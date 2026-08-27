@@ -25,6 +25,8 @@ Label: wayfinder:map
 - [调研 HiMarket 注册管理参考模型](issues/02-research-himarket-registration-model.md) — 可复用产品、发布、消费者、订阅、凭证与网关适配器的职责分离，但 AI 产品注册、审批、执行状态、租户和凭证生命周期需要平台补齐。
 - [调研 API 服务三种开发方式](issues/03-research-api-development-modes.md) — 传统、低代码和 Coding Agent 是共享草稿、契约、测试、版本与上线链路的三种创作入口，Agent 只生成需人工采纳的补丁。
 - [调研统一网关运行管理的必要配置](issues/20-research-gateway-runtime-configurations.md) — 统一网关运行管理应管理入口、路由、后端、策略、配置发布及运行观测；HiMarket 可参考资源发现、授权适配和监控，但不足以作为完整控制面。
+- [确定统一网关运行配置与发布边界](issues/21-decide-gateway-runtime-configuration-boundary.md) — 采用厂商中立的网关控制面和独立配置发布，确认风险分级审批、紧急停流、简单灰度、AI 多模型路由、安全引用及人工处理配置漂移。
+- [确定运行管理与设置的首版原型优先级](issues/22-prioritize-runtime-settings-prototype.md) — 全部菜单保留，以 P0/P1 验证核心方向；平台级能力不单独建设，只在被核心场景使用时细化状态、引用、结果和入口。
 
 ## Not yet specified
 
