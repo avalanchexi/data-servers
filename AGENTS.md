@@ -11,3 +11,7 @@
 ### Domain docs
 
 本仓库采用单上下文领域文档布局。详见 `docs/agents/domain.md`。
+
+### 原型设计规范 Skill
+
+设计、生成、修改或审查桌面 Web 原型时使用 `$enterprise-prototype-design`；仓库唯一规则位于 `.agents/skills/enterprise-prototype-design/`，平台产品术语仍以 `CONTEXT.md` 为准。
