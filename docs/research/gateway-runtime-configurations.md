@@ -4,6 +4,8 @@
 > 研究对象：同时承载数据 API、模型、Agent、MCP 等流量的统一网关管理面  
 > 研究边界：本地 HiMarket 源码，以及 Apache APISIX、Kong Gateway／Kong AI Gateway、Envoy Gateway、Azure API Management 的官方文档；AWS API Gateway／AWS WAF 仅作补充。本文不以 Higress 作为设计基线，也不承诺采用任何具体网关实现。
 
+> 后续决定：Higress 本地配置页面可以与 HiMarket 一起作为信息架构、字段组织、状态和交互模式的选择性参考，详见 `runtime-configuration-page-references.md`；本报告关于“不采用具体网关产品模型和运行依赖”的边界继续有效。
+
 ## 1. 结论摘要
 
 ### 1.1 核心结论
@@ -326,7 +328,7 @@ HiMarket 已有 Model 和 MCP 监控页面。Model 监控查询流式／非流�
 
 1. **网关概览**
    - 环境、统一网关实例、内／外网入口、连接健康、数据面健康；
-   - 当前配置版本、最后发布时间、漂移提示；
+   - 同步状态与漂移提示；技术架构明确前不在概览展示配置版本号，版本细节留在配置发布页面；
    - 今日请求、成功率、P95、AI Token、异常数。
 2. **注册与路由**
    - 服务／版本／环境／入口／Host＋Path＋Method；

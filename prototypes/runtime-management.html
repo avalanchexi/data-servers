@@ -1,0 +1,1815 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>数据服务 · 运行管理原型</title>
+  <style>
+    :root {
+      --ds-color-white: #ffffff;
+      --ds-color-black: #000000;
+      --ds-color-primary-1: #e8f3ff;
+      --ds-color-primary-2: #bedaff;
+      --ds-color-primary-3: #94bfff;
+      --ds-color-primary-4: #6aa1ff;
+      --ds-color-primary-5: #4080ff;
+      --ds-color-primary-6: #165dff;
+      --ds-color-primary-7: #0e42d2;
+      --ds-color-primary-8: #072ca6;
+      --ds-color-gray-1: #f7f8fa;
+      --ds-color-gray-2: #f2f3f5;
+      --ds-color-gray-3: #e5e6eb;
+      --ds-color-gray-4: #c9cdd4;
+      --ds-color-gray-5: #a9aeb8;
+      --ds-color-gray-6: #86909c;
+      --ds-color-gray-7: #6b7785;
+      --ds-color-gray-8: #4e5969;
+      --ds-color-gray-9: #272e3b;
+      --ds-color-gray-10: #1d2129;
+      --ds-color-success: #00b42a;
+      --ds-color-success-light: #e8ffea;
+      --ds-color-success-text: #087a24;
+      --ds-color-warning: #ff7d00;
+      --ds-color-warning-light: #fff7e8;
+      --ds-color-warning-text: #a84b00;
+      --ds-color-danger: #f53f3f;
+      --ds-color-danger-light: #ffece8;
+      --ds-color-danger-text: #cb2634;
+      --ds-bg-canvas: var(--ds-color-gray-2);
+      --ds-bg-surface: var(--ds-color-white);
+      --ds-bg-elevated: var(--ds-color-white);
+      --ds-bg-fill: var(--ds-color-gray-2);
+      --ds-bg-fill-hover: var(--ds-color-gray-3);
+      --ds-text-1: var(--ds-color-gray-10);
+      --ds-text-2: var(--ds-color-gray-8);
+      --ds-text-3: var(--ds-color-gray-6);
+      --ds-text-4: var(--ds-color-gray-4);
+      --ds-border-1: var(--ds-color-gray-2);
+      --ds-border-2: var(--ds-color-gray-3);
+      --ds-border-3: var(--ds-color-gray-4);
+      --ds-focus-ring: 0 0 0 2px rgb(22 93 255 / 18%);
+      --ds-mask: rgb(29 33 41 / 60%);
+      --ds-font-sans: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      --ds-font-mono: Consolas, Menlo, Monaco, monospace;
+      --ds-font-size-12: 12px;
+      --ds-font-size-14: 14px;
+      --ds-font-size-16: 16px;
+      --ds-font-size-20: 20px;
+      --ds-font-size-24: 24px;
+      --ds-font-size-36: 36px;
+      --ds-font-weight-regular: 400;
+      --ds-font-weight-medium: 500;
+      --ds-font-weight-semibold: 600;
+      --ds-line-height-base: 1.5715;
+      --ds-line-height-tight: 1.35;
+      --ds-space-0: 0;
+      --ds-space-1: 2px;
+      --ds-space-2: 4px;
+      --ds-space-3: 6px;
+      --ds-space-4: 8px;
+      --ds-space-5: 10px;
+      --ds-space-6: 12px;
+      --ds-space-7: 16px;
+      --ds-space-8: 20px;
+      --ds-space-9: 24px;
+      --ds-space-10: 32px;
+      --ds-space-11: 36px;
+      --ds-space-12: 40px;
+      --ds-space-13: 48px;
+      --ds-space-16: 64px;
+      --ds-radius-none: 0;
+      --ds-radius-small: 2px;
+      --ds-radius-medium: 4px;
+      --ds-radius-large: 8px;
+      --ds-radius-circle: 50%;
+      --ds-shadow-none: none;
+      --ds-shadow-1: 0 2px 5px rgb(0 0 0 / 10%);
+      --ds-shadow-2: 0 4px 10px rgb(0 0 0 / 10%);
+      --ds-shadow-3: 0 8px 20px rgb(0 0 0 / 10%);
+      --ds-duration-fast: 100ms;
+      --ds-duration-base: 200ms;
+      --ds-duration-slow: 300ms;
+      --ds-ease-standard: cubic-bezier(0.34, 0.69, 0.1, 1);
+      --ds-control-mini: 24px;
+      --ds-control-small: 28px;
+      --ds-control-default: 32px;
+      --ds-control-large: 36px;
+      --ds-nav-height: 60px;
+      --ds-sidebar-width: 220px;
+      --ds-desktop-min: 1200px;
+      --ds-content-max: 1440px;
+      --ds-grid-gutter: 16px;
+      --ds-page-padding: 24px;
+      --ds-z-popup: 1000;
+      --ds-z-modal: 1001;
+      --ds-z-message: 1003;
+      --ds-button-height: var(--ds-control-default);
+      --ds-button-radius: var(--ds-radius-small);
+      --ds-button-padding-inline: 15px;
+      --ds-input-height: var(--ds-control-default);
+      --ds-input-radius: var(--ds-radius-small);
+      --ds-form-item-gap: 20px;
+      --ds-table-cell-padding-inline: 16px;
+      --ds-table-cell-padding-block: 9px;
+      --ds-pagination-item-size: 32px;
+      --ds-modal-width: 520px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; }
+    body {
+      min-width: var(--ds-desktop-min);
+      overflow: hidden;
+      color: var(--ds-text-1);
+      background: var(--ds-bg-canvas);
+      font-family: var(--ds-font-sans);
+      font-size: var(--ds-font-size-14);
+      line-height: var(--ds-line-height-base);
+    }
+    button, input, select, textarea { font: inherit; }
+    button, a, input, select, textarea { outline: none; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      box-shadow: var(--ds-focus-ring);
+    }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .5; }
+    [hidden] { display: none !important; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .icon { width: 16px; height: 16px; display: inline-block; flex: 0 0 auto; }
+    .icon-sm { width: 14px; height: 14px; }
+    .topbar {
+      position: fixed;
+      z-index: 20;
+      inset: 0 0 auto 0;
+      height: var(--ds-nav-height);
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--ds-border-2);
+      background: var(--ds-bg-surface);
+    }
+    .product-area {
+      width: var(--ds-sidebar-width);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-6);
+      padding: 0 var(--ds-space-8);
+      border-right: 1px solid var(--ds-border-2);
+      font-size: var(--ds-font-size-16);
+      font-weight: var(--ds-font-weight-semibold);
+    }
+    .product-symbol {
+      width: var(--ds-control-default);
+      height: var(--ds-control-default);
+      display: grid;
+      place-items: center;
+      color: var(--ds-color-white);
+      border-radius: var(--ds-radius-medium);
+      background: var(--ds-color-primary-6);
+    }
+    .top-domain {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--ds-space-9);
+      border-bottom: 2px solid var(--ds-color-primary-6);
+      color: var(--ds-color-primary-6);
+      font-weight: var(--ds-font-weight-medium);
+    }
+    .top-spacer { flex: 1; }
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-4);
+      padding-right: var(--ds-space-8);
+    }
+    .top-icon {
+      width: var(--ds-control-large);
+      height: var(--ds-control-large);
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: var(--ds-radius-medium);
+      color: var(--ds-text-2);
+      background: transparent;
+    }
+    .top-icon:hover { background: var(--ds-bg-fill); }
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-4);
+      height: var(--ds-control-large);
+      padding: 0 var(--ds-space-5);
+      border: 0;
+      border-radius: var(--ds-radius-medium);
+      color: var(--ds-text-2);
+      background: transparent;
+    }
+    .user-chip:hover { background: var(--ds-bg-fill); }
+    .avatar {
+      width: var(--ds-control-small);
+      height: var(--ds-control-small);
+      display: grid;
+      place-items: center;
+      border-radius: var(--ds-radius-circle);
+      color: var(--ds-color-primary-7);
+      background: var(--ds-color-primary-1);
+      font-size: var(--ds-font-size-12);
+      font-weight: var(--ds-font-weight-medium);
+    }
+
+    .sidebar {
+      position: fixed;
+      z-index: 10;
+      top: var(--ds-nav-height);
+      bottom: 0;
+      left: 0;
+      width: var(--ds-sidebar-width);
+      overflow-y: auto;
+      border-right: 1px solid var(--ds-border-2);
+      background: var(--ds-bg-surface);
+      padding: var(--ds-space-6) var(--ds-space-4);
+    }
+    .nav-item, .nav-group-button, .nav-child {
+      width: 100%;
+      min-height: var(--ds-control-large);
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-6);
+      border: 0;
+      border-radius: var(--ds-radius-small);
+      color: var(--ds-text-2);
+      background: transparent;
+      text-align: left;
+      transition: background var(--ds-duration-fast) var(--ds-ease-standard), color var(--ds-duration-fast) var(--ds-ease-standard);
+    }
+    .nav-item, .nav-group-button { padding: 0 var(--ds-space-6); }
+    .nav-item:hover, .nav-group-button:hover, .nav-child:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+    .nav-item + .nav-item, .nav-item + .nav-group, .nav-group + .nav-item { margin-top: var(--ds-space-2); }
+    .nav-group-button {
+      color: var(--ds-color-primary-7);
+      background: var(--ds-color-primary-1);
+      font-weight: var(--ds-font-weight-medium);
+    }
+    .nav-chevron { margin-left: auto; transform: rotate(180deg); }
+    .nav-children { padding: var(--ds-space-3) 0 var(--ds-space-3) var(--ds-space-8); }
+    .nav-child {
+      position: relative;
+      min-height: var(--ds-control-default);
+      padding: 0 var(--ds-space-6) 0 var(--ds-space-8);
+      font-size: var(--ds-font-size-14);
+    }
+    .nav-child.active {
+      color: var(--ds-color-primary-6);
+      background: var(--ds-color-primary-1);
+      font-weight: var(--ds-font-weight-medium);
+    }
+    .nav-child.active::before {
+      content: "";
+      position: absolute;
+      left: var(--ds-space-3);
+      width: 3px;
+      height: 16px;
+      border-radius: var(--ds-radius-small);
+      background: var(--ds-color-primary-6);
+    }
+    .nav-divider {
+      height: 1px;
+      margin: var(--ds-space-6) var(--ds-space-6);
+      background: var(--ds-border-1);
+    }
+
+    .workspace {
+      position: fixed;
+      top: var(--ds-nav-height);
+      right: 0;
+      bottom: 0;
+      left: var(--ds-sidebar-width);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .page-head {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--ds-space-9);
+      padding: var(--ds-space-7) var(--ds-page-padding);
+      border-bottom: 1px solid var(--ds-border-2);
+      background: var(--ds-bg-surface);
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-4);
+      margin-bottom: var(--ds-space-3);
+      color: var(--ds-text-3);
+      font-size: var(--ds-font-size-12);
+    }
+    .page-title-row { display: flex; align-items: center; gap: var(--ds-space-6); }
+    h1 {
+      margin: 0;
+      font-size: var(--ds-font-size-24);
+      line-height: var(--ds-line-height-tight);
+      font-weight: var(--ds-font-weight-medium);
+    }
+    .page-description { margin: var(--ds-space-3) 0 0; color: var(--ds-text-3); }
+    .page-actions { display: flex; align-items: center; gap: var(--ds-space-5); }
+    .page-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; }
+    .page-content {
+      width: 100%;
+      max-width: var(--ds-content-max);
+      margin: 0 auto;
+      padding: var(--ds-page-padding);
+    }
+    .page-section { min-width: 0; }
+    .stack > * + * { margin-top: var(--ds-space-7); }
+
+    .btn {
+      min-height: var(--ds-button-height);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--ds-space-4);
+      padding: 0 var(--ds-button-padding-inline);
+      border: 1px solid var(--ds-border-3);
+      border-radius: var(--ds-button-radius);
+      color: var(--ds-text-1);
+      background: var(--ds-bg-surface);
+      white-space: nowrap;
+    }
+    .btn:hover { border-color: var(--ds-color-primary-5); color: var(--ds-color-primary-6); }
+    .btn-primary { border-color: var(--ds-color-primary-6); color: var(--ds-color-white); background: var(--ds-color-primary-6); }
+    .btn-primary:hover { border-color: var(--ds-color-primary-7); color: var(--ds-color-white); background: var(--ds-color-primary-7); }
+    .btn-danger { border-color: var(--ds-color-danger); color: var(--ds-color-danger-text); }
+    .btn-danger:hover { color: var(--ds-color-white); background: var(--ds-color-danger); }
+    .btn-text { min-height: var(--ds-control-small); padding: 0 var(--ds-space-3); border-color: transparent; color: var(--ds-color-primary-6); background: transparent; }
+    .btn-text:hover { border-color: transparent; color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+    .btn-small { min-height: var(--ds-control-small); padding: 0 var(--ds-space-5); font-size: var(--ds-font-size-12); }
+
+    .environment-chip, .subtle-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--ds-space-3);
+      min-height: var(--ds-control-small);
+      padding: 0 var(--ds-space-5);
+      border: 1px solid var(--ds-border-2);
+      border-radius: var(--ds-radius-medium);
+      color: var(--ds-text-2);
+      background: var(--ds-bg-fill);
+      font-size: var(--ds-font-size-12);
+      font-weight: var(--ds-font-weight-regular);
+    }
+    .dot { width: 6px; height: 6px; border-radius: var(--ds-radius-circle); background: var(--ds-color-success); }
+
+    .metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--ds-grid-gutter); }
+    .metric-card, .panel, .table-card, .summary-banner {
+      border: 1px solid var(--ds-border-2);
+      border-radius: var(--ds-radius-medium);
+      background: var(--ds-bg-surface);
+    }
+    .metric-card { min-height: 112px; padding: var(--ds-space-7); }
+    .metric-label { color: var(--ds-text-2); }
+    .metric-value {
+      margin-top: var(--ds-space-5);
+      font-size: var(--ds-font-size-24);
+      line-height: var(--ds-line-height-tight);
+      font-weight: var(--ds-font-weight-medium);
+    }
+    .metric-note { margin-top: var(--ds-space-4); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .metric-trend { color: var(--ds-color-success-text); }
+    .metric-trend.warning { color: var(--ds-color-warning-text); }
+    .metric-trend.danger { color: var(--ds-color-danger-text); }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-grid-gutter); }
+    .grid-2-wide { display: grid; grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr); gap: var(--ds-grid-gutter); }
+    .panel { min-width: 0; padding: var(--ds-space-7); }
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--ds-space-7);
+      margin-bottom: var(--ds-space-6);
+    }
+    .panel-title { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    .panel-extra { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .chart { width: 100%; height: 180px; display: block; overflow: visible; }
+    .chart.compact { height: 140px; }
+    .chart-grid { stroke: var(--ds-border-1); stroke-width: 1; }
+    .chart-primary { fill: none; stroke: var(--ds-color-primary-6); stroke-width: 2; }
+    .chart-secondary { fill: none; stroke: var(--ds-color-success); stroke-width: 2; }
+    .chart-danger { fill: none; stroke: var(--ds-color-danger); stroke-width: 2; }
+    .chart-area { fill: var(--ds-color-primary-1); opacity: .7; }
+    .chart-dot { fill: var(--ds-bg-surface); stroke: var(--ds-color-primary-6); stroke-width: 2; }
+    .chart-label { fill: var(--ds-text-3); font-size: 10px; font-family: var(--ds-font-sans); }
+    .chart-legend { display: flex; gap: var(--ds-space-7); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .legend-item { display: flex; align-items: center; gap: var(--ds-space-3); }
+    .legend-line { width: 16px; height: 2px; background: var(--ds-color-primary-6); }
+    .legend-line.success { background: var(--ds-color-success); }
+    .legend-line.danger { background: var(--ds-color-danger); }
+
+    .filter-bar {
+      display: flex;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: var(--ds-space-6);
+      padding: var(--ds-space-6);
+      border: 1px solid var(--ds-border-2);
+      border-radius: var(--ds-radius-medium);
+      background: var(--ds-bg-surface);
+    }
+    .filter-field { min-width: 148px; }
+    .filter-field.grow { flex: 1; min-width: 220px; }
+    .filter-label { display: block; margin-bottom: var(--ds-space-3); color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .input, .select, .textarea {
+      width: 100%;
+      min-height: var(--ds-input-height);
+      border: 1px solid var(--ds-border-3);
+      border-radius: var(--ds-input-radius);
+      color: var(--ds-text-1);
+      background: var(--ds-bg-surface);
+    }
+    .input, .select { padding: 0 var(--ds-space-6); }
+    .textarea { min-height: 72px; padding: var(--ds-space-5) var(--ds-space-6); resize: vertical; }
+    .input:hover, .select:hover, .textarea:hover { border-color: var(--ds-color-primary-4); }
+    .input:focus, .select:focus, .textarea:focus { border-color: var(--ds-color-primary-6); box-shadow: var(--ds-focus-ring); }
+    .field-error { margin-top: var(--ds-space-3); color: var(--ds-color-danger-text); font-size: var(--ds-font-size-12); }
+    .quick-ranges { display: inline-flex; padding: var(--ds-space-2); border-radius: var(--ds-radius-medium); background: var(--ds-bg-fill); }
+    .quick-range { min-height: var(--ds-control-small); padding: 0 var(--ds-space-6); border: 0; border-radius: var(--ds-radius-small); color: var(--ds-text-2); background: transparent; }
+    .quick-range.active { color: var(--ds-color-primary-6); background: var(--ds-bg-surface); font-weight: var(--ds-font-weight-medium); }
+
+    .table-card { overflow: hidden; }
+    .table-toolbar {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--ds-space-7);
+      padding: 0 var(--ds-space-7);
+      border-bottom: 1px solid var(--ds-border-2);
+    }
+    .table-title { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    .table-scroll { width: 100%; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td {
+      padding: var(--ds-table-cell-padding-block) var(--ds-table-cell-padding-inline);
+      border-bottom: 1px solid var(--ds-border-1);
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    th { color: var(--ds-text-2); background: var(--ds-color-gray-1); font-weight: var(--ds-font-weight-medium); }
+    tbody tr:hover { background: var(--ds-color-gray-1); }
+    tbody tr:last-child td { border-bottom: 0; }
+    .cell-main { color: var(--ds-text-1); font-weight: var(--ds-font-weight-medium); }
+    .cell-sub { margin-top: var(--ds-space-1); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .cell-wrap { white-space: normal; min-width: 180px; max-width: 280px; }
+    .numeric { font-variant-numeric: tabular-nums; }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--ds-space-3);
+      min-height: 22px;
+      padding: 0 var(--ds-space-5);
+      border-radius: var(--ds-radius-small);
+      font-size: var(--ds-font-size-12);
+      font-weight: var(--ds-font-weight-medium);
+    }
+    .status::before { content: ""; width: 6px; height: 6px; border-radius: var(--ds-radius-circle); background: currentColor; }
+    .status-success { color: var(--ds-color-success-text); background: var(--ds-color-success-light); }
+    .status-warning { color: var(--ds-color-warning-text); background: var(--ds-color-warning-light); }
+    .status-danger { color: var(--ds-color-danger-text); background: var(--ds-color-danger-light); }
+    .status-info { color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+    .status-neutral { color: var(--ds-text-2); background: var(--ds-bg-fill); }
+    .pagination {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--ds-space-5);
+      padding: 0 var(--ds-space-7);
+      border-top: 1px solid var(--ds-border-1);
+      color: var(--ds-text-3);
+      font-size: var(--ds-font-size-12);
+    }
+    .page-square {
+      width: var(--ds-pagination-item-size);
+      height: var(--ds-pagination-item-size);
+      border: 1px solid var(--ds-border-2);
+      border-radius: var(--ds-radius-small);
+      color: var(--ds-text-2);
+      background: var(--ds-bg-surface);
+    }
+    .page-square.active { border-color: var(--ds-color-primary-6); color: var(--ds-color-primary-6); }
+
+    .event-list, .ranking-list, .detail-list { margin: 0; padding: 0; list-style: none; }
+    .event-item, .ranking-item {
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-6);
+      min-height: 44px;
+      border-bottom: 1px solid var(--ds-border-1);
+    }
+    .event-item:last-child, .ranking-item:last-child { border-bottom: 0; }
+    .event-content, .ranking-content { flex: 1; min-width: 0; }
+    .event-title, .ranking-title { overflow: hidden; color: var(--ds-text-1); text-overflow: ellipsis; white-space: nowrap; }
+    .event-meta, .ranking-meta { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .rank {
+      width: var(--ds-control-mini);
+      height: var(--ds-control-mini);
+      display: grid;
+      place-items: center;
+      border-radius: var(--ds-radius-small);
+      color: var(--ds-text-2);
+      background: var(--ds-bg-fill);
+      font-size: var(--ds-font-size-12);
+    }
+    .rank.top { color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+    .bar-track { width: 96px; height: 6px; overflow: hidden; border-radius: var(--ds-radius-small); background: var(--ds-bg-fill); }
+    .bar-fill { height: 100%; border-radius: var(--ds-radius-small); background: var(--ds-color-primary-5); }
+    .bar-fill.danger { background: var(--ds-color-danger); }
+
+    .summary-banner {
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-9);
+      padding: var(--ds-space-7);
+    }
+    .summary-main { flex: 1; }
+    .summary-title { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    .summary-desc { margin-top: var(--ds-space-3); color: var(--ds-text-3); }
+    .summary-stats { display: flex; align-items: center; gap: var(--ds-space-10); }
+    .summary-stat { min-width: 80px; }
+    .summary-stat-value { font-size: var(--ds-font-size-20); font-weight: var(--ds-font-weight-medium); }
+    .summary-stat-label { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+
+    .drawer-layer, .modal-layer {
+      position: fixed;
+      z-index: var(--ds-z-modal);
+      inset: 0;
+      display: none;
+    }
+    .drawer-layer.open, .modal-layer.open { display: block; }
+    .mask { position: absolute; inset: 0; background: var(--ds-mask); }
+    .drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(560px, 48vw);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--ds-shadow-3);
+      background: var(--ds-bg-elevated);
+      transform: translateX(100%);
+      transition: transform var(--ds-duration-base) var(--ds-ease-standard);
+    }
+    .drawer-layer.open .drawer { transform: translateX(0); }
+    .drawer-head, .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--ds-space-7);
+      min-height: var(--ds-nav-height);
+      padding: 0 var(--ds-space-8);
+      border-bottom: 1px solid var(--ds-border-2);
+    }
+    .drawer-title, .modal-title { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    .close-btn {
+      width: var(--ds-control-default);
+      height: var(--ds-control-default);
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: var(--ds-radius-small);
+      color: var(--ds-text-2);
+      background: transparent;
+    }
+    .close-btn:hover { background: var(--ds-bg-fill); }
+    .drawer-body { flex: 1; overflow-y: auto; padding: var(--ds-space-8); }
+    .drawer-footer, .modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--ds-space-5);
+      padding: var(--ds-space-6) var(--ds-space-8);
+      border-top: 1px solid var(--ds-border-2);
+    }
+    .detail-section + .detail-section { margin-top: var(--ds-space-9); padding-top: var(--ds-space-7); border-top: 1px solid var(--ds-border-1); }
+    .detail-heading { margin: 0 0 var(--ds-space-6); font-size: var(--ds-font-size-14); font-weight: var(--ds-font-weight-medium); }
+    .detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-6) var(--ds-space-8); }
+    .detail-key { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .detail-value { margin-top: var(--ds-space-1); color: var(--ds-text-1); word-break: break-word; }
+    .detail-row { display: flex; justify-content: space-between; gap: var(--ds-space-7); padding: var(--ds-space-5) 0; border-bottom: 1px solid var(--ds-border-1); }
+    .detail-row:last-child { border-bottom: 0; }
+    .inline-alert {
+      padding: var(--ds-space-6);
+      border: 1px solid var(--ds-color-warning);
+      border-radius: var(--ds-radius-medium);
+      color: var(--ds-color-warning-text);
+      background: var(--ds-color-warning-light);
+    }
+    .inline-alert.danger { border-color: var(--ds-color-danger); color: var(--ds-color-danger-text); background: var(--ds-color-danger-light); }
+
+    .modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: var(--ds-modal-width);
+      max-width: calc(100vw - var(--ds-space-16));
+      overflow: hidden;
+      border-radius: var(--ds-radius-medium);
+      box-shadow: var(--ds-shadow-3);
+      background: var(--ds-bg-elevated);
+      transform: translate(-50%, -50%);
+    }
+    .modal-body { padding: var(--ds-space-8); }
+    .modal-icon {
+      width: var(--ds-control-large);
+      height: var(--ds-control-large);
+      display: grid;
+      place-items: center;
+      margin-bottom: var(--ds-space-6);
+      border-radius: var(--ds-radius-circle);
+      color: var(--ds-color-warning-text);
+      background: var(--ds-color-warning-light);
+    }
+    .modal-copy { margin: 0; color: var(--ds-text-2); }
+
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-form-item-gap) var(--ds-space-7); }
+    .form-item.full { grid-column: 1 / -1; }
+    .form-item label { display: block; margin-bottom: var(--ds-space-4); color: var(--ds-text-2); font-weight: var(--ds-font-weight-medium); }
+    .required::before { content: "*"; margin-right: var(--ds-space-2); color: var(--ds-color-danger); }
+    .help { margin-top: var(--ds-space-3); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .target-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 96px 96px;
+      gap: var(--ds-space-5);
+      align-items: end;
+      padding: var(--ds-space-6);
+      border: 1px solid var(--ds-border-2);
+      border-radius: var(--ds-radius-medium);
+      background: var(--ds-color-gray-1);
+    }
+
+    .toast {
+      position: fixed;
+      z-index: var(--ds-z-message);
+      top: calc(var(--ds-nav-height) + var(--ds-space-7));
+      left: 50%;
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-5);
+      min-height: var(--ds-control-large);
+      padding: 0 var(--ds-space-7);
+      border: 1px solid var(--ds-border-2);
+      border-radius: var(--ds-radius-medium);
+      box-shadow: var(--ds-shadow-2);
+      color: var(--ds-text-1);
+      background: var(--ds-bg-elevated);
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -8px);
+      transition: opacity var(--ds-duration-base) var(--ds-ease-standard), transform var(--ds-duration-base) var(--ds-ease-standard);
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .toast-mark { color: var(--ds-color-success-text); }
+    .empty-row td { padding: var(--ds-space-10); color: var(--ds-text-3); text-align: center; }
+
+    @media (prefers-reduced-motion: reduce) {
+      :root {
+        --ds-duration-fast: 0ms;
+        --ds-duration-base: 0ms;
+        --ds-duration-slow: 0ms;
+      }
+    }
+  </style>
+</head>
+<body>
+  <svg aria-hidden="true" class="sr-only">
+    <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" fill="currentColor"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 10.5 12 3l8.5 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-5v-6h-4v6H5a1.5 1.5 0 0 1-1.5-1.5z" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9h16l-1-5H5L4 9Zm1 0v11h14V9M9 20v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-app" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="3" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="14" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="14" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 12h9m-3 0v3m-3-3v2" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 13h4l2-7 4 13 2-6h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 14 4-4 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5M18.5 9A7 7 0 0 0 6.7 6.7L4 9m16 6-2.7 2.3A7 7 0 0 1 5.5 15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 8H3c0-1 3-1 3-8Zm4 11h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9.5 9a2.7 2.7 0 1 1 4.2 2.2c-1 .7-1.7 1.1-1.7 2.3M12 17h.01" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 3 2.7 20h18.6z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 9v5m0 3h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <header class="topbar">
+    <div class="product-area">
+      <span class="product-symbol"><svg class="icon" aria-hidden="true"><use href="#i-grid"></use></svg></span>
+      <span>数据服务</span>
+    </div>
+    <div class="top-domain">数据服务</div>
+    <div class="top-spacer"></div>
+    <div class="top-actions">
+      <button class="top-icon" type="button" aria-label="帮助" data-toast="本原型暂不包含帮助中心">
+        <svg class="icon" aria-hidden="true"><use href="#i-help"></use></svg>
+      </button>
+      <button class="top-icon" type="button" aria-label="通知" data-toast="暂无新的运行通知">
+        <svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg>
+      </button>
+      <button class="user-chip" type="button" data-toast="当前视角：管理者">
+        <span class="avatar">管</span>
+        <span>管理者</span>
+        <svg class="icon icon-sm" aria-hidden="true"><use href="#i-chevron"></use></svg>
+      </button>
+    </div>
+  </header>
+
+  <aside class="sidebar" aria-label="数据服务导航">
+    <button class="nav-item" type="button" data-scope-message>
+      <svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg><span>工作台</span>
+    </button>
+    <button class="nav-item" type="button" data-scope-message>
+      <svg class="icon" aria-hidden="true"><use href="#i-store"></use></svg><span>服务集市</span>
+    </button>
+    <button class="nav-item" type="button" data-scope-message>
+      <svg class="icon" aria-hidden="true"><use href="#i-app"></use></svg><span>数据应用</span>
+    </button>
+    <button class="nav-item" type="button" data-scope-message>
+      <svg class="icon" aria-hidden="true"><use href="#i-key"></use></svg><span>应用与授权</span>
+    </button>
+    <button class="nav-item" type="button" data-scope-message>
+      <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span>审批中心</span>
+    </button>
+    <div class="nav-group">
+      <button class="nav-group-button" type="button" aria-expanded="true">
+        <svg class="icon" aria-hidden="true"><use href="#i-activity"></use></svg>
+        <span>运行管理</span>
+        <svg class="icon icon-sm nav-chevron" aria-hidden="true"><use href="#i-chevron"></use></svg>
+      </button>
+      <div class="nav-children">
+        <button class="nav-child active" type="button" data-page="overview">网关概览</button>
+        <button class="nav-child" type="button" data-page="routes">注册与路由</button>
+        <button class="nav-child" type="button" data-page="policies">策略管理</button>
+        <button class="nav-child" type="button" data-page="releases">配置发布</button>
+        <button class="nav-child" type="button" data-page="monitoring">运行监控</button>
+        <button class="nav-child" type="button" data-page="events">异常事件</button>
+        <button class="nav-child" type="button" data-page="audit">审计日志</button>
+      </div>
+    </div>
+    <div class="nav-divider"></div>
+    <button class="nav-item" type="button" data-scope-message>
+      <svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg><span>设置</span>
+    </button>
+  </aside>
+
+  <main class="workspace">
+    <header class="page-head">
+      <div>
+        <div class="breadcrumb"><span>数据服务</span><span>/</span><span>运行管理</span><span>/</span><span id="breadcrumb-current">网关概览</span></div>
+        <div class="page-title-row">
+          <h1 id="page-title">网关概览</h1>
+          <span class="environment-chip"><span class="dot"></span>当前环境：生产</span>
+        </div>
+        <p class="page-description" id="page-description">查看数据服务整体健康状态与网关访问摘要。</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn" type="button" data-action-page="overview routes monitoring" data-refresh>
+          <svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg>刷新状态
+        </button>
+        <button class="btn btn-primary" type="button" data-action-page="policies" data-open-policy>
+          <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>新建策略
+        </button>
+        <button class="btn btn-primary" type="button" data-action-page="releases" data-release-confirm>
+          发起发布
+        </button>
+      </div>
+    </header>
+
+    <div class="page-scroll">
+      <div class="page-content">
+        <section class="page-section stack" data-page-section="overview">
+          <div class="metric-grid">
+            <article class="metric-card">
+              <div class="metric-label">正常服务</div>
+              <div class="metric-value">18 <span class="panel-extra">/ 20</span></div>
+              <div class="metric-note metric-trend">较上一周期无变化</div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-label">异常服务</div>
+              <div class="metric-value">2</div>
+              <div class="metric-note metric-trend danger">1 个服务持续异常</div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-label">近 15 分钟请求量</div>
+              <div class="metric-value numeric">428,620</div>
+              <div class="metric-note metric-trend">环比 +4.8%</div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-label">请求成功率</div>
+              <div class="metric-value numeric">99.72%</div>
+              <div class="metric-note metric-trend warning">目标值 99.90%</div>
+            </article>
+          </div>
+
+          <article class="table-card">
+            <div class="table-toolbar">
+              <h2 class="table-title">网关访问状态</h2>
+              <span class="panel-extra">最近刷新：<span data-last-refresh>13:45:20</span></span>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <caption class="sr-only">网关访问状态</caption>
+                <thead><tr><th scope="col">逻辑实例</th><th scope="col">能力范围</th><th scope="col">访问入口</th><th scope="col">数据面健康</th><th scope="col">影响服务</th><th scope="col">最近检查</th><th scope="col">操作</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><div class="cell-main">公共 API 入口</div><div class="cell-sub">通用 API 适配器</div></td>
+                    <td>API、数据流</td><td>内网 / 外网</td><td><span class="status status-success">正常</span></td><td>12 个</td><td class="numeric">13:45:12</td>
+                    <td><button class="btn btn-text btn-small" type="button" data-open-gateway="公共 API 入口">查看</button></td>
+                  </tr>
+                  <tr>
+                    <td><div class="cell-main">智能能力入口</div><div class="cell-sub">AI 能力适配器</div></td>
+                    <td>模型、Agent、MCP</td><td>外网</td><td><span class="status status-warning">降级</span></td><td>6 个</td><td class="numeric">13:45:08</td>
+                    <td><button class="btn btn-text btn-small" type="button" data-open-gateway="智能能力入口">查看</button></td>
+                  </tr>
+                  <tr>
+                    <td><div class="cell-main">任务执行入口</div><div class="cell-sub">异步任务适配器</div></td>
+                    <td>Skill、Worker</td><td>内网</td><td><span class="status status-success">正常</span></td><td>2 个</td><td class="numeric">13:44:58</td>
+                    <td><button class="btn btn-text btn-small" type="button" data-open-gateway="任务执行入口">查看</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <div class="grid-2-wide">
+            <article class="panel">
+              <div class="panel-head">
+                <div><h2 class="panel-title">请求趋势</h2><div class="chart-legend"><span class="legend-item"><span class="legend-line"></span>请求量</span><span class="legend-item"><span class="legend-line success"></span>成功率</span></div></div>
+                <span class="panel-extra">近 15 分钟</span>
+              </div>
+              <svg class="chart compact" viewBox="0 0 680 150" role="img" aria-label="近十五分钟请求量和成功率趋势">
+                <path class="chart-grid" d="M38 20H660M38 60H660M38 100H660M38 140H660"/>
+                <path class="chart-area" d="M38 118 L110 102 L182 110 L254 78 L326 85 L398 56 L470 66 L542 38 L614 48 L660 34 L660 140 L38 140 Z"/>
+                <path class="chart-primary" d="M38 118 L110 102 L182 110 L254 78 L326 85 L398 56 L470 66 L542 38 L614 48 L660 34"/>
+                <path class="chart-secondary" d="M38 42 L110 38 L182 44 L254 36 L326 40 L398 34 L470 54 L542 46 L614 40 L660 38"/>
+                <text class="chart-label" x="38" y="149">13:30</text><text class="chart-label" x="320" y="149">13:37</text><text class="chart-label" x="620" y="149">13:45</text>
+              </svg>
+            </article>
+            <article class="panel">
+              <div class="panel-head"><h2 class="panel-title">最近异常</h2><button class="btn btn-text btn-small" type="button" data-page-link="events">查看全部</button></div>
+              <ul class="event-list">
+                <li class="event-item"><span class="status status-danger">高</span><div class="event-content"><div class="event-title">客户画像查询成功率下降</div><div class="event-meta">持续中 · 13:41</div></div></li>
+                <li class="event-item"><span class="status status-warning">中</span><div class="event-content"><div class="event-title">智能问答服务触发模型降级</div><div class="event-meta">已恢复 · 13:32</div></div></li>
+                <li class="event-item"><span class="status status-warning">中</span><div class="event-content"><div class="event-title">订单查询 P95 响应升高</div><div class="event-meta">已恢复 · 12:58</div></div></li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="page-section stack" data-page-section="routes" hidden>
+          <div class="filter-bar">
+            <div class="filter-field">
+              <label class="filter-label" for="route-gateway">网关实例</label>
+              <select class="select" id="route-gateway" data-filter-select="route-table" data-filter-key="gateway">
+                <option>公共 API 入口</option>
+                <option>智能能力入口</option>
+                <option>任务执行入口</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label class="filter-label" for="route-status">运行状态</label>
+              <select class="select" id="route-status" data-filter-select="route-table" data-filter-key="status">
+                <option value="">全部状态</option>
+                <option value="正常">正常</option>
+                <option value="降级">降级</option>
+                <option value="异常">异常</option>
+                <option value="已停流">已停流</option>
+              </select>
+            </div>
+            <div class="filter-field grow">
+              <label class="filter-label" for="route-search">搜索服务</label>
+              <input class="input" id="route-search" type="search" placeholder="输入服务名称或端口" data-filter-input="route-table">
+            </div>
+            <button class="btn" type="button" data-reset-filters="route-table">重置</button>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card"><div class="metric-label">下游 QPS</div><div class="metric-value numeric">486.2</div><div class="metric-note">近 15 分钟均值</div></article>
+            <article class="metric-card"><div class="metric-label">上游 QPS</div><div class="metric-value numeric">472.8</div><div class="metric-note">近 15 分钟均值</div></article>
+            <article class="metric-card"><div class="metric-label">成功率</div><div class="metric-value numeric">99.72%</div><div class="metric-note metric-trend warning">低于目标 0.18%</div></article>
+            <article class="metric-card"><div class="metric-label">P95</div><div class="metric-value numeric">286 ms</div><div class="metric-note metric-trend danger">环比 +32 ms</div></article>
+          </div>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div><h2 class="panel-title">上下游 QPS 趋势</h2><div class="chart-legend"><span class="legend-item"><span class="legend-line"></span>下游</span><span class="legend-item"><span class="legend-line success"></span>上游</span></div></div>
+              <span class="panel-extra">近 15 分钟</span>
+            </div>
+            <svg class="chart compact" viewBox="0 0 980 150" role="img" aria-label="上下游 QPS 趋势">
+              <path class="chart-grid" d="M44 20H960M44 60H960M44 100H960M44 140H960"/>
+              <path class="chart-primary" d="M44 112 L144 96 L244 104 L344 72 L444 84 L544 42 L644 58 L744 36 L844 50 L960 28"/>
+              <path class="chart-secondary" d="M44 120 L144 104 L244 110 L344 80 L444 91 L544 50 L644 66 L744 44 L844 57 L960 36"/>
+              <text class="chart-label" x="44" y="149">13:30</text><text class="chart-label" x="480" y="149">13:37</text><text class="chart-label" x="920" y="149">13:45</text>
+            </svg>
+          </article>
+
+          <article class="table-card" id="route-table">
+            <div class="table-toolbar">
+              <h2 class="table-title">网关服务运行清单</h2>
+              <span class="panel-extra">6 条运行项</span>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <caption class="sr-only">网关服务运行清单</caption>
+                <thead><tr><th scope="col">后端服务与端口</th><th scope="col">调用协议</th><th scope="col">运行状态</th><th scope="col">QPS</th><th scope="col">成功率</th><th scope="col">P95</th><th scope="col">最近异常</th><th scope="col">操作</th></tr></thead>
+                <tbody>
+                  <tr data-filter-row data-status="正常" data-gateway="公共 API 入口">
+                    <td><div class="cell-main">客户信息查询</div><div class="cell-sub">service-customer:8080</div></td><td>HTTP</td><td><span class="status status-success">正常</span></td><td class="numeric">128.4</td><td class="numeric">99.98%</td><td class="numeric">92 ms</td><td>—</td>
+                    <td><button class="btn btn-text btn-small" type="button" data-open-route="客户信息查询" data-route-status="正常">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-status="正常" data-gateway="公共 API 入口">
+                    <td><div class="cell-main">订单明细查询</div><div class="cell-sub">service-order:8080</div></td><td>HTTP</td><td><span class="status status-success">正常</span></td><td class="numeric">96.7</td><td class="numeric">99.91%</td><td class="numeric">184 ms</td><td>12:58 已恢复</td>
+                    <td><button class="btn btn-text btn-small" type="button" data-open-route="订单明细查询" data-route-status="正常">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-status="正常" data-gateway="智能能力入口">
+                    <td><div class="cell-main">产品推荐模型</div><div class="cell-sub">model-recommend:443</div></td><td>模型推理</td><td><span class="status status-success">正常</span></td><td class="numeric">61.2</td><td class="numeric">99.84%</td><td class="numeric">426 ms</td><td>—</td>
+                    <td><button class="btn btn-text btn-small" type="button" data-open-route="产品推荐模型" data-route-status="正常">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-status="降级" data-gateway="智能能力入口">
+                    <td><div class="cell-main">智能问答服务</div><div class="cell-sub">agent-assistant:443</div></td><td>Agent</td><td><span class="status status-warning">降级</span></td><td class="numeric">48.9</td><td class="numeric">98.72%</td><td class="numeric">1,260 ms</td><td>13:32 模型降级</td>
+                    <td><button class="btn btn-text btn-small" type="button" data-open-route="智能问答服务" data-route-status="降级">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-status="异常" data-gateway="公共 API 入口">
+                    <td><div class="cell-main">客户画像查询</div><div class="cell-sub">service-profile:8090</div></td><td>HTTP</td><td><span class="status status-danger">异常</span></td><td class="numeric">31.6</td><td class="numeric">91.28%</td><td class="numeric">2,486 ms</td><td>13:41 成功率下降</td>
+                    <td><button class="btn btn-text btn-small" type="button" data-open-route="客户画像查询" data-route-status="异常">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-status="已停流" data-gateway="任务执行入口">
+                    <td><div class="cell-main">历史账单下载</div><div class="cell-sub">worker-billing:9000</div></td><td>任务执行</td><td><span class="status status-neutral">已停流</span></td><td>—</td><td>—</td><td>—</td><td>11:20 紧急停流</td>
+                    <td><button class="btn btn-text btn-small" type="button" data-open-route="历史账单下载" data-route-status="已停流">查看</button></td>
+                  </tr>
+                  <tr class="empty-row" hidden><td colspan="8">未找到符合条件的运行项。</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="pagination"><span>共 6 条</span><button class="page-square" type="button" disabled aria-label="上一页">‹</button><button class="page-square active" type="button">1</button><button class="page-square" type="button" disabled aria-label="下一页">›</button></div>
+          </article>
+
+          <div class="grid-2">
+            <article class="panel">
+              <div class="panel-head"><h2 class="panel-title">失败请求 Top 5</h2><span class="panel-extra">近 15 分钟</span></div>
+              <ol class="ranking-list">
+                <li class="ranking-item"><span class="rank top">1</span><button class="btn btn-text ranking-content" type="button" data-open-route="客户画像查询" data-route-status="异常"><span class="ranking-title">客户画像查询</span><span class="ranking-meta">失败 1,286 次</span></button><div class="bar-track"><div class="bar-fill danger" style="width:92%"></div></div></li>
+                <li class="ranking-item"><span class="rank top">2</span><button class="btn btn-text ranking-content" type="button" data-open-route="智能问答服务" data-route-status="降级"><span class="ranking-title">智能问答服务</span><span class="ranking-meta">失败 148 次</span></button><div class="bar-track"><div class="bar-fill danger" style="width:48%"></div></div></li>
+                <li class="ranking-item"><span class="rank">3</span><div class="ranking-content"><div class="ranking-title">订单明细查询</div><div class="ranking-meta">失败 82 次</div></div><div class="bar-track"><div class="bar-fill danger" style="width:28%"></div></div></li>
+                <li class="ranking-item"><span class="rank">4</span><div class="ranking-content"><div class="ranking-title">产品推荐模型</div><div class="ranking-meta">失败 36 次</div></div><div class="bar-track"><div class="bar-fill danger" style="width:18%"></div></div></li>
+                <li class="ranking-item"><span class="rank">5</span><div class="ranking-content"><div class="ranking-title">客户信息查询</div><div class="ranking-meta">失败 21 次</div></div><div class="bar-track"><div class="bar-fill danger" style="width:10%"></div></div></li>
+              </ol>
+            </article>
+            <article class="panel">
+              <div class="panel-head"><h2 class="panel-title">慢响应 Top 5</h2><span class="panel-extra">P95</span></div>
+              <ol class="ranking-list">
+                <li class="ranking-item"><span class="rank top">1</span><button class="btn btn-text ranking-content" type="button" data-open-route="客户画像查询" data-route-status="异常"><span class="ranking-title">客户画像查询</span><span class="ranking-meta">2,486 ms</span></button><div class="bar-track"><div class="bar-fill" style="width:96%"></div></div></li>
+                <li class="ranking-item"><span class="rank top">2</span><button class="btn btn-text ranking-content" type="button" data-open-route="智能问答服务" data-route-status="降级"><span class="ranking-title">智能问答服务</span><span class="ranking-meta">1,260 ms</span></button><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div></li>
+                <li class="ranking-item"><span class="rank">3</span><div class="ranking-content"><div class="ranking-title">产品推荐模型</div><div class="ranking-meta">426 ms</div></div><div class="bar-track"><div class="bar-fill" style="width:34%"></div></div></li>
+                <li class="ranking-item"><span class="rank">4</span><div class="ranking-content"><div class="ranking-title">订单明细查询</div><div class="ranking-meta">184 ms</div></div><div class="bar-track"><div class="bar-fill" style="width:22%"></div></div></li>
+                <li class="ranking-item"><span class="rank">5</span><div class="ranking-content"><div class="ranking-title">客户信息查询</div><div class="ranking-meta">92 ms</div></div><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div></li>
+              </ol>
+            </article>
+          </div>
+        </section>
+        <section class="page-section stack" data-page-section="policies" hidden>
+          <div class="filter-bar">
+            <div class="filter-field grow">
+              <label class="filter-label" for="policy-search">搜索策略</label>
+              <input class="input" id="policy-search" type="search" placeholder="输入策略名称" data-filter-input="policy-table">
+            </div>
+            <div class="filter-field">
+              <label class="filter-label" for="policy-category-filter">策略分类</label>
+              <select class="select" id="policy-category-filter" data-filter-select="policy-table" data-filter-key="category">
+                <option value="">全部分类</option><option>认证投影</option><option>限流与配额</option><option>超时／重试／熔断</option><option>CORS／IP 访问</option><option>AI 多目标路由</option><option>外部安全策略引用</option>
+              </select>
+            </div>
+            <div class="filter-field">
+              <label class="filter-label" for="policy-config-filter">配置状态</label>
+              <select class="select" id="policy-config-filter" data-filter-select="policy-table" data-filter-key="status">
+                <option value="">全部状态</option><option>已生效</option><option>存在草稿</option><option>待发布</option><option>校验失败</option>
+              </select>
+            </div>
+            <button class="btn" type="button" data-reset-filters="policy-table">重置</button>
+          </div>
+
+          <article class="table-card" id="policy-table">
+            <div class="table-toolbar"><h2 class="table-title">策略列表</h2><span class="panel-extra">8 条策略</span></div>
+            <div class="table-scroll">
+              <table>
+                <caption class="sr-only">策略列表</caption>
+                <thead><tr><th scope="col">策略名称</th><th scope="col">分类</th><th scope="col">作用范围</th><th scope="col">自动分配</th><th scope="col">启用状态</th><th scope="col">配置状态</th><th scope="col">更新时间</th><th scope="col">操作</th></tr></thead>
+                <tbody>
+                  <tr data-filter-row data-category="限流与配额" data-status="已生效">
+                    <td><div class="cell-main">公共 API 默认限流</div><div class="cell-sub">每数据应用独立计量</div></td><td>限流与配额</td><td>API 服务</td><td>12 个应用</td><td><span class="status status-success">已启用</span></td><td><span class="status status-success">已生效</span></td><td>08-27 11:20</td><td><button class="btn btn-text btn-small" type="button" data-open-policy-detail="公共 API 默认限流" data-policy-category="限流与配额">查看</button><button class="btn btn-text btn-small" type="button" data-edit-policy="公共 API 默认限流">编辑</button></td>
+                  </tr>
+                  <tr data-filter-row data-category="AI 多目标路由" data-status="已生效">
+                    <td><div class="cell-main">智能问答模型降级</div><div class="cell-sub">主模型异常时顺序降级</div></td><td>AI 多目标路由</td><td>模型、Agent</td><td>4 个应用</td><td><span class="status status-success">已启用</span></td><td><span class="status status-success">已生效</span></td><td>08-27 10:42</td><td><button class="btn btn-text btn-small" type="button" data-open-policy-detail="智能问答模型降级" data-policy-category="AI 多目标路由">查看</button><button class="btn btn-text btn-small" type="button" data-edit-policy="智能问答模型降级">编辑</button></td>
+                  </tr>
+                  <tr data-filter-row data-category="认证投影" data-status="已生效">
+                    <td><div class="cell-main">应用身份认证投影</div><div class="cell-sub">按批准结果自动分配</div></td><td>认证投影</td><td>全部调用能力</td><td>20 个应用</td><td><span class="status status-success">已启用</span></td><td><span class="status status-success">已生效</span></td><td>08-26 17:16</td><td><button class="btn btn-text btn-small" type="button" data-open-policy-detail="应用身份认证投影" data-policy-category="认证投影">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-category="超时／重试／熔断" data-status="已生效">
+                    <td><div class="cell-main">查询服务可靠性</div><div class="cell-sub">超时与有限重试</div></td><td>超时／重试／熔断</td><td>API 服务</td><td>9 个应用</td><td><span class="status status-success">已启用</span></td><td><span class="status status-success">已生效</span></td><td>08-26 16:08</td><td><button class="btn btn-text btn-small" type="button" data-open-policy-detail="查询服务可靠性" data-policy-category="超时／重试／熔断">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-category="CORS／IP 访问" data-status="已生效">
+                    <td><div class="cell-main">外部调用来源限制</div><div class="cell-sub">批准来源自动映射</div></td><td>CORS／IP 访问</td><td>外网 API</td><td>6 个应用</td><td><span class="status status-success">已启用</span></td><td><span class="status status-success">已生效</span></td><td>08-25 14:30</td><td><button class="btn btn-text btn-small" type="button" data-open-policy-detail="外部调用来源限制" data-policy-category="CORS／IP 访问">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-category="限流与配额" data-status="存在草稿">
+                    <td><div class="cell-main">数据下载日配额</div><div class="cell-sub">批量下载能力</div></td><td>限流与配额</td><td>Worker</td><td>2 个应用</td><td><span class="status status-success">已启用</span></td><td><span class="status status-info">存在草稿</span></td><td>08-27 13:12</td><td><button class="btn btn-text btn-small" type="button" data-open-policy-detail="数据下载日配额" data-policy-category="限流与配额">查看</button><button class="btn btn-text btn-small" type="button" data-edit-policy="数据下载日配额">编辑</button></td>
+                  </tr>
+                  <tr data-filter-row data-category="外部安全策略引用" data-status="待发布">
+                    <td><div class="cell-main">敏感内容策略引用</div><div class="cell-sub">仅保存外部策略引用</div></td><td>外部安全策略引用</td><td>Agent</td><td>3 个应用</td><td><span class="status status-neutral">已停用</span></td><td><span class="status status-warning">待发布</span></td><td>08-27 12:48</td><td><button class="btn btn-text btn-small" type="button" data-open-policy-detail="敏感内容策略引用" data-policy-category="外部安全策略引用">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-category="AI 多目标路由" data-status="校验失败">
+                    <td><div class="cell-main">分析模型权重路由</div><div class="cell-sub">权重合计需调整</div></td><td>AI 多目标路由</td><td>模型</td><td>0 个应用</td><td><span class="status status-success">已启用</span></td><td><span class="status status-danger">校验失败</span></td><td>08-27 13:36</td><td><button class="btn btn-text btn-small" type="button" data-open-policy-detail="分析模型权重路由" data-policy-category="AI 多目标路由">查看</button><button class="btn btn-text btn-small" type="button" data-edit-policy="分析模型权重路由">编辑</button></td>
+                  </tr>
+                  <tr class="empty-row" hidden><td colspan="8">未找到符合条件的策略。</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="pagination"><span>共 8 条</span><button class="page-square" type="button" disabled aria-label="上一页">‹</button><button class="page-square active" type="button">1</button><button class="page-square" type="button" disabled aria-label="下一页">›</button></div>
+          </article>
+        </section>
+        <section class="page-section stack" data-page-section="releases" hidden>
+          <article class="summary-banner">
+            <div class="summary-main">
+              <h2 class="summary-title">待发布变更</h2>
+              <div class="summary-desc">当前环境已有路由与策略变更，基础校验已通过。</div>
+            </div>
+            <div class="summary-stats">
+              <div class="summary-stat"><div class="summary-stat-value" id="pending-change-count">7</div><div class="summary-stat-label">变更项</div></div>
+              <div class="summary-stat"><div class="summary-stat-value" id="pending-object-count">5</div><div class="summary-stat-label">影响对象</div></div>
+              <div class="summary-stat"><div class="status status-success" id="pending-validation">校验通过</div><div class="summary-stat-label">基础校验</div></div>
+            </div>
+          </article>
+
+          <div class="filter-bar">
+            <div class="filter-field grow">
+              <label class="filter-label" for="release-search">搜索发布记录</label>
+              <input class="input" id="release-search" type="search" placeholder="输入发布编号或变更摘要" data-filter-input="release-table">
+            </div>
+            <div class="filter-field">
+              <label class="filter-label" for="release-status">发布状态</label>
+              <select class="select" id="release-status" data-filter-select="release-table" data-filter-key="status">
+                <option value="">全部状态</option><option>审批中</option><option>待发布</option><option>发布中</option><option>已生效</option><option>失败</option><option>已回滚</option>
+              </select>
+            </div>
+            <button class="btn" type="button" data-reset-filters="release-table">重置</button>
+          </div>
+
+          <article class="table-card" id="release-table">
+            <div class="table-toolbar"><h2 class="table-title">发布历史</h2><span class="panel-extra">最近 30 天</span></div>
+            <div class="table-scroll">
+              <table>
+                <caption class="sr-only">配置发布历史</caption>
+                <thead><tr><th scope="col">发布编号</th><th scope="col">变更摘要</th><th scope="col">状态</th><th scope="col">发起人</th><th scope="col">创建时间</th><th scope="col">操作</th></tr></thead>
+                <tbody id="release-table-body">
+                  <tr data-filter-row data-status="审批中">
+                    <td class="cell-main">CFG-20260827-003</td><td class="cell-wrap">调整智能问答模型路由与公共 API 限流</td><td><span class="status status-info">审批中</span></td><td>周岚</td><td>08-27 13:28</td><td><button class="btn btn-text btn-small" type="button" data-open-release="CFG-20260827-003" data-release-status="审批中">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-status="已生效">
+                    <td class="cell-main">CFG-20260827-002</td><td class="cell-wrap">新增客户画像查询路由策略</td><td><span class="status status-success">已生效</span></td><td>沈云</td><td>08-27 10:18</td><td><button class="btn btn-text btn-small" type="button" data-open-release="CFG-20260827-002" data-release-status="已生效">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-status="失败">
+                    <td class="cell-main">CFG-20260826-009</td><td class="cell-wrap">更新数据下载日配额</td><td><span class="status status-danger">失败</span></td><td>周岚</td><td>08-26 17:42</td><td><button class="btn btn-text btn-small" type="button" data-open-release="CFG-20260826-009" data-release-status="失败">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-status="已回滚">
+                    <td class="cell-main">CFG-20260826-008</td><td class="cell-wrap">回滚到发布 CFG-20260826-006 的配置</td><td><span class="status status-neutral">已回滚</span></td><td>陈川</td><td>08-26 16:05</td><td><button class="btn btn-text btn-small" type="button" data-open-release="CFG-20260826-008" data-release-status="已回滚">查看</button></td>
+                  </tr>
+                  <tr data-filter-row data-status="已生效">
+                    <td class="cell-main">EMG-20260826-002</td><td class="cell-wrap">紧急停止历史账单下载路由</td><td><span class="status status-success">已生效</span></td><td>沈云</td><td>08-26 11:20</td><td><button class="btn btn-text btn-small" type="button" data-open-release="EMG-20260826-002" data-release-status="已生效">查看</button></td>
+                  </tr>
+                  <tr class="empty-row" hidden><td colspan="6">未找到符合条件的发布记录。</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="pagination"><span>共 5 条</span><button class="page-square" type="button" disabled aria-label="上一页">‹</button><button class="page-square active" type="button">1</button><button class="page-square" type="button" disabled aria-label="下一页">›</button></div>
+          </article>
+        </section>
+        <section class="page-section stack" data-page-section="monitoring" hidden>
+          <div class="filter-bar">
+            <div class="filter-field">
+              <span class="filter-label">时间范围</span>
+              <div class="quick-ranges" role="group" aria-label="监控时间范围">
+                <button class="quick-range active" type="button" data-range="近 15 分钟">15 分钟</button>
+                <button class="quick-range" type="button" data-range="近 1 小时">1 小时</button>
+                <button class="quick-range" type="button" data-range="近 24 小时">24 小时</button>
+              </div>
+            </div>
+            <div class="filter-field">
+              <label class="filter-label" for="monitor-app">数据应用</label>
+              <select class="select" id="monitor-app" data-filter-select="monitor-table" data-filter-key="app"><option value="">全部数据应用</option><option>客户服务门户</option><option>经营分析助手</option><option>账单交付任务</option></select>
+            </div>
+            <div class="filter-field">
+              <label class="filter-label" for="monitor-type">能力类型</label>
+              <select class="select" id="monitor-type" data-filter-select="monitor-table" data-filter-key="category"><option value="">全部类型</option><option>API</option><option>模型</option><option>Agent</option><option>Worker</option></select>
+            </div>
+            <div class="filter-field">
+              <label class="filter-label" for="monitor-status">运行状态</label>
+              <select class="select" id="monitor-status" data-filter-select="monitor-table" data-filter-key="status"><option value="">全部状态</option><option>正常</option><option>降级</option><option>异常</option><option>无数据</option></select>
+            </div>
+            <div class="filter-field grow">
+              <label class="filter-label" for="monitor-search">服务产品</label>
+              <input class="input" id="monitor-search" type="search" placeholder="输入服务产品名称" data-filter-input="monitor-table">
+            </div>
+            <button class="btn" type="button" data-reset-filters="monitor-table">重置</button>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card"><div class="metric-label">正常服务</div><div class="metric-value">18</div><div class="metric-note">共 20 个服务</div></article>
+            <article class="metric-card"><div class="metric-label">异常服务</div><div class="metric-value">2</div><div class="metric-note metric-trend danger">1 个持续异常</div></article>
+            <article class="metric-card"><div class="metric-label">成功率</div><div class="metric-value numeric">99.72%</div><div class="metric-note">当前筛选范围</div></article>
+            <article class="metric-card"><div class="metric-label">P95</div><div class="metric-value numeric">286 ms</div><div class="metric-note metric-trend warning">环比 +32 ms</div></article>
+          </div>
+
+          <div class="grid-2">
+            <article class="panel">
+              <div class="panel-head"><h2 class="panel-title">请求量趋势</h2><span class="panel-extra" data-range-label>近 15 分钟</span></div>
+              <svg class="chart compact" viewBox="0 0 500 150" role="img" aria-label="请求量趋势">
+                <path class="chart-grid" d="M36 20H480M36 60H480M36 100H480M36 140H480"/>
+                <path class="chart-area" d="M36 122 L84 110 L132 116 L180 84 L228 92 L276 58 L324 68 L372 42 L420 54 L480 30 L480 140 L36 140Z"/>
+                <path class="chart-primary" d="M36 122 L84 110 L132 116 L180 84 L228 92 L276 58 L324 68 L372 42 L420 54 L480 30"/>
+                <text class="chart-label" x="36" y="149">开始</text><text class="chart-label" x="450" y="149">当前</text>
+              </svg>
+            </article>
+            <article class="panel">
+              <div class="panel-head"><div><h2 class="panel-title">成功率与错误率</h2><div class="chart-legend"><span class="legend-item"><span class="legend-line success"></span>成功率</span><span class="legend-item"><span class="legend-line danger"></span>错误率</span></div></div><span class="panel-extra" data-range-label>近 15 分钟</span></div>
+              <svg class="chart compact" viewBox="0 0 500 150" role="img" aria-label="成功率与错误率趋势">
+                <path class="chart-grid" d="M36 20H480M36 60H480M36 100H480M36 140H480"/>
+                <path class="chart-secondary" d="M36 34 L84 32 L132 36 L180 31 L228 34 L276 30 L324 52 L372 42 L420 36 L480 34"/>
+                <path class="chart-danger" d="M36 130 L84 132 L132 128 L180 133 L228 130 L276 134 L324 112 L372 122 L420 128 L480 130"/>
+                <text class="chart-label" x="36" y="149">开始</text><text class="chart-label" x="450" y="149">当前</text>
+              </svg>
+            </article>
+          </div>
+
+          <article class="table-card" id="monitor-table">
+            <div class="table-toolbar"><h2 class="table-title">服务健康清单</h2><span class="panel-extra">固定版本随服务显示</span></div>
+            <div class="table-scroll">
+              <table>
+                <caption class="sr-only">服务健康清单</caption>
+                <thead><tr><th scope="col">服务产品</th><th scope="col">能力类型</th><th scope="col">运行状态</th><th scope="col">QPS</th><th scope="col">成功率</th><th scope="col">错误率</th><th scope="col">P95</th><th scope="col">AI 健康</th><th scope="col">操作</th></tr></thead>
+                <tbody>
+                  <tr data-filter-row data-app="客户服务门户" data-category="API" data-status="正常"><td><div class="cell-main">客户信息查询</div><div class="cell-sub">版本 3.2</div></td><td>API</td><td><span class="status status-success">正常</span></td><td>128.4</td><td>99.98%</td><td>0.02%</td><td>92 ms</td><td>—</td><td><button class="btn btn-text btn-small" type="button" data-open-monitor="客户信息查询" data-monitor-status="正常" data-monitor-type="API">查看</button></td></tr>
+                  <tr data-filter-row data-app="客户服务门户" data-category="API" data-status="正常"><td><div class="cell-main">订单明细查询</div><div class="cell-sub">版本 2.4</div></td><td>API</td><td><span class="status status-success">正常</span></td><td>96.7</td><td>99.91%</td><td>0.09%</td><td>184 ms</td><td>—</td><td><button class="btn btn-text btn-small" type="button" data-open-monitor="订单明细查询" data-monitor-status="正常" data-monitor-type="API">查看</button></td></tr>
+                  <tr data-filter-row data-app="经营分析助手" data-category="模型" data-status="正常"><td><div class="cell-main">产品推荐模型</div><div class="cell-sub">版本 1.8</div></td><td>模型</td><td><span class="status status-success">正常</span></td><td>61.2</td><td>99.84%</td><td>0.16%</td><td>426 ms</td><td>首 Token 186 ms</td><td><button class="btn btn-text btn-small" type="button" data-open-monitor="产品推荐模型" data-monitor-status="正常" data-monitor-type="模型">查看</button></td></tr>
+                  <tr data-filter-row data-app="经营分析助手" data-category="Agent" data-status="降级"><td><div class="cell-main">智能问答服务</div><div class="cell-sub">版本 2.1</div></td><td>Agent</td><td><span class="status status-warning">降级</span></td><td>48.9</td><td>98.72%</td><td>1.28%</td><td>1,260 ms</td><td>降级 18 次</td><td><button class="btn btn-text btn-small" type="button" data-open-monitor="智能问答服务" data-monitor-status="降级" data-monitor-type="Agent">查看</button></td></tr>
+                  <tr data-filter-row data-app="客户服务门户" data-category="API" data-status="异常"><td><div class="cell-main">客户画像查询</div><div class="cell-sub">版本 1.3</div></td><td>API</td><td><span class="status status-danger">异常</span></td><td>31.6</td><td>91.28%</td><td>8.72%</td><td>2,486 ms</td><td>—</td><td><button class="btn btn-text btn-small" type="button" data-open-monitor="客户画像查询" data-monitor-status="异常" data-monitor-type="API">查看</button></td></tr>
+                  <tr data-filter-row data-app="账单交付任务" data-category="Worker" data-status="无数据"><td><div class="cell-main">账单交付任务</div><div class="cell-sub">版本 1.1</div></td><td>Worker</td><td><span class="status status-neutral">无数据</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td><button class="btn btn-text btn-small" type="button" data-open-monitor="账单交付任务" data-monitor-status="无数据" data-monitor-type="Worker">查看</button></td></tr>
+                  <tr class="empty-row" hidden><td colspan="9">未找到符合条件的服务。</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="pagination"><span>共 6 条</span><button class="page-square" type="button" disabled aria-label="上一页">‹</button><button class="page-square active" type="button">1</button><button class="page-square" type="button" disabled aria-label="下一页">›</button></div>
+          </article>
+        </section>
+        <section class="page-section stack" data-page-section="events" hidden>
+          <div class="metric-grid">
+            <article class="metric-card"><div class="metric-label">持续异常</div><div class="metric-value">3</div><div class="metric-note metric-trend danger">1 个高严重异常</div></article>
+            <article class="metric-card"><div class="metric-label">近 24 小时已恢复</div><div class="metric-value">12</div><div class="metric-note">平均恢复 8 分钟</div></article>
+            <article class="metric-card"><div class="metric-label">高严重异常</div><div class="metric-value">1</div><div class="metric-note">影响 2 个数据应用</div></article>
+            <article class="metric-card"><div class="metric-label">受影响服务</div><div class="metric-value">4</div><div class="metric-note">近 24 小时</div></article>
+          </div>
+          <div class="filter-bar">
+            <div class="filter-field">
+              <label class="filter-label" for="event-status">事件状态</label>
+              <select class="select" id="event-status" data-filter-select="event-table" data-filter-key="status"><option value="">全部状态</option><option>持续中</option><option>已恢复</option></select>
+            </div>
+            <div class="filter-field">
+              <label class="filter-label" for="event-level">严重程度</label>
+              <select class="select" id="event-level" data-filter-select="event-table" data-filter-key="category"><option value="">全部程度</option><option>高</option><option>中</option><option>低</option></select>
+            </div>
+            <div class="filter-field grow">
+              <label class="filter-label" for="event-search">搜索异常</label>
+              <input class="input" id="event-search" type="search" placeholder="输入事件或影响对象" data-filter-input="event-table">
+            </div>
+            <button class="btn" type="button" data-reset-filters="event-table">重置</button>
+          </div>
+          <article class="table-card" id="event-table">
+            <div class="table-toolbar"><h2 class="table-title">异常列表</h2><span class="panel-extra">近 24 小时</span></div>
+            <div class="table-scroll">
+              <table>
+                <caption class="sr-only">近二十四小时异常事件</caption>
+                <thead><tr><th scope="col">异常类型</th><th scope="col">影响对象</th><th scope="col">严重程度</th><th scope="col">状态</th><th scope="col">发生时间</th><th scope="col">恢复时间</th></tr></thead>
+                <tbody>
+                  <tr data-filter-row data-category="高" data-status="持续中"><td><div class="cell-main">成功率下降</div><div class="cell-sub">连续 5 分钟低于健康目标</div></td><td><div>客户画像查询</div><div class="cell-sub">客户服务门户等 2 个应用</div></td><td><span class="status status-danger">高</span></td><td><span class="status status-danger">持续中</span></td><td>08-27 13:41</td><td>—</td></tr>
+                  <tr data-filter-row data-category="中" data-status="持续中"><td><div class="cell-main">响应延迟升高</div><div class="cell-sub">P95 超出正常范围</div></td><td>订单明细查询</td><td><span class="status status-warning">中</span></td><td><span class="status status-warning">持续中</span></td><td>08-27 13:36</td><td>—</td></tr>
+                  <tr data-filter-row data-category="中" data-status="已恢复"><td><div class="cell-main">模型降级异常</div><div class="cell-sub">已切换至候选目标</div></td><td>智能问答服务</td><td><span class="status status-warning">中</span></td><td><span class="status status-success">已恢复</span></td><td>08-27 13:30</td><td>08-27 13:32</td></tr>
+                  <tr data-filter-row data-category="低" data-status="已恢复"><td><div class="cell-main">配置发布失败</div><div class="cell-sub">旧配置继续运行</div></td><td>数据下载日配额</td><td><span class="status status-neutral">低</span></td><td><span class="status status-success">已恢复</span></td><td>08-26 17:43</td><td>08-26 17:51</td></tr>
+                  <tr data-filter-row data-category="中" data-status="已恢复"><td><div class="cell-main">服务不可用</div><div class="cell-sub">上游连接短暂失败</div></td><td>订单明细查询</td><td><span class="status status-warning">中</span></td><td><span class="status status-success">已恢复</span></td><td>08-26 12:52</td><td>08-26 12:58</td></tr>
+                  <tr class="empty-row" hidden><td colspan="6">未找到符合条件的异常事件。</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="pagination"><span>共 5 条</span><button class="page-square" type="button" disabled aria-label="上一页">‹</button><button class="page-square active" type="button">1</button><button class="page-square" type="button" disabled aria-label="下一页">›</button></div>
+          </article>
+        </section>
+
+        <section class="page-section stack" data-page-section="audit" hidden>
+          <div class="metric-grid">
+            <article class="metric-card"><div class="metric-label">近 24 小时操作</div><div class="metric-value">36</div><div class="metric-note">配置相关管理动作</div></article>
+            <article class="metric-card"><div class="metric-label">执行失败</div><div class="metric-value">2</div><div class="metric-note metric-trend danger">均未影响运行配置</div></article>
+            <article class="metric-card"><div class="metric-label">高风险操作</div><div class="metric-value">1</div><div class="metric-note">紧急停流 1 次</div></article>
+            <article class="metric-card"><div class="metric-label">进行中</div><div class="metric-value">1</div><div class="metric-note">配置发布审批中</div></article>
+          </div>
+          <div class="filter-bar">
+            <div class="filter-field">
+              <label class="filter-label" for="audit-action">操作事项</label>
+              <select class="select" id="audit-action" data-filter-select="audit-table" data-filter-key="category"><option value="">全部操作</option><option>路由变更</option><option>策略变更</option><option>配置发布</option><option>紧急停流</option><option>策略自动分配</option></select>
+            </div>
+            <div class="filter-field">
+              <label class="filter-label" for="audit-result">执行结果</label>
+              <select class="select" id="audit-result" data-filter-select="audit-table" data-filter-key="status"><option value="">全部结果</option><option>成功</option><option>失败</option><option>进行中</option></select>
+            </div>
+            <div class="filter-field grow">
+              <label class="filter-label" for="audit-search">搜索记录</label>
+              <input class="input" id="audit-search" type="search" placeholder="输入操作者、对象或关联编号" data-filter-input="audit-table">
+            </div>
+            <button class="btn" type="button" data-reset-filters="audit-table">重置</button>
+          </div>
+          <article class="table-card" id="audit-table">
+            <div class="table-toolbar"><h2 class="table-title">审计列表</h2><span class="panel-extra">记录不可修改或删除</span></div>
+            <div class="table-scroll">
+              <table>
+                <caption class="sr-only">近二十四小时管理审计记录</caption>
+                <thead><tr><th scope="col">时间</th><th scope="col">操作者</th><th scope="col">操作事项</th><th scope="col">关联对象</th><th scope="col">执行结果</th><th scope="col">关联编号</th><th scope="col">操作</th></tr></thead>
+                <tbody>
+                  <tr data-filter-row data-category="配置发布" data-status="进行中"><td>08-27 13:28</td><td>周岚</td><td>配置发布</td><td>路由与策略变更 7 项</td><td><span class="status status-info">进行中</span></td><td class="numeric">CFG-20260827-003</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-20260827-036" data-audit-action="配置发布" data-audit-result="进行中">查看</button></td></tr>
+                  <tr data-filter-row data-category="策略变更" data-status="成功"><td>08-27 13:12</td><td>周岚</td><td>策略变更</td><td>数据下载日配额</td><td><span class="status status-success">成功</span></td><td class="numeric">AUD-20260827-035</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-20260827-035" data-audit-action="策略变更" data-audit-result="成功">查看</button></td></tr>
+                  <tr data-filter-row data-category="策略自动分配" data-status="成功"><td>08-27 12:44</td><td>系统</td><td>策略自动分配</td><td>经营分析助手 2.3</td><td><span class="status status-success">成功</span></td><td class="numeric">APP-20260827-018</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-20260827-034" data-audit-action="策略自动分配" data-audit-result="成功">查看</button></td></tr>
+                  <tr data-filter-row data-category="路由变更" data-status="失败"><td>08-27 11:56</td><td>沈云</td><td>路由变更</td><td>客户画像查询</td><td><span class="status status-danger">失败</span></td><td class="numeric">AUD-20260827-031</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-20260827-031" data-audit-action="路由变更" data-audit-result="失败">查看</button></td></tr>
+                  <tr data-filter-row data-category="紧急停流" data-status="成功"><td>08-26 11:20</td><td>沈云</td><td>紧急停流</td><td>历史账单下载</td><td><span class="status status-success">成功</span></td><td class="numeric">EMG-20260826-002</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-20260826-044" data-audit-action="紧急停流" data-audit-result="成功">查看</button></td></tr>
+                  <tr class="empty-row" hidden><td colspan="7">未找到符合条件的审计记录。</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="pagination"><span>共 5 条</span><button class="page-square" type="button" disabled aria-label="上一页">‹</button><button class="page-square active" type="button">1</button><button class="page-square" type="button" disabled aria-label="下一页">›</button></div>
+          </article>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div class="drawer-layer" id="drawer-layer" aria-hidden="true">
+    <div class="mask" data-close-drawer></div>
+    <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <header class="drawer-head">
+        <h2 class="drawer-title" id="drawer-title">详情</h2>
+        <button class="close-btn" type="button" aria-label="关闭详情" data-close-drawer><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+      </header>
+      <div class="drawer-body" id="drawer-body"></div>
+      <footer class="drawer-footer" id="drawer-footer"><button class="btn" type="button" data-close-drawer>关闭</button></footer>
+    </aside>
+  </div>
+
+  <div class="modal-layer" id="modal-layer" aria-hidden="true">
+    <div class="mask"></div>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <header class="modal-head">
+        <h2 class="modal-title" id="modal-title">确认操作</h2>
+        <button class="close-btn" type="button" aria-label="关闭确认框" data-close-modal><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+      </header>
+      <div class="modal-body" id="modal-body"></div>
+      <footer class="modal-footer">
+        <button class="btn" type="button" data-close-modal>取消</button>
+        <button class="btn btn-primary" type="button" id="modal-confirm">确认</button>
+      </footer>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"><svg class="icon toast-mark" aria-hidden="true"><use href="#i-check"></use></svg><span id="toast-text">操作完成</span></div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var pageMeta = {
+        overview: ["网关概览", "查看数据服务整体健康状态与网关访问摘要。"],
+        routes: ["注册与路由", "查看网关承载的服务注册、路由与实时访问状态。"],
+        policies: ["策略管理", "管理网关策略，并查看审批通过后的自动分配结果。"],
+        releases: ["配置发布", "汇总路由与策略变更，提交审批并查看发布结果。"],
+        monitoring: ["运行监控", "以数据应用和服务产品为范围，关注数据服务是否正常。"],
+        events: ["异常事件", "查看影响数据服务运行的持续异常与恢复结果。"],
+        audit: ["审计日志", "追溯运行配置相关管理动作与执行结果。"]
+      };
+
+      var drawerLayer = document.getElementById("drawer-layer");
+      var drawerTitle = document.getElementById("drawer-title");
+      var drawerBody = document.getElementById("drawer-body");
+      var drawerFooter = document.getElementById("drawer-footer");
+      var modalLayer = document.getElementById("modal-layer");
+      var modalTitle = document.getElementById("modal-title");
+      var modalBody = document.getElementById("modal-body");
+      var modalConfirm = document.getElementById("modal-confirm");
+      var toast = document.getElementById("toast");
+      var toastText = document.getElementById("toast-text");
+      var toastTimer = 0;
+      var modalAction = null;
+
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, function (character) {
+          return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"}[character];
+        });
+      }
+
+      function statusClass(status) {
+        if (/正常|成功|已生效|已恢复|通过/.test(status)) return "status-success";
+        if (/异常|失败/.test(status)) return "status-danger";
+        if (/降级|待发布|持续中/.test(status)) return "status-warning";
+        if (/审批中|进行中|草稿/.test(status)) return "status-info";
+        return "status-neutral";
+      }
+
+      function statusChip(status) {
+        return '<span class="status ' + statusClass(status) + '">' + escapeHtml(status) + "</span>";
+      }
+
+      function detailItem(key, value) {
+        return '<div><div class="detail-key">' + escapeHtml(key) + '</div><div class="detail-value">' + value + "</div></div>";
+      }
+
+      function detailSection(title, content) {
+        return '<section class="detail-section"><h3 class="detail-heading">' + escapeHtml(title) + "</h3>" + content + "</section>";
+      }
+
+      function showToast(message) {
+        window.clearTimeout(toastTimer);
+        toastText.textContent = message;
+        toast.classList.add("show");
+        toastTimer = window.setTimeout(function () {
+          toast.classList.remove("show");
+        }, 2200);
+      }
+
+      function navigate(page) {
+        if (!pageMeta[page]) return;
+        document.querySelectorAll("[data-page-section]").forEach(function (section) {
+          section.hidden = section.dataset.pageSection !== page;
+        });
+        document.querySelectorAll("[data-page]").forEach(function (button) {
+          button.classList.toggle("active", button.dataset.page === page);
+        });
+        document.getElementById("page-title").textContent = pageMeta[page][0];
+        document.getElementById("page-description").textContent = pageMeta[page][1];
+        document.getElementById("breadcrumb-current").textContent = pageMeta[page][0];
+        document.querySelectorAll("[data-action-page]").forEach(function (button) {
+          button.hidden = button.dataset.actionPage.split(" ").indexOf(page) === -1;
+        });
+        var filteredTables = {};
+        document.querySelectorAll('[data-page-section="' + page + '"] [data-filter-select], [data-page-section="' + page + '"] [data-filter-input]').forEach(function (control) {
+          var tableId = control.dataset.filterSelect || control.dataset.filterInput;
+          if (!filteredTables[tableId]) {
+            filterTable(tableId);
+            filteredTables[tableId] = true;
+          }
+        });
+        document.querySelector(".page-scroll").scrollTop = 0;
+        closeDrawer();
+      }
+
+      function openDrawer(title, body, footer) {
+        drawerTitle.textContent = title;
+        drawerBody.innerHTML = body;
+        drawerFooter.innerHTML = footer || '<button class="btn" type="button" data-close-drawer>关闭</button>';
+        drawerLayer.classList.add("open");
+        drawerLayer.setAttribute("aria-hidden", "false");
+        window.setTimeout(function () {
+          var first = drawerLayer.querySelector("button, input, select, textarea");
+          if (first) first.focus();
+        }, 30);
+      }
+
+      function closeDrawer() {
+        drawerLayer.classList.remove("open");
+        drawerLayer.setAttribute("aria-hidden", "true");
+      }
+
+      function openModal(title, body, confirmLabel, action, danger) {
+        modalTitle.textContent = title;
+        modalBody.innerHTML = body;
+        modalConfirm.textContent = confirmLabel || "确认";
+        modalConfirm.className = danger ? "btn btn-danger" : "btn btn-primary";
+        modalAction = action;
+        modalLayer.classList.add("open");
+        modalLayer.setAttribute("aria-hidden", "false");
+        window.setTimeout(function () { modalConfirm.focus(); }, 30);
+      }
+
+      function closeModal() {
+        modalLayer.classList.remove("open");
+        modalLayer.setAttribute("aria-hidden", "true");
+        modalAction = null;
+      }
+
+      function modalMessage(copy, danger) {
+        return '<div class="modal-icon"><svg class="icon" aria-hidden="true"><use href="#i-warning"></use></svg></div>' +
+          '<p class="modal-copy">' + escapeHtml(copy) + "</p>" +
+          (danger ? '<div class="inline-alert danger" style="margin-top:16px">该动作会立即影响当前运行流量，并写入审计日志。</div>' : "");
+      }
+
+      function filterTable(tableId) {
+        var table = document.getElementById(tableId);
+        if (!table) return;
+        var input = document.querySelector('[data-filter-input="' + tableId + '"]');
+        var query = input ? input.value.trim().toLowerCase() : "";
+        var selects = Array.prototype.slice.call(document.querySelectorAll('[data-filter-select="' + tableId + '"]'));
+        var visible = 0;
+        table.querySelectorAll("[data-filter-row]").forEach(function (row) {
+          var matchesText = !query || row.textContent.toLowerCase().indexOf(query) !== -1;
+          var matchesSelects = selects.every(function (select) {
+            if (!select.value) return true;
+            return (row.dataset[select.dataset.filterKey] || "") === select.value;
+          });
+          row.hidden = !(matchesText && matchesSelects);
+          if (!row.hidden) visible += 1;
+        });
+        var empty = table.querySelector(".empty-row");
+        if (empty) empty.hidden = visible !== 0;
+      }
+
+      function refreshStatus() {
+        var now = new Date();
+        var time = [now.getHours(), now.getMinutes(), now.getSeconds()].map(function (part) {
+          return String(part).padStart(2, "0");
+        }).join(":");
+        document.querySelectorAll("[data-last-refresh]").forEach(function (node) {
+          node.textContent = time;
+        });
+        showToast("状态已刷新，当前为最新数据");
+      }
+
+      function openGateway(name) {
+        var degraded = name === "智能能力入口";
+        var scope = name === "公共 API 入口" ? "API、数据流" : (degraded ? "模型、Agent、MCP" : "Skill、Worker");
+        var entry = name === "公共 API 入口" ? "内网 / 外网" : (degraded ? "外网" : "内网");
+        var body = detailSection("基本信息",
+          '<div class="detail-grid">' +
+          detailItem("逻辑实例", escapeHtml(name)) +
+          detailItem("运行状态", statusChip(degraded ? "降级" : "正常")) +
+          detailItem("能力范围", escapeHtml(scope)) +
+          detailItem("访问入口", escapeHtml(entry)) +
+          "</div>") +
+          detailSection("当前健康",
+            '<div class="detail-grid">' +
+            detailItem("近 15 分钟 QPS", degraded ? "110.1" : "376.1") +
+            detailItem("请求成功率", degraded ? "98.94%" : "99.95%") +
+            detailItem("P95", degraded ? "986 ms" : "176 ms") +
+            detailItem("配置一致性", statusChip("一致")) +
+            "</div>") +
+          detailSection("最近异常",
+            degraded
+              ? '<div class="inline-alert">13:32 智能问答服务触发候选模型降级，主服务仍可访问。</div>'
+              : '<div class="detail-row"><span>近 15 分钟</span><span>未发现影响访问的异常</span></div>');
+        openDrawer(name, body,
+          '<button class="btn" type="button" data-close-drawer>关闭</button>' +
+          '<button class="btn" type="button" data-page-link="routes">查看注册与路由</button>' +
+          '<button class="btn btn-primary" type="button" data-page-link="monitoring">查看运行监控</button>');
+      }
+
+      function openRoute(name, status) {
+        var isAI = /模型|问答/.test(name);
+        var port = name === "客户画像查询" ? "service-profile:8090" :
+          (name === "智能问答服务" ? "agent-assistant:443" :
+          (name === "历史账单下载" ? "worker-billing:9000" : "service-entry:443"));
+        var protocol = isAI ? (name.indexOf("模型") >= 0 ? "模型推理" : "Agent") : (name.indexOf("下载") >= 0 ? "任务执行" : "HTTP");
+        var body = detailSection("运行摘要",
+          '<div class="detail-grid">' +
+          detailItem("服务产品", escapeHtml(name)) +
+          detailItem("运行状态", statusChip(status)) +
+          detailItem("上游目标", '<span class="numeric">' + escapeHtml(port) + "</span>") +
+          detailItem("访问协议", escapeHtml(protocol)) +
+          "</div>") +
+          detailSection("近 15 分钟指标",
+            '<div class="detail-grid">' +
+            detailItem("QPS", status === "已停流" ? "—" : (status === "异常" ? "31.6" : "96.7")) +
+            detailItem("成功率", status === "已停流" ? "—" : (status === "异常" ? "91.28%" : "99.91%")) +
+            detailItem("错误率", status === "已停流" ? "—" : (status === "异常" ? "8.72%" : "0.09%")) +
+            detailItem("P95", status === "已停流" ? "—" : (status === "异常" ? "2,486 ms" : "184 ms")) +
+            "</div>") +
+          detailSection("关联信息",
+            '<div class="detail-row"><span>关联数据应用</span><span>客户服务门户</span></div>' +
+            '<div class="detail-row"><span>服务版本</span><span>固定版本随服务生效</span></div>' +
+            '<div class="detail-row"><span>路由入口</span><span>/data-service/runtime</span></div>') +
+          '<details class="detail-section"><summary class="detail-heading">技术映射</summary>' +
+          '<div class="detail-row"><span>匹配方式</span><span>前缀匹配</span></div>' +
+          '<div class="detail-row"><span>健康检查</span><span>已启用</span></div></details>' +
+          (status === "异常" ? '<div class="inline-alert danger" style="margin-top:20px">13:41 起成功率持续低于健康目标，运行版本仍在提供服务。</div>' : "");
+        var footer = '<button class="btn" type="button" data-close-drawer>关闭</button>' +
+          '<button class="btn btn-primary" type="button" data-page-link="monitoring">查看运行监控</button>';
+        if (status !== "已停流") {
+          footer = '<button class="btn btn-danger" type="button" data-emergency-stop="' + escapeHtml(name + " · /data-service/runtime") + '">紧急停流</button>' + footer;
+        }
+        openDrawer(name, body, footer);
+      }
+
+      function policyCategoryOptions(selected) {
+        return ["限流与配额", "AI 多目标路由", "认证投影", "超时／重试／熔断", "CORS／IP 访问", "外部安全策略引用"].map(function (item) {
+          return '<option' + (item === selected ? " selected" : "") + ">" + item + "</option>";
+        }).join("");
+      }
+
+      function openPolicyDetail(name, category) {
+        var ai = category === "AI 多目标路由";
+        var config = ai
+          ? '<div class="detail-row"><span>主目标</span><span>推荐模型 · 权重 60%</span></div>' +
+            '<div class="detail-row"><span>候选目标</span><span>通用模型 · 权重 40%</span></div>' +
+            '<div class="detail-row"><span>失败处理</span><span>按优先级自动降级</span></div>'
+          : '<div class="detail-row"><span>计量维度</span><span>每个数据应用独立计量</span></div>' +
+            '<div class="detail-row"><span>阈值</span><span>1,200 次 / 分钟</span></div>' +
+            '<div class="detail-row"><span>超限动作</span><span>拒绝请求并返回明确结果</span></div>';
+        var body = detailSection("策略信息",
+          '<div class="detail-grid">' +
+          detailItem("策略名称", escapeHtml(name)) +
+          detailItem("策略分类", escapeHtml(category)) +
+          detailItem("启停状态", statusChip("已启用")) +
+          detailItem("配置状态", statusChip(name === "分析模型权重路由" ? "校验失败" : "已生效")) +
+          "</div>") +
+          detailSection("配置摘要", config) +
+          detailSection("自动分配",
+            '<div class="detail-grid">' +
+            detailItem("绑定方式", "应用创建或更新审批通过后自动分配") +
+            detailItem("已分配应用", ai ? "4 个" : "12 个") +
+            detailItem("校验结果", statusChip(name === "分析模型权重路由" ? "失败" : "通过")) +
+            detailItem("最近变更", "08-27 11:20") +
+            "</div>") +
+          (ai ? detailSection("运行健康", '<div class="detail-row"><span>近 15 分钟降级</span><span>18 次</span></div><div class="detail-row"><span>首 Token P95</span><span>186 ms</span></div>') : "");
+        openDrawer(name, body,
+          '<button class="btn" type="button" data-close-drawer>关闭</button>' +
+          '<button class="btn btn-primary" type="button" data-edit-policy="' + escapeHtml(name) + '" data-policy-category="' + escapeHtml(category) + '">编辑策略</button>');
+      }
+
+      function openPolicyForm(name, category) {
+        var selectedCategory = category || "限流与配额";
+        var title = name ? "编辑策略" : "新建策略";
+        var safeName = escapeHtml(name || "");
+        var body = '<form id="policy-form" novalidate>' +
+          '<div class="form-grid">' +
+          '<div class="form-item full"><label class="required" for="policy-name">策略名称</label>' +
+          '<input class="input" id="policy-name" maxlength="40" value="' + safeName + '" placeholder="输入便于识别的策略名称">' +
+          '<div class="field-error" id="policy-name-error" hidden>请输入策略名称。</div></div>' +
+          '<div class="form-item"><label class="required" for="policy-category">策略分类</label>' +
+          '<select class="select" id="policy-category">' + policyCategoryOptions(selectedCategory) + "</select></div>" +
+          '<div class="form-item"><label for="policy-resource">适用能力</label>' +
+          '<select class="select" id="policy-resource"><option>API 服务</option><option>模型、Agent</option><option>Worker</option><option>全部调用能力</option></select></div>' +
+          '<div class="form-item full"><label for="policy-state">启停状态</label>' +
+          '<select class="select" id="policy-state"><option>启用</option><option>停用</option></select>' +
+          '<div class="help">保存后形成待发布变更，不直接影响当前运行配置。</div></div>' +
+          "</div>" +
+          '<section class="detail-section" data-policy-panel="限流与配额"><h3 class="detail-heading">限流与配额</h3>' +
+          '<div class="form-grid"><div class="form-item"><label for="limit-metric">计量指标</label><select class="select" id="limit-metric"><option>请求次数</option><option>并发请求</option></select></div>' +
+          '<div class="form-item"><label for="limit-value">阈值</label><input class="input" id="limit-value" type="number" value="1200"></div>' +
+          '<div class="form-item"><label for="limit-period">统计周期</label><select class="select" id="limit-period"><option>每分钟</option><option>每小时</option><option>每天</option></select></div>' +
+          '<div class="form-item"><label for="limit-action">超限动作</label><select class="select" id="limit-action"><option>拒绝请求</option><option>排队等待</option></select></div></div></section>' +
+          '<section class="detail-section" data-policy-panel="AI 多目标路由" hidden><h3 class="detail-heading">AI 多目标路由</h3>' +
+          '<div class="target-row"><div><div class="detail-key">目标服务</div><div class="detail-value">推荐模型 · 固定版本 1.8</div></div><div><div class="detail-key">优先级</div><input class="input" type="number" value="1" aria-label="推荐模型优先级"></div><div><div class="detail-key">权重</div><input class="input" type="number" value="60" aria-label="推荐模型权重"></div></div>' +
+          '<div class="target-row" style="margin-top:10px"><div><div class="detail-key">目标服务</div><div class="detail-value">通用模型 · 固定版本 2.3</div></div><div><div class="detail-key">优先级</div><input class="input" type="number" value="2" aria-label="通用模型优先级"></div><div><div class="detail-key">权重</div><input class="input" type="number" value="40" aria-label="通用模型权重"></div></div>' +
+          '<div class="help">目标服务版本固定显示；权重合计需为 100。</div></section>' +
+          '<section class="detail-section" data-policy-panel="通用" hidden><h3 class="detail-heading">配置说明</h3>' +
+          '<div class="inline-alert">该分类在本轮原型中仅保留基础范围与启停状态，详细参数后续补充。</div></section>' +
+          "</form>";
+        openDrawer(title, body,
+          '<button class="btn" type="button" data-close-drawer>取消</button>' +
+          '<button class="btn btn-primary" type="button" id="save-policy">保存草稿</button>');
+        updatePolicyPanel();
+      }
+
+      function updatePolicyPanel() {
+        var category = document.getElementById("policy-category");
+        if (!category) return;
+        document.querySelectorAll("[data-policy-panel]").forEach(function (panel) {
+          panel.hidden = panel.dataset.policyPanel !== category.value &&
+            !(panel.dataset.policyPanel === "通用" && ["限流与配额", "AI 多目标路由"].indexOf(category.value) === -1);
+        });
+      }
+
+      function savePolicy() {
+        var name = document.getElementById("policy-name");
+        var error = document.getElementById("policy-name-error");
+        if (!name || !name.value.trim()) {
+          if (name) {
+            name.setAttribute("aria-invalid", "true");
+            name.focus();
+          }
+          if (error) error.hidden = false;
+          return;
+        }
+        name.removeAttribute("aria-invalid");
+        if (error) error.hidden = true;
+        closeDrawer();
+        showToast("策略草稿已保存，等待纳入下一次发布");
+      }
+
+      function openRelease(id, status) {
+        var failed = status === "失败";
+        var body = detailSection("发布摘要",
+          '<div class="detail-grid">' +
+          detailItem("发布编号", '<span class="numeric">' + escapeHtml(id) + "</span>") +
+          detailItem("发布状态", statusChip(status)) +
+          detailItem("发起人", "周岚") +
+          detailItem("提交时间", "08-26 17:42") +
+          "</div>") +
+          detailSection("变更内容",
+            '<div class="detail-row"><span>路由变更</span><span>2 项</span></div>' +
+            '<div class="detail-row"><span>策略变更</span><span>5 项</span></div>' +
+            '<div class="detail-row"><span>审批结果</span><span>' + (status === "审批中" ? "审批中" : "已完成") + "</span></div>") +
+          detailSection("执行结果",
+            failed
+              ? '<div class="inline-alert danger">数据下载日配额校验未通过，当前运行配置未受影响。</div>'
+              : '<div class="detail-row"><span>结果</span><span>' + escapeHtml(status) + '</span></div><div class="detail-row"><span>运行影响</span><span>无异常</span></div>');
+        var footer = '<button class="btn" type="button" data-close-drawer>关闭</button>';
+        if (failed) footer += '<button class="btn btn-primary" type="button" data-retry-release="' + escapeHtml(id) + '">修正后重试</button>';
+        if (status === "已生效") footer += '<button class="btn" type="button" data-rollback-release="' + escapeHtml(id) + '">回滚</button>';
+        openDrawer(id, body, footer);
+      }
+
+      function openMonitor(name, status, type) {
+        var ai = type === "模型" || type === "Agent";
+        var body = detailSection("当前状态",
+          '<div class="detail-grid">' +
+          detailItem("服务产品", escapeHtml(name)) +
+          detailItem("能力类型", escapeHtml(type)) +
+          detailItem("运行状态", statusChip(status)) +
+          detailItem("数据应用", type === "Worker" ? "账单交付任务" : "客户服务门户") +
+          "</div>") +
+          detailSection("近 15 分钟指标",
+            '<div class="detail-grid">' +
+            detailItem("QPS", status === "无数据" ? "—" : (status === "异常" ? "31.6" : "96.7")) +
+            detailItem("成功率", status === "无数据" ? "—" : (status === "异常" ? "91.28%" : "99.91%")) +
+            detailItem("错误率", status === "无数据" ? "—" : (status === "异常" ? "8.72%" : "0.09%")) +
+            detailItem("P95", status === "无数据" ? "—" : (status === "异常" ? "2,486 ms" : "184 ms")) +
+            "</div>") +
+          (ai ? detailSection("AI 健康", '<div class="detail-row"><span>首 Token P95</span><span>186 ms</span></div><div class="detail-row"><span>候选目标降级</span><span>18 次</span></div>') : "") +
+          detailSection("最近异常",
+            status === "异常" || status === "降级"
+              ? '<div class="inline-alert">当前存在影响健康目标的异常，可前往异常事件查看时间线。</div>'
+              : '<div class="detail-row"><span>近 15 分钟</span><span>未发现异常</span></div>');
+        openDrawer(name, body,
+          '<button class="btn" type="button" data-close-drawer>关闭</button>' +
+          '<button class="btn btn-primary" type="button" data-page-link="events">查看异常事件</button>');
+      }
+
+      function openAudit(id, action, result) {
+        var body = detailSection("审计信息",
+          '<div class="detail-grid">' +
+          detailItem("审计编号", '<span class="numeric">' + escapeHtml(id) + "</span>") +
+          detailItem("操作事项", escapeHtml(action)) +
+          detailItem("执行结果", statusChip(result)) +
+          detailItem("操作者", action === "策略自动分配" ? "系统" : "周岚") +
+          detailItem("操作时间", "08-27 13:28") +
+          detailItem("关联编号", "CFG-20260827-003") +
+          "</div>") +
+          detailSection("变更摘要",
+            '<div class="detail-row"><span>影响对象</span><span>路由与策略变更</span></div>' +
+            '<div class="detail-row"><span>审批结果</span><span>审批通过后执行</span></div>' +
+            '<div class="detail-row"><span>敏感信息</span><span>仅保留受控引用</span></div>') +
+          (result === "失败" ? detailSection("失败信息", '<div class="inline-alert danger">目标服务校验失败，未写入当前运行配置。</div>') : "");
+        openDrawer("审计详情", body);
+      }
+
+      function confirmRelease() {
+        var count = Number(document.getElementById("pending-change-count").textContent);
+        if (!count) {
+          showToast("当前没有待发布变更");
+          return;
+        }
+        openModal("发起配置发布",
+          modalMessage("将 7 项路由与策略变更提交审批。审批完成前，当前运行配置不受影响。", false),
+          "提交审批",
+          function () {
+            document.getElementById("pending-change-count").textContent = "0";
+            document.getElementById("pending-object-count").textContent = "0";
+            var validation = document.getElementById("pending-validation");
+            validation.textContent = "无待发布变更";
+            validation.className = "status status-neutral";
+            var button = document.querySelector("[data-release-confirm]");
+            button.disabled = true;
+            closeModal();
+            showToast("发布申请已提交，当前状态为审批中");
+          },
+          false);
+      }
+
+      document.addEventListener("click", function (event) {
+        var target = event.target.closest("button, a");
+        if (!target) return;
+
+        if (target.dataset.page) navigate(target.dataset.page);
+        if (target.dataset.pageLink) {
+          closeDrawer();
+          navigate(target.dataset.pageLink);
+        }
+        if (target.hasAttribute("data-scope-message")) showToast("本轮原型聚焦运行管理");
+        if (target.dataset.toast) showToast(target.dataset.toast);
+        if (target.hasAttribute("data-refresh")) refreshStatus();
+        if (target.dataset.openGateway) openGateway(target.dataset.openGateway);
+        if (target.dataset.openRoute) openRoute(target.dataset.openRoute, target.dataset.routeStatus);
+        if (target.dataset.openPolicyDetail) openPolicyDetail(target.dataset.openPolicyDetail, target.dataset.policyCategory);
+        if (target.hasAttribute("data-open-policy")) openPolicyForm("", "限流与配额");
+        if (target.dataset.editPolicy) {
+          var policyRow = target.closest("[data-filter-row]");
+          openPolicyForm(target.dataset.editPolicy, target.dataset.policyCategory || (policyRow ? policyRow.dataset.category : "限流与配额"));
+        }
+        if (target.dataset.openRelease) openRelease(target.dataset.openRelease, target.dataset.releaseStatus);
+        if (target.dataset.openMonitor) openMonitor(target.dataset.openMonitor, target.dataset.monitorStatus, target.dataset.monitorType);
+        if (target.dataset.openAudit) openAudit(target.dataset.openAudit, target.dataset.auditAction, target.dataset.auditResult);
+        if (target.hasAttribute("data-release-confirm")) confirmRelease();
+        if (target.hasAttribute("data-close-drawer")) closeDrawer();
+        if (target.hasAttribute("data-close-modal")) closeModal();
+        if (target.id === "save-policy") savePolicy();
+
+        if (target.dataset.emergencyStop) {
+          var service = target.dataset.emergencyStop;
+          openModal("确认紧急停流", modalMessage("确认立即停止“" + service + "”的新请求流量？", true), "确认停流", function () {
+            closeModal();
+            closeDrawer();
+            showToast("紧急停流已执行，审计编号 AUD-20260827-037");
+          }, true);
+        }
+        if (target.dataset.retryRelease) {
+          openModal("重试发布", modalMessage("将重新执行校验，通过后提交审批。当前运行配置不会中断。", false), "重新校验", function () {
+            closeModal();
+            closeDrawer();
+            showToast("已开始重新校验发布变更");
+          }, false);
+        }
+        if (target.dataset.rollbackRelease) {
+          openModal("回滚配置", modalMessage("确认基于该次发布生成回滚申请？审批通过后生效。", true), "生成回滚申请", function () {
+            closeModal();
+            closeDrawer();
+            showToast("回滚申请已生成，等待审批");
+          }, true);
+        }
+        if (target.dataset.range) {
+          document.querySelectorAll("[data-range]").forEach(function (button) {
+            button.classList.toggle("active", button === target);
+          });
+          document.querySelectorAll("[data-range-label]").forEach(function (node) {
+            node.textContent = target.dataset.range;
+          });
+          showToast("监控范围已切换为" + target.dataset.range);
+        }
+        if (target.hasAttribute("data-reset-filters")) {
+          var tableId = target.dataset.resetFilters;
+          document.querySelectorAll('[data-filter-input="' + tableId + '"]').forEach(function (input) { input.value = ""; });
+          document.querySelectorAll('[data-filter-select="' + tableId + '"]').forEach(function (select) { select.selectedIndex = 0; });
+          filterTable(tableId);
+        }
+      });
+
+      document.addEventListener("input", function (event) {
+        if (event.target.dataset.filterInput) filterTable(event.target.dataset.filterInput);
+        if (event.target.id === "policy-name" && event.target.value.trim()) {
+          event.target.removeAttribute("aria-invalid");
+          var error = document.getElementById("policy-name-error");
+          if (error) error.hidden = true;
+        }
+      });
+
+      document.addEventListener("change", function (event) {
+        if (event.target.dataset.filterSelect) filterTable(event.target.dataset.filterSelect);
+        if (event.target.id === "policy-category") updatePolicyPanel();
+      });
+
+      document.querySelector(".nav-group-button").addEventListener("click", function () {
+        var expanded = this.getAttribute("aria-expanded") === "true";
+        this.setAttribute("aria-expanded", String(!expanded));
+        document.querySelector(".nav-children").hidden = expanded;
+      });
+
+      modalConfirm.addEventListener("click", function () {
+        if (typeof modalAction === "function") modalAction();
+      });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          if (modalLayer.classList.contains("open")) closeModal();
+          else if (drawerLayer.classList.contains("open")) closeDrawer();
+        }
+      });
+
+      navigate("overview");
+    }());
+  </script>
+</body>
+</html>
