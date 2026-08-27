@@ -1228,43 +1228,46 @@
 
         <section class="page-section stack" data-page-section="audit" hidden>
           <div class="metric-grid">
-            <article class="metric-card"><div class="metric-label">近 24 小时操作</div><div class="metric-value">36</div><div class="metric-note">配置相关管理动作</div></article>
-            <article class="metric-card"><div class="metric-label">执行失败</div><div class="metric-value">2</div><div class="metric-note metric-trend danger">均未影响运行配置</div></article>
-            <article class="metric-card"><div class="metric-label">高风险操作</div><div class="metric-value">1</div><div class="metric-note">紧急停流 1 次</div></article>
-            <article class="metric-card"><div class="metric-label">进行中</div><div class="metric-value">1</div><div class="metric-note">配置发布审批中</div></article>
+            <article class="metric-card"><div class="metric-label">近 24 小时审计记录</div><div class="metric-value numeric">1,284</div><div class="metric-note">覆盖四类数据服务活动</div></article>
+            <article class="metric-card"><div class="metric-label">外部数据调用</div><div class="metric-value numeric">1,126</div><div class="metric-note">成功率 99.73%</div></article>
+            <article class="metric-card"><div class="metric-label">中台数据加工</div><div class="metric-value">48</div><div class="metric-note">成功 47 · 失败 1</div></article>
+            <article class="metric-card"><div class="metric-label">系统运行日志</div><div class="metric-value">72</div><div class="metric-note metric-trend danger">异常事件 2 条</div></article>
           </div>
           <div class="filter-bar">
             <div class="filter-field">
-              <label class="filter-label" for="audit-action">操作事项</label>
-              <select class="select" id="audit-action" data-filter-select="audit-table" data-filter-key="category"><option value="">全部操作</option><option>路由变更</option><option>策略变更</option><option>配置发布</option><option>紧急停流</option><option>策略自动分配</option></select>
+              <label class="filter-label" for="audit-type">审计类型</label>
+              <select class="select" id="audit-type" data-filter-select="audit-table" data-filter-key="category"><option value="">全部类型</option><option>管理操作</option><option>系统运行日志</option><option>外部数据调用</option><option>中台数据加工</option></select>
             </div>
             <div class="filter-field">
               <label class="filter-label" for="audit-result">执行结果</label>
-              <select class="select" id="audit-result" data-filter-select="audit-table" data-filter-key="status"><option value="">全部结果</option><option>成功</option><option>失败</option><option>进行中</option></select>
+              <select class="select" id="audit-result" data-filter-select="audit-table" data-filter-key="status"><option value="">全部结果</option><option>成功</option><option>失败</option><option>进行中</option><option>已拒绝</option></select>
             </div>
             <div class="filter-field grow">
               <label class="filter-label" for="audit-search">搜索记录</label>
-              <input class="input" id="audit-search" type="search" placeholder="输入操作者、对象或关联编号" data-filter-input="audit-table">
+              <input class="input" id="audit-search" type="search" placeholder="输入主体、事项、对象或关联编号" data-filter-input="audit-table">
             </div>
             <button class="btn" type="button" data-reset-filters="audit-table">重置</button>
           </div>
           <article class="table-card" id="audit-table">
-            <div class="table-toolbar"><h2 class="table-title">审计列表</h2><span class="panel-extra">记录不可修改或删除</span></div>
+            <div class="table-toolbar"><h2 class="table-title">审计明细</h2><span class="panel-extra">默认近 24 小时 · 记录不可修改或删除</span></div>
             <div class="table-scroll">
               <table>
-                <caption class="sr-only">近二十四小时管理审计记录</caption>
-                <thead><tr><th scope="col">时间</th><th scope="col">操作者</th><th scope="col">操作事项</th><th scope="col">关联对象</th><th scope="col">执行结果</th><th scope="col">关联编号</th><th scope="col">操作</th></tr></thead>
+                <caption class="sr-only">近二十四小时数据服务运行审计明细</caption>
+                <thead><tr><th scope="col">时间</th><th scope="col">审计类型</th><th scope="col">执行主体</th><th scope="col">审计事项</th><th scope="col">关联对象</th><th scope="col">执行结果</th><th scope="col">结果摘要</th><th scope="col">关联编号</th><th scope="col">操作</th></tr></thead>
                 <tbody>
-                  <tr data-filter-row data-category="配置发布" data-status="进行中"><td>08-27 13:28</td><td>周岚</td><td>配置发布</td><td>路由与策略变更 7 项</td><td><span class="status status-info">进行中</span></td><td class="numeric">CFG-20260827-003</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-20260827-036" data-audit-action="配置发布" data-audit-result="进行中">查看</button></td></tr>
-                  <tr data-filter-row data-category="策略变更" data-status="成功"><td>08-27 13:12</td><td>周岚</td><td>策略变更</td><td>数据下载日配额</td><td><span class="status status-success">成功</span></td><td class="numeric">AUD-20260827-035</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-20260827-035" data-audit-action="策略变更" data-audit-result="成功">查看</button></td></tr>
-                  <tr data-filter-row data-category="策略自动分配" data-status="成功"><td>08-27 12:44</td><td>系统</td><td>策略自动分配</td><td>经营分析助手 2.3</td><td><span class="status status-success">成功</span></td><td class="numeric">APP-20260827-018</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-20260827-034" data-audit-action="策略自动分配" data-audit-result="成功">查看</button></td></tr>
-                  <tr data-filter-row data-category="路由变更" data-status="失败"><td>08-27 11:56</td><td>沈云</td><td>路由变更</td><td>客户画像查询</td><td><span class="status status-danger">失败</span></td><td class="numeric">AUD-20260827-031</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-20260827-031" data-audit-action="路由变更" data-audit-result="失败">查看</button></td></tr>
-                  <tr data-filter-row data-category="紧急停流" data-status="成功"><td>08-26 11:20</td><td>沈云</td><td>紧急停流</td><td>历史账单下载</td><td><span class="status status-success">成功</span></td><td class="numeric">EMG-20260826-002</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-20260826-044" data-audit-action="紧急停流" data-audit-result="成功">查看</button></td></tr>
-                  <tr class="empty-row" hidden><td colspan="7">未找到符合条件的审计记录。</td></tr>
+                  <tr data-filter-row data-category="外部数据调用" data-status="成功"><td class="numeric">08-27 14:22:36</td><td>外部数据调用</td><td><div class="cell-main">客户服务门户</div><div class="cell-sub">OAuth 2.0 客户端</div></td><td>调用 API 服务</td><td><div class="cell-main">客户信息查询</div><div class="cell-sub">固定版本 3.2</div></td><td><span class="status status-success">成功</span></td><td>返回 1 条 · 92 ms</td><td class="numeric">REQ-0827-98412</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-CALL-20260827-612" data-audit-type="外部数据调用" data-audit-action="调用 API 服务" data-audit-result="成功">查看</button></td></tr>
+                  <tr data-filter-row data-category="外部数据调用" data-status="已拒绝"><td class="numeric">08-27 14:21:18</td><td>外部数据调用</td><td><div class="cell-main">经营分析助手</div><div class="cell-sub">API Key 应用身份</div></td><td>调用 API 服务</td><td><div class="cell-main">订单明细查询</div><div class="cell-sub">固定版本 2.4</div></td><td><span class="status status-danger">已拒绝</span></td><td>数据权限范围不匹配 · 38 ms</td><td class="numeric">REQ-0827-98408</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-CALL-20260827-611" data-audit-type="外部数据调用" data-audit-action="调用 API 服务" data-audit-result="已拒绝">查看</button></td></tr>
+                  <tr data-filter-row data-category="中台数据加工" data-status="成功"><td class="numeric">08-27 14:18:42</td><td>中台数据加工</td><td>数据加工调度</td><td>执行批量加工</td><td><div class="cell-main">客户画像日汇总</div><div class="cell-sub">DWD → ADS</div></td><td><span class="status status-success">成功</span></td><td>写入 2,416,830 行 · 4 分 12 秒</td><td class="numeric">JOB-0827-24018</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-PROC-20260827-048" data-audit-type="中台数据加工" data-audit-action="执行批量加工" data-audit-result="成功">查看</button></td></tr>
+                  <tr data-filter-row data-category="系统运行日志" data-status="成功"><td class="numeric">08-27 14:16:05</td><td>系统运行日志</td><td>统一网关</td><td>身份与授权校验</td><td>客户服务门户 → 客户信息查询</td><td><span class="status status-success">成功</span></td><td>应用身份及服务授权有效</td><td class="numeric">SYS-0827-70174</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-SYS-20260827-074" data-audit-type="系统运行日志" data-audit-action="身份与授权校验" data-audit-result="成功">查看</button></td></tr>
+                  <tr data-filter-row data-category="管理操作" data-status="进行中"><td class="numeric">08-27 13:28:04</td><td>管理操作</td><td>周岚</td><td>配置发布</td><td>路由与策略变更 7 项</td><td><span class="status status-info">进行中</span></td><td>审批中 · 当前配置继续运行</td><td class="numeric">CFG-20260827-003</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-MGT-20260827-036" data-audit-type="管理操作" data-audit-action="配置发布" data-audit-result="进行中">查看</button></td></tr>
+                  <tr data-filter-row data-category="中台数据加工" data-status="失败"><td class="numeric">08-27 13:06:27</td><td>中台数据加工</td><td>数据加工调度</td><td>执行小时加工</td><td><div class="cell-main">经营指标小时汇总</div><div class="cell-sub">DWS → ADS</div></td><td><span class="status status-danger">失败</span></td><td>来源资产新鲜度校验失败</td><td class="numeric">JOB-0827-23041</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-PROC-20260827-047" data-audit-type="中台数据加工" data-audit-action="执行小时加工" data-audit-result="失败">查看</button></td></tr>
+                  <tr data-filter-row data-category="系统运行日志" data-status="成功"><td class="numeric">08-27 12:44:16</td><td>系统运行日志</td><td>策略执行器</td><td>自动分配策略</td><td>经营分析助手 2.3</td><td><span class="status status-success">成功</span></td><td>分配 4 项策略 · 整体生效</td><td class="numeric">APP-20260827-018</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-SYS-20260827-073" data-audit-type="系统运行日志" data-audit-action="自动分配策略" data-audit-result="成功">查看</button></td></tr>
+                  <tr data-filter-row data-category="管理操作" data-status="成功"><td class="numeric">08-26 11:20:09</td><td>管理操作</td><td>沈云</td><td>紧急停流</td><td>历史账单下载</td><td><span class="status status-success">成功</span></td><td>指定调用路由已停止新流量</td><td class="numeric">EMG-20260826-002</td><td><button class="btn btn-text btn-small" type="button" data-open-audit="AUD-MGT-20260826-044" data-audit-type="管理操作" data-audit-action="紧急停流" data-audit-result="成功">查看</button></td></tr>
+                  <tr class="empty-row" hidden><td colspan="9">未找到符合条件的审计记录。</td></tr>
                 </tbody>
               </table>
             </div>
-            <div class="pagination"><span>共 5 条</span><button class="page-square" type="button" disabled aria-label="上一页">‹</button><button class="page-square active" type="button">1</button><button class="page-square" type="button" disabled aria-label="下一页">›</button></div>
+            <div class="pagination"><span>当前展示 8 条样例 · 共 1,284 条</span><button class="page-square" type="button" disabled aria-label="上一页">‹</button><button class="page-square active" type="button">1</button><button class="page-square" type="button" disabled aria-label="下一页">›</button></div>
           </article>
         </section>
       </div>
@@ -1311,7 +1314,7 @@
         releases: ["配置发布", "汇总路由与策略变更，提交审批并查看发布结果。"],
         monitoring: ["运行监控", "以数据应用和服务产品为范围，关注数据服务是否正常。"],
         events: ["异常事件", "查看影响数据服务运行的持续异常与恢复结果。"],
-        audit: ["审计日志", "追溯运行配置相关管理动作与执行结果。"]
+        audit: ["审计日志", "统一查看管理操作、系统运行日志、外部数据调用与中台数据加工留痕。"]
       };
 
       var drawerLayer = document.getElementById("drawer-layer");
@@ -1335,7 +1338,7 @@
 
       function statusClass(status) {
         if (/正常|成功|已生效|已恢复|通过/.test(status)) return "status-success";
-        if (/异常|失败/.test(status)) return "status-danger";
+        if (/异常|失败|拒绝/.test(status)) return "status-danger";
         if (/降级|待发布|持续中/.test(status)) return "status-warning";
         if (/审批中|进行中|草稿/.test(status)) return "status-info";
         return "status-neutral";
@@ -1669,22 +1672,99 @@
           '<button class="btn btn-primary" type="button" data-page-link="events">查看异常事件</button>');
       }
 
-      function openAudit(id, action, result) {
+      function openAudit(id, type, action, result) {
+        var subject = "周岚";
+        var time = "08-27 13:28:04";
+        var related = "CFG-20260827-003";
+        var detail = "";
+
+        if (type === "外部数据调用") {
+          var rejected = result === "已拒绝";
+          subject = rejected ? "经营分析助手" : "客户服务门户";
+          time = rejected ? "08-27 14:21:18" : "08-27 14:22:36";
+          related = rejected ? "REQ-0827-98408" : "REQ-0827-98412";
+          detail = detailSection("调用上下文",
+            '<div class="detail-grid">' +
+            detailItem("数据应用", subject) +
+            detailItem("外部消费场景", rejected ? "经营指标分析" : "客户运营查询") +
+            detailItem("服务产品", rejected ? "订单明细查询" : "客户信息查询") +
+            detailItem("固定版本", rejected ? "2.4" : "3.2") +
+            detailItem("认证方式", rejected ? "API Key" : "OAuth 2.0") +
+            detailItem("调用入口", "POST /data-service/query") +
+            "</div>") +
+            detailSection("数据使用明细",
+              '<div class="detail-row"><span>来源资产</span><span>' + (rejected ? "ADS 订单明细" : "ADS 客户主数据") + "</span></div>" +
+              '<div class="detail-row"><span>申请数据范围</span><span>' + (rejected ? "订单标识、金额、交易时间" : "客户标识、客户等级") + "</span></div>" +
+              '<div class="detail-row"><span>服务授权引用</span><span class="numeric">' + (rejected ? "SVC-AUTH-20260818-052" : "SVC-AUTH-20260820-061") + "</span></div>" +
+              '<div class="detail-row"><span>数据权限引用</span><span class="numeric">' + (rejected ? "DAT-AUTH-20260818-084" : "DAT-AUTH-20260820-106") + "</span></div>" +
+              '<div class="detail-row"><span>返回记录</span><span>' + (rejected ? "0 条" : "1 条") + "</span></div>" +
+              '<div class="detail-row"><span>处理耗时</span><span>' + (rejected ? "38 ms" : "92 ms") + "</span></div>") +
+            (rejected
+              ? detailSection("拒绝原因", '<div class="inline-alert danger">调用请求超出当前数据应用已批准的行级数据范围，未返回任何数据。</div>')
+              : "") +
+            detailSection("留痕边界", '<div class="inline-alert">审计仅记录身份、权限、字段范围、结果数量和耗时；不保存请求参数值或响应正文。</div>');
+        } else if (type === "中台数据加工") {
+          var failed = result === "失败";
+          subject = "数据加工调度";
+          time = failed ? "08-27 13:06:27" : "08-27 14:18:42";
+          related = failed ? "JOB-0827-23041" : "JOB-0827-24018";
+          detail = detailSection("加工任务",
+            '<div class="detail-grid">' +
+            detailItem("任务名称", failed ? "经营指标小时汇总" : "客户画像日汇总") +
+            detailItem("调度批次", failed ? "2026-08-27 13:00" : "2026-08-27 日批") +
+            detailItem("触发方式", "计划调度") +
+            detailItem("加工类型", failed ? "小时增量加工" : "日批全量汇总") +
+            detailItem("来源资产", failed ? "DWS 交易主题汇总" : "DWD 客户行为明细") +
+            detailItem("目标资产", failed ? "ADS 经营指标" : "ADS 客户画像宽表") +
+            "</div>") +
+            detailSection("执行明细",
+              '<div class="detail-row"><span>读取记录</span><span>' + (failed ? "0 行" : "8,932,614 行") + "</span></div>" +
+              '<div class="detail-row"><span>写入记录</span><span>' + (failed ? "0 行" : "2,416,830 行") + "</span></div>" +
+              '<div class="detail-row"><span>处理耗时</span><span>' + (failed ? "18 秒" : "4 分 12 秒") + "</span></div>" +
+              '<div class="detail-row"><span>数据权限引用</span><span class="numeric">' + (failed ? "DEV-DATA-20260802-019" : "DEV-DATA-20260805-028") + "</span></div>") +
+            (failed
+              ? detailSection("失败原因", '<div class="inline-alert danger">来源资产新鲜度校验未通过，加工未开始，目标资产未写入数据。</div>')
+              : detailSection("质量结果", '<div class="detail-row"><span>完整性校验</span><span>通过</span></div><div class="detail-row"><span>目标写入</span><span>成功</span></div>'));
+        } else if (type === "系统运行日志") {
+          var authorization = action === "身份与授权校验";
+          subject = authorization ? "统一网关" : "策略执行器";
+          time = authorization ? "08-27 14:16:05" : "08-27 12:44:16";
+          related = authorization ? "SYS-0827-70174" : "APP-20260827-018";
+          detail = detailSection("系统事件",
+            '<div class="detail-grid">' +
+            detailItem("日志来源", subject) +
+            detailItem("事件类型", escapeHtml(action)) +
+            detailItem("关联数据应用", authorization ? "客户服务门户" : "经营分析助手 2.3") +
+            detailItem("关联服务", authorization ? "客户信息查询 3.2" : "4 项网关策略") +
+            "</div>") +
+            detailSection("执行明细",
+              authorization
+                ? '<div class="detail-row"><span>应用身份</span><span>OAuth 2.0 客户端有效</span></div><div class="detail-row"><span>服务授权</span><span>有效</span></div><div class="detail-row"><span>数据权限</span><span>范围匹配</span></div>'
+                : '<div class="detail-row"><span>计算结果</span><span>分配 4 项策略</span></div><div class="detail-row"><span>一致性校验</span><span>通过</span></div><div class="detail-row"><span>生效方式</span><span>随数据应用版本整体生效</span></div>') +
+            detailSection("日志边界", '<div class="inline-alert">仅展示数据服务运行所需的系统事件摘要，不提供主机、容器或基础设施日志全文。</div>');
+        } else {
+          var emergency = action === "紧急停流";
+          subject = emergency ? "沈云" : "周岚";
+          time = emergency ? "08-26 11:20:09" : "08-27 13:28:04";
+          related = emergency ? "EMG-20260826-002" : "CFG-20260827-003";
+          detail = detailSection("管理操作明细",
+            '<div class="detail-row"><span>影响对象</span><span>' + (emergency ? "历史账单下载调用路由" : "路由与策略变更 7 项") + "</span></div>" +
+            '<div class="detail-row"><span>审批状态</span><span>' + (emergency ? "事后补充关联" : "审批中") + "</span></div>" +
+            '<div class="detail-row"><span>运行影响</span><span>' + (emergency ? "新流量已停止" : "当前配置继续运行") + "</span></div>" +
+            '<div class="detail-row"><span>敏感信息</span><span>仅保留受控引用</span></div>');
+        }
+
         var body = detailSection("审计信息",
           '<div class="detail-grid">' +
           detailItem("审计编号", '<span class="numeric">' + escapeHtml(id) + "</span>") +
-          detailItem("操作事项", escapeHtml(action)) +
+          detailItem("审计类型", escapeHtml(type)) +
+          detailItem("审计事项", escapeHtml(action)) +
           detailItem("执行结果", statusChip(result)) +
-          detailItem("操作者", action === "策略自动分配" ? "系统" : "周岚") +
-          detailItem("操作时间", "08-27 13:28") +
-          detailItem("关联编号", "CFG-20260827-003") +
-          "</div>") +
-          detailSection("变更摘要",
-            '<div class="detail-row"><span>影响对象</span><span>路由与策略变更</span></div>' +
-            '<div class="detail-row"><span>审批结果</span><span>审批通过后执行</span></div>' +
-            '<div class="detail-row"><span>敏感信息</span><span>仅保留受控引用</span></div>') +
-          (result === "失败" ? detailSection("失败信息", '<div class="inline-alert danger">目标服务校验失败，未写入当前运行配置。</div>') : "");
-        openDrawer("审计详情", body);
+          detailItem("执行主体", escapeHtml(subject)) +
+          detailItem("记录时间", escapeHtml(time)) +
+          detailItem("关联编号", '<span class="numeric">' + escapeHtml(related) + "</span>") +
+          "</div>") + detail;
+        openDrawer(type + "详情", body);
       }
 
       function confirmRelease() {
@@ -1732,7 +1812,7 @@
         }
         if (target.dataset.openRelease) openRelease(target.dataset.openRelease, target.dataset.releaseStatus);
         if (target.dataset.openMonitor) openMonitor(target.dataset.openMonitor, target.dataset.monitorStatus, target.dataset.monitorType);
-        if (target.dataset.openAudit) openAudit(target.dataset.openAudit, target.dataset.auditAction, target.dataset.auditResult);
+        if (target.dataset.openAudit) openAudit(target.dataset.openAudit, target.dataset.auditType, target.dataset.auditAction, target.dataset.auditResult);
         if (target.hasAttribute("data-release-confirm")) confirmRelease();
         if (target.hasAttribute("data-close-drawer")) closeDrawer();
         if (target.hasAttribute("data-close-modal")) closeModal();
