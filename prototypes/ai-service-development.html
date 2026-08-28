@@ -1,0 +1,2099 @@
+<!-- SELECTED PROTOTYPE — Variant C is the product-facing default. Historical A/B/C comparison is available only with ?compare=1&variant=A|B|C. -->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>数据服务平台 · AI 服务开发原型</title>
+  <style>
+    :root {
+      --ds-color-white: #ffffff;
+      --ds-color-black: #000000;
+      --ds-color-primary-1: #e8f3ff;
+      --ds-color-primary-2: #bedaff;
+      --ds-color-primary-3: #94bfff;
+      --ds-color-primary-4: #6aa1ff;
+      --ds-color-primary-5: #4080ff;
+      --ds-color-primary-6: #165dff;
+      --ds-color-primary-7: #0e42d2;
+      --ds-color-primary-8: #072ca6;
+      --ds-color-gray-1: #f7f8fa;
+      --ds-color-gray-2: #f2f3f5;
+      --ds-color-gray-3: #e5e6eb;
+      --ds-color-gray-4: #c9cdd4;
+      --ds-color-gray-5: #a9aeb8;
+      --ds-color-gray-6: #86909c;
+      --ds-color-gray-7: #6b7785;
+      --ds-color-gray-8: #4e5969;
+      --ds-color-gray-9: #272e3b;
+      --ds-color-gray-10: #1d2129;
+      --ds-color-success: #00b42a;
+      --ds-color-success-light: #e8ffea;
+      --ds-color-success-text: #087a24;
+      --ds-color-warning: #ff7d00;
+      --ds-color-warning-light: #fff7e8;
+      --ds-color-warning-text: #a84b00;
+      --ds-color-danger: #f53f3f;
+      --ds-color-danger-light: #ffece8;
+      --ds-color-danger-text: #cb2634;
+      --ds-bg-canvas: var(--ds-color-gray-2);
+      --ds-bg-surface: var(--ds-color-white);
+      --ds-bg-elevated: var(--ds-color-white);
+      --ds-bg-fill: var(--ds-color-gray-2);
+      --ds-bg-fill-hover: var(--ds-color-gray-3);
+      --ds-text-1: var(--ds-color-gray-10);
+      --ds-text-2: var(--ds-color-gray-8);
+      --ds-text-3: var(--ds-color-gray-6);
+      --ds-text-4: var(--ds-color-gray-4);
+      --ds-border-1: var(--ds-color-gray-2);
+      --ds-border-2: var(--ds-color-gray-3);
+      --ds-border-3: var(--ds-color-gray-4);
+      --ds-focus-ring: 0 0 0 2px rgb(22 93 255 / 18%);
+      --ds-mask: rgb(29 33 41 / 60%);
+      --ds-font-sans: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      --ds-font-mono: Consolas, Menlo, Monaco, monospace;
+      --ds-font-size-12: 12px;
+      --ds-font-size-14: 14px;
+      --ds-font-size-16: 16px;
+      --ds-font-size-20: 20px;
+      --ds-font-size-24: 24px;
+      --ds-font-size-36: 36px;
+      --ds-font-weight-regular: 400;
+      --ds-font-weight-medium: 500;
+      --ds-font-weight-semibold: 600;
+      --ds-line-height-base: 1.5715;
+      --ds-line-height-tight: 1.35;
+      --ds-space-0: 0;
+      --ds-space-1: 2px;
+      --ds-space-2: 4px;
+      --ds-space-3: 6px;
+      --ds-space-4: 8px;
+      --ds-space-5: 10px;
+      --ds-space-6: 12px;
+      --ds-space-7: 16px;
+      --ds-space-8: 20px;
+      --ds-space-9: 24px;
+      --ds-space-10: 32px;
+      --ds-space-11: 36px;
+      --ds-space-12: 40px;
+      --ds-space-13: 48px;
+      --ds-space-16: 64px;
+      --ds-radius-none: 0;
+      --ds-radius-small: 2px;
+      --ds-radius-medium: 4px;
+      --ds-radius-large: 8px;
+      --ds-radius-circle: 50%;
+      --ds-shadow-none: none;
+      --ds-shadow-1: 0 2px 5px rgb(0 0 0 / 10%);
+      --ds-shadow-2: 0 4px 10px rgb(0 0 0 / 10%);
+      --ds-shadow-3: 0 8px 20px rgb(0 0 0 / 10%);
+      --ds-duration-fast: 100ms;
+      --ds-duration-base: 200ms;
+      --ds-duration-slow: 300ms;
+      --ds-ease-standard: cubic-bezier(0.34, 0.69, 0.1, 1);
+      --ds-control-mini: 24px;
+      --ds-control-small: 28px;
+      --ds-control-default: 32px;
+      --ds-control-large: 36px;
+      --ds-nav-height: 60px;
+      --ds-sidebar-width: 220px;
+      --ds-desktop-min: 1200px;
+      --ds-content-max: 1440px;
+      --ds-grid-gutter: 16px;
+      --ds-page-padding: 24px;
+      --ds-z-popup: 1000;
+      --ds-z-modal: 1001;
+      --ds-z-message: 1003;
+      --ds-button-height: var(--ds-control-default);
+      --ds-button-radius: var(--ds-radius-small);
+      --ds-button-padding-inline: 15px;
+      --ds-input-height: var(--ds-control-default);
+      --ds-input-radius: var(--ds-radius-small);
+      --ds-form-item-gap: 20px;
+      --ds-table-cell-padding-inline: 16px;
+      --ds-table-cell-padding-block: 9px;
+      --ds-pagination-item-size: 32px;
+      --ds-modal-width: 520px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      min-width: var(--ds-desktop-min);
+      overflow: hidden;
+      color: var(--ds-text-1);
+      background: var(--ds-bg-canvas);
+      font-family: var(--ds-font-sans);
+      font-size: var(--ds-font-size-14);
+      line-height: var(--ds-line-height-base);
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .5; }
+    button, input, select, textarea, a { outline: none; }
+    button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible {
+      box-shadow: var(--ds-focus-ring);
+    }
+    [hidden] { display: none !important; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+    .icon { width: 16px; height: 16px; flex: 0 0 auto; }
+    .icon-sm { width: 14px; height: 14px; }
+
+    .topbar {
+      position: fixed; z-index: 30; inset: 0 0 auto 0; height: var(--ds-nav-height);
+      display: flex; align-items: center; border-bottom: 1px solid var(--ds-border-2);
+      background: var(--ds-bg-surface);
+    }
+    .product-area {
+      width: var(--ds-sidebar-width); height: 100%; display: flex; align-items: center;
+      gap: var(--ds-space-6); padding: 0 var(--ds-space-8); border-right: 1px solid var(--ds-border-2);
+      font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-semibold);
+    }
+    .product-symbol {
+      width: var(--ds-control-default); height: var(--ds-control-default); display: grid;
+      place-items: center; border-radius: var(--ds-radius-medium); color: var(--ds-color-white);
+      background: var(--ds-color-primary-6);
+    }
+    .top-domain {
+      height: 100%; display: flex; align-items: center; padding: 0 var(--ds-space-9);
+      border-bottom: 2px solid var(--ds-color-primary-6); color: var(--ds-color-primary-6);
+      font-weight: var(--ds-font-weight-medium);
+    }
+    .top-spacer { flex: 1; }
+    .top-actions { display: flex; align-items: center; gap: var(--ds-space-4); padding-right: var(--ds-space-8); }
+    .top-icon, .user-chip {
+      min-height: var(--ds-control-large); display: inline-flex; align-items: center; justify-content: center;
+      gap: var(--ds-space-4); border: 0; border-radius: var(--ds-radius-medium);
+      color: var(--ds-text-2); background: transparent;
+    }
+    .top-icon { width: var(--ds-control-large); }
+    .user-chip { padding: 0 var(--ds-space-5); }
+    .top-icon:hover, .user-chip:hover { background: var(--ds-bg-fill); }
+    .avatar {
+      width: var(--ds-control-small); height: var(--ds-control-small); display: grid; place-items: center;
+      border-radius: var(--ds-radius-circle); color: var(--ds-color-primary-7);
+      background: var(--ds-color-primary-1); font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-medium);
+    }
+
+    .sidebar {
+      position: fixed; z-index: 20; top: var(--ds-nav-height); bottom: 0; left: 0;
+      width: var(--ds-sidebar-width); overflow-y: auto; border-right: 1px solid var(--ds-border-2);
+      background: var(--ds-bg-surface); padding: var(--ds-space-6) var(--ds-space-4);
+    }
+    .nav-item, .nav-child {
+      width: 100%; min-height: var(--ds-control-large); display: flex; align-items: center;
+      gap: var(--ds-space-6); border: 0; border-radius: var(--ds-radius-small);
+      color: var(--ds-text-2); background: transparent; text-align: left;
+      transition: background var(--ds-duration-fast) var(--ds-ease-standard), color var(--ds-duration-fast) var(--ds-ease-standard);
+    }
+    .nav-item { padding: 0 var(--ds-space-6); }
+    .nav-child { position: relative; min-height: var(--ds-control-default); padding: 0 var(--ds-space-6) 0 var(--ds-space-8); font-size: var(--ds-font-size-14); }
+    .nav-item:hover, .nav-child:hover { color: var(--ds-text-1); background: var(--ds-bg-fill); }
+    .nav-item.active, .nav-child.active {
+      color: var(--ds-color-primary-7); background: var(--ds-color-primary-1);
+      font-weight: var(--ds-font-weight-medium);
+    }
+    .nav-child.active::before {
+      content: ""; position: absolute; left: var(--ds-space-3); width: 3px; height: 16px;
+      border-radius: var(--ds-radius-small); background: var(--ds-color-primary-6);
+    }
+    .nav-group { margin: var(--ds-space-2) 0; }
+    .nav-children { padding: var(--ds-space-3) 0 var(--ds-space-3) var(--ds-space-8); }
+    .nav-divider { height: 1px; margin: var(--ds-space-6); background: var(--ds-border-1); }
+
+    .workspace {
+      position: fixed; top: var(--ds-nav-height); right: 0; bottom: 0; left: var(--ds-sidebar-width);
+      overflow: auto; background: var(--ds-bg-canvas);
+    }
+    .view { min-height: 100%; }
+    .page-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: var(--ds-space-9); padding: var(--ds-space-7) var(--ds-page-padding);
+      border-bottom: 1px solid var(--ds-border-2); background: var(--ds-bg-surface);
+    }
+    .page-title-row { display: flex; align-items: center; gap: var(--ds-space-6); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 0; font-size: var(--ds-font-size-24); line-height: var(--ds-line-height-tight); font-weight: var(--ds-font-weight-medium); }
+    h2 { margin-bottom: var(--ds-space-4); font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    h3 { margin-bottom: var(--ds-space-3); font-size: var(--ds-font-size-14); font-weight: var(--ds-font-weight-medium); }
+    .page-description, .muted { color: var(--ds-text-3); }
+    .page-description { margin: var(--ds-space-3) 0 0; }
+    .breadcrumb { display: flex; align-items: center; gap: var(--ds-space-4); margin-bottom: var(--ds-space-3); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .page-actions, .inline-actions { display: flex; align-items: center; gap: var(--ds-space-5); }
+    .page-body { width: 100%; max-width: var(--ds-content-max); margin: 0 auto; padding: var(--ds-page-padding); }
+
+    .btn {
+      min-height: var(--ds-button-height); display: inline-flex; align-items: center; justify-content: center;
+      gap: var(--ds-space-4); padding: 0 var(--ds-button-padding-inline); border: 1px solid var(--ds-border-3);
+      border-radius: var(--ds-button-radius); color: var(--ds-text-1); background: var(--ds-bg-surface);
+    }
+    .btn:hover { border-color: var(--ds-color-primary-5); color: var(--ds-color-primary-6); }
+    .btn-primary { border-color: var(--ds-color-primary-6); color: var(--ds-color-white); background: var(--ds-color-primary-6); }
+    .btn-primary:hover { border-color: var(--ds-color-primary-7); color: var(--ds-color-white); background: var(--ds-color-primary-7); }
+    .btn-danger { border-color: var(--ds-color-danger); color: var(--ds-color-danger-text); background: var(--ds-bg-surface); }
+    .btn-danger:hover { color: var(--ds-color-white); background: var(--ds-color-danger); }
+    .btn-text { min-height: var(--ds-control-small); padding: 0 var(--ds-space-3); border-color: transparent; color: var(--ds-color-primary-6); background: transparent; }
+    .btn-text:hover { background: var(--ds-color-primary-1); }
+    .btn-small { min-height: var(--ds-control-small); padding: 0 var(--ds-space-5); font-size: var(--ds-font-size-12); }
+    .icon-btn {
+      width: var(--ds-control-default); height: var(--ds-control-default); display: grid; place-items: center;
+      padding: 0; border: 1px solid var(--ds-border-3); border-radius: var(--ds-radius-small);
+      color: var(--ds-text-2); background: var(--ds-bg-surface);
+    }
+
+    .panel {
+      border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium);
+      background: var(--ds-bg-surface);
+    }
+    .panel-head {
+      min-height: 52px; display: flex; align-items: center; justify-content: space-between;
+      gap: var(--ds-space-7); padding: var(--ds-space-6) var(--ds-space-7);
+      border-bottom: 1px solid var(--ds-border-2);
+    }
+    .panel-title { margin: 0; }
+    .panel-body { padding: var(--ds-space-7); }
+    .summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--ds-grid-gutter); margin-bottom: var(--ds-space-7); }
+    .summary-card { min-height: 112px; padding: var(--ds-space-7); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); background: var(--ds-bg-surface); }
+    .summary-label { color: var(--ds-text-2); }
+    .summary-value { margin-top: var(--ds-space-5); font-size: var(--ds-font-size-24); line-height: var(--ds-line-height-tight); font-weight: var(--ds-font-weight-medium); }
+    .summary-note { margin-top: var(--ds-space-4); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+
+    .filter-bar {
+      display: flex; align-items: center; gap: var(--ds-space-6); padding: var(--ds-space-6) var(--ds-space-7);
+      border-bottom: 1px solid var(--ds-border-2);
+    }
+    .filter-spacer { flex: 1; }
+    .input, .select, .textarea {
+      width: 100%; border: 1px solid var(--ds-border-3); border-radius: var(--ds-input-radius);
+      color: var(--ds-text-1); background: var(--ds-bg-surface);
+    }
+    .input, .select { height: var(--ds-input-height); padding: 0 var(--ds-space-6); }
+    .textarea { min-height: 92px; padding: var(--ds-space-6); resize: vertical; }
+    .input:hover, .select:hover, .textarea:hover { border-color: var(--ds-color-primary-4); }
+    .input:focus, .select:focus, .textarea:focus { border-color: var(--ds-color-primary-6); }
+    .search-wrap { position: relative; width: 280px; }
+    .search-wrap .input { padding-left: 34px; }
+    .search-wrap .icon { position: absolute; top: 8px; left: 10px; color: var(--ds-text-3); }
+    .filter-select { width: 150px; }
+
+    .table-scroll { width: 100%; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    caption { text-align: left; }
+    th, td {
+      padding: var(--ds-table-cell-padding-block) var(--ds-table-cell-padding-inline);
+      border-bottom: 1px solid var(--ds-border-2); text-align: left; vertical-align: middle;
+      white-space: nowrap;
+    }
+    th { color: var(--ds-text-2); background: var(--ds-color-gray-1); font-weight: var(--ds-font-weight-medium); }
+    tbody tr:hover { background: var(--ds-color-gray-1); }
+    tbody tr:last-child td { border-bottom: 0; }
+    .service-cell { display: flex; align-items: center; gap: var(--ds-space-6); min-width: 220px; }
+    .type-mark {
+      width: 32px; height: 32px; display: grid; place-items: center; border-radius: var(--ds-radius-medium);
+      color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); font-size: var(--ds-font-size-12);
+      font-weight: var(--ds-font-weight-semibold);
+    }
+    .cell-primary { color: var(--ds-text-1); font-weight: var(--ds-font-weight-medium); }
+    .cell-secondary { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .status {
+      display: inline-flex; align-items: center; gap: var(--ds-space-3); min-height: 22px;
+      padding: 0 var(--ds-space-5); border-radius: var(--ds-radius-small); font-size: var(--ds-font-size-12);
+      font-weight: var(--ds-font-weight-medium);
+    }
+    .status::before { content: ""; width: 6px; height: 6px; border-radius: var(--ds-radius-circle); background: currentColor; }
+    .status-success { color: var(--ds-color-success-text); background: var(--ds-color-success-light); }
+    .status-warning { color: var(--ds-color-warning-text); background: var(--ds-color-warning-light); }
+    .status-danger { color: var(--ds-color-danger-text); background: var(--ds-color-danger-light); }
+    .status-neutral { color: var(--ds-text-2); background: var(--ds-bg-fill); }
+    .tag {
+      display: inline-flex; align-items: center; min-height: 22px; padding: 0 var(--ds-space-5);
+      border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-small);
+      color: var(--ds-text-2); background: var(--ds-bg-surface); font-size: var(--ds-font-size-12);
+    }
+    .tag-primary { border-color: var(--ds-color-primary-2); color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+    .pagination {
+      display: flex; align-items: center; justify-content: space-between; padding: var(--ds-space-6) var(--ds-space-7);
+      border-top: 1px solid var(--ds-border-2); color: var(--ds-text-3); font-size: var(--ds-font-size-12);
+    }
+
+    .alert {
+      display: flex; align-items: flex-start; gap: var(--ds-space-6); margin-bottom: var(--ds-space-7);
+      padding: var(--ds-space-6) var(--ds-space-7); border: 1px solid var(--ds-color-primary-2);
+      border-radius: var(--ds-radius-medium); color: var(--ds-color-primary-8); background: var(--ds-color-primary-1);
+    }
+    .alert-warning { border-color: var(--ds-color-warning); color: var(--ds-color-warning-text); background: var(--ds-color-warning-light); }
+    .alert-success { border-color: var(--ds-color-success); color: var(--ds-color-success-text); background: var(--ds-color-success-light); }
+    .alert-body { flex: 1; }
+    .alert-title { margin-bottom: var(--ds-space-2); font-weight: var(--ds-font-weight-medium); }
+    .alert-copy { margin: 0; color: inherit; font-size: var(--ds-font-size-12); }
+
+    .workbench-page { height: calc(100vh - var(--ds-nav-height)); display: flex; flex-direction: column; overflow: hidden; }
+    .workbench-head { flex: 0 0 auto; }
+    .workbench { min-height: 0; flex: 1; display: grid; background: var(--ds-bg-canvas); }
+    .manual-workbench { grid-template-columns: 240px minmax(0, 1fr); }
+    .workbench-nav, .assistant-panel { overflow-y: auto; background: var(--ds-bg-surface); }
+    .workbench-nav { border-right: 1px solid var(--ds-border-2); padding: var(--ds-space-6); }
+    .workbench-nav h2 { padding: var(--ds-space-4) var(--ds-space-6); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .section-button {
+      width: 100%; min-height: var(--ds-control-large); display: flex; align-items: center; gap: var(--ds-space-5);
+      padding: 0 var(--ds-space-6); border: 0; border-radius: var(--ds-radius-small);
+      color: var(--ds-text-2); background: transparent; text-align: left;
+    }
+    .section-button:hover { background: var(--ds-bg-fill); }
+    .section-button.active { color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); font-weight: var(--ds-font-weight-medium); }
+    .workbench-main { min-width: 0; overflow-y: auto; padding: var(--ds-space-7); }
+    .editor-panel { min-height: 100%; }
+    .editor-tabs { display: flex; gap: var(--ds-space-8); border-bottom: 1px solid var(--ds-border-2); padding: 0 var(--ds-space-7); }
+    .tab-button {
+      min-height: 44px; padding: 0 var(--ds-space-2); border: 0; border-bottom: 2px solid transparent;
+      color: var(--ds-text-2); background: transparent;
+    }
+    .tab-button.active { border-bottom-color: var(--ds-color-primary-6); color: var(--ds-color-primary-6); font-weight: var(--ds-font-weight-medium); }
+    .editor-body { padding: var(--ds-space-7); }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-form-item-gap) var(--ds-space-7); }
+    .form-item { min-width: 0; }
+    .form-item.full { grid-column: 1 / -1; }
+    .form-item label, .field-label { display: block; margin-bottom: var(--ds-space-4); color: var(--ds-text-2); font-weight: var(--ds-font-weight-medium); }
+    .help { margin-top: var(--ds-space-3); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .prompt-editor {
+      min-height: 210px; font-family: var(--ds-font-mono); line-height: 1.65; white-space: pre-wrap;
+    }
+    .dependency-list { display: grid; gap: var(--ds-space-6); }
+    .dependency-item {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--ds-space-7);
+      padding: var(--ds-space-6); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium);
+    }
+    .assistant-panel { border-left: 1px solid var(--ds-border-2); display: flex; flex-direction: column; }
+    .assistant-head { flex: 0 0 auto; padding: var(--ds-space-7); border-bottom: 1px solid var(--ds-border-2); }
+    .assistant-title { display: flex; align-items: center; gap: var(--ds-space-5); margin-bottom: var(--ds-space-3); }
+    .assistant-scope { margin: 0; color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .chat-log { flex: 1; overflow-y: auto; padding: var(--ds-space-7); }
+    .message { max-width: 92%; margin-bottom: var(--ds-space-7); padding: var(--ds-space-6); border-radius: var(--ds-radius-medium); }
+    .message-agent { color: var(--ds-text-2); background: var(--ds-bg-fill); }
+    .message-user { margin-left: auto; color: var(--ds-color-primary-8); background: var(--ds-color-primary-1); }
+    .message-label { margin-bottom: var(--ds-space-3); font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-medium); }
+    .proposal {
+      margin-top: var(--ds-space-6); padding: var(--ds-space-6); border: 1px solid var(--ds-color-primary-2);
+      border-radius: var(--ds-radius-medium); background: var(--ds-bg-surface);
+    }
+    .proposal ul { margin: var(--ds-space-4) 0 var(--ds-space-6); padding-left: 18px; }
+    .assistant-compose { flex: 0 0 auto; padding: var(--ds-space-7); border-top: 1px solid var(--ds-border-2); }
+    .assistant-compose .textarea { min-height: 76px; }
+    .compose-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--ds-space-6); margin-top: var(--ds-space-5); }
+    .scope-note { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+
+    .mode-switch {
+      display: inline-flex; align-items: center; padding: var(--ds-space-1);
+      border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); background: var(--ds-bg-fill);
+    }
+    .mode-switch-button {
+      min-height: var(--ds-control-small); padding: 0 var(--ds-space-6); border: 0;
+      border-radius: var(--ds-radius-small); color: var(--ds-text-2); background: transparent;
+    }
+    .mode-switch-button:hover { color: var(--ds-text-1); background: var(--ds-bg-fill-hover); }
+    .mode-switch-button.active { color: var(--ds-color-primary-7); background: var(--ds-bg-surface); box-shadow: var(--ds-shadow-1); font-weight: var(--ds-font-weight-medium); }
+    .config-mode { margin: var(--ds-space-6) 0; }
+    .config-mode .mode-switch { display: flex; width: 100%; }
+    .config-mode .mode-switch-button { flex: 1; min-width: 0; min-height: var(--ds-control-default); padding-inline: var(--ds-space-2); white-space: nowrap; }
+    .workbench-nav .config-mode { margin-inline: var(--ds-space-4); }
+    .ai-workbench {
+      min-height: 0; flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 240px;
+      overflow: hidden; background: var(--ds-bg-canvas);
+    }
+    .ai-workbench.drawer-open { grid-template-columns: minmax(0, 1fr) 240px minmax(320px, 380px); }
+    .ai-config-rail {
+      min-height: 0; overflow-y: auto; padding: var(--ds-space-6);
+      border-left: 1px solid var(--ds-border-2); background: var(--ds-bg-surface);
+    }
+    .ai-config-rail-head { padding: var(--ds-space-4) var(--ds-space-5) var(--ds-space-7); }
+    .ai-config-rail-head h2 { margin-bottom: var(--ds-space-2); font-size: var(--ds-font-size-14); }
+    .ai-config-rail-head p { margin: 0; color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .ai-config-button {
+      width: 100%; min-height: 58px; display: grid; grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center; gap: var(--ds-space-5); margin-bottom: var(--ds-space-4); padding: var(--ds-space-5) var(--ds-space-6);
+      border: 1px solid transparent; border-radius: var(--ds-radius-medium); color: var(--ds-text-2); background: transparent; text-align: left;
+    }
+    .ai-config-button:hover { background: var(--ds-bg-fill); }
+    .ai-config-button.active { border-color: var(--ds-color-primary-2); color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+    .ai-config-name { display: flex; align-items: center; gap: var(--ds-space-5); min-width: 0; }
+    .ai-config-name span { overflow-wrap: anywhere; }
+    .ai-config-button .status { justify-self: end; }
+    .config-drawer-panel {
+      min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden;
+      border-left: 1px solid var(--ds-border-2); background: var(--ds-bg-surface); box-shadow: var(--ds-shadow-1);
+    }
+    .config-drawer-head {
+      flex: none; min-height: 52px; display: flex; align-items: center; justify-content: space-between;
+      gap: var(--ds-space-6); padding: 0 var(--ds-space-7); border-bottom: 1px solid var(--ds-border-2);
+    }
+    .config-drawer-head h2 { margin: 0; }
+    .config-drawer-body { flex: 1; overflow-y: auto; padding: var(--ds-space-7); }
+    .config-drawer-foot { flex: none; padding: var(--ds-space-6) var(--ds-space-7); border-top: 1px solid var(--ds-border-2); }
+    .config-summary { display: grid; gap: var(--ds-space-6); margin: 0; }
+    .config-summary > div { padding-bottom: var(--ds-space-6); border-bottom: 1px solid var(--ds-border-1); }
+    .config-summary > div:last-child { padding-bottom: 0; border-bottom: 0; }
+    .config-summary dt { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .config-summary dd { margin: var(--ds-space-2) 0 0; overflow-wrap: anywhere; }
+    .readonly-note { margin-bottom: var(--ds-space-7); padding: var(--ds-space-6); border-radius: var(--ds-radius-medium); color: var(--ds-text-2); background: var(--ds-bg-fill); }
+    .ai-chat-panel { min-width: 0; min-height: 0; display: flex; flex-direction: column; background: var(--ds-bg-surface); }
+    .ai-chat-head {
+      flex: none; min-height: 52px; display: flex; align-items: center; justify-content: space-between;
+      gap: var(--ds-space-7); padding: var(--ds-space-6) var(--ds-space-8); border-bottom: 1px solid var(--ds-border-2);
+    }
+    .ai-chat-head h2 { margin: 0; }
+    .ai-chat-head p { margin: var(--ds-space-2) 0 0; color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .ai-chat-panel .chat-log { padding: var(--ds-space-8); }
+    .ai-chat-panel .message { max-width: 760px; }
+    .ai-chat-panel .assistant-compose { padding: var(--ds-space-7) var(--ds-space-8); }
+    .ai-chat-boundary { display: flex; align-items: center; gap: var(--ds-space-4); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .proposal-actions { display: flex; flex-wrap: wrap; gap: var(--ds-space-5); margin-top: var(--ds-space-6); }
+
+    .layer-intro { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: var(--ds-grid-gutter); margin-bottom: var(--ds-space-7); }
+    .app-meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-6); }
+    .meta-item { padding: var(--ds-space-6); border-radius: var(--ds-radius-medium); background: var(--ds-color-gray-1); }
+    .meta-label { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .meta-value { margin-top: var(--ds-space-2); font-weight: var(--ds-font-weight-medium); }
+    .layer-stack { display: grid; gap: var(--ds-space-6); }
+    .layer-card { position: relative; overflow: hidden; }
+    .layer-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--ds-color-primary-6); }
+    .layer-card.service-layer::before { background: var(--ds-color-warning); }
+    .layer-card.data-layer::before { background: var(--ds-color-success); }
+    .layer-header {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: var(--ds-space-7);
+      padding: var(--ds-space-7); border-bottom: 1px solid var(--ds-border-2);
+    }
+    .layer-index {
+      width: 24px; height: 24px; display: inline-grid; place-items: center; margin-right: var(--ds-space-5);
+      border-radius: var(--ds-radius-circle); color: var(--ds-color-white); background: var(--ds-color-primary-6);
+      font-size: var(--ds-font-size-12);
+    }
+    .service-layer .layer-index { background: var(--ds-color-warning); }
+    .data-layer .layer-index { background: var(--ds-color-success); }
+    .layer-heading { display: flex; align-items: center; }
+    .layer-copy { margin: var(--ds-space-2) 0 0 34px; color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .credential-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--ds-space-6); padding: var(--ds-space-7); }
+    .credential-card { padding: var(--ds-space-6); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); }
+    .change-row { background: var(--ds-color-warning-light); }
+    .version-arrow { color: var(--ds-color-warning-text); font-weight: var(--ds-font-weight-medium); }
+    .permission-chips { display: flex; flex-wrap: wrap; gap: var(--ds-space-5); }
+
+    .stage-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--ds-space-6); margin-bottom: var(--ds-space-7); }
+    .stage-item { position: relative; padding: var(--ds-space-6); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); background: var(--ds-bg-surface); }
+    .stage-item.active { border-color: var(--ds-color-primary-5); background: var(--ds-color-primary-1); }
+    .stage-label { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .stage-value { margin-top: var(--ds-space-2); font-weight: var(--ds-font-weight-medium); }
+    .ai-first-layout { display: grid; grid-template-columns: 148px minmax(300px, .85fr) minmax(380px, 1.15fr); gap: var(--ds-grid-gutter); align-items: start; }
+    .task-rail { padding: var(--ds-space-6); }
+    .task-rail-head { display: flex; align-items: center; justify-content: space-between; padding: var(--ds-space-4) var(--ds-space-5) var(--ds-space-6); }
+    .task-rail-title { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .task-session {
+      width: 100%; min-height: 54px; margin-bottom: var(--ds-space-4); padding: var(--ds-space-5) var(--ds-space-6);
+      border: 0; border-radius: var(--ds-radius-medium); color: var(--ds-text-2); background: transparent; text-align: left;
+    }
+    .task-session:hover { background: var(--ds-bg-fill); }
+    .task-session.active { color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+    .task-session strong, .task-session span { display: block; }
+    .task-session span { margin-top: var(--ds-space-2); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .context-picker { display: flex; flex-wrap: wrap; gap: var(--ds-space-4); margin-bottom: var(--ds-space-6); }
+    .context-chip {
+      min-height: var(--ds-control-small); display: inline-flex; align-items: center; gap: var(--ds-space-3);
+      padding: 0 var(--ds-space-5); border: 1px solid var(--ds-border-2); border-radius: 14px;
+      color: var(--ds-text-2); background: var(--ds-bg-surface); font-size: var(--ds-font-size-12);
+    }
+    .context-chip:hover { border-color: var(--ds-color-primary-4); color: var(--ds-color-primary-7); }
+    .composer-actions { display: flex; align-items: center; justify-content: space-between; gap: var(--ds-space-6); margin-top: var(--ds-space-5); }
+    .context-note { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .brief-thread { display: grid; gap: var(--ds-space-7); }
+    .brief-message { padding: var(--ds-space-7); border-radius: var(--ds-radius-medium); background: var(--ds-bg-fill); }
+    .brief-message.user { margin-left: 48px; color: var(--ds-color-primary-8); background: var(--ds-color-primary-1); }
+    .artifact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-6); }
+    .artifact-card { min-height: 132px; padding: var(--ds-space-7); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); background: var(--ds-bg-surface); }
+    .artifact-card.changed { border-color: var(--ds-color-warning); background: var(--ds-color-warning-light); }
+    .artifact-card-head { display: flex; align-items: center; justify-content: space-between; gap: var(--ds-space-6); margin-bottom: var(--ds-space-6); }
+    .artifact-card-head .status { flex-shrink: 0; white-space: nowrap; }
+    .artifact-list { margin: 0; padding-left: 18px; color: var(--ds-text-2); }
+    .readiness { display: grid; gap: var(--ds-space-5); margin-top: var(--ds-space-7); }
+    .readiness-row { display: grid; grid-template-columns: 120px 1fr 42px; gap: var(--ds-space-6); align-items: center; }
+    .progress { height: 6px; overflow: hidden; border-radius: 3px; background: var(--ds-bg-fill-hover); }
+    .progress > span { display: block; height: 100%; border-radius: inherit; background: var(--ds-color-primary-6); }
+    .pipeline-view { height: 100%; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .pipeline-view > .page-head { flex: none; }
+    .pipeline-view > .page-body { flex: 1; min-height: 0; display: flex; overflow: hidden; }
+    .pipeline-layout { flex: 1; min-width: 0; min-height: 0; display: grid; grid-template-columns: 190px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: var(--ds-grid-gutter); }
+    .type-rail { min-height: 0; overflow-y: auto; padding: var(--ds-space-6); }
+    .type-rail-title { padding: var(--ds-space-5) var(--ds-space-6); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .type-filter-button { width: 100%; min-height: var(--ds-control-large); display: flex; align-items: center; justify-content: space-between; padding: 0 var(--ds-space-6); border: 0; border-radius: var(--ds-radius-small); color: var(--ds-text-2); background: transparent; text-align: left; }
+    .type-filter-button.active { color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+    .count-badge { min-width: 24px; padding: 0 var(--ds-space-4); border-radius: 10px; color: var(--ds-text-3); background: var(--ds-bg-fill); text-align: center; font-size: var(--ds-font-size-12); }
+    .kanban { min-width: 0; min-height: 0; display: grid; grid-template-columns: repeat(4, minmax(320px, 1fr)); grid-template-rows: minmax(0, 1fr); gap: var(--ds-space-6); overflow-x: auto; overflow-y: hidden; padding-bottom: var(--ds-space-4); }
+    .kanban:focus-visible { outline: 2px solid var(--ds-color-primary-6); outline-offset: -2px; }
+    .kanban-column { min-width: 320px; min-height: 0; display: flex; flex-direction: column; padding: var(--ds-space-6); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); background: var(--ds-color-gray-1); }
+    .kanban-head { flex: none; display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--ds-space-6); }
+    .kanban-cards { flex: 1; min-height: 0; display: grid; align-content: start; gap: var(--ds-space-6); overflow-y: auto; padding: var(--ds-space-1); }
+    .kanban-card { padding: var(--ds-space-6); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); background: var(--ds-bg-surface); box-shadow: var(--ds-shadow-1); }
+    .kanban-card:hover { border-color: var(--ds-color-primary-4); }
+    .kanban-card-title { margin-bottom: var(--ds-space-5); font-weight: var(--ds-font-weight-medium); }
+    .kanban-card-meta { display: flex; align-items: center; justify-content: space-between; gap: var(--ds-space-5); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .kanban-card .btn { margin-top: var(--ds-space-6); }
+    .kanban-card-actions { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--ds-space-4); }
+
+    .prototype-switcher {
+      position: fixed; z-index: calc(var(--ds-z-message) + 1); left: 50%; bottom: 18px;
+      display: flex; align-items: center; gap: var(--ds-space-4); padding: var(--ds-space-4);
+      border: 1px solid rgb(255 255 255 / 22%); border-radius: 24px; color: var(--ds-color-white);
+      background: var(--ds-color-gray-10); box-shadow: var(--ds-shadow-3); transform: translateX(-50%);
+    }
+    .prototype-switcher[hidden] { display: none; }
+    .switcher-button { width: var(--ds-control-default); height: var(--ds-control-default); display: grid; place-items: center; border: 0; border-radius: var(--ds-radius-circle); color: var(--ds-color-white); background: rgb(255 255 255 / 10%); }
+    .switcher-button:hover { background: rgb(255 255 255 / 20%); }
+    .switcher-label { min-width: 210px; text-align: center; font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-medium); }
+    .switcher-note { color: var(--ds-color-gray-5); font-weight: var(--ds-font-weight-regular); }
+
+    .modal-layer, .drawer-layer {
+      position: fixed; z-index: var(--ds-z-modal); inset: 0; display: none;
+    }
+    .modal-layer.open, .drawer-layer.open { display: block; }
+    .mask { position: absolute; inset: 0; background: var(--ds-mask); }
+    .modal {
+      position: absolute; top: 50%; left: 50%; width: var(--ds-modal-width); max-width: calc(100vw - var(--ds-space-16)); max-height: calc(100vh - 80px);
+      display: flex; flex-direction: column; transform: translate(-50%, -50%);
+      border-radius: var(--ds-radius-large); background: var(--ds-bg-elevated); box-shadow: var(--ds-shadow-3);
+    }
+    .modal-head, .drawer-head {
+      flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between;
+      gap: var(--ds-space-7); min-height: var(--ds-nav-height); padding: 0 var(--ds-space-8); border-bottom: 1px solid var(--ds-border-2);
+    }
+    .modal-title, .drawer-title { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    .modal-body, .drawer-body { overflow-y: auto; padding: var(--ds-space-8); }
+    .modal-foot, .drawer-foot {
+      flex: 0 0 auto; display: flex; justify-content: flex-end; gap: var(--ds-space-6);
+      padding: var(--ds-space-6) var(--ds-space-8); border-top: 1px solid var(--ds-border-2);
+    }
+    .close-button { border: 0; background: transparent; }
+    .drawer { position: absolute; top: 0; right: 0; bottom: 0; width: min(560px, 48vw); display: flex; flex-direction: column; background: var(--ds-bg-elevated); box-shadow: var(--ds-shadow-3); }
+    .drawer-body { flex: 1; }
+    .type-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-6); margin-bottom: var(--ds-space-7); }
+    .type-option {
+      min-height: 70px; display: flex; align-items: center; gap: var(--ds-space-6); padding: var(--ds-space-6);
+      border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); background: var(--ds-bg-surface); text-align: left;
+    }
+    .type-option.active { border-color: var(--ds-color-primary-6); box-shadow: var(--ds-focus-ring); }
+    .radio-row { display: flex; gap: var(--ds-space-7); }
+    .radio-row label { display: flex; align-items: center; gap: var(--ds-space-4); }
+    .creation-mode-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-6); }
+    .creation-mode-option {
+      min-height: 88px; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start;
+      gap: var(--ds-space-5); padding: var(--ds-space-6); border: 1px solid var(--ds-border-2);
+      border-radius: var(--ds-radius-medium); background: var(--ds-bg-surface); cursor: pointer;
+    }
+    .creation-mode-option:hover { border-color: var(--ds-color-primary-4); }
+    .creation-mode-option:has(input:checked) { border-color: var(--ds-color-primary-6); background: var(--ds-color-primary-1); box-shadow: var(--ds-focus-ring); }
+    .creation-mode-option input { margin-top: var(--ds-space-2); }
+    .creation-mode-option strong, .creation-mode-option span { display: block; }
+    .creation-mode-option span { margin-top: var(--ds-space-2); color: var(--ds-text-3); font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-regular); }
+    .field-error { margin-top: var(--ds-space-3); color: var(--ds-color-danger-text); font-size: var(--ds-font-size-12); }
+    .workbench-head { flex-wrap: wrap; }
+    .workbench-head > div:first-child { min-width: 0; flex: 1 1 420px; }
+    .workbench-head h1, .kanban-card-title { overflow-wrap: anywhere; }
+    .workbench-head .page-title-row { flex-wrap: wrap; }
+    .workbench-main { min-width: 0; }
+    .editor-section { padding: var(--ds-space-7); border-bottom: 1px solid var(--ds-border-2); }
+    .editor-section:last-child { border-bottom: 0; }
+    .editor-section h2 { display: flex; align-items: center; gap: var(--ds-space-4); margin-bottom: var(--ds-space-7); }
+    .config-fields { min-width: 0; margin: 0; padding: 0; border: 0; }
+    .config-fields:disabled .input, .config-fields:disabled .textarea, .config-fields:disabled .select { background: var(--ds-bg-fill); color: var(--ds-text-2); }
+    .check-grid { display: flex; flex-wrap: wrap; gap: var(--ds-space-6) var(--ds-space-7); }
+    .check-grid label, .form-item .check-inline { display: inline-flex; align-items: center; gap: var(--ds-space-4); margin: 0; font-weight: var(--ds-font-weight-regular); }
+    .field-help { position: relative; display: inline-flex; vertical-align: middle; margin-left: var(--ds-space-3); }
+    .field-help > button { display: grid; place-items: center; width: 20px; height: 20px; padding: 0; border: 0; color: var(--ds-text-2); background: transparent; }
+    .help-popover { position: absolute; z-index: var(--ds-z-popup); top: 100%; left: 0; width: 250px; padding: var(--ds-space-6); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); color: var(--ds-text-1); background: var(--ds-bg-elevated); box-shadow: var(--ds-shadow-2); font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-regular); visibility: hidden; }
+    .field-help:hover .help-popover, .field-help:focus-within .help-popover { visibility: visible; }
+    .scope-help-floating { position: fixed; z-index: var(--ds-z-popup); width: 300px; max-width: calc(100vw - 32px); padding: var(--ds-space-6); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); color: var(--ds-text-1); background: var(--ds-bg-elevated); box-shadow: var(--ds-shadow-2); font-size: var(--ds-font-size-12); line-height: var(--ds-line-height-base); overflow-wrap: anywhere; }
+    .request-card { border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); margin-top: var(--ds-space-7); }
+    .request-card .panel-head { background: var(--ds-color-gray-1); }
+    .request-card .form-grid { padding: var(--ds-space-7); }
+    .asset-results { display: grid; gap: var(--ds-space-6); margin-top: var(--ds-space-7); }
+    .asset-choice { display: flex; gap: var(--ds-space-6); padding: var(--ds-space-6); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); }
+    .asset-choice span { min-width: 0; }
+    .editor-empty { padding: var(--ds-space-10) var(--ds-space-7); text-align: center; color: var(--ds-text-2); }
+    .editor-notice { padding: var(--ds-space-6) var(--ds-space-7); border-bottom: 1px solid var(--ds-border-2); color: var(--ds-text-2); background: var(--ds-color-gray-1); }
+    .review-summary { display: grid; gap: var(--ds-space-6); }
+    .review-summary dl { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: var(--ds-space-6); margin: 0; }
+    .review-summary dt { color: var(--ds-text-2); }
+    .review-summary dd { margin: 0; overflow-wrap: anywhere; }
+    .review-history { margin: 0; padding-left: var(--ds-space-8); }
+    .review-history li { margin: var(--ds-space-6) 0; }
+    .code-preview { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--ds-color-gray-1); padding: var(--ds-space-7); font: var(--ds-font-size-12)/1.65 var(--ds-font-mono); }
+    .modal-body > .form-item + .form-item { margin-top: var(--ds-form-item-gap); }
+    .select[aria-invalid="true"] { border-color: var(--ds-color-danger); }
+    .skill-package-head { flex-wrap: wrap; }
+    .skill-package-head .inline-actions { flex-wrap: wrap; }
+    .skill-files-layout { display: grid; grid-template-columns: 208px minmax(0, 1fr); min-height: 480px; }
+    .skill-directory { min-width: 0; padding: var(--ds-space-6); border-right: 1px solid var(--ds-border-2); background: var(--ds-color-gray-1); }
+    .skill-directory-title { display: flex; align-items: center; gap: var(--ds-space-4); padding: var(--ds-space-4); overflow-wrap: anywhere; font-size: var(--ds-font-size-12); }
+    .skill-file-list { margin: 0; padding: 0; list-style: none; }
+    .skill-file-list .skill-file-list { margin-left: var(--ds-space-6); padding-left: var(--ds-space-4); border-left: 1px solid var(--ds-border-2); }
+    .skill-folder > summary { min-height: var(--ds-control-default); padding: var(--ds-space-3) var(--ds-space-4); cursor: pointer; color: var(--ds-text-2); overflow-wrap: anywhere; }
+    .skill-file-button { width: 100%; min-height: var(--ds-control-default); display: flex; gap: var(--ds-space-4); align-items: center; padding: var(--ds-space-3) var(--ds-space-4); border: 0; border-radius: var(--ds-radius-small); background: transparent; color: var(--ds-text-2); text-align: left; }
+    .skill-file-button span { overflow-wrap: anywhere; }
+    .skill-file-button:hover { background: var(--ds-bg-fill-hover); }
+    .skill-file-button.active { background: var(--ds-color-primary-1); color: var(--ds-color-primary-7); }
+    .skill-file-editor { min-width: 0; }
+    .skill-file-toolbar { min-height: var(--ds-nav-height); padding: var(--ds-space-6) var(--ds-space-7); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--ds-space-6); border-bottom: 1px solid var(--ds-border-2); }
+    .skill-file-toolbar h3 { margin: 0; overflow-wrap: anywhere; }
+    .skill-content-editor { min-height: 360px; font-family: var(--ds-font-mono); line-height: var(--ds-line-height-base); tab-size: 2; white-space: pre; overflow: auto; }
+    .skill-metadata-extra { margin-top: var(--ds-space-7); }
+    .skill-metadata-extra > summary { min-height: var(--ds-control-default); cursor: pointer; }
+    .skill-metadata-extra .form-grid { margin-top: var(--ds-space-7); }
+    .skill-file-editor #cfg-skillDescription { min-height: 80px; }
+    .skill-file-editor #cfg-instructions { min-height: 300px; }
+    .skill-empty-folder { padding: var(--ds-space-4) var(--ds-space-6); color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .skill-notes { margin-top: var(--ds-space-7); padding: var(--ds-space-6); font-size: var(--ds-font-size-12); color: var(--ds-text-2); }
+    .skill-package-errors { padding: var(--ds-space-6) var(--ds-space-7); }
+    .skill-assistant-drawer { min-height: 480px; border-left: 0; }
+    summary:focus-visible { outline: 2px solid var(--ds-color-primary-6); outline-offset: 2px; }
+    .input[aria-invalid="true"], .textarea[aria-invalid="true"] { border-color: var(--ds-color-danger); }
+    .diff-block {
+      overflow: auto; padding: var(--ds-space-7); border-radius: var(--ds-radius-medium);
+      color: var(--ds-color-gray-3); background: var(--ds-color-gray-10); font: 13px/1.65 var(--ds-font-mono); white-space: pre-wrap;
+    }
+    .diff-add { color: var(--ds-color-success-light); }
+    .check-list { display: grid; gap: var(--ds-space-6); margin: var(--ds-space-7) 0; }
+    .check-item { display: flex; align-items: flex-start; gap: var(--ds-space-5); }
+    .result-list { display: grid; gap: var(--ds-space-6); }
+    .result-item { display: flex; justify-content: space-between; gap: var(--ds-space-7); padding: var(--ds-space-6); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); }
+
+    .toast {
+      position: fixed; z-index: var(--ds-z-message); top: calc(var(--ds-nav-height) + var(--ds-space-7));
+      left: calc(var(--ds-sidebar-width) + (100vw - var(--ds-sidebar-width)) / 2);
+      display: flex; align-items: center; gap: var(--ds-space-5); min-height: var(--ds-control-large);
+      max-width: 520px;
+      padding: 0 var(--ds-space-7); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium);
+      color: var(--ds-text-1); background: var(--ds-bg-elevated); box-shadow: var(--ds-shadow-2);
+      opacity: 0; pointer-events: none; transform: translate(-50%, -8px);
+      transition: opacity var(--ds-duration-base) var(--ds-ease-standard), transform var(--ds-duration-base) var(--ds-ease-standard);
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .toast-mark { color: var(--ds-color-success-text); }
+    @media (max-width: 1279px) {
+      .ai-workbench { grid-template-columns: minmax(0, 1fr) 240px; }
+      .ai-workbench.drawer-open { grid-template-columns: minmax(0, 1fr) 240px 320px; }
+      .ai-config-button { padding-inline: var(--ds-space-5); }
+      .ai-chat-head, .ai-chat-panel .assistant-compose { padding-inline: var(--ds-space-7); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <svg class="sr-only" aria-hidden="true">
+    <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 4h6v6H4zm10 0h6v6h-6zM4 14h6v6H4zm10 0h6v6h-6z" fill="currentColor"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5v8a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m9 7-5 5 5 5m6-10 5 5-5 5M13 4l-2 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9h16l-1-5H5zm1 0v11h14V9M9 20v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-app" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h8M8 12h8M8 16h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 12h8m-3 0v3m-3-3v2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2.2-6 4 12 2.2-6H21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9.8 9a2.4 2.4 0 1 1 3 2.3c-.8.3-.8 1-.8 1.7m0 3.5v.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 17h12l-1.5-2V10a4.5 4.5 0 0 0-9 0v5zm4 2h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 15.5 4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5zm6 12 .7 2.3L21 18l-2.3.7L18 21l-.7-2.3L15 18l2.3-.7z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.7L4 8.5M4 4v4.5h4.5M12 8v5l3 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6m0-9v.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <header class="topbar">
+    <div class="product-area"><span class="product-symbol"><svg class="icon" aria-hidden="true"><use href="#i-grid"></use></svg></span><span>数据服务平台</span></div>
+    <div class="top-domain">数据服务域</div>
+    <div class="top-spacer"></div>
+    <div class="top-actions">
+      <button class="top-icon" type="button" aria-label="帮助" data-toast="初版原型暂不包含帮助中心"><svg class="icon" aria-hidden="true"><use href="#i-help"></use></svg></button>
+      <button class="top-icon" type="button" aria-label="通知" data-toast="暂无新的待处理通知"><svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg></button>
+      <button class="user-chip" type="button" data-toast="当前视角：开发岗位"><span class="avatar">开</span><span>开发岗位</span><svg class="icon icon-sm" aria-hidden="true"><use href="#i-chevron"></use></svg></button>
+    </div>
+  </header>
+
+  <aside class="sidebar" aria-label="数据服务域导航">
+    <button class="nav-item" type="button" data-toast="工作台不在本次原型范围"><svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg><span>工作台</span></button>
+    <div class="nav-group">
+      <button class="nav-item active" type="button" data-view="services"><svg class="icon" aria-hidden="true"><use href="#i-code"></use></svg><span>服务开发</span></button>
+      <div class="nav-children">
+        <button class="nav-child" type="button" data-toast="API 开发沿用独立开发与上线流程，本页暂不展开">API 开发</button>
+        <button class="nav-child active" type="button" data-view="services">AI 服务开发</button>
+      </div>
+    </div>
+    <button class="nav-item" type="button" data-toast="服务集市不在本次原型范围"><svg class="icon" aria-hidden="true"><use href="#i-store"></use></svg><span>服务集市</span></button>
+    <button class="nav-item" type="button" data-view="application"><svg class="icon" aria-hidden="true"><use href="#i-app"></use></svg><span>数据应用</span></button>
+    <button class="nav-item" type="button" data-toast="应用与授权通过数据应用版本衔接，本页仅展示摘要"><svg class="icon" aria-hidden="true"><use href="#i-key"></use></svg><span>应用与授权</span></button>
+    <button class="nav-item" type="button" data-toast="审批中心由统一工作流引擎提供，本页只模拟提交和结果"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span>审批中心</span></button>
+    <button class="nav-item" type="button" data-toast="运行管理不在本次原型范围"><svg class="icon" aria-hidden="true"><use href="#i-activity"></use></svg><span>运行管理</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-item" type="button" data-toast="设置不在本次原型范围"><svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg><span>设置</span></button>
+  </aside>
+
+  <main class="workspace" id="workspace"></main>
+
+  <div class="modal-layer" id="modal-layer" aria-hidden="true">
+    <div class="mask"></div>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <header class="modal-head"><h2 class="modal-title" id="modal-title">确认操作</h2><button class="close-button icon-btn" type="button" aria-label="关闭对话框" data-close-modal><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button></header>
+      <div class="modal-body" id="modal-body"></div>
+      <footer class="modal-foot" id="modal-foot"></footer>
+    </section>
+  </div>
+
+  <div class="drawer-layer" id="drawer-layer" aria-hidden="true">
+    <div class="mask"></div>
+    <section class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <header class="drawer-head"><h2 class="drawer-title" id="drawer-title">详情</h2><button class="close-button icon-btn" type="button" aria-label="关闭抽屉" data-close-drawer><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button></header>
+      <div class="drawer-body" id="drawer-body"></div>
+      <footer class="drawer-foot" id="drawer-foot"></footer>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status"><svg class="icon toast-mark" aria-hidden="true"><use href="#i-check"></use></svg><span id="toast-text">操作完成</span></div>
+  <div class="scope-help-floating" id="scope-help-popover" role="tooltip" hidden></div>
+
+  <div class="prototype-switcher" aria-label="原型方案切换器" hidden>
+    <button class="switcher-button" type="button" aria-label="上一个方案" data-variant-step="-1">←</button>
+    <div class="switcher-label" id="switcher-label">C — 服务制品流水线<br><span class="switcher-note">原型比较工具，不属于产品界面</span></div>
+    <button class="switcher-button" type="button" aria-label="下一个方案" data-variant-step="1">→</button>
+  </div>
+
+  <script>
+    (function () {
+      var serviceRows = [
+        { id: "agent-customer", name: "客户洞察 Agent", code: "AG", type: "Agent", version: "v1.2.0", lifecycle: "已上线", runtime: "可用", updated: "2026-08-27 10:32" },
+        { id: "mcp-profile", name: "客户资料 MCP", code: "MC", type: "MCP", version: "v1.1.0", lifecycle: "已上线", runtime: "可用", updated: "2026-08-26 16:08" },
+        { id: "skill-compliance", name: "合规查询 Skill", code: "SK", type: "Skill", version: "v1.0.3", lifecycle: "已上线", runtime: "可用", updated: "2026-08-25 14:20" },
+        { id: "worker-report", name: "洞察报告 Worker", code: "WK", type: "Worker", version: "v0.9.0", lifecycle: "仿真测试", runtime: "—", updated: "2026-08-27 09:12" },
+        { id: "agent-risk", name: "风险核验 Agent", code: "AG", type: "Agent", version: "草稿", lifecycle: "草稿", runtime: "—", updated: "2026-08-27 08:45" },
+        { id: "mcp-order", name: "订单分析 MCP", code: "MC", type: "MCP", version: "草稿", lifecycle: "草稿", runtime: "—", updated: "2026-08-24 18:05" },
+        { id: "skill-compliance-next", name: "合规校验 Skill", code: "SK", type: "Skill", version: "v1.0.4", lifecycle: "仿真测试", runtime: "—", updated: "2026-08-27 11:00" },
+        { id: "agent-recommend", name: "客群推荐 Agent", code: "AG", type: "Agent", version: "v1.0.0", lifecycle: "待审核", runtime: "—", updated: "2026-08-27 11:00" },
+        { id: "mcp-product", name: "商品查询 MCP", code: "MC", type: "MCP", version: "v1.2.0", lifecycle: "待审核", runtime: "—", updated: "2026-08-27 11:00" }
+      ];
+      var variantNames = { A: "列表与专属编辑器", B: "AI 任务工作台", C: "服务制品流水线" };
+      var queryParams = new URLSearchParams(window.location.search);
+      var compareMode = queryParams.get("compare") === "1";
+      var requestedVariant = queryParams.get("variant");
+      var initialVariant = compareMode && variantNames[requestedVariant] ? requestedVariant : "C";
+      var state = {
+        variant: initialVariant,
+        view: "services",
+        query: "",
+        type: "全部类型",
+        lifecycle: "全部状态",
+        activeSection: "data",
+        currentServiceId: "agent-risk",
+        selectedHosted: true,
+        creationMode: "ai",
+        assetQuery: "",
+        assetSelection: [],
+        skillFile: "SKILL.md",
+        skillCollapsed: {},
+        skillAssistantDrawer: false,
+        aiConfigOpen: false,
+        aiConfigSection: "definition",
+        validationErrors: {},
+        editorTab: "compose",
+        revision: 7,
+        proposal: false,
+        assistantRequest: "",
+        draftChanged: false,
+        selectedCreateType: "Agent",
+        app: {
+          version: "v3.2.0",
+          status: "运行中",
+          draft: false,
+          reviewPending: false,
+          upgraded: false,
+          mainAgentVersion: "v1.2.0"
+        }
+      };
+      var workspace = document.getElementById("workspace");
+      var modalLayer = document.getElementById("modal-layer");
+      var modalTitle = document.getElementById("modal-title");
+      var modalBody = document.getElementById("modal-body");
+      var modalFoot = document.getElementById("modal-foot");
+      var drawerLayer = document.getElementById("drawer-layer");
+      var prototypeSwitcher = document.querySelector(".prototype-switcher");
+      prototypeSwitcher.hidden = !compareMode;
+      var drawerTitle = document.getElementById("drawer-title");
+      var drawerBody = document.getElementById("drawer-body");
+      var drawerFoot = document.getElementById("drawer-foot");
+      var toast = document.getElementById("toast");
+      var toastText = document.getElementById("toast-text");
+      var switcherLabel = document.getElementById("switcher-label");
+      var toastTimer;
+
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, function (character) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[character];
+        });
+      }
+
+      function icon(id, extra) {
+        return '<svg class="icon ' + (extra || "") + '" aria-hidden="true"><use href="#' + id + '"></use></svg>';
+      }
+
+      // This offline prototype stores drafts locally; it never grants permissions or calls a runtime.
+      var storageKey = "data-services.ai-development.v2";
+      var dataAssets = [
+        { id: "customer", name: "客户基本信息", table: "ads_customer_profile", domain: "客户域", fields: [{ id: "customer_id", name: "客户编号" }, { id: "name_masked", name: "客户姓名（脱敏）" }, { id: "region", name: "所属地区" }, { id: "level", name: "客户等级" }] },
+        { id: "orders", name: "订单明细", table: "ads_order_detail", domain: "交易域", fields: [{ id: "order_id", name: "订单编号" }, { id: "customer_id", name: "客户编号" }, { id: "amount", name: "订单金额" }, { id: "order_date", name: "订单日期" }] },
+        { id: "tags", name: "客户标签", table: "ads_customer_tags", domain: "客户域", fields: [{ id: "customer_id", name: "客户编号" }, { id: "tag_name", name: "标签名称" }, { id: "updated_at", name: "更新时间" }] }
+      ];
+      var typeDescriptions = { Agent: "行为、模型与工具编排", MCP: "工具、资源与提示模板", Skill: "技能说明与可选脚本", Worker: "异步任务与定时执行" };
+      function copy(value) { return JSON.parse(JSON.stringify(value)); }
+      function configDefaults(type, description) {
+        var schema = '{\n  "type": "object",\n  "properties": {}\n}';
+        if (type === "Agent") return { goal: description, prompt: "仅使用当前数据应用获准的数据与已声明工具。返回结果时附带依据；权限不足时明确拒绝。", model: "通用语言模型 · model-v3", memory: "仅会话内临时记忆", callMode: "同步会话与异步任务", steps: "30", duration: "300", inputSchema: schema, outputSchema: schema, dependency: "客户资料 MCP · v1.1.0" };
+        if (type === "MCP") return { tools: true, resources: false, prompts: false, entry: "server:create_server", transport: "Streamable HTTP", toolName: "query_data", toolDescription: description, toolInput: schema, toolOutput: schema, toolHandler: "handlers.query_data", resourceUri: "data://catalog/summary", resourceMime: "application/json", resourceHandler: "handlers.read_summary", promptName: "summarize_data", promptArguments: "topic", promptBody: "根据 {{topic}} 汇总获准的数据。", timeout: "30", dependency: "客户标签 API · v2.4.1" };
+        if (type === "Skill") return { packageName: "data-analysis-skill", skillDescription: description, instructions: "## 使用时机\n用户需要分析已获准的数据时使用。\n\n## 执行步骤\n1. 核对数据范围。\n2. 参考[使用指南](references/usage.md)。\n3. 整理证据并生成摘要，数据不足时说明限制。", license: "", compatibility: "", metadata: "{}", allowedTools: "", files: [{ path: "references/usage.md", content: "# 使用指南\n\n仅引用当前数据应用获准的数据。" }], folders: [], dependency: "客户资料 MCP · v1.1.0" };
+        return { taskName: "process_data", entry: "tasks.process_data", implementation: "def process_data(payload):\n    return {\"status\": \"completed\"}", runtime: "Python 受管运行时", inputSchema: schema, outputSchema: schema, trigger: "按需异步", schedule: "0 9 * * *", timezone: "Asia/Shanghai", overlap: "跳过重叠执行", attemptTimeout: "300", totalTimeout: "900", attempts: "3", backoff: "指数退避", idempotency: "request_id", dependency: "客户标签 API · v2.4.1" };
+      }
+      function newDraft(id, name, description, type, hosted) {
+        return { id: id, name: name, description: description, type: type, code: type.slice(0, 2).toUpperCase(), hosted: hosted, creationMode: hosted ? "manual" : "data-only", version: "草稿", lifecycle: "草稿", runtime: "—", updated: "刚刚", revision: 1, dirty: false, noData: false, requests: [], config: hosted ? configDefaults(type, description) : {}, history: [], submissions: [], releases: [], submission: null, test: null };
+      }
+      function submissionContent(service) {
+        var result = { name: service.name, description: service.description, type: service.type, hosted: service.hosted, revision: service.revision, noData: service.noData, requests: copy(service.noData ? [] : service.requests), config: service.hosted ? copy(service.config) : {}, test: copy(service.test) };
+        if (service.hosted && service.type === "Skill") result.skillPackage = buildSkillPackage(service.config);
+        return result;
+      }
+      serviceRows = serviceRows.map(function (row) {
+        var draft = Object.assign(newDraft(row.id, row.name, "面向业务场景提供受治理的" + row.type + "能力。", row.type, true), row);
+        draft.requests = [{ assetId: "customer", fields: ["customer_id", "region"], scope: "业务域范围", scopeField: "region", scopeValue: "", purpose: "使用客户编号与地区形成业务分析结果。" }];
+        if (draft.lifecycle === "待审核" || draft.lifecycle === "已上线") {
+          draft.submission = submissionContent(draft);
+          draft.submission.version = draft.version;
+          draft.submissions = [copy(draft.submission)];
+          draft.releases = [draft.version];
+          draft.history = [{ action: "提交审核", note: "示例审核记录", revision: draft.revision }];
+        }
+        return draft;
+      });
+      try {
+        var saved = window.localStorage && JSON.parse(window.localStorage.getItem(storageKey) || "null");
+        if (saved && saved.schema === 2 && Array.isArray(saved.services) && saved.services.every(function (s) {
+          return s && typeof s.id === "string" && /^[a-z0-9-]+$/.test(s.id) && typeof s.name === "string" && typeof s.description === "string" && typeDescriptions[s.type] && typeof s.hosted === "boolean" && s.config && Array.isArray(s.requests) && s.requests.every(function (r) { return dataAssets.some(function (a) { return a.id === r.assetId; }) && Array.isArray(r.fields) && typeof r.purpose === "string"; }) && Array.isArray(s.history);
+        })) serviceRows = saved.services;
+      } catch (error) { /* Storage may be disabled for local files; the current tab remains usable. */ }
+      serviceRows.forEach(function (s) {
+        s.creationMode = s.hosted ? (["ai", "manual"].includes(s.creationMode) ? s.creationMode : "manual") : "data-only";
+        if (s.hosted && s.type === "Skill") upgradeSkillConfig(s.config);
+      });
+      function persist() {
+        try {
+          if (!window.localStorage) return false;
+          window.localStorage.setItem(storageKey, JSON.stringify({ schema: 2, services: serviceRows }));
+          return true;
+        } catch (error) { return false; }
+      }
+      function activeServices() { return serviceRows.filter(function (item) { return !item.deleted; }); }
+      function currentService() { return activeServices().find(function (item) { return item.id === state.currentServiceId; }) || activeServices()[0]; }
+      function editable(service) { return Boolean(service && !service.deleted && ["草稿", "仿真测试", "已驳回"].includes(service.lifecycle)); }
+      function deletable(service) { return editable(service) && service.runtime !== "可用" && !service.history.some(function (entry) { return entry.action === "模拟发布" || entry.action === "审核通过"; }); }
+      function deleteServiceButton(service) { return deletable(service) ? '<button class="btn btn-danger btn-small" type="button" data-delete-service="' + service.id + '" aria-label="删除 ' + escapeHtml(service.name) + '">删除</button>' : ''; }
+      function markChanged(service) {
+        service.dirty = true;
+        service.test = null;
+        if (service.lifecycle === "仿真测试") service.lifecycle = "草稿";
+        var indicator = document.getElementById("draft-save-state");
+        if (indicator) indicator.textContent = "有未保存的修改";
+      }
+      function openService(id) {
+        if (!activeServices().some(function (item) { return item.id === id; })) return;
+        state.currentServiceId = id;
+        state.view = "workbench";
+        state.activeSection = "data";
+        state.validationErrors = {};
+        state.proposal = false;
+        state.assistantRequest = "";
+        state.aiConfigOpen = false;
+        state.aiConfigSection = "definition";
+        state.skillFile = "SKILL.md";
+        state.skillCollapsed = {};
+        render();
+      }
+      function help(text) {
+        return '<span class="field-help"><button type="button" aria-label="' + escapeHtml(text) + '">' + icon("i-help", "icon-sm") + '</button><span class="help-popover" role="tooltip">' + escapeHtml(text) + '</span></span>';
+      }
+      function scopeHelp() {
+        var text = "模型由 AI 网关注册管理。托管服务生成平台制品；非托管服务仅提交数据需求，不在此登记外部地址或获得运行权限。";
+        return '<span class="field-help"><button type="button" id="scope-help-trigger" data-scope-help="' + escapeHtml(text) + '" aria-label="查看服务范围说明" aria-describedby="scope-help-popover">' + icon("i-help", "icon-sm") + '</button></span>';
+      }
+      var scopeHelpTimer;
+      function hideScopeHelp() {
+        window.clearTimeout(scopeHelpTimer);
+        document.getElementById("scope-help-popover").hidden = true;
+      }
+      function showScopeHelp(button) {
+        window.clearTimeout(scopeHelpTimer);
+        var popup = document.getElementById("scope-help-popover");
+        popup.textContent = button.dataset.scopeHelp;
+        popup.hidden = false;
+        var anchor = button.getBoundingClientRect(), edge = 16;
+        var width = window.innerWidth, height = window.innerHeight;
+        var left = Math.max(edge, Math.min(anchor.left, width - popup.offsetWidth - edge));
+        var top = anchor.bottom + 8;
+        if (top + popup.offsetHeight > height - edge) top = anchor.top - popup.offsetHeight - 8;
+        popup.style.left = left + "px";
+        popup.style.top = Math.max(edge, top) + "px";
+      }
+      function fieldError(id) { return '<div class="field-error" id="' + id + '-error"' + (state.validationErrors[id] ? '' : ' hidden') + '>' + escapeHtml(state.validationErrors[id] || '') + '</div>'; }
+      function configField(key, label, kind, options, hint) {
+        var value = currentService().config[key], id = "cfg-" + key;
+        var attrs = ' id="' + id + '" data-config="' + key + '" aria-describedby="' + id + '-error" aria-invalid="' + Boolean(state.validationErrors[id]) + '"';
+        var control = kind === "textarea" ? '<textarea class="textarea prompt-editor"' + attrs + '>' + escapeHtml(value || '') + '</textarea>' : kind === "select" ? '<select class="select"' + attrs + '>' + options.map(function (o) { return '<option' + (o === value ? ' selected' : '') + '>' + escapeHtml(o) + '</option>'; }).join('') + '</select>' : '<input class="input"' + attrs + ' type="' + (kind === 'number' ? 'number' : 'text') + '"' + (kind === 'number' ? ' min="1" step="1"' : '') + ' value="' + escapeHtml(value || '') + '">';
+        return '<div class="form-item' + (kind === "textarea" ? ' full' : '') + '"><label for="' + id + '">' + label + (hint ? help(hint) : '') + '</label>' + control + fieldError(id) + '</div>';
+      }
+      function configCheck(key, label) { return '<label class="check-inline"><input type="checkbox" id="cfg-' + key + '" data-config="' + key + '"' + (currentService().config[key] ? ' checked' : '') + '> ' + label + '</label>'; }
+      function formSection(title, body, hint) { return '<section class="editor-section"><h2>' + title + (hint ? help(hint) : '') + '</h2>' + body + '</section>'; }
+
+      // SKILL.md is generated from its metadata and Markdown body; other files are edited verbatim.
+      function upgradeSkillConfig(c) {
+        if (!Array.isArray(c.files)) {
+          c.files = [];
+          if (c.resourcePath) c.files.push({ path: c.resourcePath, content: c.resourceContent || "" });
+          if (c.hasScript && c.scriptPath) c.files.push({ path: c.scriptPath, content: c.scriptContent || "", duration: c.duration || "60" });
+          if (!c.hasScript && c.scriptContent) c.legacyInactiveScript = { path: c.scriptPath || "scripts/analyze.py", content: c.scriptContent, duration: c.duration || "60" };
+          ["hasScript", "scriptPath", "scriptContent", "resourcePath", "resourceContent", "runtime", "duration"].forEach(function (key) { delete c[key]; });
+        }
+        if (!Array.isArray(c.folders)) c.folders = [];
+        ["license", "compatibility", "allowedTools"].forEach(function (key) { if (typeof c[key] !== "string") c[key] = ""; });
+        if (typeof c.metadata !== "string") c.metadata = "{}";
+      }
+      function skillMarkdown(c) {
+        var lines = ["---", "name: " + JSON.stringify(c.packageName), "description: " + JSON.stringify(c.skillDescription)];
+        if (c.license) lines.push("license: " + JSON.stringify(c.license));
+        if (c.compatibility) lines.push("compatibility: " + JSON.stringify(c.compatibility));
+        if (c.allowedTools) lines.push("allowed-tools: " + JSON.stringify(c.allowedTools));
+        try {
+          var meta = JSON.parse(c.metadata || "{}");
+          if (meta && typeof meta === "object" && !Array.isArray(meta) && Object.keys(meta).length) {
+            lines.push("metadata:");
+            Object.keys(meta).forEach(function (key) { lines.push("  " + JSON.stringify(key) + ": " + JSON.stringify(meta[key])); });
+          }
+        } catch (error) { /* Invalid metadata remains editable and is blocked by package validation. */ }
+        return lines.concat(["---", "", c.instructions]).join("\n");
+      }
+      function skillDirectories(c) {
+        var dirs = new Set((c.folders || []).filter(validSkillPath));
+        (c.files || []).forEach(function (file) {
+          if (!validSkillPath(file.path)) return;
+          var segments = file.path.split("/");
+          segments.pop();
+          while (segments.length) { dirs.add(segments.join("/")); segments.pop(); }
+        });
+        Array.from(dirs).forEach(function (dir) {
+          var parts = dir.split("/"); parts.pop();
+          while (parts.length) { dirs.add(parts.join("/")); parts.pop(); }
+        });
+        return Array.from(dirs).sort();
+      }
+      function buildSkillPackage(c) {
+        // Work on a copy so legacy review snapshots remain immutable during display/migration.
+        c = copy(c); upgradeSkillConfig(c);
+        return { root: c.packageName, directories: skillDirectories(c), files: [{ path: "SKILL.md", content: skillMarkdown(c) }].concat(copy(c.files)) };
+      }
+      function skillScript(file) { return /\.(py|js|mjs|cjs|ts|sh|bash|ps1|rb)$/i.test(file.path); }
+      function skillFileType(path) {
+        var ext = path.split(".").pop().toLowerCase();
+        return ({ md: "Markdown", py: "Python 脚本", js: "JavaScript 脚本", mjs: "JavaScript 脚本", cjs: "JavaScript 脚本", ts: "TypeScript 脚本", sh: "Shell 脚本", bash: "Shell 脚本", ps1: "PowerShell 脚本", rb: "Ruby 脚本", json: "JSON", yaml: "YAML", yml: "YAML", csv: "CSV", svg: "SVG 文本" })[ext] || "文本文件";
+      }
+      function validSkillPath(path) {
+        if (!path || path.length > 240 || path !== path.trim() || /[\\:*?"<>|\u0000-\u001f]/.test(path)) return false;
+        return path.split("/").every(function (part) {
+          return part && part !== "." && part !== ".." && !/[. ]$/.test(part) && !/^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(part);
+        });
+      }
+      function skillPathConflict(path, c, ignore) {
+        if (!validSkillPath(path)) return "使用包内相对路径，不能包含绝对路径、空层级、.. 或特殊保留名称。";
+        var lower = path.toLowerCase(), files = ["SKILL.md"].concat(c.files.filter(function (f) { return f.path !== ignore; }).map(function (f) { return f.path; }));
+        var dirs = skillDirectories(c);
+        if (files.concat(dirs).some(function (p) { return p.toLowerCase() === lower; })) return "该路径已被文件或目录占用（不区分大小写）。";
+        if (files.some(function (p) { return lower.startsWith(p.toLowerCase() + "/"); })) return "父路径是文件，不能在文件下创建内容。";
+        return "";
+      }
+      function skillDirectoryMarkup(c) {
+        var paths = ["SKILL.md"].concat(c.files.map(function (f) { return f.path; }).filter(validSkillPath)), dirs = skillDirectories(c);
+        function items(parent) {
+          var prefix = parent ? parent + "/" : "";
+          var children = dirs.filter(function (d) { return d.startsWith(prefix) && !d.slice(prefix.length).includes("/"); });
+          var files = paths.filter(function (p) { return p.startsWith(prefix) && !p.slice(prefix.length).includes("/"); });
+          return '<ul class="skill-file-list">' + files.map(function (path) {
+            return '<li><button class="skill-file-button ' + (state.skillFile === path ? 'active' : '') + '" type="button" data-skill-file="' + escapeHtml(path) + '"' + (state.skillFile === path ? ' aria-current="true"' : '') + ' title="' + escapeHtml(path) + '">' + icon(skillScript({ path: path }) ? "i-code" : "i-app", "icon-sm") + '<span>' + escapeHtml(path.slice(prefix.length)) + '</span></button></li>';
+          }).join('') + children.map(function (dir) {
+            var empty = !paths.some(function (p) { return p.startsWith(dir + "/"); }) && !dirs.some(function (d) { return d.startsWith(dir + "/"); });
+            return '<li><details class="skill-folder" data-skill-dir="' + escapeHtml(dir) + '"' + (!state.skillCollapsed[dir] ? ' open' : '') + '><summary>' + escapeHtml(dir.slice(prefix.length)) + '/</summary>' + items(dir) + (empty ? '<div class="skill-empty-folder">空目录' + (editable(currentService()) ? '<button class="btn btn-text btn-small" type="button" data-skill-remove-dir="' + escapeHtml(dir) + '">移除</button>' : '') + '</div>' : '') + '</details></li>';
+          }).join('') + '</ul>';
+        }
+        return items("") + c.files.filter(function (f) { return !validSkillPath(f.path); }).map(function (f) { return '<button class="skill-file-button" type="button" data-skill-file="' + escapeHtml(f.path) + '">待修复路径：' + escapeHtml(f.path) + '</button>'; }).join('');
+      }
+      function skillPackageEditor() {
+        var s = currentService(), c = s.config, disabled = editable(s) ? '' : ' disabled';
+        var file = c.files.find(function (f) { return f.path === state.skillFile; });
+        if (!file) state.skillFile = "SKILL.md";
+        var body = '';
+        if (state.skillFile === "SKILL.md") {
+          body = '<div class="form-grid">' + configField("packageName", "技能包标识 / name（必填）", "input", null, "根目录自动与 name 保持一致；使用 1–64 位小写字母、数字和单连字符。") + configField("skillDescription", "能力与使用场景 / description（必填）", "textarea", null, "说明做什么以及何时使用，最多 1024 个字符。") + configField("instructions", "SKILL.md 正文（必填）", "textarea", null, "元数据表单生成 YAML frontmatter，正文使用 Markdown；其他文件通过相对路径引用。") + '</div>' +
+            '<details class="skill-metadata-extra"><summary>可选元数据</summary><div class="form-grid">' + configField("license", "license（可选）") + configField("compatibility", "compatibility（可选）", "input", null, "环境要求，最多 500 个字符。") + configField("allowedTools", "allowed-tools（实验性）", "input", null, "支持情况因宿主而异；此声明不会授予数据权限或绕过平台审批。") + configField("metadata", "metadata（JSON 字符串键值对象）", "textarea", null, "界面以 JSON 编辑键值，生成 SKILL.md 时转成 YAML 映射；所有值须为字符串。") + '</div></details><details class="skill-metadata-extra"><summary>查看完整 SKILL.md</summary><pre class="code-preview" id="skill-manifest-preview">' + escapeHtml(skillMarkdown(c)) + '</pre></details>';
+        } else {
+          body = '<div class="form-item"><label for="skill-file-content">' + skillFileType(file.path) + ' 内容</label><textarea class="textarea skill-content-editor" id="skill-file-content" spellcheck="false" aria-describedby="skill-file-content-error">' + escapeHtml(file.content) + '</textarea>' + fieldError("skill-file-content") + '</div>' +
+            (skillScript(file) ? '<div class="form-item skill-metadata-extra"><label for="skill-file-duration">脚本执行时限（秒）' + help("平台运行约束，不是 Skill 格式必填项。原型仅编辑与校验，不运行脚本。") + '</label><input class="input" type="number" min="1" step="1" id="skill-file-duration" value="' + escapeHtml(file.duration || "60") + '" aria-describedby="skill-file-duration-error">' + fieldError("skill-file-duration") + '</div>' : '');
+        }
+        return '<section class="skill-package"><div class="panel-head skill-package-head"><h2 class="panel-title">技能包文件' + help("SKILL.md 为必需入口；scripts、references、assets 是可选目录，也可创建其他目录。全部文件与数据需求一起保存和提交审核。") + '</h2><div class="inline-actions"><button class="btn btn-small" type="button" data-skill-create="file"' + disabled + '>' + icon("i-plus", "icon-sm") + '新建文件</button><button class="btn btn-small" type="button" data-skill-create="folder"' + disabled + '>新建目录</button></div></div><div class="skill-package-errors">' + fieldError("skill-files") + '</div><div class="skill-files-layout"><nav class="skill-directory" aria-label="Skill 文件目录"><div class="skill-directory-title">' + icon("i-grid", "icon-sm") + '<strong id="skill-root-name">' + escapeHtml(c.packageName || "未命名技能包") + '/</strong></div>' + skillDirectoryMarkup(c) + '<div class="skill-notes">' + (c.files.length + 1) + ' 个文件' + (c.legacyInactiveScript ? '<br><button class="btn btn-text btn-small" type="button" data-skill-restore-legacy' + disabled + '>恢复旧版未启用脚本</button>' : '') + '</div></nav><div class="skill-file-editor"><div class="skill-file-toolbar"><h3>' + escapeHtml(state.skillFile) + '</h3>' +
+          (state.skillFile === "SKILL.md" ? '<span class="tag">必需入口</span>' : '<div class="inline-actions"><button class="btn btn-text btn-small" type="button" data-skill-reference' + disabled + '>插入入口引用</button><button class="btn btn-text btn-small" type="button" data-skill-rename' + disabled + '>重命名</button><button class="btn btn-text btn-small" type="button" data-skill-delete' + disabled + '>删除</button></div>') + '</div><fieldset class="config-fields"' + disabled + '><legend class="sr-only">编辑 ' + escapeHtml(state.skillFile) + '</legend><div class="editor-body">' + body + '</div></fieldset></div></div></section>';
+      }
+
+      function status(value) {
+        var kind = "neutral";
+        if (["已上线", "运行中", "可用", "已批准", "审核通过", "需求已通过"].includes(value)) kind = "success";
+        if (["待上线审核", "待应用上线审核", "待审核", "草稿", "验证中", "仿真测试", "待采纳", "未配置"].includes(value)) kind = "warning";
+        if (["上线失败", "不可用", "已驳回", "需修正"].includes(value)) kind = "danger";
+        if (["已确认"].includes(value)) kind = "success";
+        return '<span class="status status-' + kind + '">' + escapeHtml(value) + '</span>';
+      }
+
+      function showToast(message) {
+        toastText.textContent = message;
+        toast.classList.add("show");
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(function () { toast.classList.remove("show"); }, 2400);
+      }
+
+      function updateNavigation() {
+        document.querySelectorAll("[data-view]").forEach(function (button) {
+          var active = state.view === "application" ? button.dataset.view === "application" : button.dataset.view === "services";
+          button.classList.toggle("active", active);
+          if (active) button.setAttribute("aria-current", "page"); else button.removeAttribute("aria-current");
+        });
+      }
+
+      function serviceListView() {
+        var rows = activeServices().filter(function (item) {
+          var matchQuery = !state.query || item.name.toLowerCase().includes(state.query.toLowerCase()) || item.type.toLowerCase().includes(state.query.toLowerCase());
+          var matchType = state.type === "全部类型" || item.type === state.type;
+          var matchStatus = state.lifecycle === "全部状态" || item.lifecycle === state.lifecycle;
+          return matchQuery && matchType && matchStatus;
+        });
+        return '<section class="view">' +
+          '<header class="page-head"><div><div class="breadcrumb"><span>数据服务域</span><span>/</span><span>服务开发</span><span>/</span><span>AI 服务开发</span></div><h1>AI 服务开发</h1><p class="page-description">独立开发、测试和上线 Agent、MCP、Skill 与 Worker，AI 只生成待人工采纳的草稿修订。</p></div>' +
+          '<div class="page-actions"><button class="btn btn-primary" type="button" data-create-service>' + icon("i-plus") + '创建 AI 服务</button></div></header>' +
+          '<div class="page-body">' +
+          '<div class="summary-grid"><article class="summary-card"><div class="summary-label">全部服务</div><div class="summary-value">18</div><div class="summary-note">Agent、MCP、Skill、Worker</div></article>' +
+          '<article class="summary-card"><div class="summary-label">草稿</div><div class="summary-value">5</div><div class="summary-note">含 3 项 AI 草稿修订</div></article>' +
+          '<article class="summary-card"><div class="summary-label">待上线审核</div><div class="summary-value">2</div><div class="summary-note">由开发岗位人工提交</div></article>' +
+          '<article class="summary-card"><div class="summary-label">运行异常</div><div class="summary-value">1</div><div class="summary-note">网关投影未全部生效</div></article></div>' +
+          '<div class="alert"><svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg><div class="alert-body"><div class="alert-title">首期开发范围</div><p class="alert-copy">AI 服务支持 Agent、MCP、Skill、Worker。托管服务可开发并配置数据需求；非托管服务只配置数据需求。模型由 AI 网关注册管理。</p></div></div>' +
+          '<section class="panel" aria-labelledby="service-table-title"><div class="filter-bar"><h2 class="sr-only" id="service-table-title">AI 服务列表</h2>' +
+          '<label class="search-wrap"><span class="sr-only">搜索服务</span>' + icon("i-search") + '<input class="input" id="service-search" value="' + escapeHtml(state.query) + '" placeholder="搜索服务名称或类型"></label>' +
+          '<label><span class="sr-only">服务类型</span><select class="select filter-select" id="type-filter"><option>全部类型</option><option>Agent</option><option>MCP</option><option>Skill</option><option>Worker</option></select></label>' +
+          '<label><span class="sr-only">生命周期状态</span><select class="select filter-select" id="status-filter"><option>全部状态</option><option>草稿</option><option>待上线审核</option><option>已上线</option><option>上线失败</option></select></label>' +
+          '<div class="filter-spacer"></div><button class="btn btn-text" type="button" data-reset-filter>重置筛选</button></div>' +
+          '<div class="table-scroll"><table><caption class="sr-only">AI 服务及其版本、生命周期和运行状态</caption><thead><tr><th scope="col">服务</th><th scope="col">类型</th><th scope="col">当前版本</th><th scope="col">生命周期</th><th scope="col">运行可用状态</th><th scope="col">更新时间</th><th scope="col">操作</th></tr></thead><tbody>' +
+          (rows.length ? rows.map(function (item) {
+            return '<tr><td><div class="service-cell"><span class="type-mark">' + item.code + '</span><div><div class="cell-primary">' + escapeHtml(item.name) + '</div><div class="cell-secondary">' + item.id + '</div></div></div></td>' +
+              '<td><span class="tag">' + item.type + '</span></td><td>' + item.version + '</td><td>' + status(item.lifecycle) + '</td><td>' + (item.runtime === "—" ? "—" : status(item.runtime)) + '</td><td>' + item.updated + '</td>' +
+              '<td><button class="btn btn-text btn-small" type="button" data-open-service="' + item.id + '">' + (item.lifecycle === "草稿" ? "继续开发" : "查看") + '</button></td></tr>';
+          }).join("") : '<tr><td colspan="7"><div class="panel-body muted">没有符合当前筛选条件的服务。请调整筛选或创建 AI 服务。</div></td></tr>') +
+          '</tbody></table></div><div class="pagination"><span>共 ' + rows.length + ' 条示例记录</span><span>第 1 / 1 页</span></div></section></div></section>';
+      }
+
+      function aiTaskWorkbenchView() {
+        return '<section class="view"><header class="page-head"><div><div class="breadcrumb"><span>数据服务域</span><span>/</span><span>AI 服务开发</span><span>/</span><span>方案 B</span></div><div class="page-title-row"><h1>客户洞察 Agent</h1>' + status("草稿") + '<span class="tag">修订 r' + state.revision + '</span></div><p class="page-description">从开发任务开始，由人工把 AI 变更集推进为可测试、可发布的整体制品。</p></div><div class="page-actions"><button class="btn" type="button" data-view="services">服务目录</button><button class="btn btn-primary" type="button" data-open-service="agent-customer">打开专属编辑器</button></div></header>' +
+          '<div class="page-body"><div class="stage-strip"><article class="stage-item active"><div class="stage-label">当前阶段</div><div class="stage-value">1 · 定义与修订</div></article><article class="stage-item"><div class="stage-label">下一步</div><div class="stage-value">2 · 人工仿真测试</div></article><article class="stage-item"><div class="stage-label">待完成</div><div class="stage-value">3 · 创建正式版本</div></article><article class="stage-item"><div class="stage-label">最终动作</div><div class="stage-value">4 · 提交上线审核</div></article></div>' +
+          '<div class="ai-first-layout"><aside class="panel task-rail" aria-label="开发任务会话"><div class="task-rail-head"><span class="task-rail-title">开发会话</span><button class="icon-btn" type="button" aria-label="新建开发会话" data-toast="已创建空白开发任务">' + icon("i-plus") + '</button></div><button class="task-session active" type="button"><strong>证据字段补充</strong><span>刚刚 · 3 项变更</span></button><button class="task-session" type="button" data-toast="切换至敏感字段拒绝测试任务"><strong>拒绝测试</strong><span>今天 · 已采纳</span></button><button class="task-session" type="button" data-toast="切换至调用契约梳理任务"><strong>调用契约梳理</strong><span>昨天 · 已完成</span></button><div class="nav-divider"></div><button class="btn btn-text btn-small" type="button" data-toast="显示全部开发任务">查看全部</button></aside>' +
+          '<section class="panel"><div class="panel-head"><div><h2 class="panel-title">开发任务</h2><div class="muted">AI 生成提案，开发者决定是否写入草稿</div></div>' + icon("i-spark") + '</div><div class="panel-body"><div class="brief-thread"><div class="brief-message"><strong>开发 Agent</strong><p class="muted" style="margin:6px 0 0">当前可读取客户洞察 Agent 草稿、4 项已批准依赖和受控规范。</p></div><div class="brief-message user"><strong>开发者</strong><p style="margin:6px 0 0">补充回答证据字段、数据时间和敏感字段拒绝测试。</p></div><div class="brief-message"><strong>待采纳变更集</strong><ul class="artifact-list"><li>修改 Prompt 输出要求</li><li>扩展输入与输出契约</li><li>新增 2 条仿真测试</li></ul><div class="inline-actions" style="margin-top:12px"><button class="btn btn-small" type="button" data-preview-diff>审查差异</button><button class="btn btn-primary btn-small" type="button" data-accept-all>接受并形成修订</button></div></div></div><div class="form-item" style="margin-top:20px"><label for="variant-b-request">继续描述开发任务</label><div class="context-picker" aria-label="开发上下文"><button class="context-chip" type="button" data-toast="模型：通用语言模型 model-v3">模型 · model-v3</button><button class="context-chip" type="button" data-toast="MCP：客户资料 MCP v1.1.0">MCP · 客户资料</button><button class="context-chip" type="button" data-toast="Skill：合规查询 Skill v1.0.3">Skill · 合规查询</button><button class="context-chip" type="button" data-toast="添加已批准的开发上下文">' + icon("i-plus", "icon-sm") + '添加</button></div><textarea class="textarea" id="variant-b-request" placeholder="描述希望 AI 生成或修改的草稿、代码、契约、测试或文档"></textarea><div class="composer-actions"><span class="context-note">AI 不会直接测试、提审、审批或上线</span><button class="btn btn-primary" type="button" data-toast="已生成新的待采纳变更集">生成变更</button></div></div></div></section>' +
+          '<section><div class="artifact-grid"><article class="artifact-card changed"><div class="artifact-card-head"><h2 class="panel-title">Prompt 与行为</h2><span class="status status-warning">待采纳</span></div><ul class="artifact-list"><li>目标与边界</li><li>证据要求</li><li>敏感数据限制</li></ul></article><article class="artifact-card changed"><div class="artifact-card-head"><h2 class="panel-title">调用契约</h2><span class="status status-warning">待采纳</span></div><ul class="artifact-list"><li>输入 3 个字段</li><li>输出 4 个字段</li><li>同步与异步</li></ul></article><article class="artifact-card"><div class="artifact-card-head"><h2 class="panel-title">工具与依赖</h2><span class="status status-success">已固定</span></div><ul class="artifact-list"><li>模型 1 项</li><li>MCP、Skill、API 3 项</li><li>无循环依赖</li></ul></article><article class="artifact-card"><div class="artifact-card-head"><h2 class="panel-title">仿真测试</h2><span class="status status-neutral">待运行</span></div><ul class="artifact-list"><li>模拟与脱敏数据</li><li>真实写操作已禁用</li><li>6 条基础用例</li></ul></article></div>' +
+          '<section class="panel" style="margin-top:16px"><div class="panel-head"><h2 class="panel-title">制品就绪度</h2><button class="btn" type="button" data-run-test>人工运行仿真测试</button></div><div class="panel-body readiness"><div class="readiness-row"><span>定义完整度</span><span class="progress"><span style="width:86%"></span></span><strong>86%</strong></div><div class="readiness-row"><span>依赖完整度</span><span class="progress"><span style="width:100%"></span></span><strong>100%</strong></div><div class="readiness-row"><span>测试完成度</span><span class="progress"><span style="width:45%"></span></span><strong>45%</strong></div></div></section></section></div></div></section>';
+      }
+
+      function pipelineView() {
+        var services = activeServices();
+        var filtered = services.filter(function (s) { return state.type === "全部类型" || s.type === state.type; });
+        var groups = [
+          { title: "草稿配置", states: ["草稿", "已驳回"] },
+          { title: "仿真测试", states: ["仿真测试"] },
+          { title: "提交审核", states: ["待审核"] },
+          { title: "审核通过 / 已上线", states: ["审核通过", "需求已通过", "已上线"] }
+        ];
+        return '<section class="view pipeline-view"><header class="page-head"><div><div class="breadcrumb"><span>数据服务域</span><span>/</span><span>AI 服务开发</span></div><h1>服务制品流水线</h1><p class="page-description">统一配置数据需求；托管服务按类型开发，非托管服务仅登记数据需求。</p></div><div class="page-actions"><button class="btn btn-primary" type="button" data-create-service>' + icon("i-plus") + '创建 AI 服务</button></div></header><div class="page-body"><div class="pipeline-layout"><aside class="panel type-rail"><div class="type-rail-title">服务类型</div>' +
+          ["全部类型", "Agent", "MCP", "Skill", "Worker"].map(function (type) { return '<button class="type-filter-button ' + (state.type === type ? 'active' : '') + '" type="button" data-pipeline-type="' + type + '"><span>' + (type === "全部类型" ? "全部服务" : type) + '</span><span class="count-badge">' + services.filter(function (s) { return type === "全部类型" || s.type === type; }).length + '</span></button>'; }).join('') +
+          '<div class="nav-divider"></div><div class="type-rail-title">范围说明' + scopeHelp() + '</div></aside><div class="kanban" role="region" tabindex="0" aria-label="服务生命周期看板，可横向滚动">' +
+          groups.map(function (group) {
+            var rows = filtered.filter(function (s) { return group.states.includes(s.lifecycle); });
+            return '<section class="kanban-column"><header class="kanban-head"><h2 class="panel-title">' + group.title + '</h2><span class="count-badge">' + rows.length + '</span></header><div class="kanban-cards">' + (rows.length ? rows.map(function (s) {
+              return '<article class="kanban-card"><div class="kanban-card-title">' + escapeHtml(s.name) + '</div><div class="kanban-card-meta"><span>' + s.type + ' · ' + (s.hosted ? developmentModeLabel(s.creationMode) : '非托管') + '</span></div><div class="kanban-card-meta"><span>r' + s.revision + '</span>' + status(s.lifecycle) + '</div><div class="kanban-card-actions"><button class="btn btn-text btn-small" type="button" data-open-service="' + s.id + '">' + (editable(s) ? (s.hosted ? "继续配置" : "配置数据需求") : "查看详情") + '</button>' + deleteServiceButton(s) + '</div></article>';
+            }).join('') : '<div class="editor-empty">暂无服务</div>') + '</div></section>';
+          }).join('') + '</div></div></div></section>';
+      }
+
+      function requestAttributes(index, key) {
+        var id = "req-" + index + "-" + key;
+        return ' id="' + id + '" data-request-index="' + index + '" data-request-key="' + key + '" aria-invalid="' + Boolean(state.validationErrors[id]) + '" aria-describedby="' + id + '-error"';
+      }
+      function dataRequirements() {
+        var s = currentService();
+        return '<div class="panel-head"><h2 class="panel-title">数据需求' + help("选择数据资产、所需字段、行范围与用途。这里仅声明需求，审核通过不自动授予数据权限；运行时仍须使用数据应用获批的身份和范围。") + '</h2><button class="btn" type="button" data-select-assets' + (!editable(s) ? ' disabled' : '') + '>' + icon("i-plus") + '选择数据</button></div>' +
+          '<fieldset class="config-fields"' + (!editable(s) ? ' disabled' : '') + '><legend class="sr-only">数据需求选择与配置</legend><div class="editor-section"><label class="check-inline"><input type="checkbox" id="service-no-data"' + (s.noData ? ' checked' : '') + (s.requests.length ? ' disabled' : '') + '> 本服务不使用平台数据</label>' + help("不使用平台数据时可显式声明；已有数据需求请先移除。该声明不会改变外部消费方的数据应用注册要求。") + fieldError("data-requests") +
+          (!s.requests.length ? '<div class="editor-empty">' + (s.noData ? "已声明不使用平台数据" : "尚未选择数据，请从资产目录添加需求") + '</div>' : s.requests.map(function (r, i) {
+            var asset = dataAssets.find(function (a) { return a.id === r.assetId; });
+            return '<article class="request-card"><div class="panel-head"><div><h3 class="panel-title">' + asset.name + '</h3><span class="cell-secondary">' + asset.domain + ' · ' + asset.table + '</span></div><button class="btn btn-text btn-small" type="button" data-remove-request="' + i + '">移除</button></div><div class="form-grid">' +
+              '<div class="form-item full"><span class="field-label" id="req-' + i + '-fields-label">所需字段（必选）</span><div class="check-grid" role="group" aria-labelledby="req-' + i + '-fields-label" aria-describedby="req-' + i + '-fields-error">' + asset.fields.map(function (f) { return '<label><input type="checkbox" data-request-field="' + f.id + '" data-request-index="' + i + '"' + (r.fields.includes(f.id) ? ' checked' : '') + '> ' + f.name + '</label>'; }).join('') + '</div>' + fieldError('req-' + i + '-fields') + '</div>' +
+              '<div class="form-item"><label for="req-' + i + '-scope">行范围' + help("业务域范围在数据应用申请权限时进一步收窄。自定义条件仅表达需求，不执行查询。") + '</label><select class="select"' + requestAttributes(i, "scope") + '>' + ["业务域范围", "指定条件"].map(function (v) { return '<option' + (r.scope === v ? ' selected' : '') + '>' + v + '</option>'; }).join('') + '</select></div>' +
+              (r.scope === "指定条件" ? '<div class="form-item"><label for="req-' + i + '-scopeField">条件字段</label><select class="select"' + requestAttributes(i, "scopeField") + '>' + asset.fields.map(function (f) { return '<option value="' + f.id + '"' + (r.scopeField === f.id ? ' selected' : '') + '>' + f.name + '</option>'; }).join('') + '</select></div><div class="form-item full"><label for="req-' + i + '-scopeValue">等于（必填）</label><input class="input"' + requestAttributes(i, "scopeValue") + ' value="' + escapeHtml(r.scopeValue) + '" placeholder="输入所需行范围的条件值">' + fieldError('req-' + i + '-scopeValue') + '</div>' : '') +
+              '<div class="form-item full"><label for="req-' + i + '-purpose">使用用途（必填）</label><textarea class="textarea"' + requestAttributes(i, "purpose") + ' placeholder="说明使用这些字段的业务目的">' + escapeHtml(r.purpose) + '</textarea>' + fieldError('req-' + i + '-purpose') + '</div></div></article>';
+          }).join('')) + '</div></fieldset>';
+      }
+
+      function editorDefinition() {
+        var s = currentService(), c = s.config, content = '';
+        if (s.type === "Agent") {
+          content = formSection("行为与模型", '<div class="form-grid">' + configField("goal", "Agent 目标（必填）") + configField("model", "模型固定版本", "select", ["通用语言模型 · model-v3", "轻量语言模型 · model-lite-v2"]) + configField("prompt", "系统指令（必填）", "textarea") + '</div>') +
+            formSection("状态与调用契约", '<div class="form-grid">' + configField("memory", "Memory 策略", "select", ["仅会话内临时记忆", "数据应用沙箱内持久化"], "持久化状态按数据应用与环境隔离，不允许跨应用共享。") + configField("callMode", "调用模式", "select", ["同步会话与异步任务", "仅同步会话", "仅异步任务"]) + configField("inputSchema", "输入 JSON Schema（必填）", "textarea") + configField("outputSchema", "输出 JSON Schema（必填）", "textarea") + '</div>') +
+            formSection("执行边界", '<div class="form-grid">' + configField("steps", "最大执行步数", "number") + configField("duration", "单次总时长（秒）", "number") + '</div>', "限制由平台运行时执行，实际应用配置不得超过域级上限。");
+        } else if (s.type === "MCP") {
+          content = formSection("服务实现", '<div class="form-grid">' + configField("entry", "实现入口（必填）") + configField("transport", "受管传输", "select", ["Streamable HTTP"], "平台发布后生成访问端点；此处不是外部 URL 注册。") + configField("timeout", "单次超时（秒）", "number") + '</div>') +
+            formSection("协议能力", '<div class="check-grid">' + configCheck("tools", "Tools 工具") + configCheck("resources", "Resources 资源") + configCheck("prompts", "Prompts 提示模板") + '</div>' + fieldError("cfg-capabilities"));
+          if (c.tools) content += formSection("工具契约", '<div class="form-grid">' + configField("toolName", "工具名（必填）") + configField("toolDescription", "工具用途（必填）") + configField("toolHandler", "处理函数（必填）") + configField("toolInput", "输入 JSON Schema（必填）", "textarea") + configField("toolOutput", "输出 JSON Schema（可选）", "textarea") + '</div>');
+          if (c.resources) content += formSection("资源契约", '<div class="form-grid">' + configField("resourceUri", "资源 URI（必填）") + configField("resourceMime", "MIME 类型（必填）") + configField("resourceHandler", "读取实现（必填）") + '</div>', "资源 URI 是协议标识，不代表文件系统或数据访问权限。");
+          if (c.prompts) content += formSection("提示模板", '<div class="form-grid">' + configField("promptName", "模板名（必填）") + configField("promptArguments", "参数名（逗号分隔）") + configField("promptBody", "消息模板（必填）", "textarea") + '</div>');
+        } else if (s.type === "Skill") {
+          return skillPackageEditor();
+        } else {
+          content = formSection("任务实现", '<div class="form-grid">' + configField("taskName", "任务标识（必填）") + configField("entry", "处理入口（必填）") + configField("runtime", "运行时档案", "select", ["Python 受管运行时", "JavaScript 受管运行时"]) + configField("implementation", "任务实现（必填）", "textarea") + configField("inputSchema", "输入 JSON Schema（必填）", "textarea") + configField("outputSchema", "结果 JSON Schema（必填）", "textarea") + '</div>') +
+            formSection("触发与恢复", '<div class="form-grid">' + configField("trigger", "触发能力", "select", ["按需异步", "平台定时", "按需异步与平台定时"]) +
+              (c.trigger !== "按需异步" ? configField("schedule", "调度表达式（五段 Cron）") + configField("timezone", "时区", "select", ["Asia/Shanghai", "UTC"]) + configField("overlap", "重叠执行", "select", ["跳过重叠执行", "等待上次完成"]) : '') +
+              configField("attemptTimeout", "单次尝试时限（秒）", "number") + configField("totalTimeout", "整体期限（秒，含重试）", "number") + configField("attempts", "最大尝试次数（含首次）", "number") + configField("backoff", "重试退避", "select", ["指数退避", "固定间隔"]) + configField("idempotency", "业务幂等键（必填）", "input", null, "仅声明键来源，任务实现仍需处理重复请求；不是 exactly-once 保证。") + '</div>', "此处仅编辑调度模板，不创建真实计划；实际执行需绑定获批的数据应用身份。");
+        }
+        return '<fieldset class="config-fields"' + (!editable(s) ? ' disabled' : '') + '><legend class="sr-only">' + s.type + ' 开发配置</legend>' + content + '</fieldset>';
+      }
+
+      function editorDependencies() {
+        var s = currentService();
+        var options = s.type === "Agent" ? ["不使用服务依赖", "客户资料 MCP · v1.1.0", "客户标签 API · v2.4.1", "合规查询 Skill · v1.0.3"] : s.type === "MCP" ? ["不使用服务依赖", "客户标签 API · v2.4.1"] : s.type === "Skill" ? ["不使用服务依赖", "客户资料 MCP · v1.1.0", "客户标签 API · v2.4.1"] : ["不使用服务依赖", "客户标签 API · v2.4.1", "客户资料 MCP · v1.1.0", "合规查询 Skill · v1.0.3", "通用语言模型 · model-v3"];
+        return '<fieldset class="config-fields"' + (!editable(s) ? ' disabled' : '') + '><legend class="sr-only">依赖配置</legend>' + formSection(s.type === "Agent" ? "工具与依赖" : "受管依赖", '<div class="form-grid">' + configField("dependency", "服务固定版本", "select", options, "原型演示单项固定版本引用；数据资产需求在“数据需求”中配置，秘密值不进入服务草稿。") + '</div>') + '</fieldset>';
+      }
+
+      function editorVersions() {
+        var s = currentService();
+        return '<div class="panel-head"><h2 class="panel-title">' + (s.hosted ? "修订与审核" : "需求审核记录") + '</h2><span class="tag">修订 r' + s.revision + '</span></div><div class="panel-body review-summary"><dl><dt>当前状态</dt><dd>' + status(s.lifecycle) + '</dd><dt>审核内容</dt><dd>' + (s.hosted ? '数据需求与 ' + s.type + ' 服务配置' : '仅数据需求，不包含开发制品') + '</dd><dt>生效边界</dt><dd>需求审核不授予数据权限；运行授权仍由数据应用单独申请。</dd></dl>' +
+          (s.history.length ? '<ol class="review-history">' + s.history.map(function (h) { return '<li><strong>' + escapeHtml(h.action) + '</strong> · r' + h.revision + '<div class="cell-secondary">' + escapeHtml(h.note) + '</div></li>'; }).join('') + '</ol>' : '<div class="editor-empty">尚未提交审核</div>') +
+          (s.submission ? '<button class="btn" type="button" data-review-details>查看当前提交快照</button>' : '') +
+          (s.submissions || []).map(function (snapshot, i) { return '<div class="result-item"><span>' + escapeHtml(snapshot.version) + ' · r' + snapshot.revision + '</span><button class="btn btn-text btn-small" type="button" data-review-snapshot="' + i + '">查看历史快照</button></div>'; }).join('') + '</div>';
+      }
+
+      function proposalFor(service) {
+        if (service.creationMode === "ai" && state.aiConfigSection === "data") {
+          return { key: "__data__", section: "data", label: "客户数据需求", before: service.noData || service.requests.length ? "保留当前数据需求" : "尚未配置", after: "客户基本信息 · 客户编号、所属地区 · 业务域范围 · 用于形成受治理的业务分析结果" };
+        }
+        var mapping = { Agent: ["prompt", "系统指令", "\n结果应附数据来源；缺失证据时说明限制。"], MCP: ["toolDescription", "工具用途", " 仅返回当前数据应用获准范围的数据。"], Skill: ["instructions", "使用指令", "\n## 安全检查\n核对数据应用身份，不输出未获准字段。"], Worker: ["implementation", "任务实现", "\n# 重复请求按业务幂等键返回已有结果。"] };
+        if (service.type === "MCP" && !service.config.tools) mapping.MCP = service.config.prompts ? ["promptBody", "消息模板", "\n仅总结已获准的数据。"] : ["resourceHandler", "资源读取实现", "_scoped"];
+        var item = mapping[service.type];
+        return { key: item[0], section: item[0] === "dependency" ? "dependencies" : "definition", label: item[1], before: service.config[item[0]], after: service.config[item[0]] + item[2] };
+      }
+      function assistantMarkup() {
+        var s = currentService(), p = proposalFor(s);
+        return '<aside class="assistant-panel" aria-label="AI 开发助手"><div class="assistant-head"><div class="assistant-title">' + icon("i-spark") + '<h2 class="panel-title">AI 开发助手' + help("当前为离线提案演示，不连接模型。仅生成类型专属草稿变更，不执行代码、测试、提审或上线。") + '</h2></div><p class="assistant-scope">' + s.type + ' · ' + escapeHtml(s.name) + '</p></div><div class="chat-log">' +
+          '<div class="message message-agent">可审查的 ' + s.type + ' 配置提案，仅在接受后写入草稿。</div>' +
+          (state.assistantRequest ? '<div class="message message-user">' + escapeHtml(state.assistantRequest) + '</div>' : '') +
+          (state.proposal ? '<div class="message message-agent"><strong>示例变更：' + p.label + '</strong><div class="inline-actions"><button class="btn btn-small" type="button" data-preview-diff>查看差异</button><button class="btn btn-small" type="button" data-accept-all>接受</button></div></div>' : '') +
+          '</div><div class="assistant-compose"><label class="sr-only" for="ai-request">描述开发任务</label><textarea class="textarea" id="ai-request" placeholder="描述需要调整的 ' + s.type + ' 配置"' + (!editable(s) ? ' disabled' : '') + '></textarea><div class="compose-foot"><span class="scope-note">离线示例 · r' + s.revision + '</span><button class="btn btn-primary" type="button" data-ai-generate' + (!editable(s) ? ' disabled' : '') + '>生成提案</button></div></div></aside>';
+      }
+
+      function developmentSections(s) {
+        return [["data", "数据需求", "i-app"]]
+          .concat(s.hosted ? [["definition", s.type === "Skill" ? "技能包" : s.type + " 开发配置", "i-code"], ["dependencies", s.type === "Agent" ? "工具与依赖" : "受管依赖", "i-grid"]] : [])
+          .concat([["versions", s.hosted ? "修订与审核" : "需求审核记录", "i-history"]]);
+      }
+
+      function workbenchActions(s) {
+        return editable(s) ? '<button class="btn" type="button" data-save-draft>保存草稿</button>' + (s.hosted ? '<button class="btn" type="button" data-run-test>仿真校验</button>' : '') + '<button class="btn btn-primary" type="button" data-submit-service>提交审核</button>' : '<button class="btn" type="button" data-review-details>查看审核</button>' +
+          (s.lifecycle === "待审核" ? '<button class="btn btn-primary" type="button" data-review-details>模拟审核</button>' : '<button class="btn" type="button" data-new-revision>创建新修订</button>') +
+          (s.hosted && s.lifecycle === "审核通过" ? '<button class="btn btn-primary" type="button" data-deploy-service>模拟发布</button>' : '');
+      }
+
+      function developmentModeLabel(mode) { return mode === "ai" ? "AI 辅助开发" : "手工开发"; }
+
+      function modeSwitchMarkup(s) {
+        if (!s.hosted) return '';
+        if (!editable(s)) return '<span class="tag tag-primary">' + developmentModeLabel(s.creationMode) + '</span>';
+        return '<div class="mode-switch" role="group" aria-label="开发方式">' +
+          '<button class="mode-switch-button ' + (s.creationMode === "ai" ? 'active' : '') + '" type="button" data-switch-mode="ai" aria-pressed="' + (s.creationMode === "ai") + '">AI 辅助开发</button>' +
+          '<button class="mode-switch-button ' + (s.creationMode === "manual" ? 'active' : '') + '" type="button" data-switch-mode="manual" aria-pressed="' + (s.creationMode === "manual") + '">手工开发</button></div>';
+      }
+
+      function workbenchHeader(s) {
+        return '<header class="page-head workbench-head"><div><div class="breadcrumb"><span>数据服务域</span><span>/</span><button class="btn btn-text btn-small" type="button" data-view="services">AI 服务开发</button><span>/</span><span>' + s.type + '</span></div><div class="page-title-row"><h1>' + escapeHtml(s.name) + '</h1>' + status(s.lifecycle) + '<span class="tag">' + (s.hosted ? '平台托管' : '非托管') + '</span></div><p class="page-description">' + escapeHtml(s.description) + '</p></div><div class="page-actions">' + workbenchActions(s) + '</div></header>';
+      }
+
+      function manualWorkbenchView() {
+        var s = currentService();
+        if (!s.hosted && !["data", "versions"].includes(state.activeSection)) state.activeSection = "data";
+        var editor = state.activeSection === "data" ? dataRequirements() : state.activeSection === "dependencies" ? editorDependencies() : state.activeSection === "versions" ? editorVersions() : editorDefinition();
+        return '<section class="view workbench-page">' + workbenchHeader(s) +
+          '<div class="workbench manual-workbench"><nav class="workbench-nav" aria-label="服务详情导航"><h2>' + (s.hosted ? '服务配置' : '需求配置') + '</h2>' + (s.hosted ? '<div class="config-mode">' + modeSwitchMarkup(s) + '</div>' : '') +
+          developmentSections(s).map(function (item) {
+            return '<button class="section-button ' + (state.activeSection === item[0] ? 'active' : '') + '" type="button" data-section="' + item[0] + '"' + (state.activeSection === item[0] ? ' aria-current="page"' : '') + '>' + icon(item[2]) + item[1] + '</button>';
+          }).join('') + '</nav><div class="workbench-main"><section class="panel editor-panel">' +
+          (!editable(s) ? '<div class="editor-notice">' + (s.lifecycle === "待审核" ? '提交内容已冻结，等待审核结果。' : '当前版本只读；需要调整时创建新修订。') + '</div>' : s.lifecycle === "已驳回" ? '<div class="editor-notice">已驳回：' + escapeHtml(s.reviewNote || '') + '。修改后可重新提交。</div>' : '') +
+          '<div class="editor-notice"><span id="draft-save-state">' + (s.dirty ? '有未保存的修改' : '当前修订 r' + s.revision) + '</span> · 本地原型' + help("保存写入浏览器本地存储；不提交后台。若本地存储不可用，会明确提示仅当前页面保留。") + '</div>' +
+          (Object.keys(state.validationErrors).length ? '<div class="editor-notice" role="alert">请修正标记的必填项或格式错误后再提交。</div>' : '') + editor + '</section></div></div></section>';
+      }
+
+      function configProgress(s, section) {
+        if (Object.keys(state.validationErrors).some(function (key) {
+          if (section === "data") return key === "data-requests" || key.startsWith("req-");
+          if (section === "definition") return key.startsWith("cfg-") || key.startsWith("skill-");
+          return false;
+        })) return "需修正";
+        if (state.proposal && proposalFor(s).section === section) return "待采纳";
+        if (section === "data") return s.noData || s.requests.length ? "已确认" : "未配置";
+        if (section === "definition") return Object.keys(s.config).length ? "已确认" : "未配置";
+        if (section === "dependencies") return s.config.dependency ? "已确认" : "未配置";
+        return s.history.length ? "已确认" : "未配置";
+      }
+
+      function configSummaryEntries(s, section) {
+        var c = s.config;
+        if (section === "data") {
+          if (s.noData) return [["数据使用", "已声明不使用平台数据"]];
+          if (!s.requests.length) return [["数据使用", "尚未配置"]];
+          return s.requests.map(function (request) {
+            var asset = dataAssets.find(function (item) { return item.id === request.assetId; });
+            return [asset ? asset.name : request.assetId, request.fields.length + " 个字段 · " + request.scope + " · " + (request.purpose || "用途待补充")];
+          });
+        }
+        if (section === "dependencies") return [["固定服务版本", c.dependency || "尚未配置"], ["数据身份", "运行时使用数据应用获批身份"]];
+        if (section === "versions") return [["当前修订", "r" + s.revision], ["服务状态", s.lifecycle], ["历史记录", s.history.length + " 条"]];
+        if (s.type === "Agent") return [["任务目标", c.goal], ["模型", c.model], ["记忆", c.memory], ["调用模式", c.callMode]];
+        if (s.type === "MCP") return [["实现入口", c.entry], ["传输", c.transport], ["协议能力", [c.tools && "Tools", c.resources && "Resources", c.prompts && "Prompts"].filter(Boolean).join("、") || "尚未声明"]];
+        if (s.type === "Skill") return [["技能包", c.packageName], ["能力说明", c.skillDescription], ["文件", (c.files.length + 1) + " 个"]];
+        return [["任务标识", c.taskName], ["处理入口", c.entry], ["触发能力", c.trigger], ["最大尝试", c.attempts + " 次"]];
+      }
+
+      function configDrawerMarkup(s) {
+        var item = developmentSections(s).find(function (section) { return section[0] === state.aiConfigSection; }) || developmentSections(s)[0];
+        var entries = configSummaryEntries(s, item[0]);
+        var canRequestChange = item[0] !== "versions" && editable(s);
+        var note = item[0] === "versions" ? "修订与审核记录由系统生成，不能由开发 Agent 或开发者直接修改。" : "AI 辅助开发中不能直接修改。可让开发 Agent 生成变更，或切换到手工开发。";
+        return '<aside class="config-drawer-panel" aria-label="' + escapeHtml(item[1]) + '只读配置"><div class="config-drawer-head"><h2>' + escapeHtml(item[1]) + '</h2><button class="icon-btn" type="button" aria-label="关闭配置抽屉" data-close-config-drawer>' + icon("i-close") + '</button></div><div class="config-drawer-body"><div class="readonly-note"><strong>只读配置</strong><br>' + note + '</div><dl class="config-summary">' + entries.map(function (entry) { return '<div><dt>' + escapeHtml(entry[0]) + '</dt><dd>' + escapeHtml(entry[1] || "—") + '</dd></div>'; }).join('') + '</dl></div><div class="config-drawer-foot"><div class="inline-actions">' + (canRequestChange ? '<button class="btn" type="button" data-request-ai-change="' + item[0] + '">请 Agent 调整</button>' : '') + (editable(s) ? '<button class="btn btn-primary" type="button" data-switch-mode="manual">切换手工开发</button>' : '') + '</div></div></aside>';
+      }
+
+      function aiConversationMarkup(s) {
+        var p = proposalFor(s);
+        return '<section class="ai-chat-panel" aria-label="开发 Agent 会话"><div class="ai-chat-head"><div><h2>开发 Agent 会话</h2><p>MaaS 提供会话与生成能力，服务开发制品仍保存在数据服务平台</p></div><span class="tag">修订 r' + s.revision + '</span></div><div class="chat-log">' +
+          '<div class="message message-agent"><div class="message-label">开发 Agent</div>我可以根据描述生成 ' + s.type + ' 配置、契约、依赖、测试和文档变更。所有变更都需要你采纳后才写入草稿。</div>' +
+          (state.assistantRequest ? '<div class="message message-user"><div class="message-label">开发者</div>' + escapeHtml(state.assistantRequest) + '</div>' : '') +
+          (state.proposal ? '<div class="message message-agent"><div class="message-label">开发 Agent · 待采纳变更</div><strong>' + escapeHtml(p.label) + '</strong><p class="muted">已生成 1 项可审查变更，不会自动执行测试或提交审核。</p><div class="proposal-actions"><button class="btn btn-small" type="button" data-preview-diff>审查差异</button><button class="btn btn-small" type="button" data-discard-proposal>放弃变更</button><button class="btn btn-primary btn-small" type="button" data-accept-all>接受并形成修订</button></div></div>' : '<div class="message message-agent"><div class="message-label">当前上下文</div>可读取当前草稿、开发者已获授权的数据资产元数据、已批准依赖与受控规范；不能读取生产明文或其他服务草稿。</div>') +
+          '</div><div class="assistant-compose"><label for="ai-request">描述开发任务</label><textarea class="textarea" id="ai-request" placeholder="例如：补充输出证据、配置客户数据需求并增加越权拒绝测试"' + (!editable(s) ? ' disabled' : '') + '></textarea><div class="compose-foot"><span class="ai-chat-boundary">' + icon("i-check", "icon-sm") + '人工采纳 · 人工测试 · 人工提审</span><button class="btn btn-primary" type="button" data-ai-generate' + (!editable(s) ? ' disabled' : '') + '>生成变更</button></div></div></section>';
+      }
+
+      function aiWorkbenchView() {
+        var s = currentService();
+        var sections = developmentSections(s);
+        var rail = '<nav class="ai-config-rail" aria-label="配置目录"><div class="ai-config-rail-head"><h2>服务配置</h2><div class="config-mode">' + modeSwitchMarkup(s) + '</div><p>点击查看只读配置与生成状态</p></div>' + sections.map(function (item) {
+          return '<button class="ai-config-button ' + (state.aiConfigOpen && state.aiConfigSection === item[0] ? 'active' : '') + '" type="button" data-config-drawer="' + item[0] + '" aria-expanded="' + (state.aiConfigOpen && state.aiConfigSection === item[0]) + '"><span class="ai-config-name">' + icon(item[2]) + '<span>' + item[1] + '</span></span>' + status(configProgress(s, item[0])) + '</button>';
+        }).join('') + '</nav>';
+        return '<section class="view workbench-page">' + workbenchHeader(s) + '<div class="ai-workbench' + (state.aiConfigOpen ? ' drawer-open' : '') + '">' + aiConversationMarkup(s) + rail + (state.aiConfigOpen ? configDrawerMarkup(s) : '') + '</div></section>';
+      }
+
+      function workbenchView() {
+        var s = currentService();
+        return s.hosted && s.creationMode === "ai" ? aiWorkbenchView() : manualWorkbenchView();
+      }
+
+      function applicationView() {
+        var appStatus = state.app.reviewPending ? "待应用上线审核" : state.app.status;
+        var newVersion = state.app.upgraded ? "v1.3.0" : state.app.mainAgentVersion;
+        return '<section class="view"><header class="page-head"><div><div class="breadcrumb"><span>数据服务域</span><span>/</span><span>数据应用</span><span>/</span><span>外部数据消费方映射</span></div><div class="page-title-row"><h1>客户服务助手</h1>' + status(appStatus) + '<span class="tag">运行版本 ' + state.app.version + '</span></div><p class="page-description">映射外部客户服务系统的咨询辅助场景，按应用身份组合固定服务版本和数据权限。</p></div>' +
+          '<div class="page-actions">' + (state.app.reviewPending ? '<button class="btn btn-primary" type="button" data-approve-app>模拟审核通过</button>' : state.app.draft ? '<button class="btn btn-primary" type="button" data-submit-app>提交应用审核</button>' : '<button class="btn" type="button" data-rollback-app>回滚版本</button><button class="btn btn-primary" type="button" data-create-app-version>创建新版本</button>') + '</div></header>' +
+          '<div class="page-body">' +
+          (state.app.reviewPending ? '<div class="alert alert-warning"><svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg><div class="alert-body"><div class="alert-title">应用版本 v3.3.0 已进入统一工作流</div><p class="alert-copy">审核数据应用接入配置、固定服务版本、数据权限和动作权限；审核通过后自动原子切换。</p></div></div></div>' : state.app.draft ? '<div class="alert"><svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg><div class="alert-body"><div class="alert-title">正在编辑应用版本 v3.3.0</div><p class="alert-copy">运行版本 v3.2.0 不受影响。只有新版本整体审核并完成策略下发后才会切换。</p></div></div></div>' : '') +
+          '<div class="layer-intro"><section class="panel"><div class="panel-head"><div><h2 class="panel-title">映射关系</h2><div class="muted">一个外部数据消费方的一个消费场景对应一个数据应用</div></div></div><div class="panel-body app-meta">' +
+          '<div class="meta-item"><div class="meta-label">外部数据消费方</div><div class="meta-value">客户服务系统</div></div><div class="meta-item"><div class="meta-label">外部消费场景</div><div class="meta-value">咨询辅助</div></div><div class="meta-item"><div class="meta-label">运行方式</div><div class="meta-value">外部运行</div></div><div class="meta-item"><div class="meta-label">主要消费形态</div><div class="meta-value">Agent</div></div></div></section>' +
+          '<aside class="panel"><div class="panel-head"><h2 class="panel-title">版本摘要</h2></div><div class="panel-body"><div class="summary-label">当前运行版本</div><div class="summary-value">' + state.app.version + '</div><div class="summary-note">固定 4 项服务 · 2 项数据权限</div>' + (state.app.upgraded ? '<div class="alert alert-warning" style="margin-top:16px;margin-bottom:0"><div class="alert-body"><div class="alert-title">存在待审核变更</div><p class="alert-copy">客户洞察 Agent 将升级至 v1.3.0。</p></div></div>' : '') + '</div></aside></div>' +
+          '<div class="layer-stack">' +
+          '<section class="panel layer-card"><header class="layer-header"><div><div class="layer-heading"><span class="layer-index">3</span><h2 class="panel-title">应用接入层</h2></div><p class="layer-copy">数据应用身份、证书、密钥、认证方式、配额与主要消费形态</p></div><span class="tag tag-primary">应用身份 app-customer-018</span></header><div class="credential-grid">' +
+          '<div class="credential-card"><div class="meta-label">主要消费形态</div><div class="meta-value">Agent</div><div class="summary-note">外部运行</div></div><div class="credential-card"><div class="meta-label">认证方式</div><div class="meta-value">mTLS + API Key</div><div class="summary-note">共享应用身份</div></div><div class="credential-card"><div class="meta-label">有效凭据</div><div class="meta-value">2 项</div><div class="summary-note">轮换窗口至 09-05</div></div><div class="credential-card"><div class="meta-label">调用超时</div><div class="meta-value">30 秒</div><div class="summary-note">中台上限 60 秒</div></div></div></section>' +
+          '<section class="panel layer-card service-layer"><header class="layer-header"><div><div class="layer-heading"><span class="layer-index">2</span><h2 class="panel-title">服务能力层</h2></div><p class="layer-copy">选择已经上线并完成网关注册的平台内部服务固定版本</p></div><span class="tag">1 项主入口 · 3 项辅助服务</span></header><div class="table-scroll"><table><caption class="sr-only">数据应用选择的固定服务版本</caption><thead><tr><th scope="col">关系</th><th scope="col">服务</th><th scope="col">类型</th><th scope="col">固定版本</th><th scope="col">运行状态</th><th scope="col">操作</th></tr></thead><tbody>' +
+          '<tr class="' + (state.app.upgraded ? "change-row" : "") + '"><td><span class="tag tag-primary">主入口</span></td><td><div class="cell-primary">客户洞察 Agent</div></td><td>Agent</td><td>' + (state.app.upgraded ? '<span class="version-arrow">v1.2.0 → v1.3.0</span>' : newVersion) + '</td><td>' + status("可用") + '</td><td>' + (state.app.draft && !state.app.upgraded ? '<button class="btn btn-text btn-small" type="button" data-upgrade-agent>升级至 v1.3.0</button>' : state.app.upgraded ? '<button class="btn btn-text btn-small" type="button" data-cancel-upgrade>撤销变更</button>' : '<button class="btn btn-text btn-small" type="button" data-toast="请先创建数据应用新版本">更换版本</button>') + '</td></tr>' +
+          '<tr><td><span class="tag">辅助</span></td><td><div class="cell-primary">客户资料 MCP</div></td><td>MCP</td><td>v1.1.0</td><td>' + status("可用") + '</td><td><button class="btn btn-text btn-small" type="button" data-toast="固定版本 v1.1.0">查看</button></td></tr>' +
+          '<tr><td><span class="tag">辅助</span></td><td><div class="cell-primary">合规查询 Skill</div></td><td>Skill</td><td>v1.0.3</td><td>' + status("可用") + '</td><td><button class="btn btn-text btn-small" type="button" data-toast="签名文件已绑定应用身份">查看</button></td></tr>' +
+          '<tr><td><span class="tag">辅助</span></td><td><div class="cell-primary">客户标签 API</div></td><td>API</td><td>v2.4.1</td><td>' + status("可用") + '</td><td><button class="btn btn-text btn-small" type="button" data-toast="固定版本 v2.4.1">查看</button></td></tr></tbody></table></div></section>' +
+          '<section class="panel layer-card data-layer"><header class="layer-header"><div><div class="layer-heading"><span class="layer-index">1</span><h2 class="panel-title">数据权限层</h2></div><p class="layer-copy">权限只授予数据应用，服务仅声明数据依赖和所需范围</p></div><span class="tag">审批有效期至 2027-08-26</span></header><div class="panel-body"><div class="permission-chips"><span class="tag tag-primary">客户基本信息 · 姓名脱敏、地区、等级</span><span class="tag tag-primary">客户标签 · 标签名称、更新时间</span><span class="tag">行范围：所属业务域</span><span class="tag">操作权限：无真实写入</span></div></div></section>' +
+          '</div></div></section>';
+      }
+
+      function render() {
+        hideScopeHelp();
+        updateNavigation();
+        workspace.innerHTML = state.view === "services" ? (state.variant === "A" ? serviceListView() : state.variant === "B" ? aiTaskWorkbenchView() : pipelineView()) : state.view === "workbench" ? workbenchView() : applicationView();
+        if (compareMode) switcherLabel.innerHTML = state.variant + " — " + variantNames[state.variant] + '<br><span class="switcher-note">原型比较工具，不属于产品界面</span>';
+        if (state.view === "services" && state.variant === "A") {
+          document.getElementById("type-filter").value = state.type;
+          document.getElementById("status-filter").value = state.lifecycle;
+        }
+      }
+
+      function switchVariant(step) {
+        if (!compareMode) return;
+        var keys = ["A", "B", "C"];
+        var index = keys.indexOf(state.variant);
+        state.variant = keys[(index + step + keys.length) % keys.length];
+        state.view = "services";
+        var url = new URL(window.location.href);
+        url.searchParams.set("compare", "1");
+        url.searchParams.set("variant", state.variant);
+        window.history.replaceState({}, "", url.href);
+        render();
+        showToast("已切换到方案 " + state.variant + "：" + variantNames[state.variant]);
+      }
+
+      function openModal(title, body, confirmLabel, action, danger) {
+        modalTitle.textContent = title;
+        modalBody.innerHTML = body;
+        modalFoot.innerHTML = '<button class="btn" type="button" data-close-modal>取消</button><button class="btn ' + (danger ? "btn-danger" : "btn-primary") + '" type="button" id="modal-confirm">' + confirmLabel + '</button>';
+        modalLayer.classList.add("open");
+        modalLayer.setAttribute("aria-hidden", "false");
+        document.getElementById("modal-confirm").onclick = action;
+      }
+
+      function closeModal() {
+        modalLayer.classList.remove("open");
+        modalLayer.setAttribute("aria-hidden", "true");
+      }
+
+      function deleteService(id) {
+        var service = serviceRows.find(function (item) { return item.id === id; });
+        if (!deletable(service)) { showToast("仅草稿配置或仿真测试阶段、且未审核通过或上线的服务可以删除"); return; }
+        openModal("删除服务", '<p>确认删除 <strong>' + escapeHtml(service.name) + '</strong>？</p><p>当前阶段：' + escapeHtml(service.lifecycle) + '。删除后将从服务目录移除，不能继续配置或提交审核。</p><p class="muted">原型保留本地历史记录，不影响其他服务，不执行后台删除。</p>', "确认删除", function () {
+          service = serviceRows.find(function (item) { return item.id === id; });
+          if (!deletable(service)) { closeModal(); showToast("服务状态已变化，不能删除"); return; }
+          service.deleted = true;
+          service.history.push({ action: "删除服务", note: "从服务目录移除，历史记录保留", revision: service.revision });
+          var stored = persist();
+          if (state.currentServiceId === id) {
+            state.currentServiceId = null;
+            state.proposal = false;
+            state.assistantRequest = "";
+            state.aiConfigOpen = false;
+            state.validationErrors = {};
+          }
+          state.view = "services";
+          closeModal(); closeDrawer(); render();
+          showToast("已删除“" + service.name + "”，历史记录保留" + (stored ? "（本地）" : "；仅当前页面生效，刷新后可能恢复"));
+        }, true);
+      }
+
+      function openDrawer(title, body, footer) {
+        state.skillAssistantDrawer = false;
+        drawerTitle.textContent = title;
+        drawerBody.innerHTML = body;
+        drawerFoot.innerHTML = footer || '<button class="btn" type="button" data-close-drawer>关闭</button>';
+        drawerLayer.classList.add("open");
+        drawerLayer.setAttribute("aria-hidden", "false");
+      }
+
+      function closeDrawer() {
+        state.skillAssistantDrawer = false;
+        drawerLayer.classList.remove("open");
+        drawerLayer.setAttribute("aria-hidden", "true");
+      }
+
+      function canEditSkill() {
+        var s = currentService();
+        return state.view === "workbench" && s.hosted && s.creationMode === "manual" && s.type === "Skill" && editable(s);
+      }
+      function skillFileTemplates() {
+        return {
+          markdown: { label: "Markdown 文档", path: "references/notes.md", content: "# 参考说明\n\n在这里补充使用方法、示例或边界条件。\n" },
+          python: { label: "Python 脚本", path: "scripts/process.py", content: "def run(payload):\n    # 只处理调用方传入的获准数据。\n    return payload\n" },
+          javascript: { label: "JavaScript 脚本", path: "scripts/process.js", content: "export function run(payload) {\n  return payload;\n}\n" },
+          shell: { label: "Shell 脚本", path: "scripts/process.sh", content: "#!/usr/bin/env bash\nset -euo pipefail\n# 在此编写受控脚本；原型不会执行它。\n" },
+          json: { label: "JSON 资源 / 模板", path: "assets/template.json", content: "{\n  \"items\": []\n}\n" },
+          text: { label: "其他文本文件", path: "assets/notes.txt", content: "" }
+        };
+      }
+      function createSkillEntry(kind) {
+        if (!canEditSkill() || !["file", "folder"].includes(kind)) return;
+        var s = currentService(), c = s.config, templates = skillFileTemplates();
+        state.skillPathEdited = false;
+        openModal(kind === "folder" ? "新建目录" : "新建文件",
+          (kind === "file" ? '<div class="form-item"><label for="skill-new-kind">初始模板</label><select class="select" id="skill-new-kind">' + Object.keys(templates).map(function (key) { return '<option value="' + key + '">' + templates[key].label + '</option>'; }).join('') + '</select></div>' : '') +
+          '<div class="form-item"><label for="skill-new-path">包内相对路径（必填）' + help("可使用 scripts/、references/、assets/ 或自定义目录。嵌套路径会自动显示父目录；不能覆盖现有文件或必需入口。") + '</label><input class="input" id="skill-new-path" value="' + (kind === "folder" ? '' : templates.markdown.path) + '" placeholder="' + (kind === "folder" ? '例如 references/examples' : '例如 scripts/process.py') + '" aria-describedby="skill-new-path-error"><div class="field-error" id="skill-new-path-error" hidden></div></div>', "创建", function () {
+            if (!canEditSkill() || currentService() !== s) return;
+            var input = document.getElementById("skill-new-path"), path = input.value.trim(), error = skillPathConflict(path, c);
+            if (error) { showSkillPathError(error); return; }
+            if (kind === "folder") c.folders.push(path);
+            else {
+              var template = templates[document.getElementById("skill-new-kind").value] || templates.text;
+              var file = { path: path, content: template.content };
+              if (skillScript(file)) file.duration = "60";
+              c.files.push(file);
+              state.skillFile = path;
+            }
+            state.activeSection = "definition";
+            state.skillCollapsed = {};
+            state.validationErrors = {};
+            markChanged(s); closeModal(); render();
+            showToast((kind === "folder" ? "目录" : "文件") + "已加入草稿，请保存");
+          });
+      }
+      function showSkillPathError(message) {
+        var input = document.getElementById("skill-new-path"), error = document.getElementById("skill-new-path-error");
+        input.setAttribute("aria-invalid", "true");
+        error.textContent = message; error.hidden = false; input.focus();
+      }
+      function renameSkillFile() {
+        if (!canEditSkill() || state.skillFile === "SKILL.md") return;
+        var s = currentService(), file = s.config.files.find(function (f) { return f.path === state.skillFile; });
+        if (!file) return;
+        openModal("重命名文件", '<div class="form-item"><label for="skill-new-path">包内相对路径' + help("文件内容保留。重命名后需同步修改 Markdown 中的相对引用；提交前会检查本地 Markdown 链接。") + '</label><input class="input" id="skill-new-path" value="' + escapeHtml(file.path) + '" aria-describedby="skill-new-path-error"><div class="field-error" id="skill-new-path-error" hidden></div></div>', "保存名称", function () {
+          if (!canEditSkill() || currentService() !== s) return;
+          var path = document.getElementById("skill-new-path").value.trim();
+          if (path === file.path) { closeModal(); return; }
+          var error = skillPathConflict(path, s.config, file.path);
+          if (error) { showSkillPathError(error); return; }
+          file.path = path; state.skillFile = path;
+          if (skillScript(file) && !file.duration) file.duration = "60";
+          state.skillCollapsed = {}; state.validationErrors = {};
+          markChanged(s); closeModal(); render(); showToast("文件已重命名，请检查正文相对引用并保存");
+        });
+      }
+      function deleteSkillEntry(path, folder) {
+        if (!canEditSkill() || path === "SKILL.md") return;
+        var s = currentService(), c = s.config;
+        if (folder ? !skillDirectories(c).includes(path) : !c.files.some(function (f) { return f.path === path; })) return;
+        if (folder && c.files.map(function (f) { return f.path; }).concat(c.folders).some(function (p) { return p.startsWith(path + "/"); })) { showToast("请先移除目录中的文件与子目录"); return; }
+        openModal(folder ? "移除空目录" : "删除文件", '<p>从当前草稿移除 <strong>' + escapeHtml(path) + '</strong>？</p><p>已提交的历史快照不受影响。请同步检查引用；此操作不会删除电脑上的文件。</p>', "确认移除", function () {
+          if (!canEditSkill() || currentService() !== s) return;
+          if (folder) c.folders = c.folders.filter(function (p) { return p !== path; });
+          else c.files = c.files.filter(function (f) { return f.path !== path; });
+          state.skillFile = "SKILL.md"; state.validationErrors = {};
+          markChanged(s); closeModal(); render(); showToast("已从当前草稿移除，历史审核快照未改变");
+        }, true);
+      }
+      function insertSkillReference() {
+        if (!canEditSkill() || state.skillFile === "SKILL.md") return;
+        var s = currentService(), file = s.config.files.find(function (f) { return f.path === state.skillFile; });
+        if (!file) return;
+        var href = file.path.split("/").map(encodeURIComponent).join("/");
+        s.config.instructions += '\n\n- [' + file.path.split("/").pop().replace(/[\[\]]/g, "") + '](' + href + ')';
+        state.skillFile = "SKILL.md"; markChanged(s); render(); showToast("已在 SKILL.md 中插入相对引用");
+      }
+      function restoreLegacySkillScript() {
+        if (!canEditSkill()) return;
+        var s = currentService(), file = s.config.legacyInactiveScript;
+        if (!file) return;
+        var error = skillPathConflict(file.path, s.config);
+        if (error) { showToast(error + "请先处理冲突。"); return; }
+        s.config.files.push(copy(file)); delete s.config.legacyInactiveScript;
+        state.skillFile = file.path; markChanged(s); render(); showToast("已恢复旧版未启用的脚本草稿");
+      }
+      function openSkillAssistant() {
+        if (!canEditSkill()) return;
+        openDrawer("Skill 开发助手", assistantMarkup().replace('class="assistant-panel"', 'class="assistant-panel skill-assistant-drawer"'));
+        state.skillAssistantDrawer = true;
+      }
+
+      function createServiceModal() {
+        state.selectedCreateType = "Agent";
+        state.selectedHosted = true;
+        state.creationMode = "ai";
+        openModal("创建 AI 服务", '<div class="form-item"><span class="field-label">服务类型</span><div class="type-options" role="group" aria-label="选择服务类型">' +
+          ["Agent", "MCP", "Skill", "Worker"].map(function (type) { return '<button class="type-option ' + (state.selectedCreateType === type ? "active" : "") + '" type="button" aria-pressed="' + (state.selectedCreateType === type) + '" data-create-type="' + type + '"><span class="type-mark">' + type.slice(0, 2).toUpperCase() + '</span><span><strong>' + type + '</strong><span class="cell-secondary" style="display:block">' + typeDescriptions[type] + '</span></span></button>'; }).join("") +
+          '</div></div><div class="form-item"><label for="new-service-name">服务名称（必填）</label><input class="input" id="new-service-name" placeholder="请输入服务名称" required aria-describedby="new-service-error"><div class="field-error" id="new-service-error" hidden>请输入服务名称。</div></div>' +
+          '<div class="form-item"><label for="new-service-desc">服务说明（必填）</label><textarea class="textarea" id="new-service-desc" placeholder="请输入服务说明" required aria-describedby="new-service-desc-error"></textarea><div class="field-error" id="new-service-desc-error" hidden>请输入服务说明。</div></div>' +
+          '<div class="form-item"><span class="field-label" id="hosting-label">AI 服务是否托管' + help("是：在平台开发并托管服务，同时配置数据需求。否：仅登记和配置数据需求，不在平台开发、测试或部署。") + '</span><div class="radio-row" role="group" aria-labelledby="hosting-label"><label><input type="radio" name="hosting" id="new-hosted-yes" value="yes" checked> 是</label><label><input type="radio" name="hosting" id="new-hosted-no" value="no"> 否</label></div><p class="help" id="hosting-summary" role="status">平台托管 · 数据需求 + 类型专属开发配置</p></div>' +
+          '<div class="form-item" id="creation-mode-field"><span class="field-label">开发方式' + help("创建后可在服务配置中切换；两种方式共用同一个草稿、修订和审核流程。") + '</span><div class="creation-mode-options"><label class="creation-mode-option"><input type="radio" name="creation-mode" id="creation-mode-ai" value="ai" checked><span><strong>AI 对话创建</strong><span>以开发 Agent 会话为主；右侧配置只读，采纳变更后写入草稿。</span></span></label><label class="creation-mode-option"><input type="radio" name="creation-mode" id="creation-mode-manual" value="manual"><span><strong>手工创建</strong><span>进入类型专属编辑器，配置、保存与校验均由开发者执行。</span></span></label></div><p class="help">测试、提交审核、审批与上线始终需要人工执行。</p></div>', "创建草稿", function () {
+            var name = document.getElementById("new-service-name"), description = document.getElementById("new-service-desc");
+            var nameInvalid = !name.value.trim(), descriptionInvalid = !description.value.trim();
+            document.getElementById("new-service-error").hidden = !nameInvalid;
+            document.getElementById("new-service-desc-error").hidden = !descriptionInvalid;
+            name.setAttribute("aria-invalid", String(nameInvalid));
+            description.setAttribute("aria-invalid", String(descriptionInvalid));
+            if (nameInvalid || descriptionInvalid) { (nameInvalid ? name : description).focus(); return; }
+            var id = "service-" + Date.now();
+            while (serviceRows.some(function (s) { return s.id === id; })) id += "-1";
+            var service = newDraft(id, name.value.trim(), description.value.trim(), state.selectedCreateType, state.selectedHosted);
+            service.creationMode = service.hosted ? state.creationMode : "data-only";
+            serviceRows.unshift(service);
+            var stored = persist();
+            closeModal();
+            openService(id);
+            showToast(service.type + " 草稿已创建" + (stored ? "，已保存在本地" : "；本地存储不可用，仅当前页面保留"));
+          });
+      }
+
+      function assetResults() {
+        var q = state.assetQuery.trim().toLowerCase(), s = currentService();
+        var matches = dataAssets.filter(function (a) { return (a.name + a.table + a.domain).toLowerCase().includes(q); });
+        return matches.length ? matches.map(function (a) {
+          var existing = s.requests.some(function (r) { return r.assetId === a.id; });
+          return '<label class="asset-choice"><input type="checkbox" data-asset-select="' + a.id + '"' + (existing || state.assetSelection.includes(a.id) ? ' checked' : '') + (existing ? ' disabled' : '') + '><span><strong>' + a.name + '</strong><br><span class="cell-secondary">' + a.domain + ' · ' + a.table + (existing ? ' · 已添加' : '') + '</span></span></label>';
+        }).join('') : '<div class="editor-empty">未找到匹配的数据资产</div>';
+      }
+      function selectAssets() {
+        var s = currentService();
+        if (!editable(s) || (s.hosted && s.creationMode === "ai")) return;
+        state.assetQuery = "";
+        state.assetSelection = [];
+        openModal("选择数据资产", '<label class="search-wrap"><span class="sr-only">搜索数据资产</span>' + icon("i-search") + '<input class="input" id="asset-search" placeholder="搜索名称、标识或业务域"></label><div class="asset-results" id="asset-results">' + assetResults() + '</div><div class="field-error" id="asset-error" hidden>请至少选择一项尚未添加的数据。</div>', "添加所选数据", function () {
+          if (!editable(s)) return;
+          if (!state.assetSelection.length) { document.getElementById("asset-error").hidden = false; return; }
+          state.assetSelection.forEach(function (id) {
+            var asset = dataAssets.find(function (a) { return a.id === id; });
+            if (asset && !s.requests.some(function (r) { return r.assetId === id; })) s.requests.push({ assetId: id, fields: [], scope: "业务域范围", scopeField: asset.fields[0].id, scopeValue: "", purpose: "" });
+          });
+          s.noData = false;
+          state.validationErrors = {};
+          markChanged(s);
+          closeModal();
+          render();
+        });
+      }
+
+      function validateService(s) {
+        var errors = {}, c = s.config;
+        if (!s.noData && !s.requests.length) errors["data-requests"] = "请选择数据，或声明本服务不使用平台数据。";
+        if (!s.noData) s.requests.forEach(function (r, i) {
+          if (!r.fields.length) errors["req-" + i + "-fields"] = "请至少选择一个字段。";
+          if (!r.purpose.trim()) errors["req-" + i + "-purpose"] = "请填写数据使用用途。";
+          if (r.scope === "指定条件" && !r.scopeValue.trim()) errors["req-" + i + "-scopeValue"] = "请填写条件值。";
+        });
+        if (s.hosted) {
+          var required = s.type === "Agent" ? ["goal", "prompt", "model"] : s.type === "MCP" ? ["entry"] : s.type === "Skill" ? ["packageName", "skillDescription", "instructions"] : ["taskName", "entry", "implementation", "idempotency"];
+          if (s.type === "MCP") {
+            if (!c.tools && !c.resources && !c.prompts) errors["cfg-capabilities"] = "请至少声明一种协议能力。";
+            if (c.tools) required = required.concat(["toolName", "toolDescription", "toolHandler"]);
+            if (c.resources) required = required.concat(["resourceUri", "resourceMime", "resourceHandler"]);
+            if (c.prompts) required = required.concat(["promptName", "promptBody"]);
+          }
+          required.forEach(function (key) { if (!String(c[key] || '').trim()) errors["cfg-" + key] = "此项为必填内容。"; });
+          var schemas = ["Agent", "Worker"].includes(s.type) ? ["inputSchema", "outputSchema"] : s.type === "MCP" && c.tools ? ["toolInput"].concat(String(c.toolOutput || '').trim() ? ["toolOutput"] : []) : [];
+          schemas.forEach(function (key) {
+            try {
+              var schema = JSON.parse(c[key]);
+              if (!schema || Array.isArray(schema) || schema.type !== "object" || (schema.properties && (typeof schema.properties !== "object" || Array.isArray(schema.properties)))) throw new Error("object schema required");
+            } catch (e) { errors["cfg-" + key] = "请输入合法的对象 JSON Schema（type 为 object）。"; }
+          });
+          var numbers = s.type === "Agent" ? ["steps", "duration"] : s.type === "MCP" ? ["timeout"] : s.type === "Skill" ? [] : ["attemptTimeout", "totalTimeout", "attempts"];
+          numbers.forEach(function (key) { if (!Number.isInteger(Number(c[key])) || Number(c[key]) < 1) errors["cfg-" + key] = "请输入大于 0 的整数。"; });
+          if (s.type === "Skill") {
+            validateSkillPackage(s, errors);
+          }
+          if (s.type === "Worker") {
+            if (Number(c.totalTimeout) < Number(c.attemptTimeout)) errors["cfg-totalTimeout"] = "整体期限不能小于单次尝试时限。";
+            if (c.trigger !== "按需异步" && !validCron(c.schedule)) errors["cfg-schedule"] = "使用合法的五段 Cron（分 时 日 月 周）。";
+          }
+        }
+        state.validationErrors = errors;
+        if (Object.keys(errors).length) {
+          if (s.type === "Skill" && Object.keys(errors).some(function (key) { return key.startsWith("cfg-"); })) state.skillFile = "SKILL.md";
+          state.activeSection = Object.keys(errors).some(function (k) { return k === "data-requests" || k.startsWith("req-"); }) ? "data" : "definition";
+          render();
+          var first = document.getElementById(Object.keys(errors)[0]);
+          if (first) first.focus();
+          return false;
+        }
+        return true;
+      }
+      function validCron(value) {
+        var parts = String(value).trim().split(/\s+/), ranges = [[0,59],[0,23],[1,31],[1,12],[0,7]];
+        if (parts.length !== 5) return false;
+        return parts.every(function (part, i) {
+          return part.split(",").every(function (piece) {
+            var split = piece.split("/");
+            if (split.length > 2 || (split.length === 2 && (!/^\d+$/.test(split[1]) || Number(split[1]) < 1 || Number(split[1]) > ranges[i][1] + 1))) return false;
+            if (split[0] === "*") return true;
+            var limits = split[0].split("-");
+            return limits.length <= 2 && limits.every(function (n) { return /^\d+$/.test(n) && Number(n) >= ranges[i][0] && Number(n) <= ranges[i][1]; }) && (limits.length === 1 || Number(limits[0]) <= Number(limits[1]));
+          });
+        });
+      }
+
+      function skillLinkTarget(from, href) {
+        if (/^(https?:|mailto:)/i.test(href) || href.startsWith("#")) return null;
+        try { href = decodeURIComponent(href.split(/[?#]/)[0]); } catch (error) { return false; }
+        if (!href) return null;
+        if (/^[a-z][a-z0-9+.-]*:/i.test(href) || href.startsWith("/") || href.includes("\\")) return false;
+        var parts = from.split("/"); parts.pop();
+        var segments = href.split("/");
+        for (var i = 0; i < segments.length; i++) {
+          if (segments[i] === "." || !segments[i]) continue;
+          if (segments[i] === "..") { if (!parts.length) return false; parts.pop(); }
+          else parts.push(segments[i]);
+        }
+        return parts.join("/");
+      }
+      function validateSkillPackage(service, errors) {
+        var c = service.config;
+        if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(c.packageName) || c.packageName.length > 64) errors["cfg-packageName"] = "使用 1–64 位小写英文、数字与单连字符，并与根目录一致。";
+        if (!c.skillDescription.trim() || c.skillDescription.length > 1024) errors["cfg-skillDescription"] = "能力与使用场景需为 1–1024 个字符。";
+        if (c.compatibility.length > 500) errors["cfg-compatibility"] = "环境要求不能超过 500 个字符。";
+        try {
+          var metadata = JSON.parse(c.metadata || "{}");
+          if (!metadata || typeof metadata !== "object" || Array.isArray(metadata) || Object.values(metadata).some(function (v) { return typeof v !== "string"; })) throw new Error("string map required");
+        } catch (error) { errors["cfg-metadata"] = '填写字符串键值对象，例如 {"author":"数据团队"}。'; }
+        var issues = [], seen = new Set(["skill.md"]), allFiles = ["SKILL.md"].concat(c.files.map(function (f) { return f.path; }));
+        c.files.forEach(function (file) {
+          if (!validSkillPath(file.path)) issues.push(file.path + "：必须是合法包内相对路径");
+          if (seen.has(file.path.toLowerCase())) issues.push(file.path + "：文件路径重复或与必需入口冲突");
+          seen.add(file.path.toLowerCase());
+          if (allFiles.some(function (p) { return file.path.toLowerCase().startsWith(p.toLowerCase() + "/"); })) issues.push(file.path + "：父路径不是目录");
+          if (skillScript(file) && (!Number.isSafeInteger(Number(file.duration || "60")) || Number(file.duration || "60") < 1)) { issues.push(file.path + "：执行时限需为正整数"); errors["skill-file-duration"] = "请输入大于 0 的整数。"; state.skillFile = file.path; }
+          if (skillScript(file) && !file.content.trim()) { issues.push(file.path + "：请填写脚本内容"); errors["skill-file-content"] = "请填写脚本内容。"; state.skillFile = file.path; }
+        });
+        c.folders.forEach(function (dir) {
+          if (!validSkillPath(dir) || seen.has(dir.toLowerCase()) || allFiles.some(function (p) { return dir.toLowerCase().startsWith(p.toLowerCase() + "/"); })) issues.push(dir + "：目录路径非法或与文件冲突");
+        });
+        var bundle = buildSkillPackage(c), targets = bundle.files.map(function (f) { return f.path; }).concat(bundle.directories);
+        bundle.files.filter(function (f) { return /\.md$/i.test(f.path); }).forEach(function (file) {
+          var text = file.content.replace(/^\s*```[^\n]*\n[\s\S]*?^\s*```\s*$/gm, "").replace(/`[^`\n]*`/g, "");
+          var links = Array.from(text.matchAll(/\[[^\]]*\]\((?:<([^>]+)>|([^\s)]+))(?:\s+["'][^)]*["'])?\)/g), function (match) { return match[1] || match[2]; });
+          Array.from(text.matchAll(/^\s*\[[^\]]+\]:\s*(?:<([^>]+)>|(\S+))/gm)).forEach(function (match) { links.push(match[1] || match[2]); });
+          links.forEach(function (href) {
+            var target = skillLinkTarget(file.path, href);
+            if (target === false || (target !== null && !targets.includes(target))) {
+              issues.push(file.path + "：引用 " + href + " 不存在或越出技能包");
+              if (!Object.keys(errors).some(function (key) { return key.startsWith("cfg-"); })) state.skillFile = file.path;
+            }
+          });
+        });
+        if (issues.length) errors["skill-files"] = issues.join("；");
+      }
+
+      function saveDraft() {
+        var s = currentService();
+        if (!editable(s)) return;
+        s.revision += 1;
+        s.dirty = false;
+        s.updated = "刚刚";
+        var stored = persist();
+        render();
+        showToast("草稿已保存为修订 r" + s.revision + (stored ? "（本地）" : "；本地存储不可用，仅当前页面保留"));
+      }
+      function diffDrawer() {
+        var s = currentService();
+        if (!s.hosted || s.creationMode !== "ai" || !editable(s) || !state.proposal) return;
+        var p = proposalFor(s);
+        openDrawer("审查 " + s.type + " 示例变更", '<div class="review-summary"><p>以下内容仅在人工接受后写入当前草稿。</p><h3>' + p.label + ' · 修改前</h3><pre class="code-preview">' + escapeHtml(p.before) + '</pre><h3>修改后</h3><pre class="code-preview">' + escapeHtml(p.after) + '</pre></div>', '<button class="btn" type="button" data-close-drawer>取消</button><button class="btn btn-primary" type="button" data-accept-all>接受变更</button>');
+      }
+      function acceptProposal() {
+        var s = currentService();
+        if (!s.hosted || s.creationMode !== "ai" || !editable(s) || !state.proposal) return;
+        var p = proposalFor(s);
+        if (p.key === "__data__") {
+          s.noData = false;
+          s.requests = [{ assetId: "customer", fields: ["customer_id", "region"], scope: "业务域范围", scopeField: "region", scopeValue: "", purpose: "用于形成受治理的业务分析结果。" }];
+        } else s.config[p.key] = p.after;
+        markChanged(s);
+        state.proposal = false;
+        closeDrawer();
+        saveDraft();
+      }
+
+      function switchDevelopmentMode(mode) {
+        var s = currentService();
+        if (!s.hosted || !editable(s) || !["ai", "manual"].includes(mode) || s.creationMode === mode) return;
+        if (state.proposal) { showToast("请先接受或放弃待采纳变更，再切换开发方式"); return; }
+        var from = developmentModeLabel(s.creationMode);
+        s.creationMode = mode;
+        s.revision += 1;
+        s.dirty = false;
+        s.updated = "刚刚";
+        s.history.push({ action: "切换开发方式", note: from + " → " + developmentModeLabel(mode), revision: s.revision });
+        state.validationErrors = {};
+        state.aiConfigOpen = false;
+        if (mode === "manual") state.activeSection = ["data", "definition", "dependencies", "versions"].includes(state.aiConfigSection) ? state.aiConfigSection : "definition";
+        else state.aiConfigSection = ["data", "definition", "dependencies", "versions"].includes(state.activeSection) ? state.activeSection : "definition";
+        var stored = persist();
+        render();
+        showToast("已切换为" + developmentModeLabel(mode) + "并保存修订 r" + s.revision + (stored ? "（本地）" : "；仅当前页面保留"));
+      }
+      function testDrawer() {
+        var s = currentService();
+        if (!s.hosted || !editable(s) || !validateService(s)) return;
+        s.test = { result: "静态校验通过", type: s.type, revision: s.revision };
+        s.lifecycle = "仿真测试";
+        var tests = s.type === "Agent" ? ["模型与行为字段", "输入输出结构", "执行边界声明"] : s.type === "MCP" ? ["服务入口与传输声明"].concat(s.config.tools ? ["工具契约结构"] : []).concat(s.config.resources ? ["资源契约字段"] : []).concat(s.config.prompts ? ["提示模板字段"] : []) : s.type === "Skill" ? ["SKILL.md 元数据与根目录名称", "文件结构与本地 Markdown 链接"].concat(s.config.files.some(skillScript) ? ["脚本内容与执行时限声明"] : []) : ["任务入口与契约", "超时与重试范围", "幂等键声明"].concat(s.config.trigger !== "按需异步" ? ["调度表达式格式"] : []);
+        render();
+        openDrawer(s.type + " 仿真校验", '<p class="editor-notice">离线原型仅执行字段与结构检查，不运行代码、不读取生产数据；以下结果不代表运行测试或安全验证已通过。</p><div class="result-list">' + tests.map(function (name) { return '<div class="result-item"><span>' + name + '</span><span class="tag">静态检查通过</span></div>'; }).join('') + '</div>');
+      }
+      function requestSummary(snapshot) {
+        return snapshot.noData ? '<p>已声明不使用平台数据。</p>' : snapshot.requests.map(function (r) {
+          var a = dataAssets.find(function (asset) { return asset.id === r.assetId; });
+          return '<section class="request-card"><div class="panel-body"><h3>' + a.name + '</h3><dl><dt>字段</dt><dd>' + r.fields.map(function (id) { var f = a.fields.find(function (field) { return field.id === id; }); return escapeHtml(f ? f.name : id); }).join('、') + '</dd><dt>范围</dt><dd>' + escapeHtml(r.scope) + (r.scope === "指定条件" ? ' · ' + escapeHtml(r.scopeField) + ' = ' + escapeHtml(r.scopeValue) : '') + '</dd><dt>用途</dt><dd>' + escapeHtml(r.purpose) + '</dd></dl></div></section>';
+        }).join('');
+      }
+      function releaseModal() {
+        var s = currentService();
+        if (!editable(s) || !validateService(s)) return;
+        var snapshot = submissionContent(s);
+        var versionParts = /^v(\d+)\.(\d+)\.(\d+)$/.exec(s.version);
+        var suggestedVersion = versionParts ? 'v' + versionParts[1] + '.' + versionParts[2] + '.' + (Number(versionParts[3]) + 1) : 'v1.0.0';
+        openModal(s.hosted ? "提交服务审核" : "提交数据需求审核",
+          '<div class="review-summary"><dl><dt>服务名称</dt><dd>' + escapeHtml(s.name) + '</dd><dt>服务类型</dt><dd>' + s.type + '</dd><dt>托管方式</dt><dd>' + (s.hosted ? '平台托管' : '非托管 · 仅数据需求') + '</dd></dl>' + requestSummary(snapshot) + '</div>' +
+          (s.hosted ? '<div class="form-item"><label for="release-version">正式版本号（必填）</label><input class="input" id="release-version" value="' + suggestedVersion + '" aria-describedby="release-version-error"><div class="field-error" id="release-version-error" hidden>填写未使用的版本号，如 v1.0.0。</div></div>' : '') +
+          '<div class="check-list"><label class="check-item"><input type="checkbox" id="review-confirmed" aria-describedby="review-confirmed-error"><span>我已核对数据需求' + (s.hosted ? '与开发配置' : '') + '。本次审核不会自动授予数据权限。</span></label><div class="field-error" id="review-confirmed-error" hidden>请先核对并确认提交内容。</div></div>', "确认提交", function () {
+            if (!editable(s)) return;
+            var versionInput = document.getElementById("release-version"), check = document.getElementById("review-confirmed");
+            var version = s.hosted ? versionInput.value.trim() : "需求修订 r" + (s.revision + 1);
+            if (s.hosted && (!/^v\d+\.\d+\.\d+$/.test(version) || (s.releases || []).includes(version))) {
+              document.getElementById("release-version-error").hidden = false;
+              versionInput.setAttribute("aria-invalid", "true");
+              versionInput.focus();
+              return;
+            }
+            document.getElementById("review-confirmed-error").hidden = check.checked;
+            check.setAttribute("aria-invalid", String(!check.checked));
+            if (!check.checked) { check.focus(); return; }
+            s.revision += 1;
+            s.version = version;
+            s.lifecycle = "待审核";
+            s.dirty = false;
+            s.submission = submissionContent(s);
+            s.submission.version = version;
+            if (s.hosted) s.releases = (s.releases || []).concat(version);
+            s.submissions = (s.submissions || []).concat(copy(s.submission));
+            s.history.push({ action: "提交审核", note: (s.hosted ? version + " · 服务配置与数据需求" : "仅数据需求；不提交开发制品"), revision: s.revision });
+            var stored = persist();
+            closeModal();
+            state.activeSection = "versions";
+            render();
+            showToast("已进入待审核状态，提交内容已冻结" + (stored ? "（本地模拟）" : "；仅当前页面保留"));
+          });
+      }
+      function reviewDrawer(index) {
+        var s = currentService(), snapshot = index === undefined ? s.submission : (s.submissions || [])[index];
+        if (!snapshot) { showToast("尚未提交审核"); return; }
+        var pending = s.lifecycle === "待审核" && index === undefined;
+        openDrawer("审核详情 · " + s.name, '<div class="review-summary"><span class="tag">原型模拟 · 非真实审批</span><dl><dt>提交状态</dt><dd>' + status(index === undefined ? s.lifecycle : "历史快照") + '</dd><dt>提交版本</dt><dd>' + escapeHtml(snapshot.version) + '</dd><dt>服务类型</dt><dd>' + snapshot.type + '</dd><dt>托管方式</dt><dd>' + (snapshot.hosted ? '平台托管' : '非托管') + '</dd></dl>' + requestSummary(snapshot) +
+          (snapshot.hosted ? '<details><summary>查看已冻结的 ' + snapshot.type + ' 开发配置</summary><pre class="code-preview">' + escapeHtml(JSON.stringify(snapshot.config, null, 2)) + '</pre></details>' : '') +
+          '<p>审核通过仅确认需求' + (snapshot.hosted ? '与服务版本' : '') + '；生产访问仍需数据应用授权。实际审批人员由统一工作流决定。</p>' +
+          (pending ? '<div class="form-item"><label for="review-note">审核意见（驳回时必填）</label><textarea class="textarea" id="review-note" aria-describedby="review-note-error" placeholder="填写审核意见"></textarea><div class="field-error" id="review-note-error" hidden>驳回时请填写原因。</div></div>' : '') + '</div>',
+          '<button class="btn" type="button" data-close-drawer>关闭</button>' + (pending ? '<button class="btn btn-danger" type="button" data-review-decision="reject">模拟驳回</button><button class="btn btn-primary" type="button" data-review-decision="approve">模拟通过</button>' : ''));
+      }
+      function decideReview(decision) {
+        var s = currentService();
+        if (s.lifecycle !== "待审核" || !["approve", "reject"].includes(decision)) return;
+        var note = document.getElementById("review-note");
+        if (decision === "reject" && !note.value.trim()) {
+          document.getElementById("review-note-error").hidden = false;
+          note.setAttribute("aria-invalid", "true");
+          note.focus();
+          return;
+        }
+        s.lifecycle = decision === "reject" ? "已驳回" : s.hosted ? "审核通过" : "需求已通过";
+        s.reviewNote = note.value.trim() || "模拟审核通过";
+        s.history.push({ action: decision === "reject" ? "审核驳回" : "审核通过", note: s.reviewNote, revision: s.revision });
+        var stored = persist();
+        closeDrawer();
+        render();
+        showToast((decision === "reject" ? "已驳回，可修改后重新提交" : "模拟审核通过；未授予数据权限" + (s.hosted ? "，尚未发布" : "")) + (stored ? "" : "；仅当前页面保留"));
+      }
+      function newRevision() {
+        var s = currentService();
+        if (s.lifecycle === "待审核" || editable(s)) return;
+        s.lifecycle = "草稿";
+        s.revision += 1;
+        s.test = null;
+        s.dirty = false;
+        s.reviewNote = "";
+        s.history.push({ action: "创建新修订", note: "历史提交快照保持不变", revision: s.revision });
+        var stored = persist();
+        state.activeSection = "data";
+        render();
+        showToast("已创建新修订" + (stored ? "（本地）" : "；仅当前页面保留"));
+      }
+      function deployService() {
+        var s = currentService();
+        if (!s.hosted || s.lifecycle !== "审核通过") return;
+        openModal("模拟发布服务", '<p>仅演示已审核服务的发布状态，不连接网关或运行时，不授予任何数据权限。</p><p>' + escapeHtml(s.name) + ' · ' + escapeHtml(s.version) + '</p>', "确认模拟发布", function () {
+          if (!s.hosted || s.lifecycle !== "审核通过") return;
+          s.lifecycle = "已上线";
+          s.runtime = "可用";
+          s.history.push({ action: "模拟发布", note: "仅原型状态，未实际部署", revision: s.revision });
+          var stored = persist();
+          closeModal();
+          render();
+          showToast("模拟发布完成，未进行实际部署或授权" + (stored ? "" : "；仅当前页面保留"));
+        });
+      }
+
+      function submitApplication() {
+        openModal("提交数据应用新版本", '<div class="alert"><svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg><div class="alert-body"><div class="alert-title">版本整体审核和生效</div><p class="alert-copy">审核应用接入配置、固定服务版本、数据权限和操作权限；任何必需项未通过都不会改变当前运行版本。</p></div></div></div>' +
+          '<div class="result-list"><div class="result-item"><span>应用接入层</span><strong>2 项凭据 · Agent 形态</strong></div><div class="result-item"><span>服务能力层</span><strong>客户洞察 Agent v1.3.0</strong></div><div class="result-item"><span>数据权限层</span><strong>2 项权限 · 无真实写入</strong></div></div>', "提交应用审核", function () {
+            closeModal();
+            state.app.reviewPending = true;
+            render();
+            showToast("应用版本 v3.3.0 已提交统一工作流");
+          });
+      }
+
+      function approveApplication() {
+        state.app.reviewPending = false;
+        state.app.draft = false;
+        state.app.upgraded = false;
+        state.app.version = "v3.3.0";
+        state.app.mainAgentVersion = "v1.3.0";
+        render();
+        showToast("审核通过，应用版本 v3.3.0 已原子切换");
+      }
+
+      function rollbackApplication() {
+        openModal("回滚数据应用版本", '<div class="alert alert-warning"><svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg><div class="alert-body"><div class="alert-title">回滚至已批准版本 v3.2.0</div><p class="alert-copy">系统将重新校验服务在线状态、授权有效性和当前安全策略。旧凭据不会恢复；新调用切换到旧快照，进行中的调用继续使用原快照。</p></div></div></div>', "确认回滚", function () {
+          closeModal();
+          state.app.version = "v3.2.0";
+          state.app.mainAgentVersion = "v1.2.0";
+          render();
+          showToast("数据应用已回滚至 v3.2.0，审计记录已生成");
+        }, true);
+      }
+
+      function updateDraftField(target) {
+        var s = currentService(), data = target.dataset || {};
+        if (state.view !== "workbench" || !editable(s)) return false;
+        if (s.hosted && s.creationMode === "ai") return false;
+        if ((target.id === "skill-file-content" || target.id === "skill-file-duration") && canEditSkill()) {
+          var file = s.config.files.find(function (f) { return f.path === state.skillFile; });
+          if (!file) return false;
+          if (target.id === "skill-file-content") file.content = target.value;
+          else if (skillScript(file)) file.duration = target.value;
+        } else if (data.config && s.hosted && Object.prototype.hasOwnProperty.call(s.config, data.config) && !["files", "folders", "legacyInactiveScript"].includes(data.config)) {
+          s.config[data.config] = ["tools", "resources", "prompts", "hasScript"].includes(data.config) ? target.checked : target.value;
+        } else if (data.requestField && data.requestIndex !== undefined) {
+          var r = s.requests[Number(data.requestIndex)];
+          if (!r) return false;
+          var asset = dataAssets.find(function (a) { return a.id === r.assetId; });
+          if (!asset.fields.some(function (f) { return f.id === data.requestField; })) return false;
+          r.fields = r.fields.filter(function (id) { return id !== data.requestField; });
+          if (target.checked) r.fields.push(data.requestField);
+          delete state.validationErrors["req-" + data.requestIndex + "-fields"];
+          var fieldErrorNode = document.getElementById("req-" + data.requestIndex + "-fields-error");
+          if (fieldErrorNode) fieldErrorNode.hidden = true;
+        } else if (data.requestKey && data.requestIndex !== undefined && ["scope", "scopeField", "scopeValue", "purpose"].includes(data.requestKey)) {
+          if (!s.requests[Number(data.requestIndex)]) return false;
+          s.requests[Number(data.requestIndex)][data.requestKey] = target.value;
+        } else if (target.id === "service-no-data" && !s.requests.length) {
+          s.noData = target.checked;
+        } else return false;
+        markChanged(s);
+        if (s.type === "Skill" && s.hosted && data.config) {
+          var rootName = document.getElementById("skill-root-name"), preview = document.getElementById("skill-manifest-preview");
+          if (rootName) rootName.textContent = s.config.packageName + "/";
+          if (preview) preview.textContent = skillMarkdown(s.config);
+        }
+        if (target.id) {
+          delete state.validationErrors[target.id];
+          target.removeAttribute("aria-invalid");
+          var error = document.getElementById(target.id + "-error");
+          if (error) error.hidden = true;
+        }
+        return true;
+      }
+      document.addEventListener("input", function (event) {
+        var target = event.target;
+        if (target.id === "skill-new-path") state.skillPathEdited = true;
+        if ((target.id === "new-service-name" || target.id === "new-service-desc") && target.value.trim()) {
+          target.removeAttribute("aria-invalid");
+          document.getElementById(target.id === "new-service-name" ? "new-service-error" : "new-service-desc-error").hidden = true;
+        }
+        if (target.id === "service-search") {
+          state.query = target.value;
+          render();
+          var input = document.getElementById("service-search");
+          input.focus();
+          input.setSelectionRange(state.query.length, state.query.length);
+        }
+        if (target.id === "asset-search") {
+          state.assetQuery = target.value;
+          document.getElementById("asset-results").innerHTML = assetResults();
+        }
+        if (target.type !== "checkbox" && target.type !== "radio" && target.tagName !== "SELECT") updateDraftField(target);
+      });
+
+      document.addEventListener("change", function (event) {
+        var target = event.target, data = target.dataset || {};
+        if (target.id === "skill-new-kind") {
+          var template = skillFileTemplates()[target.value];
+          if (template && !state.skillPathEdited) document.getElementById("skill-new-path").value = template.path;
+          return;
+        }
+        if (target.id === "type-filter") { state.type = target.value; render(); return; }
+        if (target.id === "status-filter") { state.lifecycle = target.value; render(); return; }
+        if (target.id === "new-hosted-yes" || target.id === "new-hosted-no") {
+          state.selectedHosted = target.id === "new-hosted-yes";
+          document.getElementById("creation-mode-field").hidden = !state.selectedHosted;
+          document.getElementById("hosting-summary").textContent = state.selectedHosted ? "平台托管 · 数据需求 + 类型专属开发配置" : "非托管 · 仅配置数据需求并提交审核";
+          return;
+        }
+        if (target.id === "creation-mode-ai" || target.id === "creation-mode-manual") { state.creationMode = target.id === "creation-mode-ai" ? "ai" : "manual"; return; }
+        if (data.assetSelect) {
+          state.assetSelection = state.assetSelection.filter(function (id) { return id !== data.assetSelect; });
+          if (target.checked) state.assetSelection.push(data.assetSelect);
+          document.getElementById("asset-error").hidden = true;
+          return;
+        }
+        if (updateDraftField(target) && (["tools", "resources", "prompts", "trigger"].includes(data.config) || data.requestKey === "scope" || target.id === "service-no-data")) { state.validationErrors = {}; render(); }
+      });
+
+      document.addEventListener("click", function (event) {
+        var target = event.target.closest("button");
+        if (!target) return;
+        if (target.disabled) return;
+        if (target.dataset.scopeHelp) { showScopeHelp(target); return; }
+        if (target.dataset.deleteService) { deleteService(target.dataset.deleteService); return; }
+        if (target.dataset.variantStep) { switchVariant(Number(target.dataset.variantStep)); return; }
+        if (target.dataset.toast !== undefined) { showToast(target.dataset.toast); return; }
+        if (target.dataset.view) { state.view = target.dataset.view; render(); return; }
+        if (target.hasAttribute("data-create-service")) { createServiceModal(); return; }
+        if (target.dataset.configDrawer) {
+          var configService = currentService();
+          if (!configService.hosted || configService.creationMode !== "ai") return;
+          if (state.aiConfigOpen && state.aiConfigSection === target.dataset.configDrawer) state.aiConfigOpen = false;
+          else { state.aiConfigSection = target.dataset.configDrawer; state.aiConfigOpen = true; }
+          render();
+          return;
+        }
+        if (target.hasAttribute("data-close-config-drawer")) { state.aiConfigOpen = false; render(); return; }
+        if (target.dataset.switchMode) { switchDevelopmentMode(target.dataset.switchMode); return; }
+        if (target.dataset.requestAiChange) {
+          var aiService = currentService();
+          if (!aiService.hosted || aiService.creationMode !== "ai" || !editable(aiService) || target.dataset.requestAiChange === "versions") return;
+          state.aiConfigSection = target.dataset.requestAiChange;
+          state.assistantRequest = "请根据当前草稿调整" + (developmentSections(aiService).find(function (item) { return item[0] === state.aiConfigSection; }) || [null, "服务配置"])[1] + "。";
+          state.proposal = true;
+          state.aiConfigOpen = false;
+          render();
+          return;
+        }
+        if (target.dataset.skillFile && currentService().hosted && currentService().type === "Skill") {
+          if (target.dataset.skillFile === "SKILL.md" || currentService().config.files.some(function (file) { return file.path === target.dataset.skillFile; })) { state.skillFile = target.dataset.skillFile; render(); }
+          return;
+        }
+        if (target.dataset.skillCreate) { createSkillEntry(target.dataset.skillCreate); return; }
+        if (target.hasAttribute("data-skill-rename")) { renameSkillFile(); return; }
+        if (target.hasAttribute("data-skill-delete")) { deleteSkillEntry(state.skillFile, false); return; }
+        if (target.dataset.skillRemoveDir) { deleteSkillEntry(target.dataset.skillRemoveDir, true); return; }
+        if (target.hasAttribute("data-skill-reference")) { insertSkillReference(); return; }
+        if (target.hasAttribute("data-skill-restore-legacy")) { restoreLegacySkillScript(); return; }
+        if (target.hasAttribute("data-skill-ai")) { openSkillAssistant(); return; }
+        if (target.dataset.createType) {
+          state.selectedCreateType = target.dataset.createType;
+          modalBody.querySelectorAll("[data-create-type]").forEach(function (button) {
+            button.classList.toggle("active", button.dataset.createType === state.selectedCreateType);
+            button.setAttribute("aria-pressed", String(button.dataset.createType === state.selectedCreateType));
+          });
+          return;
+        }
+        if (target.dataset.openService) { openService(target.dataset.openService); return; }
+        if (target.dataset.pipelineType) { state.type = target.dataset.pipelineType; render(); return; }
+        if (target.hasAttribute("data-select-assets")) { selectAssets(); return; }
+        if (target.dataset.removeRequest !== undefined) {
+          var service = currentService();
+          if (!editable(service) || (service.hosted && service.creationMode === "ai")) return;
+          service.requests.splice(Number(target.dataset.removeRequest), 1);
+          state.validationErrors = {};
+          markChanged(service);
+          render();
+          return;
+        }
+        if (target.hasAttribute("data-submit-service")) { releaseModal(); return; }
+        if (target.hasAttribute("data-review-details")) { reviewDrawer(); return; }
+        if (target.dataset.reviewSnapshot !== undefined) { reviewDrawer(Number(target.dataset.reviewSnapshot)); return; }
+        if (target.dataset.reviewDecision) { decideReview(target.dataset.reviewDecision); return; }
+        if (target.hasAttribute("data-new-revision")) { newRevision(); return; }
+        if (target.hasAttribute("data-deploy-service")) { deployService(); return; }
+        if (target.hasAttribute("data-reset-filter")) { state.query = ""; state.type = "全部类型"; state.lifecycle = "全部状态"; render(); return; }
+        if (target.dataset.section) {
+          if (currentService().hosted && currentService().creationMode === "ai") return;
+          state.activeSection = target.dataset.section; render(); return;
+        }
+        if (target.dataset.editorTab) { state.editorTab = target.dataset.editorTab; render(); return; }
+        if (target.hasAttribute("data-ai-generate")) {
+          if (!currentService().hosted || currentService().creationMode !== "ai" || !editable(currentService())) return;
+          var request = document.getElementById("ai-request");
+          state.assistantRequest = request.value.trim() || "生成一项类型专属配置示例变更。";
+          state.proposal = true;
+          render();
+          if (state.skillAssistantDrawer) openSkillAssistant();
+          return;
+        }
+        if (target.hasAttribute("data-preview-diff")) { diffDrawer(); return; }
+        if (target.hasAttribute("data-discard-proposal")) { state.proposal = false; render(); showToast("已放弃待采纳变更，草稿未修改"); return; }
+        if (target.hasAttribute("data-accept-all")) { acceptProposal("全部 AI 变更已由开发者接受"); return; }
+        if (target.hasAttribute("data-accept-selected")) {
+          var selected = document.querySelectorAll("[data-diff-part]:checked").length;
+          if (!selected) { showToast("请至少选择一项变更"); return; }
+          acceptProposal("已接受 " + selected + " 项 AI 变更");
+          return;
+        }
+        if (target.hasAttribute("data-save-draft")) { saveDraft(); return; }
+        if (target.hasAttribute("data-run-test")) { testDrawer(); return; }
+        if (target.hasAttribute("data-create-version")) { releaseModal(); return; }
+        if (target.hasAttribute("data-create-app-version")) { state.app.draft = true; render(); showToast("数据应用新版本 v3.3.0 草稿已创建"); return; }
+        if (target.hasAttribute("data-upgrade-agent")) { state.app.upgraded = true; render(); showToast("服务版本变更已加入应用草稿"); return; }
+        if (target.hasAttribute("data-cancel-upgrade")) { state.app.upgraded = false; render(); showToast("服务版本变更已撤销"); return; }
+        if (target.hasAttribute("data-submit-app")) {
+          if (!state.app.upgraded) { showToast("当前应用版本没有待提交变更"); return; }
+          submitApplication();
+          return;
+        }
+        if (target.hasAttribute("data-approve-app")) { approveApplication(); return; }
+        if (target.hasAttribute("data-rollback-app")) { rollbackApplication(); return; }
+        if (target.hasAttribute("data-close-modal")) { closeModal(); return; }
+        if (target.hasAttribute("data-close-drawer")) { closeDrawer(); return; }
+      });
+
+      modalLayer.querySelector(".mask").addEventListener("click", closeModal);
+      function scopeHelpEnter(event) {
+        var target = event.target.closest && event.target.closest("[data-scope-help], #scope-help-popover");
+        if (!target) return;
+        window.clearTimeout(scopeHelpTimer);
+        if (target.dataset.scopeHelp) showScopeHelp(target);
+      }
+      function scopeHelpLeave(event) {
+        if (!event.target.closest || !event.target.closest("[data-scope-help], #scope-help-popover")) return;
+        if (event.relatedTarget && event.relatedTarget.closest && event.relatedTarget.closest("[data-scope-help], #scope-help-popover")) return;
+        window.clearTimeout(scopeHelpTimer);
+        scopeHelpTimer = window.setTimeout(hideScopeHelp, 120);
+      }
+      document.addEventListener("pointerover", scopeHelpEnter);
+      document.addEventListener("pointerout", scopeHelpLeave);
+      document.addEventListener("focusin", scopeHelpEnter);
+      document.addEventListener("focusout", scopeHelpLeave);
+      document.addEventListener("scroll", hideScopeHelp, true);
+      if (window.addEventListener) window.addEventListener("resize", hideScopeHelp);
+      document.addEventListener("toggle", function (event) {
+        var target = event.target;
+        if (target.dataset && target.dataset.skillDir !== undefined && workspace.contains(target)) state.skillCollapsed[target.dataset.skillDir] = !target.open;
+      }, true);
+      drawerLayer.querySelector(".mask").addEventListener("click", closeDrawer);
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") hideScopeHelp();
+        if (!compareMode) return;
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        var active = document.activeElement;
+        if (active && (active.matches("input, textarea, select") || active.isContentEditable)) return;
+        switchVariant(event.key === "ArrowRight" ? 1 : -1);
+      });
+      render();
+    }());
+  </script>
+</body>
+</html>

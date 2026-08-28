@@ -27,6 +27,10 @@ Label: wayfinder:map
 - [调研统一网关运行管理的必要配置](issues/20-research-gateway-runtime-configurations.md) — 统一网关运行管理应管理入口、路由、后端、策略、配置发布及运行观测；HiMarket 可参考资源发现、授权适配和监控，但不足以作为完整控制面。
 - [确定统一网关运行配置与发布边界](issues/21-decide-gateway-runtime-configuration-boundary.md) — 采用厂商中立的网关控制面和独立配置发布，确认风险分级审批、紧急停流、简单灰度、AI 多模型路由、安全引用及人工处理配置漂移。
 - [确定运行管理与设置的首版原型优先级](issues/22-prioritize-runtime-settings-prototype.md) — 全部菜单保留，以 P0/P1 验证核心方向；平台级能力不单独建设，只在被核心场景使用时细化状态、引用、结果和入口。
+- [确定设置模块的策略与字段边界](issues/16-decide-settings-policy-scope.md) — 设置收敛为面向管理者的一张极简页面，只维护集市产品类型的呈现信息，以及受数据安全底线约束的认证与密钥策略默认值和上限；租户、环境、网关接入、系统和运维配置均移出。
+- [验证 AI 服务开发与数据应用装配](issues/23-prototype-ai-service-development.md) — 已选择方案 C「服务制品流水线」作为主入口，以全局生命周期组织 AI 服务；Agent 专属编辑器和数据应用三层装配保留下钻，A／B 仅用于显式历史比较。
+- [标准化三份核心原型的设计系统](issues/24-standardize-prototype-design-system.md) — AI 服务开发、运行管理和设置原型统一采用完整规范令牌、数据服务平台壳层及共享按钮、状态、表格、抽屉、弹窗和反馈组件，并由跨文件自动检查防止视觉规范漂移。
+- [验证数据服务平台统一原型](issues/25-prototype-unified-data-service-platform.md) — 采用六项统一目录和单文件直接合并，默认进入服务集市；保留三个已验收来源原型的运行内容，未验收的服务集市、审批中心和 API 开发等待后续协作页面接入。
 
 ## Not yet specified
 

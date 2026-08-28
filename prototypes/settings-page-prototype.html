@@ -1,0 +1,1483 @@
+<!-- PROTOTYPE — Selected settings-page direction: catalog and detail. Throwaway UI for design validation. -->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>数据服务平台 · 设置原型</title>
+  <style>
+    :root {
+      --ds-color-white: #ffffff;
+      --ds-color-black: #000000;
+      --ds-color-primary-1: #e8f3ff;
+      --ds-color-primary-2: #bedaff;
+      --ds-color-primary-3: #94bfff;
+      --ds-color-primary-4: #6aa1ff;
+      --ds-color-primary-5: #4080ff;
+      --ds-color-primary-6: #165dff;
+      --ds-color-primary-7: #0e42d2;
+      --ds-color-primary-8: #072ca6;
+      --ds-color-gray-1: #f7f8fa;
+      --ds-color-gray-2: #f2f3f5;
+      --ds-color-gray-3: #e5e6eb;
+      --ds-color-gray-4: #c9cdd4;
+      --ds-color-gray-5: #a9aeb8;
+      --ds-color-gray-6: #86909c;
+      --ds-color-gray-7: #6b7785;
+      --ds-color-gray-8: #4e5969;
+      --ds-color-gray-9: #272e3b;
+      --ds-color-gray-10: #1d2129;
+      --ds-color-success: #00b42a;
+      --ds-color-success-light: #e8ffea;
+      --ds-color-success-text: #087a24;
+      --ds-color-warning: #ff7d00;
+      --ds-color-warning-light: #fff7e8;
+      --ds-color-warning-text: #a84b00;
+      --ds-color-danger: #f53f3f;
+      --ds-color-danger-light: #ffece8;
+      --ds-color-danger-text: #cb2634;
+      --ds-bg-canvas: var(--ds-color-gray-2);
+      --ds-bg-surface: var(--ds-color-white);
+      --ds-bg-elevated: var(--ds-color-white);
+      --ds-bg-fill: var(--ds-color-gray-2);
+      --ds-bg-fill-hover: var(--ds-color-gray-3);
+      --ds-text-1: var(--ds-color-gray-10);
+      --ds-text-2: var(--ds-color-gray-8);
+      --ds-text-3: var(--ds-color-gray-6);
+      --ds-text-4: var(--ds-color-gray-4);
+      --ds-border-1: var(--ds-color-gray-2);
+      --ds-border-2: var(--ds-color-gray-3);
+      --ds-border-3: var(--ds-color-gray-4);
+      --ds-focus-ring: 0 0 0 2px rgb(22 93 255 / 18%);
+      --ds-mask: rgb(29 33 41 / 60%);
+      --ds-font-sans: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      --ds-font-mono: Consolas, Menlo, Monaco, monospace;
+      --ds-font-size-12: 12px;
+      --ds-font-size-14: 14px;
+      --ds-font-size-16: 16px;
+      --ds-font-size-20: 20px;
+      --ds-font-size-24: 24px;
+      --ds-font-size-36: 36px;
+      --ds-font-weight-regular: 400;
+      --ds-font-weight-medium: 500;
+      --ds-font-weight-semibold: 600;
+      --ds-line-height-base: 1.5715;
+      --ds-line-height-tight: 1.35;
+      --ds-space-0: 0;
+      --ds-space-1: 2px;
+      --ds-space-2: 4px;
+      --ds-space-3: 6px;
+      --ds-space-4: 8px;
+      --ds-space-5: 10px;
+      --ds-space-6: 12px;
+      --ds-space-7: 16px;
+      --ds-space-8: 20px;
+      --ds-space-9: 24px;
+      --ds-space-10: 32px;
+      --ds-space-11: 36px;
+      --ds-space-12: 40px;
+      --ds-space-13: 48px;
+      --ds-space-16: 64px;
+      --ds-radius-none: 0;
+      --ds-radius-small: 2px;
+      --ds-radius-medium: 4px;
+      --ds-radius-large: 8px;
+      --ds-radius-circle: 50%;
+      --ds-shadow-none: none;
+      --ds-shadow-1: 0 2px 5px rgb(0 0 0 / 10%);
+      --ds-shadow-2: 0 4px 10px rgb(0 0 0 / 10%);
+      --ds-shadow-3: 0 8px 20px rgb(0 0 0 / 10%);
+      --ds-duration-fast: 100ms;
+      --ds-duration-base: 200ms;
+      --ds-duration-slow: 300ms;
+      --ds-ease-standard: cubic-bezier(0.34, 0.69, 0.1, 1);
+      --ds-control-mini: 24px;
+      --ds-control-small: 28px;
+      --ds-control-default: 32px;
+      --ds-control-large: 36px;
+      --ds-nav-height: 60px;
+      --ds-sidebar-width: 220px;
+      --ds-desktop-min: 1200px;
+      --ds-content-max: 1440px;
+      --ds-grid-gutter: 16px;
+      --ds-page-padding: 24px;
+      --ds-z-popup: 1000;
+      --ds-z-modal: 1001;
+      --ds-z-message: 1003;
+      --ds-button-height: var(--ds-control-default);
+      --ds-button-radius: var(--ds-radius-small);
+      --ds-button-padding-inline: 15px;
+      --ds-input-height: var(--ds-control-default);
+      --ds-input-radius: var(--ds-radius-small);
+      --ds-form-item-gap: 20px;
+      --ds-table-cell-padding-inline: 16px;
+      --ds-table-cell-padding-block: 9px;
+      --ds-pagination-item-size: 32px;
+      --ds-modal-width: 520px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      min-width: var(--ds-desktop-min);
+      overflow: hidden;
+      color: var(--ds-text-1);
+      background: var(--ds-bg-canvas);
+      font-family: var(--ds-font-sans);
+      font-size: var(--ds-font-size-14);
+      line-height: var(--ds-line-height-base);
+    }
+    button, input, select, textarea { font: inherit; }
+    button, a, input, select, textarea { outline: none; }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      box-shadow: var(--ds-focus-ring);
+    }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .5; }
+    [hidden] { display: none !important; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .icon { width: 16px; height: 16px; display: inline-block; flex: 0 0 auto; }
+    .icon-sm { width: 14px; height: 14px; }
+
+    .topbar {
+      position: fixed;
+      z-index: 30;
+      inset: 0 0 auto 0;
+      height: var(--ds-nav-height);
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--ds-border-2);
+      background: var(--ds-bg-surface);
+    }
+    .product-area {
+      width: var(--ds-sidebar-width);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-6);
+      padding: 0 var(--ds-space-8);
+      border-right: 1px solid var(--ds-border-2);
+      font-size: var(--ds-font-size-16);
+      font-weight: var(--ds-font-weight-semibold);
+    }
+    .product-symbol {
+      width: var(--ds-control-default);
+      height: var(--ds-control-default);
+      display: grid;
+      place-items: center;
+      border-radius: var(--ds-radius-medium);
+      color: var(--ds-color-white);
+      background: var(--ds-color-primary-6);
+    }
+    .top-domain {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--ds-space-9);
+      border-bottom: 2px solid var(--ds-color-primary-6);
+      color: var(--ds-color-primary-6);
+      font-weight: var(--ds-font-weight-medium);
+    }
+    .top-spacer { flex: 1; }
+    .top-actions { display: flex; align-items: center; gap: var(--ds-space-4); padding-right: var(--ds-space-8); }
+    .top-icon, .user-chip {
+      min-height: var(--ds-control-large);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--ds-space-4);
+      border: 0;
+      border-radius: var(--ds-radius-medium);
+      color: var(--ds-text-2);
+      background: transparent;
+    }
+    .top-icon { width: var(--ds-control-large); }
+    .user-chip { padding: 0 var(--ds-space-5); }
+    .top-icon:hover, .user-chip:hover { background: var(--ds-bg-fill); }
+    .avatar {
+      width: var(--ds-control-small);
+      height: var(--ds-control-small);
+      display: grid;
+      place-items: center;
+      border-radius: var(--ds-radius-circle);
+      color: var(--ds-color-primary-7);
+      background: var(--ds-color-primary-1);
+      font-size: var(--ds-font-size-12);
+      font-weight: var(--ds-font-weight-medium);
+    }
+
+    .sidebar {
+      position: fixed;
+      z-index: 20;
+      top: var(--ds-nav-height);
+      bottom: 0;
+      left: 0;
+      width: var(--ds-sidebar-width);
+      overflow-y: auto;
+      border-right: 1px solid var(--ds-border-2);
+      background: var(--ds-bg-surface);
+      padding: var(--ds-space-6) var(--ds-space-4);
+    }
+    .nav-item {
+      width: 100%;
+      min-height: var(--ds-control-large);
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-6);
+      padding: 0 var(--ds-space-6);
+      border: 0;
+      border-radius: var(--ds-radius-small);
+      color: var(--ds-text-2);
+      background: transparent;
+      text-align: left;
+      transition: background var(--ds-duration-fast) var(--ds-ease-standard), color var(--ds-duration-fast) var(--ds-ease-standard);
+    }
+    .nav-item + .nav-item { margin-top: var(--ds-space-2); }
+    .nav-item:hover { color: var(--ds-text-1); background: var(--ds-bg-fill); }
+    .nav-item.active {
+      color: var(--ds-color-primary-7);
+      background: var(--ds-color-primary-1);
+      font-weight: var(--ds-font-weight-medium);
+    }
+    .nav-divider { height: 1px; margin: var(--ds-space-6); background: var(--ds-border-1); }
+
+    .workspace {
+      position: fixed;
+      top: var(--ds-nav-height);
+      right: 0;
+      bottom: 0;
+      left: var(--ds-sidebar-width);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .page-head {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--ds-space-9);
+      padding: var(--ds-space-7) var(--ds-page-padding);
+      border-bottom: 1px solid var(--ds-border-2);
+      background: var(--ds-bg-surface);
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-4);
+      margin-bottom: var(--ds-space-3);
+      color: var(--ds-text-3);
+      font-size: var(--ds-font-size-12);
+    }
+    h1 { margin: 0; font-size: var(--ds-font-size-24); line-height: var(--ds-line-height-tight); font-weight: var(--ds-font-weight-medium); }
+    .page-description { margin: var(--ds-space-3) 0 0; color: var(--ds-text-3); }
+    .manager-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--ds-space-3);
+      min-height: var(--ds-control-small);
+      padding: 0 var(--ds-space-5);
+      border: 1px solid var(--ds-border-2);
+      border-radius: var(--ds-radius-medium);
+      color: var(--ds-text-2);
+      background: var(--ds-bg-fill);
+      font-size: var(--ds-font-size-12);
+    }
+    .page-scroll { flex: 1; min-height: 0; overflow: hidden; }
+    .page-content {
+      width: 100%;
+      max-width: var(--ds-content-max);
+      height: 100%;
+      min-height: 0;
+      margin: 0 auto;
+      padding: var(--ds-page-padding);
+    }
+    #variant-root { height: 100%; min-height: 0; }
+    .stack > * + * { margin-top: var(--ds-space-7); }
+
+    .btn {
+      min-height: var(--ds-button-height);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--ds-space-4);
+      padding: 0 var(--ds-button-padding-inline);
+      border: 1px solid var(--ds-border-3);
+      border-radius: var(--ds-button-radius);
+      color: var(--ds-text-1);
+      background: var(--ds-bg-surface);
+      white-space: nowrap;
+    }
+    .btn:hover { border-color: var(--ds-color-primary-5); color: var(--ds-color-primary-6); }
+    .btn-primary { border-color: var(--ds-color-primary-6); color: var(--ds-color-white); background: var(--ds-color-primary-6); }
+    .btn-primary:hover { border-color: var(--ds-color-primary-7); color: var(--ds-color-white); background: var(--ds-color-primary-7); }
+    .btn-danger { border-color: var(--ds-color-danger); color: var(--ds-color-danger-text); }
+    .btn-danger:hover { color: var(--ds-color-white); background: var(--ds-color-danger); }
+    .btn-text { min-height: var(--ds-control-small); padding: 0 var(--ds-space-3); border-color: transparent; color: var(--ds-color-primary-6); background: transparent; }
+    .btn-text:hover { border-color: transparent; color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+    .btn-small { min-height: var(--ds-control-small); padding: 0 var(--ds-space-5); font-size: var(--ds-font-size-12); }
+
+    .panel, .table-card, .summary-card {
+      border: 1px solid var(--ds-border-2);
+      border-radius: var(--ds-radius-medium);
+      background: var(--ds-bg-surface);
+    }
+    .panel { min-width: 0; padding: var(--ds-space-7); }
+    .panel-head, .table-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--ds-space-7);
+    }
+    .panel-head { margin-bottom: var(--ds-space-6); }
+    .table-toolbar { min-height: 52px; padding: 0 var(--ds-space-7); border-bottom: 1px solid var(--ds-border-2); }
+    .panel-title, .table-title { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    .panel-copy { margin: var(--ds-space-2) 0 0; color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .panel-actions { display: flex; align-items: center; gap: var(--ds-space-4); }
+    .table-card { overflow: hidden; }
+    .table-scroll { width: 100%; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td {
+      padding: var(--ds-table-cell-padding-block) var(--ds-table-cell-padding-inline);
+      border-bottom: 1px solid var(--ds-border-1);
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+    th { color: var(--ds-text-2); background: var(--ds-color-gray-1); font-weight: var(--ds-font-weight-medium); }
+    tbody tr:hover { background: var(--ds-color-gray-1); }
+    tbody tr:last-child td { border-bottom: 0; }
+    .cell-main { color: var(--ds-text-1); font-weight: var(--ds-font-weight-medium); }
+    .cell-sub { margin-top: var(--ds-space-1); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .cell-wrap { min-width: 180px; max-width: 360px; white-space: normal; }
+    .numeric { font-variant-numeric: tabular-nums; }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--ds-space-3);
+      min-height: 22px;
+      padding: 0 var(--ds-space-5);
+      border-radius: var(--ds-radius-small);
+      font-size: var(--ds-font-size-12);
+      font-weight: var(--ds-font-weight-medium);
+    }
+    .status::before { content: ""; width: 6px; height: 6px; border-radius: var(--ds-radius-circle); background: currentColor; }
+    .status-success { color: var(--ds-color-success-text); background: var(--ds-color-success-light); }
+    .status-warning { color: var(--ds-color-warning-text); background: var(--ds-color-warning-light); }
+    .status-neutral { color: var(--ds-text-2); background: var(--ds-bg-fill); }
+    .type-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 0 var(--ds-space-5);
+      border-radius: var(--ds-radius-small);
+      color: var(--ds-color-primary-7);
+      background: var(--ds-color-primary-1);
+      font-size: var(--ds-font-size-12);
+    }
+    .type-badge.asset { color: var(--ds-text-2); background: var(--ds-bg-fill); }
+    .action-group { display: flex; align-items: center; gap: var(--ds-space-3); }
+
+    .policy-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--ds-grid-gutter);
+      padding: var(--ds-space-7);
+      border-bottom: 1px solid var(--ds-border-1);
+    }
+    .policy-item { min-width: 0; }
+    .policy-label { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .policy-value { margin-top: var(--ds-space-3); font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    .policy-note { margin-top: var(--ds-space-2); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .inline-alert {
+      padding: var(--ds-space-6);
+      border: 1px solid var(--ds-color-primary-2);
+      border-radius: var(--ds-radius-medium);
+      color: var(--ds-color-primary-7);
+      background: var(--ds-color-primary-1);
+    }
+    .inline-alert.warning { border-color: var(--ds-color-warning); color: var(--ds-color-warning-text); background: var(--ds-color-warning-light); }
+    .inline-alert.danger { border-color: var(--ds-color-danger); color: var(--ds-color-danger-text); background: var(--ds-color-danger-light); }
+
+    .catalog-layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: var(--ds-grid-gutter);
+      height: 100%;
+      min-height: 0;
+      align-items: stretch;
+    }
+    .settings-rail { height: 100%; min-height: 0; overflow-y: auto; padding: var(--ds-space-4); }
+    .rail-intro { padding: var(--ds-space-6); }
+    .rail-title { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    .rail-copy { margin: var(--ds-space-3) 0 0; color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .topic-button {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: var(--ds-space-5);
+      padding: var(--ds-space-6);
+      border: 0;
+      border-radius: var(--ds-radius-medium);
+      color: var(--ds-text-2);
+      background: transparent;
+      text-align: left;
+    }
+    .topic-button + .topic-button { margin-top: var(--ds-space-2); }
+    .topic-button:hover { background: var(--ds-bg-fill); }
+    .topic-button.active { color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+    .topic-main { flex: 1; min-width: 0; }
+    .topic-name { display: block; font-weight: var(--ds-font-weight-medium); }
+    .topic-meta { display: block; margin-top: var(--ds-space-2); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .detail-shell { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+    .detail-topline {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--ds-space-7);
+      padding: var(--ds-space-7);
+      border-bottom: 1px solid var(--ds-border-2);
+    }
+    .detail-body { flex: 1; min-height: 0; overflow-y: auto; padding: var(--ds-space-7); }
+    .limit-note { margin: var(--ds-space-7) 0 0; color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .limit-preview { margin: var(--ds-space-7) 0; padding-left: var(--ds-space-8); color: var(--ds-text-2); }
+    .limit-preview li + li { margin-top: var(--ds-space-4); }
+    .type-card-head .status { flex-shrink: 0; white-space: nowrap; }
+    .type-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-grid-gutter); }
+    .type-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 168px;
+      padding: var(--ds-space-6);
+      border: 1px solid var(--ds-border-2);
+      border-radius: var(--ds-radius-medium);
+      background: var(--ds-bg-surface);
+    }
+    .type-card.is-hidden { background: var(--ds-color-gray-1); }
+    .type-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--ds-space-6);
+    }
+    .type-card-copy { min-width: 0; }
+    .type-title-line { display: flex; align-items: baseline; flex-wrap: wrap; gap: var(--ds-space-3); }
+    .type-card-name {
+      margin: 0;
+      color: var(--ds-text-1);
+      font-size: var(--ds-font-size-16);
+      font-weight: var(--ds-font-weight-medium);
+      line-height: var(--ds-line-height-tight);
+    }
+    .type-description {
+      min-height: 40px;
+      margin: var(--ds-space-3) 0 0;
+      color: var(--ds-text-2);
+      font-size: var(--ds-font-size-14);
+      line-height: var(--ds-line-height-base);
+    }
+    .type-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--ds-space-4) var(--ds-space-6);
+      margin-top: auto;
+      padding-top: var(--ds-space-5);
+      border-top: 1px solid var(--ds-border-1);
+    }
+    .type-card-meta { display: flex; align-items: center; flex-wrap: wrap; gap: var(--ds-space-3); }
+    .type-product-count { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .type-actions { display: flex; align-items: center; gap: var(--ds-space-3); margin-left: auto; }
+
+    .drawer-layer, .modal-layer {
+      position: fixed;
+      z-index: var(--ds-z-modal);
+      inset: 0;
+      display: none;
+    }
+    .drawer-layer.open, .modal-layer.open { display: block; }
+    .mask { position: absolute; inset: 0; background: var(--ds-mask); }
+    .drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(560px, 48vw);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--ds-shadow-3);
+      background: var(--ds-bg-elevated);
+    }
+    .drawer .settings-group { padding: var(--ds-space-7); }
+    .drawer-head, .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--ds-space-7);
+      min-height: var(--ds-nav-height);
+      padding: 0 var(--ds-space-8);
+      border-bottom: 1px solid var(--ds-border-2);
+    }
+    .drawer-title, .modal-title { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    .close-btn {
+      width: var(--ds-control-default);
+      height: var(--ds-control-default);
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: var(--ds-radius-small);
+      color: var(--ds-text-2);
+      background: transparent;
+    }
+    .close-btn:hover { background: var(--ds-bg-fill); }
+    .drawer-body { flex: 1; overflow-y: auto; padding: var(--ds-space-8); }
+    .drawer-footer, .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--ds-space-5);
+      padding: var(--ds-space-6) var(--ds-space-8);
+      border-top: 1px solid var(--ds-border-2);
+    }
+    .modal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: var(--ds-modal-width);
+      max-width: calc(100vw - var(--ds-space-16));
+      max-height: calc(100vh - 64px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: var(--ds-radius-large);
+      box-shadow: var(--ds-shadow-3);
+      background: var(--ds-bg-elevated);
+      transform: translate(-50%, -50%);
+    }
+    .modal-body { padding: var(--ds-space-8); overflow-y: auto; min-height: 0; }
+    .modal-head, .modal-footer { flex: 0 0 auto; }
+    .modal-copy { margin: 0; color: var(--ds-text-2); }
+    .impact-box { margin-top: var(--ds-space-7); padding: var(--ds-space-6); border-radius: var(--ds-radius-medium); background: var(--ds-bg-fill); }
+    .impact-number { font-size: var(--ds-font-size-20); font-weight: var(--ds-font-weight-medium); }
+
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-form-item-gap) var(--ds-space-7); }
+    .form-item.full { grid-column: 1 / -1; }
+    .form-item label, .field-label { display: block; margin-bottom: var(--ds-space-4); color: var(--ds-text-2); font-weight: var(--ds-font-weight-medium); }
+    .input, .select, .textarea {
+      width: 100%;
+      min-height: var(--ds-input-height);
+      border: 1px solid var(--ds-border-3);
+      border-radius: var(--ds-input-radius);
+      color: var(--ds-text-1);
+      background: var(--ds-bg-surface);
+    }
+    .input, .select { padding: 0 var(--ds-space-6); }
+    .textarea { min-height: 88px; padding: var(--ds-space-5) var(--ds-space-6); resize: vertical; }
+    .input:focus, .select:focus, .textarea:focus { border-color: var(--ds-color-primary-6); box-shadow: var(--ds-focus-ring); }
+    .input:disabled { color: var(--ds-text-3); background: var(--ds-bg-fill); }
+    .help { margin-top: var(--ds-space-3); color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+    .field-error { margin-top: var(--ds-space-3); color: var(--ds-color-danger-text); font-size: var(--ds-font-size-12); }
+    .check-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-5); }
+    .check-option {
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-4);
+      min-height: var(--ds-control-default);
+      padding: 0 var(--ds-space-5);
+      border: 1px solid var(--ds-border-2);
+      border-radius: var(--ds-radius-medium);
+    }
+
+    .toast {
+      position: fixed;
+      z-index: var(--ds-z-message);
+      top: calc(var(--ds-nav-height) + var(--ds-space-7));
+      left: calc(var(--ds-sidebar-width) + (100vw - var(--ds-sidebar-width)) / 2);
+      display: flex;
+      align-items: center;
+      gap: var(--ds-space-5);
+      min-height: var(--ds-control-large);
+      max-width: 520px;
+      padding: 0 var(--ds-space-7);
+      border: 1px solid var(--ds-border-2);
+      border-radius: var(--ds-radius-medium);
+      color: var(--ds-text-1);
+      box-shadow: var(--ds-shadow-2);
+      background: var(--ds-bg-elevated);
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -8px);
+      transition: opacity var(--ds-duration-base) var(--ds-ease-standard), transform var(--ds-duration-base) var(--ds-ease-standard);
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .toast-mark { color: var(--ds-color-success-text); }
+
+    .settings-body { padding: var(--ds-space-9); }
+    .editor-context { display: flex; align-items: center; justify-content: space-between; gap: var(--ds-space-7); margin-bottom: var(--ds-space-8); }
+    .editor-title { display: flex; align-items: center; gap: var(--ds-space-4); }
+    .editor-title h3 { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    .editor-count { color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .settings-group { margin: 0; padding: var(--ds-space-8); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); }
+    .settings-group + .settings-group { margin-top: var(--ds-space-8); }
+    .settings-group h3, .settings-group h4 { margin: 0 0 var(--ds-space-6); font-size: var(--ds-font-size-14); font-weight: var(--ds-font-weight-medium); }
+    .settings-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-form-item-gap) var(--ds-space-9); }
+    .settings-form-grid .form-item { min-width: 0; }
+    .form-label-line { display: flex; align-items: center; gap: var(--ds-space-2); margin-bottom: var(--ds-space-3); }
+    .form-item .form-label-line label, .form-label-line .field-label { margin: 0; color: var(--ds-text-1); }
+    .field-help { display: inline-flex; flex: 0 0 auto; }
+    .help-trigger { display: inline-grid; place-items: center; width: var(--ds-control-default); height: var(--ds-control-default); padding: 0; border: 0; border-radius: var(--ds-radius-medium); color: var(--ds-text-2); background: transparent; }
+    .help-trigger:hover, .help-trigger:focus-visible { color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+    .field-tooltip { position: fixed; z-index: var(--ds-z-message); width: 300px; max-width: calc(100vw - 32px); padding: var(--ds-space-6); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); box-shadow: var(--ds-shadow-1); color: var(--ds-text-1); background: var(--ds-bg-elevated); font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-regular); white-space: pre-line; }
+    .input-unit { display: flex; align-items: center; min-height: var(--ds-control-large); border: 1px solid var(--ds-border-3); border-radius: var(--ds-input-radius); background: var(--ds-bg-surface); }
+    .input-unit:focus-within { border-color: var(--ds-color-primary-6); box-shadow: var(--ds-focus-ring); }
+    .input-unit .input { flex: 1; min-width: 0; border: 0; height: var(--ds-control-large); box-shadow: none; background: transparent; }
+    .input-unit:has([aria-invalid="true"]), .select[aria-invalid="true"] { border-color: var(--ds-color-danger-text); }
+    .input-suffix { flex: 0 0 auto; padding-right: var(--ds-space-6); color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .inline-settings .select { height: var(--ds-control-large); }
+    .inline-settings .check-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .inline-settings .check-option { margin-bottom: 0; min-height: var(--ds-control-large); }
+    .settings-footer { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: var(--ds-space-7); padding: var(--ds-space-7) var(--ds-space-9); border-top: 1px solid var(--ds-border-2); background: var(--ds-bg-surface); }
+    .settings-footer-copy { color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .settings-footer-actions { display: flex; gap: var(--ds-space-6); }
+    .inline-settings > .field-error { margin-top: var(--ds-space-7); }
+    .inline-settings > .inline-alert { margin: 0 0 var(--ds-space-8); }
+    .limit-card { min-height: 0; }
+    .limit-card .type-card-head { min-height: 0; align-items: center; }
+    .limit-card .type-card-footer { margin-top: auto; }
+    .limit-card-metrics { display: grid; gap: var(--ds-space-6); margin: var(--ds-space-7) 0 var(--ds-space-8); }
+    .limit-card-metrics > div { display: flex; justify-content: space-between; align-items: baseline; gap: var(--ds-space-6); }
+    .limit-card-metrics dt { color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .limit-card-metrics dd { margin: 0; color: var(--ds-text-1); text-align: right; overflow-wrap: anywhere; }
+    .limit-card-metrics .metric-unit { color: var(--ds-text-2); font-size: var(--ds-font-size-12); margin-left: var(--ds-space-2); }
+    .auth-default { padding-bottom: var(--ds-space-8); margin-bottom: var(--ds-space-8); border-bottom: 1px solid var(--ds-border-2); }
+    .auth-default .form-item { max-width: 360px; }
+    .auth-methods-title { margin: 0 0 var(--ds-space-6); font-size: var(--ds-font-size-14); font-weight: var(--ds-font-weight-medium); }
+    .auth-method-list { display: grid; gap: var(--ds-space-7); }
+    .auth-method-row { border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); }
+    .auth-method-head { display: flex; align-items: center; justify-content: space-between; padding: var(--ds-space-6) var(--ds-space-7); gap: var(--ds-space-6); }
+    .auth-method-heading { display: flex; align-items: center; gap: var(--ds-space-3); }
+    .auth-method-label { display: flex; align-items: center; min-height: var(--ds-control-default); gap: var(--ds-space-5); font-weight: var(--ds-font-weight-medium); }
+    .auth-method-label input { width: 16px; height: 16px; margin: 0; accent-color: var(--ds-color-primary-6); }
+    .auth-method-state { color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .auth-method-fields { min-width: 0; margin: 0; padding: 0 var(--ds-space-7) var(--ds-space-8); border: 0; }
+    .auth-method-fields .settings-form-grid { gap: var(--ds-space-7) var(--ds-space-9); }
+    .drawer-footer .settings-footer-copy { display: inline-flex; align-items: center; margin-right: auto; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0ms !important; animation-duration: 0ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <svg class="sr-only" aria-hidden="true">
+    <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 4h6v6H4zm10 0h6v6h-6zM4 14h6v6H4zm10 0h6v6h-6z" fill="currentColor"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5v8a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9h16l-1-5H5zm1 0v11h14V9M9 20v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-app" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h8M8 12h8M8 16h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 12h8m-3 0v3m-3-3v2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2.2-6 4 12 2.2-6H21" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9.8 9a2.4 2.4 0 1 1 3 2.3c-.8.3-.8 1-.8 1.7m0 3.5v.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 17h12l-1.5-2V10a4.5 4.5 0 0 0-9 0v5zm4 2h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m8 10 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6m0-9v.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="m4 20 4.2-1 10.6-10.6-3.2-3.2L5 15.8zm9.8-13 3.2 3.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6Z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M4 4l16 16M9.7 6.4A8.6 8.6 0 0 1 12 6c5.5 0 9 6 9 6a15 15 0 0 1-2.2 2.8M6.2 8.1A15 15 0 0 0 3 12s3.5 6 9 6a8.6 8.6 0 0 0 2.3-.3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m14.5 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9.5 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 4 3 20h18zm0 5v5m0 3v.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <header class="topbar">
+    <div class="product-area">
+      <span class="product-symbol"><svg class="icon" aria-hidden="true"><use href="#i-grid"></use></svg></span>
+      <span>数据服务平台</span>
+    </div>
+    <div class="top-domain">数据服务域</div>
+    <div class="top-spacer"></div>
+    <div class="top-actions">
+      <button class="top-icon" type="button" aria-label="帮助" data-toast="本原型暂不包含帮助中心"><svg class="icon" aria-hidden="true"><use href="#i-help"></use></svg></button>
+      <button class="top-icon" type="button" aria-label="通知" data-toast="暂无新的设置通知"><svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg></button>
+      <button class="user-chip" type="button" data-toast="当前视角：管理者"><span class="avatar">管</span><span>管理者</span><svg class="icon icon-sm" aria-hidden="true"><use href="#i-chevron"></use></svg></button>
+    </div>
+  </header>
+
+  <aside class="sidebar" aria-label="数据服务域导航">
+    <button class="nav-item" type="button" data-toast="工作台不在本次设置原型范围"><svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg><span>工作台</span></button>
+    <button class="nav-item" type="button" data-toast="服务集市不在本次设置原型范围"><svg class="icon" aria-hidden="true"><use href="#i-store"></use></svg><span>服务集市</span></button>
+    <button class="nav-item" type="button" data-toast="数据应用不在本次设置原型范围"><svg class="icon" aria-hidden="true"><use href="#i-app"></use></svg><span>数据应用</span></button>
+    <button class="nav-item" type="button" data-toast="应用与授权不在本次设置原型范围"><svg class="icon" aria-hidden="true"><use href="#i-key"></use></svg><span>应用与授权</span></button>
+    <button class="nav-item" type="button" data-toast="审批中心不在本次设置原型范围"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg><span>审批中心</span></button>
+    <button class="nav-item" type="button" data-toast="运行管理不在本次设置原型范围"><svg class="icon" aria-hidden="true"><use href="#i-activity"></use></svg><span>运行管理</span></button>
+    <div class="nav-divider"></div>
+    <button class="nav-item active" type="button" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg><span>设置</span></button>
+  </aside>
+
+  <main class="workspace">
+    <header class="page-head">
+      <div>
+        <div class="breadcrumb"><span>数据服务域</span><span>/</span><span>设置</span></div>
+        <h1>设置</h1>
+        <p class="page-description">维护数据服务域各业务功能共用的必要配置。</p>
+      </div>
+      <span class="manager-chip"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-settings"></use></svg>管理者可编辑</span>
+    </header>
+    <div class="page-scroll">
+      <div class="page-content">
+        <div id="variant-root"></div>
+      </div>
+    </div>
+  </main>
+
+  <div class="drawer-layer" id="drawer-layer" aria-hidden="true">
+    <div class="mask" data-close-drawer></div>
+    <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <header class="drawer-head">
+        <h2 class="drawer-title" id="drawer-title">编辑设置</h2>
+        <button class="close-btn" type="button" aria-label="关闭抽屉" data-close-drawer><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+      </header>
+      <div class="drawer-body" id="drawer-body"></div>
+      <footer class="drawer-footer" id="drawer-footer"></footer>
+    </aside>
+  </div>
+
+  <div class="modal-layer" id="modal-layer" aria-hidden="true">
+    <div class="mask"></div>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <header class="modal-head">
+        <h2 class="modal-title" id="modal-title">确认操作</h2>
+        <button class="close-btn" type="button" aria-label="关闭确认框" data-close-modal><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+      </header>
+      <div class="modal-body" id="modal-body"></div>
+      <footer class="modal-footer">
+        <button class="btn" type="button" data-close-modal>取消</button>
+        <button class="btn btn-primary" type="button" id="modal-confirm">确认</button>
+      </footer>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status"><svg class="icon toast-mark" aria-hidden="true"><use href="#i-check"></use></svg><span id="toast-text">操作完成</span></div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var state = {
+        variantBTopic: "types",
+        types: [
+          {id: "agent", code: "AGENT", name: "Agent", description: "以 Agent 为主编排数据、模型与工具能力", kind: "可调用产品", shown: true, count: 12, order: 1},
+          {id: "api", code: "API", name: "API", description: "以请求—响应方式交付受治理数据能力", kind: "可调用产品", shown: true, count: 38, order: 2},
+          {id: "model", code: "MODEL", name: "模型", description: "通过统一网关提供推理访问的模型能力", kind: "可调用产品", shown: true, count: 9, order: 3},
+          {id: "mcp", code: "MCP", name: "MCP", description: "以标准协议暴露工具或资源能力", kind: "可调用产品", shown: true, count: 16, order: 4},
+          {id: "skill", code: "SKILL", name: "Skill", description: "可被 Agent 发现、装配和调用的能力包", kind: "可调用产品", shown: true, count: 24, order: 5},
+          {id: "worker", code: "WORKER", name: "Worker", description: "执行异步或长时任务的运行单元", kind: "可调用产品", shown: false, count: 5, order: 6},
+          {id: "stream", code: "STREAM", name: "数据流", description: "持续订阅受治理流式数据资产", kind: "可调用产品", shown: true, count: 7, order: 7},
+          {id: "logical", code: "LOGICAL_TABLE", name: "逻辑表", description: "面向服务开发的 ADS 业务语义资产", kind: "资产类型", shown: true, count: 53, order: 8}
+        ],
+        common: {
+          allowed: ["OAuth 2.0", "API Key", "JWT"],
+          defaultMethod: "OAuth 2.0",
+          oauthTokenDefaultMinutes: 60,
+          oauthTokenMaxMinutes: 120,
+          oauthSecretDefaultDays: 90,
+          oauthSecretMaxDays: 180,
+          keyDefaultDays: 90,
+          keyMaxDays: 180,
+          jwtMaxMinutes: 60,
+          mtlsMaxDays: 365
+        },
+        runningAuth: [
+          {name: "经营分析助手", method: "OAuth 2.0", limits: {oauthTokenMaxMinutes: 90, oauthSecretMaxDays: 120}},
+          {name: "经营指标查询", method: "API Key", limits: {keyMaxDays: 120}},
+          {name: "实时订单订阅", method: "JWT", limits: {jwtMaxMinutes: 30}}
+        ],
+        // UI examples only. Field rationale and integration gaps live in
+        // docs/research/settings-type-specific-limits.md. No gateway is connected.
+        limits: [
+          {id: "agent", apps: 8, application: "经营分析助手", owner: "统一网关 + Agent 运行时", note: "网关控制请求入口；执行步数、工具调用和总时长由运行时终止。模型调用另计模型额度。", fields: [
+            {key: "rpm", label: "请求频率", value: 120, used: 80, unit: "次/分钟", group: "quota", owner: "统一网关"},
+            {key: "runConcurrency", label: "运行并发", value: 20, used: 12, unit: "个运行", group: "quota", owner: "Agent 运行时"},
+            {key: "steps", label: "单次执行步数", value: 30, used: 20, unit: "步/运行", group: "execution", owner: "Agent 运行时", help: "按运行契约计步；不等同于 HTTP 请求次数。"},
+            {key: "toolCalls", label: "工具调用次数", value: 60, used: 40, unit: "次/运行", group: "execution", owner: "Agent 运行时"},
+            {key: "runSeconds", label: "单次执行时长", value: 300, used: 180, unit: "秒/运行", group: "execution", owner: "Agent 运行时"}
+          ]},
+          {id: "api", apps: 24, application: "经营指标查询", owner: "统一网关 + 数据计量", note: "以数据应用为主体汇总请求和传输量；GB/月是周期总量，不是实时带宽。", fields: [
+            {key: "concurrency", label: "请求并发", value: 300, used: 220, unit: "个请求", group: "quota", owner: "统一网关"},
+            {key: "rpm", label: "请求频率", value: 3000, used: 1800, unit: "次/分钟", group: "quota", owner: "统一网关"},
+            {key: "monthlyGb", label: "周期数据总量", value: 1200, used: 860, unit: "GB/月", group: "quota", owner: "数据计量服务"},
+            {key: "requestMib", label: "请求体大小", value: 10, used: 6, unit: "MiB/请求", group: "execution", owner: "统一网关"}
+          ]},
+          {id: "model", apps: 6, application: "智能问答应用", owner: "统一网关 + 模型适配器", note: "Token 额度独立于数据传输量；模型上下文与输出能力仍是不可突破的上限。流式和并发调用需要预估与结算。", fields: [
+            {key: "rpm", label: "请求频率", value: 300, used: 180, unit: "次/分钟", group: "quota", owner: "统一网关"},
+            {key: "tpm", label: "Token 速率", value: 120000, used: 80000, unit: "Token/分钟", group: "quota", owner: "统一网关"},
+            {key: "monthlyTokens", label: "月度 Token 额度", value: 100, used: 60, unit: "百万 Token/月", group: "quota", owner: "统一网关 / 配额服务"},
+            {key: "inputTokens", label: "单次输入 Token", value: 32768, used: 16384, unit: "Token/请求", group: "execution", owner: "模型适配器", help: "使用对应模型分词器校验，且输入加预留输出不得超过模型上下文。"},
+            {key: "outputTokens", label: "单次输出 Token", value: 4096, used: 2048, unit: "Token/请求", group: "execution", owner: "模型适配器", help: "按模型协议映射输出参数，不假定所有模型使用同一字段。"}
+          ]},
+          {id: "mcp", apps: 11, application: "知识工具应用", owner: "统一网关 + MCP 适配器", note: "仅允许调用已获授权的工具；本页不授予工具权限，协议动作需要适配器识别。", fields: [
+            {key: "concurrency", label: "工具调用并发", value: 120, used: 74, unit: "个调用", group: "quota", owner: "MCP 适配器"},
+            {key: "rpm", label: "工具调用频率", value: 600, used: 360, unit: "次/分钟", group: "quota", owner: "MCP 适配器"},
+            {key: "resultKib", label: "工具结果大小", value: 1024, used: 512, unit: "KiB/调用", group: "execution", owner: "MCP 适配器"}
+          ]},
+          {id: "skill", apps: 15, application: "材料整理助手", owner: "Agent 运行时 / 沙箱", note: "Skill 是能力包，不天然具有独立 HTTP 入口。网关不统计本地激活；脚本权限继承已审批的应用与沙箱边界。", fields: [
+            {key: "activations", label: "单次运行激活次数", value: 10, used: 6, unit: "次/运行", group: "quota", owner: "Agent 运行时", help: "仅对能够观测激活事件的运行时启用；包下载不计为执行。"},
+            {key: "scriptSeconds", label: "单次脚本执行时长", value: 60, used: 30, unit: "秒/脚本", group: "execution", owner: "沙箱运行时", help: "纯指令 Skill 不适用脚本限制。"},
+            {key: "outputKib", label: "脚本输出大小", value: 256, used: 128, unit: "KiB/脚本", group: "execution", owner: "沙箱运行时"}
+          ]},
+          {id: "worker", apps: 4, application: "报表生成任务", owner: "统一网关 + 任务运行时", note: "网关只约束任务提交；并发、排队与终止由调度器执行，不能用 HTTP 超时替代任务执行时长。", fields: [
+            {key: "rpm", label: "任务提交频率", value: 60, used: 40, unit: "次/分钟", group: "quota", owner: "统一网关"},
+            {key: "taskConcurrency", label: "任务并发", value: 20, used: 12, unit: "个任务", group: "quota", owner: "任务运行时"},
+            {key: "queueDepth", label: "排队任务上限", value: 100, used: 60, unit: "个任务", group: "quota", owner: "任务调度器"},
+            {key: "taskSeconds", label: "单次任务执行时长", value: 1800, used: 900, unit: "秒/任务", group: "execution", owner: "任务运行时", help: "从首次调度到最终结束的总预算，包含排队与重试；超时需协作取消或沙箱终止。"},
+            {key: "attempts", label: "最大执行尝试次数", value: 3, used: 2, unit: "次/任务", group: "execution", owner: "任务运行时", help: "包含首次执行；设为 1 表示不重试。"}
+          ]},
+          {id: "stream", apps: 5, application: "实时订单订阅", owner: "订阅适配器 + 数据计量", note: "这里的数据流是业务数据订阅，不是模型流式响应。连接按应用汇总；消息和周期配额由订阅链路执行。", fields: [
+            {key: "connections", label: "订阅连接上限", value: 50, used: 32, unit: "个连接", group: "quota", owner: "订阅适配器", help: "按应用聚合，不按 IP 或单个凭据独立分配。"},
+            {key: "monthlyGb", label: "周期数据总量", value: 2000, used: 1480, unit: "GB/月", group: "quota", owner: "数据计量服务"},
+            {key: "messageKib", label: "单条消息大小", value: 1024, used: 512, unit: "KiB/条", group: "execution", owner: "订阅适配器", help: "按解码后单条业务消息校验，不等同于消息代理的压缩批次大小。"},
+            {key: "batchRecords", label: "单批消息条数", value: 1000, used: 500, unit: "条/批", group: "execution", owner: "订阅适配器", help: "仅适用于支持批量交付的订阅协议。"}
+          ]}
+        ]
+      };
+
+      // Domain policy examples, not RFC defaults or connected issuer capabilities.
+      var authDefinitions = [
+        {id: "oauth", name: "OAuth 2.0", note: "本原型按服务间 Client Credentials + Client Secret 场景表达。访问令牌与客户端密钥独立到期；Client ID 不是密钥。不默认签发刷新令牌。实际签发与轮换由认证服务负责，本页只维护策略。OAuth 令牌可采用 JWT 格式，不因此重复套用独立 JWT 接入策略。", fields: [
+          {id: "oauth-token-default-minutes", key: "oauthTokenDefaultMinutes", label: "访问令牌默认有效期", unit: "分钟", upper: "oauthTokenMaxMinutes", help: "新配置使用的访问令牌寿命，不超过最长有效期；由认证服务签发时落实，不延长已签发令牌。"},
+          {id: "oauth-token-max-minutes", key: "oauthTokenMaxMinutes", label: "访问令牌最长有效期", unit: "分钟", help: "数据应用可配置的令牌寿命上限；运行应用示例最高为 90 分钟。实际期限以认证服务签发结果为准。"},
+          {id: "oauth-secret-default-days", key: "oauthSecretDefaultDays", label: "客户端密钥默认有效期", unit: "天", upper: "oauthSecretMaxDays", help: "仅用于采用 Client Secret 的新客户端密钥配置；不等于访问令牌有效期，也不控制 Client ID。"},
+          {id: "oauth-secret-max-days", key: "oauthSecretMaxDays", label: "客户端密钥最长有效期", unit: "天", help: "客户端密钥的有效期上限；运行应用示例最高为 120 天。吊销和轮换属于凭据管理，本页不执行。"}
+        ]},
+        {id: "api-key", name: "API Key", note: "平台管理的应用级调用凭据。期限由平台安全策略确定，没有适用于所有 API Key 的统一标准天数。到期或禁用后拒绝调用；按本项目约定，轮换使旧 Key 立即失效，不设置并行期。", fields: [
+          {id: "key-default-days", key: "keyDefaultDays", label: "API Key 默认有效期", unit: "天", max: 365, upper: "keyMaxDays", help: "用于新建 API Key 配置，不超过最长有效期；不修改已有 Key 的到期时间。"},
+          {id: "key-max-days", key: "keyMaxDays", label: "API Key 最长有效期", unit: "天", max: 365, help: "本原型沿用数据安全域 365 天的示例上限，不是行业统一要求；运行应用示例最高为 120 天。"}
+        ]},
+        {id: "jwt", name: "JWT", note: "这里指独立 JWT 令牌校验接入，不是 OAuth 令牌的格式开关。本平台接入契约要求 exp、iat，校验 exp > iat 且 exp − iat 不超过上限；到期拒绝，有 nbf 时校验生效时间。签名、签发方和受众仍须校验。", fields: [
+          {id: "jwt-max-minutes", key: "jwtMaxMinutes", label: "最大可接受令牌时长", unit: "分钟", help: "限制签发方给出的 exp − iat，不改写已签发令牌。运行应用示例最高为 30 分钟。exp、iat 在通用 JWT 标准中是可选声明，本项目接入契约将其设为必需；签名密钥轮换由签发方管理。"}
+        ]},
+        {id: "mtls", name: "mTLS", note: "使用客户端证书验证调用身份。TLS 适配层需校验证书链、用途、吊销状态及 notBefore / notAfter。本页只配置接受边界，不签发、续签或延长证书，也不收集私钥。mTLS 可与 OAuth 组合，本原型四项是接入配置档案，不表示协议互斥。", fields: [
+          {id: "mtls-max-days", key: "mtlsMaxDays", label: "可接受证书最长有效期", unit: "天", help: "限制客户端叶证书的总签发周期 notAfter − notBefore，不是剩余天数。仍须处于证书自身有效区间；修改本项不能延长证书寿命。续签由证书签发方负责，信任与吊销策略继承数据安全域。"}
+        ]}
+      ];
+
+      var root = document.getElementById("variant-root");
+      var drawerLayer = document.getElementById("drawer-layer");
+      var drawerTitle = document.getElementById("drawer-title");
+      var drawerBody = document.getElementById("drawer-body");
+      var drawerFooter = document.getElementById("drawer-footer");
+      var modalLayer = document.getElementById("modal-layer");
+      var modalTitle = document.getElementById("modal-title");
+      var modalBody = document.getElementById("modal-body");
+      var modalConfirm = document.getElementById("modal-confirm");
+      var toast = document.getElementById("toast");
+      var toastText = document.getElementById("toast-text");
+      var toastTimer = 0;
+      var modalAction = null;
+      var activeTooltip = null;
+      var tooltipTrigger = null;
+      var tooltipTimer = 0;
+      var drawerLimitId = null;
+
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, function (character) {
+          return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"}[character];
+        });
+      }
+
+      function getType(id) {
+        return state.types.find(function (item) { return item.id === id; });
+      }
+
+      function getLimit(id) {
+        return state.limits.find(function (item) { return item.id === id; });
+      }
+
+      function statusChip(shown) {
+        return '<span class="status ' + (shown ? "status-success" : "status-neutral") + '">' + (shown ? "对外呈现" : "已隐藏") + "</span>";
+      }
+
+      function typeBadge(type) {
+        return '<span class="type-badge ' + (type.kind === "资产类型" ? "asset" : "") + '">' + escapeHtml(type.kind) + "</span>";
+      }
+
+
+      function sortedTypes() {
+        return state.types.slice().sort(function (a, b) { return a.order - b.order; });
+      }
+
+
+
+      function helpControl(id, title, copy) {
+        return '<span class="field-help"><button class="help-trigger" type="button" data-help="' + id + '" aria-label="' + escapeHtml(title) + '说明" aria-describedby="' + id + '"><svg class="icon" aria-hidden="true"><use href="#i-help"></use></svg></button>' +
+          '<span id="' + id + '" class="field-tooltip" role="tooltip" hidden>' + escapeHtml(copy) + '</span></span>';
+      }
+
+      function fieldLabel(id, label, help) {
+        return '<div class="form-label-line"><label for="' + id + '">' + escapeHtml(label) + '</label>' + helpControl("help-" + id, label, help) + '</div>';
+      }
+
+      function commonPolicyForm() {
+        return '<div class="inline-settings"><div class="inline-alert danger" id="common-policy-error" role="alert" hidden></div>' +
+          '<section class="auth-default"><div class="form-item">' + fieldLabel("default-method", "默认认证方式", "用于数据应用的新配置，只能选择下方已勾选的方式。取消当前默认方式后须重新选择，不自动替换运行应用配置。") +
+          '<select class="select" id="default-method" aria-describedby="help-default-method default-method-error">' + state.common.allowed.map(function (method) {
+            return '<option value="' + escapeHtml(method) + '"' + (state.common.defaultMethod === method ? ' selected' : '') + '>' + escapeHtml(method) + '</option>';
+          }).join("") + '</select><div class="field-error" id="default-method-error" role="alert" hidden>请选择一种已启用的默认认证方式。</div></div></section>' +
+          '<h3 class="auth-methods-title" id="allowed-title">允许认证方式</h3><div class="field-error" id="auth-method-error" role="alert" hidden>至少选择一种认证方式。</div>' +
+          '<div class="auth-method-list" role="group" aria-labelledby="allowed-title" aria-describedby="auth-method-error">' + authDefinitions.map(function (definition, index) {
+            var enabled = state.common.allowed.indexOf(definition.name) !== -1;
+            return '<section class="auth-method-row"><div class="auth-method-head"><div class="auth-method-heading"><label class="auth-method-label" for="auth-method-' + index + '">' +
+              '<input id="auth-method-' + index + '" type="checkbox" value="' + definition.name + '" data-auth-method="' + definition.id + '" aria-controls="auth-fields-' + definition.id + '"' + (enabled ? ' checked' : '') + '><span id="auth-label-' + definition.id + '">' + definition.name + '</span></label>' +
+              helpControl("help-auth-" + definition.id, definition.name, definition.note) + '</div><span class="auth-method-state" id="auth-status-' + definition.id + '">' + (enabled ? '已启用' : '未启用') + '</span></div>' +
+              '<fieldset class="auth-method-fields" id="auth-fields-' + definition.id + '" aria-labelledby="auth-label-' + definition.id + '"' + (enabled ? '' : ' hidden disabled') + '><div class="settings-form-grid">' +
+              definition.fields.map(function (field) {
+                return '<div class="form-item">' + fieldLabel(field.id, field.label, field.help) +
+                  '<div class="input-unit"><input class="input" id="' + field.id + '" type="number" min="1" max="' + (field.max || Number.MAX_SAFE_INTEGER) + '" step="1" value="' + state.common[field.key] + '"' + (enabled ? '' : ' disabled') +
+                  ' aria-describedby="help-' + field.id + ' unit-' + field.id + ' error-' + field.id + '"><span class="input-suffix" id="unit-' + field.id + '">' + field.unit + '</span></div>' +
+                  '<div class="field-error" id="error-' + field.id + '" role="alert" hidden></div></div>';
+              }).join("") + '</div></fieldset></section>';
+          }).join("") + '</div></div>';
+      }
+
+      function limitPolicyForm(limit) {
+        return '<div class="inline-settings" id="type-limit-panel">' +
+          '<div class="editor-context"><div class="editor-title"><h3>' + escapeHtml(getType(limit.id).name) + '</h3>' + helpControl("help-type-notes", "类型执行边界", limit.note) + '</div><span class="editor-count">' + limit.apps + ' 个运行数据应用</span></div>' +
+          '<div class="inline-alert danger" id="limit-error" role="alert" hidden></div>' +
+          ["quota", "execution"].map(function (group) {
+            return '<section class="settings-group"><h4>' + (group === "quota" ? "调用与配额" : "单次执行边界") + '</h4><div class="settings-form-grid">' +
+              limit.fields.filter(function (field) { return field.group === group; }).map(function (field) {
+                var help = '执行方：' + field.owner + '\n运行应用最高配置（示例）：' + formatLimit(field.used) + ' ' + field.unit + (field.help ? '\n' + field.help : '');
+                return '<div class="form-item"><div class="form-label-line"><label for="limit-' + field.key + '">' + escapeHtml(field.label) + '</label>' + helpControl("help-" + field.key, field.label, help) + '</div>' +
+                  '<div class="input-unit"><input class="input" id="limit-' + field.key + '" type="number" min="1" max="9007199254740991" step="1" value="' + field.value + '" aria-describedby="help-' + field.key + ' unit-' + field.key + ' limit-error"><span class="input-suffix" id="unit-' + field.key + '">' + escapeHtml(field.unit) + '</span></div></div>';
+              }).join("") + '</div></section>';
+          }).join("") + '</div>';
+      }
+
+      function settingsFooter(saveAttribute) {
+        return '<footer class="settings-footer"><span class="settings-footer-copy">仅保存原型状态' + helpControl("help-save-scope", "保存范围", "示例值不代表生产推荐值。保存不下发网关或运行时配置，刷新后恢复。收紧限制前检查运行应用配置，应用实际调整仍需版本审批和发版。") + '</span>' +
+          '<div class="settings-footer-actions"><button class="btn" type="button" data-reset-settings>取消更改</button><button class="btn btn-primary" type="button" ' + saveAttribute + '>保存配置</button></div></footer>';
+      }
+
+
+      function renderTypeCards() {
+        return sortedTypes().map(function (type) {
+          return '<article class="type-card ' + (type.shown ? "" : "is-hidden") + '">' +
+            '<div class="type-card-head"><div class="type-card-copy"><div class="type-title-line"><h3 class="type-card-name">' + escapeHtml(type.name) + '</h3></div><p class="type-description">' + escapeHtml(type.description) + '</p></div>' + statusChip(type.shown) + '</div>' +
+            '<div class="type-card-footer"><div class="type-card-meta">' + typeBadge(type) + '<span class="type-product-count numeric">' + type.count + ' 个产品</span></div><div class="type-actions">' +
+            '<button class="btn btn-small" type="button" data-edit-type="' + type.id + '">编辑</button><button class="btn btn-text btn-small" type="button" data-toggle-type="' + type.id + '">' + (type.shown ? "停用呈现" : "启用呈现") + '</button></div></div>' +
+          '</article>';
+        }).join("");
+      }
+
+      function renderLimitCards() {
+        var summaryKeys = {
+          agent: ["rpm", "runConcurrency", "runSeconds"], api: ["rpm", "monthlyGb", "requestMib"],
+          model: ["tpm", "monthlyTokens", "outputTokens"], mcp: ["concurrency", "rpm", "resultKib"],
+          skill: ["activations", "scriptSeconds", "outputKib"], worker: ["taskConcurrency", "queueDepth", "taskSeconds"],
+          stream: ["connections", "monthlyGb", "messageKib"]
+        };
+        return state.limits.map(function (limit) {
+          var type = getType(limit.id);
+          return '<article class="type-card limit-card"><div class="type-card-head"><div class="editor-title"><h3 class="type-card-name">' + escapeHtml(type.name) + '</h3>' +
+            helpControl("help-card-" + limit.id, type.name + "限制", limit.note + "\n同一数据应用的全部凭据共享额度；逻辑表不参与。卡片为摘要，编辑可查看全部 " + limit.fields.length + " 项限制。数值仅为原型示例。") +
+            '</div><span class="type-badge">' + limit.fields.length + ' 项限制</span></div><dl class="limit-card-metrics">' + summaryKeys[limit.id].map(function (key) {
+              var field = limit.fields.find(function (item) { return item.key === key; });
+              return '<div><dt>' + escapeHtml(field.label) + '</dt><dd class="numeric">' + formatLimit(field.value) + '<span class="metric-unit">' + escapeHtml(field.unit) + '</span></dd></div>';
+            }).join("") + '</dl><div class="type-card-footer"><span class="type-product-count">' + limit.apps + ' 个运行数据应用</span>' +
+            '<div class="type-actions"><button class="btn btn-small" type="button" data-edit-limit="' + limit.id + '" aria-label="编辑' + escapeHtml(type.name) + '专属限制">编辑</button></div></div></article>';
+        }).join("");
+      }
+
+      function renderVariantBDetail() {
+        if (state.variantBTopic === "auth") {
+          return '<section class="table-card detail-shell" aria-labelledby="detail-b-title">' +
+            '<div class="detail-topline"><div><h2 class="table-title" id="detail-b-title">认证与密钥策略</h2><p class="panel-copy">按认证方式维护数据应用的凭据有效期与接受边界。</p></div><span class="status status-neutral">原型示例</span></div>' +
+            '<div class="detail-body settings-body">' + commonPolicyForm() + '</div>' + settingsFooter('data-save-common') + '</section>';
+        }
+        if (state.variantBTopic === "limits") {
+          return '<section class="table-card detail-shell" aria-labelledby="detail-b-title">' +
+            '<div class="detail-topline"><div><h2 class="table-title" id="detail-b-title">类型专属限制</h2><p class="panel-copy">查看各类型限制摘要，编辑完整配置。</p></div><span class="status status-neutral">原型示例</span></div>' +
+            '<div class="detail-body"><div class="type-card-grid">' + renderLimitCards() + '</div></div></section>';
+        }
+        return '<section class="table-card detail-shell" aria-labelledby="detail-b-title">' +
+          '<div class="detail-topline"><div><h2 class="table-title" id="detail-b-title">集市产品类型</h2><p class="panel-copy">以可扫描卡片维护展示名称、说明、排序和呈现状态。</p></div></div>' +
+          '<div class="detail-body"><div class="type-card-grid">' + renderTypeCards() + '</div></div></section>';
+      }
+
+      function renderVariantB() {
+        return '<div class="catalog-layout">' +
+            '<aside class="panel settings-rail" aria-label="设置主题"><div class="rail-intro"><h2 class="rail-title">设置目录</h2><p class="rail-copy">面向管理者的域级共用配置。</p></div>' +
+              '<button class="topic-button ' + (state.variantBTopic === "types" ? "active" : "") + '" aria-pressed="' + (state.variantBTopic === "types") + '" type="button" data-topic="types"><span class="topic-main"><span class="topic-name">集市产品类型</span><span class="topic-meta">8 类 · ' + state.types.filter(function (item) { return item.shown; }).length + ' 类对外呈现</span></span></button>' +
+              '<button class="topic-button ' + (state.variantBTopic === "auth" ? "active" : "") + '" aria-pressed="' + (state.variantBTopic === "auth") + '" type="button" data-topic="auth"><span class="topic-main"><span class="topic-name">认证与密钥策略</span><span class="topic-meta">认证方式 · 凭据有效期</span></span></button>' +
+              '<button class="topic-button ' + (state.variantBTopic === "limits" ? "active" : "") + '" aria-pressed="' + (state.variantBTopic === "limits") + '" type="button" data-topic="limits"><span class="topic-main"><span class="topic-name">类型专属限制</span><span class="topic-meta">7 类产品 · 调用与执行上限</span></span></button>' +
+            '</aside>' +
+            renderVariantBDetail() +
+          '</div>';
+      }
+
+      function formatLimit(value) {
+        return Number(value).toLocaleString("zh-CN");
+      }
+
+
+
+      function render() {
+        hideHelp();
+        root.innerHTML = renderVariantB();
+        if (state.variantBTopic === "auth") syncAuthAvailability(false);
+        document.querySelector(".page-scroll").scrollTop = 0;
+      }
+
+      function showToast(message) {
+        window.clearTimeout(toastTimer);
+        toastText.textContent = message;
+        toast.classList.add("show");
+        toastTimer = window.setTimeout(function () { toast.classList.remove("show"); }, 2400);
+      }
+
+      function openDrawer(title, body, footer) {
+        hideHelp();
+        drawerLayer.setAttribute("data-placement", "right");
+        drawerTitle.textContent = title;
+        drawerBody.innerHTML = body;
+        drawerFooter.innerHTML = footer || '<button class="btn" type="button" data-close-drawer>关闭</button>';
+        drawerLayer.classList.add("open");
+        drawerLayer.setAttribute("aria-hidden", "false");
+        window.setTimeout(function () {
+          var first = drawerLayer.querySelector("input:not(:disabled), select, textarea, button");
+          if (first) first.focus();
+        }, 20);
+      }
+
+      function closeDrawer() {
+        hideHelp();
+        drawerLayer.classList.remove("open");
+        drawerLayer.setAttribute("aria-hidden", "true");
+        drawerLimitId = null;
+        drawerBody.innerHTML = "";
+        drawerFooter.innerHTML = "";
+      }
+
+      function requestDrawerClose() {
+        if (drawerLimitId && hasUnsavedSettings()) {
+          openModal("放弃未保存的更改？", '<p class="modal-copy">关闭后将丢弃当前类型尚未保存的修改。</p>', "放弃更改", function () {
+            closeModal();
+            closeDrawer();
+          }, true);
+        } else {
+          closeDrawer();
+        }
+      }
+
+      function openModal(title, body, confirmLabel, action, danger) {
+        hideHelp();
+        modalTitle.textContent = title;
+        modalBody.innerHTML = body;
+        modalConfirm.textContent = confirmLabel || "确认";
+        modalConfirm.className = danger ? "btn btn-danger" : "btn btn-primary";
+        modalAction = action;
+        modalLayer.classList.add("open");
+        modalLayer.setAttribute("aria-hidden", "false");
+        window.setTimeout(function () { modalConfirm.focus(); }, 20);
+      }
+
+      function closeModal() {
+        modalLayer.classList.remove("open");
+        modalLayer.setAttribute("aria-hidden", "true");
+        modalAction = null;
+      }
+
+      function editType(id) {
+        var type = getType(id);
+        var body = '<div class="form-grid">' +
+          '<div class="form-item">' + fieldLabel("type-code", "内部类型", "运行语义和配置结构由平台固定；内部编码只在编辑时只读显示，不展示在卡片标题旁。") + '<input class="input" id="type-code" value="' + escapeHtml(type.code) + '" aria-describedby="help-type-code" disabled></div>' +
+          '<div class="form-item"><label for="type-order">展示顺序</label><input class="input" id="type-order" type="number" min="1" max="99" value="' + type.order + '"></div>' +
+          '<div class="form-item full"><label for="type-name">展示名称</label><input class="input" id="type-name" value="' + escapeHtml(type.name) + '" aria-describedby="type-name-error"><div class="field-error" id="type-name-error" hidden>请输入展示名称。</div></div>' +
+          '<div class="form-item full">' + fieldLabel("type-description", "说明", "保存只更新本页原型，刷新后恢复；生产场景应同步集市展示并记录审计，本原型不执行真实同步或审计写入。") + '<textarea class="textarea" id="type-description" aria-describedby="help-type-description">' + escapeHtml(type.description) + '</textarea></div>' +
+          '</div>';
+        openDrawer("编辑“" + type.name + "”展示信息", body,
+          '<button class="btn" type="button" data-close-drawer>取消</button><button class="btn btn-primary" type="button" data-save-type="' + type.id + '">保存</button>');
+      }
+
+      function saveType(id) {
+        var type = getType(id);
+        var nameInput = document.getElementById("type-name");
+        var error = document.getElementById("type-name-error");
+        if (!nameInput.value.trim()) {
+          nameInput.setAttribute("aria-invalid", "true");
+          error.hidden = false;
+          return;
+        }
+        type.name = nameInput.value.trim();
+        type.description = document.getElementById("type-description").value.trim() || "—";
+        type.order = Number(document.getElementById("type-order").value) || type.order;
+        closeDrawer();
+        render();
+        showToast("展示信息已更新（原型演示，未同步集市或写入审计）");
+      }
+
+      function toggleType(id) {
+        var type = getType(id);
+        if (!type.shown) {
+          type.shown = true;
+          render();
+          showToast(type.name + "已恢复呈现（原型演示，未同步集市）");
+          return;
+        }
+        var body = '<p class="modal-copy">停用后，服务集市将隐藏“' + escapeHtml(type.name) + '”类型及其新发现入口。</p>' +
+          '<div class="impact-box"><div class="policy-label">受影响的集市产品</div><div class="impact-number numeric">' + type.count + ' 个</div><div class="policy-note">既有产品、授权和调用继续有效；创建与注册不受影响。</div></div>' +
+          '<div class="inline-alert warning" style="margin-top:16px">该动作只改变对外呈现，不代替单个产品的下线。</div>';
+        openModal("停用“" + type.name + "”对外呈现", body, "确认停用呈现", function () {
+          type.shown = false;
+          closeModal();
+          render();
+          showToast(type.name + "已停止对外呈现（原型演示，未写入审计）");
+        }, true);
+      }
+
+      function hideHelp() {
+        window.clearTimeout(tooltipTimer);
+        if (activeTooltip) activeTooltip.hidden = true;
+        activeTooltip = null;
+        tooltipTrigger = null;
+      }
+
+      function showHelp(trigger) {
+        window.clearTimeout(tooltipTimer);
+        var tooltip = document.getElementById(trigger.dataset.help);
+        if (!tooltip) return;
+        if (activeTooltip && activeTooltip !== tooltip) hideHelp();
+        activeTooltip = tooltip;
+        tooltipTrigger = trigger;
+        tooltip.hidden = false;
+        var rect = trigger.getBoundingClientRect();
+        var size = tooltip.getBoundingClientRect();
+        var left = Math.max(16, Math.min(rect.left, window.innerWidth - size.width - 16));
+        var top = rect.bottom + 8;
+        if (top + size.height > window.innerHeight - 16) top = rect.top - size.height - 8;
+        tooltip.style.left = left + "px";
+        tooltip.style.top = Math.max(16, top) + "px";
+      }
+
+      function selectedAuthMethods() {
+        return Array.prototype.slice.call(document.querySelectorAll("[data-auth-method]:checked")).map(function (input) { return input.value; });
+      }
+
+      function syncAuthAvailability(showDefaultError) {
+        hideHelp();
+        var selected = selectedAuthMethods();
+        authDefinitions.forEach(function (definition, index) {
+          var enabled = document.getElementById("auth-method-" + index).checked;
+          var fields = document.getElementById("auth-fields-" + definition.id);
+          fields.hidden = !enabled;
+          fields.disabled = !enabled;
+          document.getElementById("auth-status-" + definition.id).textContent = enabled ? "已启用" : "未启用";
+          definition.fields.forEach(function (field) {
+            var input = document.getElementById(field.id);
+            input.disabled = !enabled;
+            if (!enabled) {
+              input.removeAttribute("aria-invalid");
+              document.getElementById("error-" + field.id).hidden = true;
+            }
+          });
+        });
+        var select = document.getElementById("default-method");
+        var current = selected.indexOf(select.value) !== -1 ? select.value : "";
+        select.innerHTML = (current ? "" : '<option value="">请选择默认认证方式</option>') + selected.map(function (method) {
+          return '<option value="' + escapeHtml(method) + '">' + escapeHtml(method) + '</option>';
+        }).join("");
+        select.value = current;
+        select.disabled = !selected.length;
+        document.getElementById("default-method-error").hidden = !!current || !showDefaultError;
+        if (!current && showDefaultError) select.setAttribute("aria-invalid", "true");
+        else select.removeAttribute("aria-invalid");
+        document.getElementById("auth-method-error").hidden = true;
+        document.getElementById("common-policy-error").hidden = true;
+      }
+
+      function hasUnsavedSettings() {
+        if (state.variantBTopic === "auth") {
+          var method = document.getElementById("default-method");
+          if (!method) return false;
+          return selectedAuthMethods().join("|") !== state.common.allowed.join("|") ||
+            method.value !== state.common.defaultMethod || authDefinitions.some(function (definition, index) {
+              return document.getElementById("auth-method-" + index).checked && definition.fields.some(function (field) {
+                return document.getElementById(field.id).value !== String(state.common[field.key]);
+              });
+            });
+        }
+        if (drawerLimitId && drawerLayer.classList.contains("open")) {
+          return getLimit(drawerLimitId).fields.some(function (field) {
+            var input = document.getElementById("limit-" + field.key);
+            return input && input.value !== String(field.value);
+          });
+        }
+        return false;
+      }
+
+      function requestSettingsView(topic, afterSwitch) {
+        if (topic === state.variantBTopic && !afterSwitch) return;
+        function applyView() {
+          closeDrawer();
+          state.variantBTopic = topic;
+          render();
+          if (afterSwitch) afterSwitch();
+        }
+        if (hasUnsavedSettings()) {
+          openModal("放弃未保存的更改？", '<p class="modal-copy">当前配置尚未保存。切换后将恢复已保存的示例值。</p>', "放弃并切换", function () {
+            closeModal();
+            applyView();
+          }, true);
+        } else {
+          applyView();
+        }
+      }
+
+      function editCommon() {
+        requestSettingsView("auth");
+      }
+
+      function revealError(error) {
+        error.hidden = false;
+        error.scrollIntoView({block: "nearest", inline: "nearest"});
+      }
+
+      function saveCommon() {
+        var selected = selectedAuthMethods();
+        var methodError = document.getElementById("auth-method-error");
+        var policyError = document.getElementById("common-policy-error");
+        var defaultError = document.getElementById("default-method-error");
+        var methodInput = document.getElementById("default-method");
+        var proposed = Object.assign({}, state.common, {allowed: selected, defaultMethod: methodInput.value});
+        var invalid = [];
+        methodError.hidden = true;
+        policyError.hidden = true;
+        defaultError.hidden = true;
+        methodInput.removeAttribute("aria-invalid");
+        authDefinitions.forEach(function (definition) {
+          definition.fields.forEach(function (field) {
+            document.getElementById(field.id).removeAttribute("aria-invalid");
+            document.getElementById("error-" + field.id).hidden = true;
+          });
+        });
+        if (!selected.length) {
+          revealError(methodError);
+          return;
+        }
+        if (selected.indexOf(proposed.defaultMethod) === -1) {
+          methodInput.setAttribute("aria-invalid", "true");
+          defaultError.hidden = false;
+          policyError.textContent = "请选择一种已启用的默认认证方式。";
+          revealError(policyError);
+          return;
+        }
+        function markInvalid(field, message) {
+          document.getElementById(field.id).setAttribute("aria-invalid", "true");
+          var error = document.getElementById("error-" + field.id);
+          error.textContent = message;
+          error.hidden = false;
+          invalid.push(message);
+        }
+        authDefinitions.forEach(function (definition) {
+          if (selected.indexOf(definition.name) === -1) return;
+          definition.fields.forEach(function (field) {
+            var input = document.getElementById(field.id);
+            var value = Number(input.value);
+            proposed[field.key] = value;
+            if (!input.value.trim() || !Number.isSafeInteger(value) || value < 1 || value > (field.max || Number.MAX_SAFE_INTEGER)) {
+              markInvalid(field, "请输入" + (field.max ? " 1–" + field.max + " 范围内的" : "有效的") + "正整数。");
+            }
+          });
+          definition.fields.forEach(function (field) {
+            if (field.upper && proposed[field.key] > proposed[field.upper]) markInvalid(field, "默认有效期不能超过该凭据的最长有效期。");
+          });
+        });
+        if (invalid.length) {
+          policyError.textContent = "配置尚未保存，请修正已启用认证方式中的标红字段。";
+          revealError(policyError);
+          return;
+        }
+        var affected = [];
+        state.runningAuth.forEach(function (application) {
+          if (selected.indexOf(application.method) === -1) {
+            affected.push(application.name + "（正在使用 " + application.method + "）");
+            return;
+          }
+          var definition = authDefinitions.find(function (item) { return item.name === application.method; });
+          Object.keys(application.limits || {}).forEach(function (key) {
+            if (proposed[key] < application.limits[key]) {
+              var field = definition.fields.find(function (item) { return item.key === key; });
+              affected.push(application.name + "（" + field.label + "配置为 " + application.limits[key] + " " + field.unit + "）");
+              markInvalid(field, "低于运行应用的配置 " + application.limits[key] + " " + field.unit + "，请先调整应用版本。");
+            }
+          });
+        });
+        if (affected.length) {
+          policyError.textContent = "无法保存，将影响运行应用：" + affected.join("、") + "。请先通过数据应用新版本完成调整。";
+          revealError(policyError);
+          return;
+        }
+        var changes = [
+          ["允许认证方式", state.common.allowed.join("、"), selected.join("、")],
+          ["默认认证方式", state.common.defaultMethod, proposed.defaultMethod]
+        ];
+        authDefinitions.forEach(function (definition) {
+          if (selected.indexOf(definition.name) === -1) return;
+          definition.fields.forEach(function (field) {
+            changes.push([definition.name + " · " + field.label, state.common[field.key] + " " + field.unit, proposed[field.key] + " " + field.unit]);
+          });
+        });
+        changes = changes.filter(function (change) { return change[1] !== change[2]; });
+        var preview = changes.length ? '<ul class="limit-preview">' + changes.map(function (change) {
+          return '<li>' + escapeHtml(change[0]) + '：' + escapeHtml(change[1]) + ' → ' + escapeHtml(change[2]) + '</li>';
+        }).join("") + '</ul>' : '<p class="limit-note">本次未改变配置值。</p>';
+        openModal("确认认证与凭据策略", '<p class="modal-copy">已检查运行应用的凭据配置示例，未发现受影响对象。</p>' + preview +
+          '<p class="limit-note">仅保存本页原型状态。不会签发、轮换或延长已有令牌、密钥及证书，不下发认证配置；刷新后恢复。</p>', "确认保存", function () {
+            state.common = proposed;
+            closeModal();
+            render();
+            showToast("认证与凭据策略已保存（原型演示，未下发配置）");
+          });
+      }
+
+      function editLimit(id) {
+        var limit = getLimit(id);
+        if (!limit) return;
+        requestSettingsView("limits", function () {
+          drawerLimitId = id;
+          openDrawer("编辑“" + getType(id).name + "”专属限制", limitPolicyForm(limit),
+            '<span class="settings-footer-copy">原型示例' + helpControl("help-drawer-save", "保存范围", "只保存当前页面的示例值，刷新恢复；不下发网关或运行时。保存前校验运行应用配置，收紧不能影响现有调用。") + '</span>' +
+            '<button class="btn" type="button" data-close-drawer>取消</button><button class="btn btn-primary" type="button" data-save-limit="' + id + '">保存</button>');
+        });
+      }
+
+      function saveLimit(id) {
+        var type = getType(id);
+        var limit = getLimit(id);
+        if (!limit) return;
+        var error = document.getElementById("limit-error");
+        var proposed = {};
+        var invalid = [];
+        var affected = [];
+        error.hidden = true;
+        limit.fields.forEach(function (field) {
+          var input = document.getElementById("limit-" + field.key);
+          var value = Number(input.value);
+          input.removeAttribute("aria-invalid");
+          proposed[field.key] = value;
+          if (!input.value.trim() || !Number.isSafeInteger(value) || value < 1) {
+            invalid.push(field.label + "必须为有效的正整数");
+            input.setAttribute("aria-invalid", "true");
+          } else if (value < field.used) {
+            affected.push(field.label + "低于“" + limit.application + "”等运行应用的配置 " + formatLimit(field.used) + " " + field.unit);
+            input.setAttribute("aria-invalid", "true");
+          }
+        });
+        if (invalid.length || affected.length) {
+          error.innerHTML = invalid.length ? escapeHtml(invalid.join("；")) + '。' :
+            '<strong>无法保存，可能影响消费方使用。</strong><br>' + escapeHtml(affected.join("；")) + '。请先通过数据应用新版本完成调整。';
+          revealError(error);
+          return;
+        }
+        var changes = limit.fields.filter(function (field) { return field.value !== proposed[field.key]; });
+        var preview = changes.length ? '<ul class="limit-preview">' + changes.map(function (field) {
+          return '<li>' + escapeHtml(field.label) + '：' + formatLimit(field.value) + ' → ' + formatLimit(proposed[field.key]) + ' ' + escapeHtml(field.unit) + '</li>';
+        }).join("") + '</ul>' : '<p class="limit-note">本次未改变限制值。</p>';
+        openModal("确认“" + type.name + "”专属限制", '<p class="modal-copy">已按 ' + limit.apps + ' 个运行数据应用的最高配置摘要完成示例校验，未发现超限对象。</p>' + preview +
+          '<p class="limit-note">仅保存本页原型状态，不修改运行应用、不下发网关或运行时配置；刷新后恢复示例值。</p>', "确认保存", function () {
+          limit.fields.forEach(function (field) { field.value = proposed[field.key]; });
+          closeModal();
+          closeDrawer();
+          render();
+          showToast(type.name + "专属限制已保存（原型演示，未下发配置）");
+        });
+      }
+
+      document.addEventListener("click", function (event) {
+        if (event.target.hasAttribute && event.target.hasAttribute("data-close-drawer")) {
+          requestDrawerClose();
+          return;
+        }
+        var target = event.target.closest("button");
+        if (!target) return;
+        if (target.dataset.toast) showToast(target.dataset.toast);
+        if (target.dataset.topic) requestSettingsView(target.dataset.topic);
+        if (target.hasAttribute("data-reset-settings")) { render(); showToast("未保存的更改已取消"); }
+        if (target.dataset.help) showHelp(target);
+        if (target.dataset.editType) editType(target.dataset.editType);
+        if (target.dataset.toggleType) toggleType(target.dataset.toggleType);
+        if (target.hasAttribute("data-edit-common")) editCommon();
+        if (target.dataset.editLimit) editLimit(target.dataset.editLimit);
+        if (target.dataset.saveType) saveType(target.dataset.saveType);
+        if (target.hasAttribute("data-save-common")) saveCommon();
+        if (target.dataset.saveLimit) saveLimit(target.dataset.saveLimit);
+        if (target.hasAttribute("data-close-drawer")) requestDrawerClose();
+        if (target.hasAttribute("data-close-modal")) closeModal();
+      });
+
+      document.addEventListener("change", function (event) {
+        if (event.target.dataset.authMethod) syncAuthAvailability(true);
+        if (event.target.id === "default-method") {
+          document.getElementById("default-method-error").hidden = !!event.target.value;
+          if (event.target.value) event.target.removeAttribute("aria-invalid");
+        }
+      });
+
+      modalConfirm.addEventListener("click", function () {
+        if (typeof modalAction === "function") modalAction();
+      });
+
+      document.addEventListener("mouseover", function (event) {
+        var trigger = event.target.closest("[data-help]");
+        if (trigger) showHelp(trigger);
+        else if (activeTooltip && activeTooltip.contains(event.target)) window.clearTimeout(tooltipTimer);
+      });
+      document.addEventListener("mouseout", function (event) {
+        if (!activeTooltip) return;
+        var next = event.relatedTarget;
+        if (next && (activeTooltip.contains(next) || tooltipTrigger.contains(next))) return;
+        window.clearTimeout(tooltipTimer);
+        tooltipTimer = window.setTimeout(function () {
+          if (document.activeElement !== tooltipTrigger) hideHelp();
+        }, 120);
+      });
+      document.addEventListener("focusin", function (event) {
+        var trigger = event.target.closest("[data-help]");
+        if (trigger) showHelp(trigger);
+      });
+      document.addEventListener("focusout", function (event) {
+        if (event.target === tooltipTrigger) hideHelp();
+      });
+      document.addEventListener("scroll", hideHelp, true);
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          if (activeTooltip) hideHelp();
+          else if (modalLayer.classList.contains("open")) closeModal();
+          else if (drawerLayer.classList.contains("open")) requestDrawerClose();
+        }
+      });
+
+      var pageUrl = new URL(window.location.href);
+      if (pageUrl.searchParams.has("variant")) {
+        pageUrl.searchParams.delete("variant");
+        window.history.replaceState({}, "", pageUrl);
+      }
+      render();
+    }());
+  </script>
+</body>
+</html>

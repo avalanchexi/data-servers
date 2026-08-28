@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>数据服务 · 运行管理原型</title>
+  <title>数据服务平台 · 运行管理原型</title>
   <style>
     :root {
       --ds-color-white: #ffffff;
@@ -150,7 +150,7 @@
     .icon-sm { width: 14px; height: 14px; }
     .topbar {
       position: fixed;
-      z-index: 20;
+      z-index: 30;
       inset: 0 0 auto 0;
       height: var(--ds-nav-height);
       display: flex;
@@ -231,7 +231,7 @@
 
     .sidebar {
       position: fixed;
-      z-index: 10;
+      z-index: 20;
       top: var(--ds-nav-height);
       bottom: 0;
       left: 0;
@@ -336,6 +336,82 @@
     }
     .page-section { min-width: 0; }
     .stack > * + * { margin-top: var(--ds-space-7); }
+
+    .page-scroll.runtime-mode { overflow: hidden; }
+    .runtime-mode .page-content { height: 100%; }
+    .runtime-layout { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: var(--ds-grid-gutter); height: 100%; }
+    .runtime-directory { overflow-y: auto; padding: var(--ds-space-7) var(--ds-space-4); }
+    .runtime-directory > h2 { margin: 0 var(--ds-space-4) var(--ds-space-7); }
+    .runtime-choice { display: block; width: 100%; min-height: var(--ds-control-default); padding: var(--ds-space-5) var(--ds-space-6); border: 0; border-radius: var(--ds-radius-medium); color: var(--ds-text-2); background: transparent; text-align: left; }
+    .runtime-choice:hover { background: var(--ds-color-gray-1); }
+    .runtime-choice[aria-current="true"] { color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+    .runtime-choice-name { display: block; font-weight: var(--ds-font-weight-medium); }
+    .runtime-choice-meta { display: block; margin-top: var(--ds-space-2); color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .runtime-group { margin-top: var(--ds-space-6); }
+    .runtime-group > summary { cursor: pointer; padding: var(--ds-space-4); color: var(--ds-text-1); font-weight: var(--ds-font-weight-medium); }
+    .runtime-group > summary:focus-visible { box-shadow: var(--ds-focus-ring); }
+    .runtime-group-count { float: right; color: var(--ds-text-2); font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-regular); }
+    .runtime-main { min-width: 0; overflow-y: auto; overflow-x: hidden; padding-right: var(--ds-space-2); }
+    .runtime-main > * + * { margin-top: var(--ds-space-7); }
+    .runtime-heading { display: flex; justify-content: space-between; align-items: center; gap: var(--ds-space-7); }
+    .runtime-heading h2 { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    .runtime-heading p { margin: var(--ds-space-2) 0 0; font-size: var(--ds-font-size-12); color: var(--ds-text-2); }
+    .runtime-main .metric-note, .runtime-main .panel-extra, .runtime-main .cell-sub, .runtime-main .ranking-meta, .runtime-main .chart-legend { color: var(--ds-text-2); }
+    .runtime-main .chart-label { fill: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .runtime-main .filter-bar { border: 0; border-bottom: 1px solid var(--ds-border-2); border-radius: 0; padding: var(--ds-space-6) var(--ds-space-7); }
+    .runtime-main .table-toolbar { flex-wrap: wrap; padding-block: var(--ds-space-4); }
+    .runtime-main .table-title { font-size: var(--ds-font-size-14); }
+    .runtime-empty { display: grid; align-content: center; justify-items: center; gap: var(--ds-space-4); min-height: 160px; padding: var(--ds-space-7); color: var(--ds-text-2); text-align: center; }
+    .runtime-empty p { margin: 0; font-size: var(--ds-font-size-12); }
+    .runtime-rank-button { display: grid; grid-template-columns: var(--ds-control-mini) minmax(0, 1fr) 72px; align-items: center; gap: var(--ds-space-6); width: 100%; min-height: 64px; padding: var(--ds-space-4) 0; border: 0; border-bottom: 1px solid var(--ds-border-1); color: var(--ds-text-1); background: transparent; text-align: left; }
+    .ranking-list > li:last-child .runtime-rank-button { border-bottom: 0; }
+    .runtime-rank-button:hover { background: var(--ds-color-gray-1); }
+    .runtime-rank-button .ranking-title, .runtime-rank-button .ranking-meta { display: block; }
+    .runtime-rank-button .ranking-meta { margin-top: var(--ds-space-2); }
+    .runtime-rank-button .bar-track { display: block; width: 100%; }
+    .runtime-rank-button .bar-fill { display: block; }
+    .runtime-coverage { display: flex; flex-wrap: wrap; gap: var(--ds-space-4); color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .runtime-coverage span { padding: var(--ds-space-3) var(--ds-space-4); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-small); background: var(--ds-bg-surface); }
+    .runtime-help { display: inline-flex; position: relative; margin-left: var(--ds-space-2); vertical-align: middle; color: var(--ds-text-2); cursor: help; }
+    .runtime-help .icon { width: 14px; height: 14px; }
+    .runtime-help-text { display: none; position: absolute; z-index: 10; top: calc(100% + 8px); left: 0; width: 240px; padding: var(--ds-space-5); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); background: var(--ds-bg-elevated); box-shadow: var(--ds-shadow-2); color: var(--ds-text-1); font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-regular); line-height: 1.6; white-space: normal; }
+    .runtime-help:hover .runtime-help-text, .runtime-help:focus .runtime-help-text { display: block; }
+    .runtime-help:focus-visible { outline: 2px solid var(--ds-color-primary-6); outline-offset: 2px; }
+    .metric-card:last-child .runtime-help-text { left: auto; right: 0; }
+    .runtime-summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--ds-grid-gutter); }
+    .runtime-summary-grid .runtime-choice { border: 1px solid var(--ds-border-2); background: var(--ds-bg-surface); }
+    .runtime-profile-table { min-width: 640px; }
+    .runtime-event { display: flex; align-items: flex-start; gap: var(--ds-space-6); padding: var(--ds-space-6) 0; border-bottom: 1px solid var(--ds-border-1); }
+    .runtime-event:last-child { border-bottom: 0; }
+    .runtime-event .ranking-content { flex: 1; min-width: 0; }
+    .runtime-event p { margin: var(--ds-space-2) 0 0; color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .runtime-bar { fill: var(--ds-color-primary-6); }
+    .runtime-bar-danger { fill: var(--ds-color-danger); }
+    .runtime-profile .metric-value { font-size: var(--ds-font-size-24); }
+    .inspection-layout { grid-template-columns: 248px minmax(0, 1fr); }
+    .inspection-directory { display: flex; flex-direction: column; min-height: 0; padding: 0; }
+    .inspection-directory-head { padding: var(--ds-space-7); border-bottom: 1px solid var(--ds-border-2); }
+    .inspection-directory-title { display: flex; align-items: center; gap: var(--ds-space-4); min-height: var(--ds-control-default); }
+    .inspection-directory-title h2 { flex: 1; margin: 0; }
+    .inspection-search-toggle { width: var(--ds-control-default); padding: 0; flex: none; }
+    .inspection-search-toggle[aria-expanded="true"] { color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+    .inspection-search-panel { display: flex; align-items: center; flex: 1; min-width: 0; }
+    .inspection-search-panel .input { width: 100%; min-width: 0; }
+    .inspection-tree { flex: 1; min-height: 0; overflow-y: auto; padding: var(--ds-space-4); }
+    .inspection-app-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-grid-gutter); }
+    .inspection-app-card { display: flex; flex-direction: column; min-width: 0; }
+    .inspection-app-card .panel-head { align-items: flex-start; }
+    .inspection-app-card .panel-title { font-size: var(--ds-font-size-14); }
+    .inspection-card-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-6); margin-block: var(--ds-space-6); }
+    .inspection-card-metrics strong { display: block; margin-top: var(--ds-space-2); font-size: var(--ds-font-size-20); font-weight: var(--ds-font-weight-medium); }
+    .inspection-card-footer { display: flex; justify-content: space-between; align-items: center; gap: var(--ds-space-4); margin-top: auto; padding-top: var(--ds-space-6); border-top: 1px solid var(--ds-border-1); }
+    .inspection-section-title { margin: 0 0 var(--ds-space-6); font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+    .inspection-metric-note { color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+    .inspection-supplement { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-6) var(--ds-space-8); }
+    .inspection-supplement .detail-row { margin: 0; }
+    .inspection-table { min-width: 740px; }
+    .inspection-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--ds-space-7); }
+    .inspection-actions { display: flex; align-items: center; gap: var(--ds-space-5); margin-left: auto; }
 
     .btn {
       min-height: var(--ds-button-height);
@@ -572,10 +648,7 @@
       flex-direction: column;
       box-shadow: var(--ds-shadow-3);
       background: var(--ds-bg-elevated);
-      transform: translateX(100%);
-      transition: transform var(--ds-duration-base) var(--ds-ease-standard);
     }
-    .drawer-layer.open .drawer { transform: translateX(0); }
     .drawer-head, .modal-head {
       display: flex;
       align-items: center;
@@ -629,7 +702,7 @@
       width: var(--ds-modal-width);
       max-width: calc(100vw - var(--ds-space-16));
       overflow: hidden;
-      border-radius: var(--ds-radius-medium);
+      border-radius: var(--ds-radius-large);
       box-shadow: var(--ds-shadow-3);
       background: var(--ds-bg-elevated);
       transform: translate(-50%, -50%);
@@ -667,11 +740,12 @@
       position: fixed;
       z-index: var(--ds-z-message);
       top: calc(var(--ds-nav-height) + var(--ds-space-7));
-      left: 50%;
+      left: calc(var(--ds-sidebar-width) + (100vw - var(--ds-sidebar-width)) / 2);
       display: flex;
       align-items: center;
       gap: var(--ds-space-5);
       min-height: var(--ds-control-large);
+      max-width: 520px;
       padding: 0 var(--ds-space-7);
       border: 1px solid var(--ds-border-2);
       border-radius: var(--ds-radius-medium);
@@ -720,9 +794,9 @@
   <header class="topbar">
     <div class="product-area">
       <span class="product-symbol"><svg class="icon" aria-hidden="true"><use href="#i-grid"></use></svg></span>
-      <span>数据服务</span>
+      <span>数据服务平台</span>
     </div>
-    <div class="top-domain">数据服务</div>
+    <div class="top-domain">数据服务域</div>
     <div class="top-spacer"></div>
     <div class="top-actions">
       <button class="top-icon" type="button" aria-label="帮助" data-toast="本原型暂不包含帮助中心">
@@ -739,7 +813,7 @@
     </div>
   </header>
 
-  <aside class="sidebar" aria-label="数据服务导航">
+  <aside class="sidebar" aria-label="数据服务域导航">
     <button class="nav-item" type="button" data-scope-message>
       <svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg><span>工作台</span>
     </button>
@@ -763,10 +837,10 @@
       </button>
       <div class="nav-children">
         <button class="nav-child active" type="button" data-page="overview">网关概览</button>
-        <button class="nav-child" type="button" data-page="routes">注册与路由</button>
+        <button class="nav-child" type="button" data-page="routes">运行情况</button>
         <button class="nav-child" type="button" data-page="policies">策略管理</button>
         <button class="nav-child" type="button" data-page="releases">配置发布</button>
-        <button class="nav-child" type="button" data-page="monitoring">运行监控</button>
+        <button class="nav-child" type="button" data-page="monitoring">服务运监</button>
         <button class="nav-child" type="button" data-page="events">异常事件</button>
         <button class="nav-child" type="button" data-page="audit">审计日志</button>
       </div>
@@ -780,7 +854,7 @@
   <main class="workspace">
     <header class="page-head">
       <div>
-        <div class="breadcrumb"><span>数据服务</span><span>/</span><span>运行管理</span><span>/</span><span id="breadcrumb-current">网关概览</span></div>
+        <div class="breadcrumb"><span>数据服务域</span><span>/</span><span>运行管理</span><span>/</span><span id="breadcrumb-current">网关概览</span></div>
         <div class="page-title-row">
           <h1 id="page-title">网关概览</h1>
           <span class="environment-chip"><span class="dot"></span>当前环境：生产</span>
@@ -803,55 +877,18 @@
     <div class="page-scroll">
       <div class="page-content">
         <section class="page-section stack" data-page-section="overview">
-          <div class="metric-grid">
-            <article class="metric-card">
-              <div class="metric-label">正常服务</div>
-              <div class="metric-value">18 <span class="panel-extra">/ 20</span></div>
-              <div class="metric-note metric-trend">较上一周期无变化</div>
-            </article>
-            <article class="metric-card">
-              <div class="metric-label">异常服务</div>
-              <div class="metric-value">2</div>
-              <div class="metric-note metric-trend danger">1 个服务持续异常</div>
-            </article>
-            <article class="metric-card">
-              <div class="metric-label">近 15 分钟请求量</div>
-              <div class="metric-value numeric">428,620</div>
-              <div class="metric-note metric-trend">环比 +4.8%</div>
-            </article>
-            <article class="metric-card">
-              <div class="metric-label">请求成功率</div>
-              <div class="metric-value numeric">99.72%</div>
-              <div class="metric-note metric-trend warning">目标值 99.90%</div>
-            </article>
-          </div>
+          <div class="metric-grid" id="runtime-overview-metrics"></div>
 
           <article class="table-card">
             <div class="table-toolbar">
-              <h2 class="table-title">网关访问状态</h2>
+              <h2 class="table-title">实例运行状态</h2>
               <span class="panel-extra">最近刷新：<span data-last-refresh>13:45:20</span></span>
             </div>
             <div class="table-scroll">
               <table>
-                <caption class="sr-only">网关访问状态</caption>
-                <thead><tr><th scope="col">逻辑实例</th><th scope="col">能力范围</th><th scope="col">访问入口</th><th scope="col">数据面健康</th><th scope="col">影响服务</th><th scope="col">最近检查</th><th scope="col">操作</th></tr></thead>
-                <tbody>
-                  <tr>
-                    <td><div class="cell-main">公共 API 入口</div><div class="cell-sub">通用 API 适配器</div></td>
-                    <td>API、数据流</td><td>内网 / 外网</td><td><span class="status status-success">正常</span></td><td>12 个</td><td class="numeric">13:45:12</td>
-                    <td><button class="btn btn-text btn-small" type="button" data-open-gateway="公共 API 入口">查看</button></td>
-                  </tr>
-                  <tr>
-                    <td><div class="cell-main">智能能力入口</div><div class="cell-sub">AI 能力适配器</div></td>
-                    <td>模型、Agent、MCP</td><td>外网</td><td><span class="status status-warning">降级</span></td><td>6 个</td><td class="numeric">13:45:08</td>
-                    <td><button class="btn btn-text btn-small" type="button" data-open-gateway="智能能力入口">查看</button></td>
-                  </tr>
-                  <tr>
-                    <td><div class="cell-main">任务执行入口</div><div class="cell-sub">异步任务适配器</div></td>
-                    <td>Skill、Worker</td><td>内网</td><td><span class="status status-success">正常</span></td><td>2 个</td><td class="numeric">13:44:58</td>
-                    <td><button class="btn btn-text btn-small" type="button" data-open-gateway="任务执行入口">查看</button></td>
-                  </tr>
-                </tbody>
+                <caption class="sr-only">当前环境的实例运行状态</caption>
+                <thead><tr><th scope="col">实例名称</th><th scope="col">实例类型</th><th scope="col">能力范围</th><th scope="col">访问入口</th><th scope="col">运行状态</th><th scope="col">关联对象</th><th scope="col">最近检查</th><th scope="col">操作</th></tr></thead>
+                <tbody id="runtime-overview-rows"></tbody>
               </table>
             </div>
           </article>
@@ -874,123 +911,19 @@
               <div class="panel-head"><h2 class="panel-title">最近异常</h2><button class="btn btn-text btn-small" type="button" data-page-link="events">查看全部</button></div>
               <ul class="event-list">
                 <li class="event-item"><span class="status status-danger">高</span><div class="event-content"><div class="event-title">客户画像查询成功率下降</div><div class="event-meta">持续中 · 13:41</div></div></li>
-                <li class="event-item"><span class="status status-warning">中</span><div class="event-content"><div class="event-title">智能问答服务触发模型降级</div><div class="event-meta">已恢复 · 13:32</div></div></li>
+                <li class="event-item"><span class="status status-warning">中</span><div class="event-content"><div class="event-title">智能问答服务触发模型降级</div><div class="event-meta">持续中 · 13:32</div></div></li>
                 <li class="event-item"><span class="status status-warning">中</span><div class="event-content"><div class="event-title">订单查询 P95 响应升高</div><div class="event-meta">已恢复 · 12:58</div></div></li>
               </ul>
             </article>
           </div>
         </section>
 
-        <section class="page-section stack" data-page-section="routes" hidden>
-          <div class="filter-bar">
-            <div class="filter-field">
-              <label class="filter-label" for="route-gateway">网关实例</label>
-              <select class="select" id="route-gateway" data-filter-select="route-table" data-filter-key="gateway">
-                <option>公共 API 入口</option>
-                <option>智能能力入口</option>
-                <option>任务执行入口</option>
-              </select>
-            </div>
-            <div class="filter-field">
-              <label class="filter-label" for="route-status">运行状态</label>
-              <select class="select" id="route-status" data-filter-select="route-table" data-filter-key="status">
-                <option value="">全部状态</option>
-                <option value="正常">正常</option>
-                <option value="降级">降级</option>
-                <option value="异常">异常</option>
-                <option value="已停流">已停流</option>
-              </select>
-            </div>
-            <div class="filter-field grow">
-              <label class="filter-label" for="route-search">搜索服务</label>
-              <input class="input" id="route-search" type="search" placeholder="输入服务名称或端口" data-filter-input="route-table">
-            </div>
-            <button class="btn" type="button" data-reset-filters="route-table">重置</button>
-          </div>
-
-          <div class="metric-grid">
-            <article class="metric-card"><div class="metric-label">下游 QPS</div><div class="metric-value numeric">486.2</div><div class="metric-note">近 15 分钟均值</div></article>
-            <article class="metric-card"><div class="metric-label">上游 QPS</div><div class="metric-value numeric">472.8</div><div class="metric-note">近 15 分钟均值</div></article>
-            <article class="metric-card"><div class="metric-label">成功率</div><div class="metric-value numeric">99.72%</div><div class="metric-note metric-trend warning">低于目标 0.18%</div></article>
-            <article class="metric-card"><div class="metric-label">P95</div><div class="metric-value numeric">286 ms</div><div class="metric-note metric-trend danger">环比 +32 ms</div></article>
-          </div>
-
-          <article class="panel">
-            <div class="panel-head">
-              <div><h2 class="panel-title">上下游 QPS 趋势</h2><div class="chart-legend"><span class="legend-item"><span class="legend-line"></span>下游</span><span class="legend-item"><span class="legend-line success"></span>上游</span></div></div>
-              <span class="panel-extra">近 15 分钟</span>
-            </div>
-            <svg class="chart compact" viewBox="0 0 980 150" role="img" aria-label="上下游 QPS 趋势">
-              <path class="chart-grid" d="M44 20H960M44 60H960M44 100H960M44 140H960"/>
-              <path class="chart-primary" d="M44 112 L144 96 L244 104 L344 72 L444 84 L544 42 L644 58 L744 36 L844 50 L960 28"/>
-              <path class="chart-secondary" d="M44 120 L144 104 L244 110 L344 80 L444 91 L544 50 L644 66 L744 44 L844 57 L960 36"/>
-              <text class="chart-label" x="44" y="149">13:30</text><text class="chart-label" x="480" y="149">13:37</text><text class="chart-label" x="920" y="149">13:45</text>
-            </svg>
-          </article>
-
-          <article class="table-card" id="route-table">
-            <div class="table-toolbar">
-              <h2 class="table-title">网关服务运行清单</h2>
-              <span class="panel-extra">6 条运行项</span>
-            </div>
-            <div class="table-scroll">
-              <table>
-                <caption class="sr-only">网关服务运行清单</caption>
-                <thead><tr><th scope="col">后端服务与端口</th><th scope="col">调用协议</th><th scope="col">运行状态</th><th scope="col">QPS</th><th scope="col">成功率</th><th scope="col">P95</th><th scope="col">最近异常</th><th scope="col">操作</th></tr></thead>
-                <tbody>
-                  <tr data-filter-row data-status="正常" data-gateway="公共 API 入口">
-                    <td><div class="cell-main">客户信息查询</div><div class="cell-sub">service-customer:8080</div></td><td>HTTP</td><td><span class="status status-success">正常</span></td><td class="numeric">128.4</td><td class="numeric">99.98%</td><td class="numeric">92 ms</td><td>—</td>
-                    <td><button class="btn btn-text btn-small" type="button" data-open-route="客户信息查询" data-route-status="正常">查看</button></td>
-                  </tr>
-                  <tr data-filter-row data-status="正常" data-gateway="公共 API 入口">
-                    <td><div class="cell-main">订单明细查询</div><div class="cell-sub">service-order:8080</div></td><td>HTTP</td><td><span class="status status-success">正常</span></td><td class="numeric">96.7</td><td class="numeric">99.91%</td><td class="numeric">184 ms</td><td>12:58 已恢复</td>
-                    <td><button class="btn btn-text btn-small" type="button" data-open-route="订单明细查询" data-route-status="正常">查看</button></td>
-                  </tr>
-                  <tr data-filter-row data-status="正常" data-gateway="智能能力入口">
-                    <td><div class="cell-main">产品推荐模型</div><div class="cell-sub">model-recommend:443</div></td><td>模型推理</td><td><span class="status status-success">正常</span></td><td class="numeric">61.2</td><td class="numeric">99.84%</td><td class="numeric">426 ms</td><td>—</td>
-                    <td><button class="btn btn-text btn-small" type="button" data-open-route="产品推荐模型" data-route-status="正常">查看</button></td>
-                  </tr>
-                  <tr data-filter-row data-status="降级" data-gateway="智能能力入口">
-                    <td><div class="cell-main">智能问答服务</div><div class="cell-sub">agent-assistant:443</div></td><td>Agent</td><td><span class="status status-warning">降级</span></td><td class="numeric">48.9</td><td class="numeric">98.72%</td><td class="numeric">1,260 ms</td><td>13:32 模型降级</td>
-                    <td><button class="btn btn-text btn-small" type="button" data-open-route="智能问答服务" data-route-status="降级">查看</button></td>
-                  </tr>
-                  <tr data-filter-row data-status="异常" data-gateway="公共 API 入口">
-                    <td><div class="cell-main">客户画像查询</div><div class="cell-sub">service-profile:8090</div></td><td>HTTP</td><td><span class="status status-danger">异常</span></td><td class="numeric">31.6</td><td class="numeric">91.28%</td><td class="numeric">2,486 ms</td><td>13:41 成功率下降</td>
-                    <td><button class="btn btn-text btn-small" type="button" data-open-route="客户画像查询" data-route-status="异常">查看</button></td>
-                  </tr>
-                  <tr data-filter-row data-status="已停流" data-gateway="任务执行入口">
-                    <td><div class="cell-main">历史账单下载</div><div class="cell-sub">worker-billing:9000</div></td><td>任务执行</td><td><span class="status status-neutral">已停流</span></td><td>—</td><td>—</td><td>—</td><td>11:20 紧急停流</td>
-                    <td><button class="btn btn-text btn-small" type="button" data-open-route="历史账单下载" data-route-status="已停流">查看</button></td>
-                  </tr>
-                  <tr class="empty-row" hidden><td colspan="8">未找到符合条件的运行项。</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="pagination"><span>共 6 条</span><button class="page-square" type="button" disabled aria-label="上一页">‹</button><button class="page-square active" type="button">1</button><button class="page-square" type="button" disabled aria-label="下一页">›</button></div>
-          </article>
-
-          <div class="grid-2">
-            <article class="panel">
-              <div class="panel-head"><h2 class="panel-title">失败请求 Top 5</h2><span class="panel-extra">近 15 分钟</span></div>
-              <ol class="ranking-list">
-                <li class="ranking-item"><span class="rank top">1</span><button class="btn btn-text ranking-content" type="button" data-open-route="客户画像查询" data-route-status="异常"><span class="ranking-title">客户画像查询</span><span class="ranking-meta">失败 1,286 次</span></button><div class="bar-track"><div class="bar-fill danger" style="width:92%"></div></div></li>
-                <li class="ranking-item"><span class="rank top">2</span><button class="btn btn-text ranking-content" type="button" data-open-route="智能问答服务" data-route-status="降级"><span class="ranking-title">智能问答服务</span><span class="ranking-meta">失败 148 次</span></button><div class="bar-track"><div class="bar-fill danger" style="width:48%"></div></div></li>
-                <li class="ranking-item"><span class="rank">3</span><div class="ranking-content"><div class="ranking-title">订单明细查询</div><div class="ranking-meta">失败 82 次</div></div><div class="bar-track"><div class="bar-fill danger" style="width:28%"></div></div></li>
-                <li class="ranking-item"><span class="rank">4</span><div class="ranking-content"><div class="ranking-title">产品推荐模型</div><div class="ranking-meta">失败 36 次</div></div><div class="bar-track"><div class="bar-fill danger" style="width:18%"></div></div></li>
-                <li class="ranking-item"><span class="rank">5</span><div class="ranking-content"><div class="ranking-title">客户信息查询</div><div class="ranking-meta">失败 21 次</div></div><div class="bar-track"><div class="bar-fill danger" style="width:10%"></div></div></li>
-              </ol>
-            </article>
-            <article class="panel">
-              <div class="panel-head"><h2 class="panel-title">慢响应 Top 5</h2><span class="panel-extra">P95</span></div>
-              <ol class="ranking-list">
-                <li class="ranking-item"><span class="rank top">1</span><button class="btn btn-text ranking-content" type="button" data-open-route="客户画像查询" data-route-status="异常"><span class="ranking-title">客户画像查询</span><span class="ranking-meta">2,486 ms</span></button><div class="bar-track"><div class="bar-fill" style="width:96%"></div></div></li>
-                <li class="ranking-item"><span class="rank top">2</span><button class="btn btn-text ranking-content" type="button" data-open-route="智能问答服务" data-route-status="降级"><span class="ranking-title">智能问答服务</span><span class="ranking-meta">1,260 ms</span></button><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div></li>
-                <li class="ranking-item"><span class="rank">3</span><div class="ranking-content"><div class="ranking-title">产品推荐模型</div><div class="ranking-meta">426 ms</div></div><div class="bar-track"><div class="bar-fill" style="width:34%"></div></div></li>
-                <li class="ranking-item"><span class="rank">4</span><div class="ranking-content"><div class="ranking-title">订单明细查询</div><div class="ranking-meta">184 ms</div></div><div class="bar-track"><div class="bar-fill" style="width:22%"></div></div></li>
-                <li class="ranking-item"><span class="rank">5</span><div class="ranking-content"><div class="ranking-title">客户信息查询</div><div class="ranking-meta">92 ms</div></div><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div></li>
-              </ol>
-            </article>
-          </div>
+        <section class="page-section runtime-layout" data-page-section="routes" hidden>
+          <aside class="runtime-directory panel" aria-label="运行实例目录">
+            <h2 class="panel-title">实例目录</h2>
+            <nav id="runtime-directory" aria-label="选择实例"></nav>
+          </aside>
+          <div class="runtime-main" id="runtime-dashboard"></div>
         </section>
         <section class="page-section stack" data-page-section="policies" hidden>
           <div class="filter-bar">
@@ -1107,82 +1040,21 @@
             <div class="pagination"><span>共 5 条</span><button class="page-square" type="button" disabled aria-label="上一页">‹</button><button class="page-square active" type="button">1</button><button class="page-square" type="button" disabled aria-label="下一页">›</button></div>
           </article>
         </section>
-        <section class="page-section stack" data-page-section="monitoring" hidden>
-          <div class="filter-bar">
-            <div class="filter-field">
-              <span class="filter-label">时间范围</span>
-              <div class="quick-ranges" role="group" aria-label="监控时间范围">
-                <button class="quick-range active" type="button" data-range="近 15 分钟">15 分钟</button>
-                <button class="quick-range" type="button" data-range="近 1 小时">1 小时</button>
-                <button class="quick-range" type="button" data-range="近 24 小时">24 小时</button>
+        <section class="page-section runtime-layout inspection-layout" data-page-section="monitoring" hidden>
+          <aside class="panel inspection-directory" aria-label="数据应用分类导航">
+            <div class="inspection-directory-head">
+              <div class="inspection-directory-title">
+                <h2 class="panel-title" id="inspection-directory-heading">应用目录</h2>
+                <div class="inspection-search-panel" id="inspection-search-panel" hidden>
+                  <label class="sr-only" for="inspection-query">应用或服务名称</label>
+                  <input class="input" id="inspection-query" type="search" placeholder="输入应用或服务名称">
+                </div>
+                <button class="btn btn-text inspection-search-toggle" id="inspection-search-toggle" type="button" data-inspection-search-toggle aria-label="展开名称查询" aria-expanded="false" aria-controls="inspection-search-panel" title="展开名称查询"><svg class="icon" aria-hidden="true"><use id="inspection-search-icon" href="#i-search"></use></svg></button>
               </div>
             </div>
-            <div class="filter-field">
-              <label class="filter-label" for="monitor-app">数据应用</label>
-              <select class="select" id="monitor-app" data-filter-select="monitor-table" data-filter-key="app"><option value="">全部数据应用</option><option>客户服务门户</option><option>经营分析助手</option><option>账单交付任务</option></select>
-            </div>
-            <div class="filter-field">
-              <label class="filter-label" for="monitor-type">能力类型</label>
-              <select class="select" id="monitor-type" data-filter-select="monitor-table" data-filter-key="category"><option value="">全部类型</option><option>API</option><option>模型</option><option>Agent</option><option>Worker</option></select>
-            </div>
-            <div class="filter-field">
-              <label class="filter-label" for="monitor-status">运行状态</label>
-              <select class="select" id="monitor-status" data-filter-select="monitor-table" data-filter-key="status"><option value="">全部状态</option><option>正常</option><option>降级</option><option>异常</option><option>无数据</option></select>
-            </div>
-            <div class="filter-field grow">
-              <label class="filter-label" for="monitor-search">服务产品</label>
-              <input class="input" id="monitor-search" type="search" placeholder="输入服务产品名称" data-filter-input="monitor-table">
-            </div>
-            <button class="btn" type="button" data-reset-filters="monitor-table">重置</button>
-          </div>
-
-          <div class="metric-grid">
-            <article class="metric-card"><div class="metric-label">正常服务</div><div class="metric-value">18</div><div class="metric-note">共 20 个服务</div></article>
-            <article class="metric-card"><div class="metric-label">异常服务</div><div class="metric-value">2</div><div class="metric-note metric-trend danger">1 个持续异常</div></article>
-            <article class="metric-card"><div class="metric-label">成功率</div><div class="metric-value numeric">99.72%</div><div class="metric-note">当前筛选范围</div></article>
-            <article class="metric-card"><div class="metric-label">P95</div><div class="metric-value numeric">286 ms</div><div class="metric-note metric-trend warning">环比 +32 ms</div></article>
-          </div>
-
-          <div class="grid-2">
-            <article class="panel">
-              <div class="panel-head"><h2 class="panel-title">请求量趋势</h2><span class="panel-extra" data-range-label>近 15 分钟</span></div>
-              <svg class="chart compact" viewBox="0 0 500 150" role="img" aria-label="请求量趋势">
-                <path class="chart-grid" d="M36 20H480M36 60H480M36 100H480M36 140H480"/>
-                <path class="chart-area" d="M36 122 L84 110 L132 116 L180 84 L228 92 L276 58 L324 68 L372 42 L420 54 L480 30 L480 140 L36 140Z"/>
-                <path class="chart-primary" d="M36 122 L84 110 L132 116 L180 84 L228 92 L276 58 L324 68 L372 42 L420 54 L480 30"/>
-                <text class="chart-label" x="36" y="149">开始</text><text class="chart-label" x="450" y="149">当前</text>
-              </svg>
-            </article>
-            <article class="panel">
-              <div class="panel-head"><div><h2 class="panel-title">成功率与错误率</h2><div class="chart-legend"><span class="legend-item"><span class="legend-line success"></span>成功率</span><span class="legend-item"><span class="legend-line danger"></span>错误率</span></div></div><span class="panel-extra" data-range-label>近 15 分钟</span></div>
-              <svg class="chart compact" viewBox="0 0 500 150" role="img" aria-label="成功率与错误率趋势">
-                <path class="chart-grid" d="M36 20H480M36 60H480M36 100H480M36 140H480"/>
-                <path class="chart-secondary" d="M36 34 L84 32 L132 36 L180 31 L228 34 L276 30 L324 52 L372 42 L420 36 L480 34"/>
-                <path class="chart-danger" d="M36 130 L84 132 L132 128 L180 133 L228 130 L276 134 L324 112 L372 122 L420 128 L480 130"/>
-                <text class="chart-label" x="36" y="149">开始</text><text class="chart-label" x="450" y="149">当前</text>
-              </svg>
-            </article>
-          </div>
-
-          <article class="table-card" id="monitor-table">
-            <div class="table-toolbar"><h2 class="table-title">服务健康清单</h2><span class="panel-extra">固定版本随服务显示</span></div>
-            <div class="table-scroll">
-              <table>
-                <caption class="sr-only">服务健康清单</caption>
-                <thead><tr><th scope="col">服务产品</th><th scope="col">能力类型</th><th scope="col">运行状态</th><th scope="col">QPS</th><th scope="col">成功率</th><th scope="col">错误率</th><th scope="col">P95</th><th scope="col">AI 健康</th><th scope="col">操作</th></tr></thead>
-                <tbody>
-                  <tr data-filter-row data-app="客户服务门户" data-category="API" data-status="正常"><td><div class="cell-main">客户信息查询</div><div class="cell-sub">版本 3.2</div></td><td>API</td><td><span class="status status-success">正常</span></td><td>128.4</td><td>99.98%</td><td>0.02%</td><td>92 ms</td><td>—</td><td><button class="btn btn-text btn-small" type="button" data-open-monitor="客户信息查询" data-monitor-status="正常" data-monitor-type="API">查看</button></td></tr>
-                  <tr data-filter-row data-app="客户服务门户" data-category="API" data-status="正常"><td><div class="cell-main">订单明细查询</div><div class="cell-sub">版本 2.4</div></td><td>API</td><td><span class="status status-success">正常</span></td><td>96.7</td><td>99.91%</td><td>0.09%</td><td>184 ms</td><td>—</td><td><button class="btn btn-text btn-small" type="button" data-open-monitor="订单明细查询" data-monitor-status="正常" data-monitor-type="API">查看</button></td></tr>
-                  <tr data-filter-row data-app="经营分析助手" data-category="模型" data-status="正常"><td><div class="cell-main">产品推荐模型</div><div class="cell-sub">版本 1.8</div></td><td>模型</td><td><span class="status status-success">正常</span></td><td>61.2</td><td>99.84%</td><td>0.16%</td><td>426 ms</td><td>首 Token 186 ms</td><td><button class="btn btn-text btn-small" type="button" data-open-monitor="产品推荐模型" data-monitor-status="正常" data-monitor-type="模型">查看</button></td></tr>
-                  <tr data-filter-row data-app="经营分析助手" data-category="Agent" data-status="降级"><td><div class="cell-main">智能问答服务</div><div class="cell-sub">版本 2.1</div></td><td>Agent</td><td><span class="status status-warning">降级</span></td><td>48.9</td><td>98.72%</td><td>1.28%</td><td>1,260 ms</td><td>降级 18 次</td><td><button class="btn btn-text btn-small" type="button" data-open-monitor="智能问答服务" data-monitor-status="降级" data-monitor-type="Agent">查看</button></td></tr>
-                  <tr data-filter-row data-app="客户服务门户" data-category="API" data-status="异常"><td><div class="cell-main">客户画像查询</div><div class="cell-sub">版本 1.3</div></td><td>API</td><td><span class="status status-danger">异常</span></td><td>31.6</td><td>91.28%</td><td>8.72%</td><td>2,486 ms</td><td>—</td><td><button class="btn btn-text btn-small" type="button" data-open-monitor="客户画像查询" data-monitor-status="异常" data-monitor-type="API">查看</button></td></tr>
-                  <tr data-filter-row data-app="账单交付任务" data-category="Worker" data-status="无数据"><td><div class="cell-main">账单交付任务</div><div class="cell-sub">版本 1.1</div></td><td>Worker</td><td><span class="status status-neutral">无数据</span></td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td><button class="btn btn-text btn-small" type="button" data-open-monitor="账单交付任务" data-monitor-status="无数据" data-monitor-type="Worker">查看</button></td></tr>
-                  <tr class="empty-row" hidden><td colspan="9">未找到符合条件的服务。</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="pagination"><span>共 6 条</span><button class="page-square" type="button" disabled aria-label="上一页">‹</button><button class="page-square active" type="button">1</button><button class="page-square" type="button" disabled aria-label="下一页">›</button></div>
-          </article>
+            <nav class="inspection-tree" id="inspection-tree" aria-label="选择数据应用"></nav>
+          </aside>
+          <div class="runtime-main" id="inspection-dashboard"></div>
         </section>
         <section class="page-section stack" data-page-section="events" hidden>
           <div class="metric-grid">
@@ -1309,13 +1181,684 @@
 
       var pageMeta = {
         overview: ["网关概览", "查看数据服务整体健康状态与网关访问摘要。"],
-        routes: ["注册与路由", "查看网关承载的服务注册、路由与实时访问状态。"],
+        routes: ["运行情况", "按实例查看运行指标、服务状态与最近异常。"],
         policies: ["策略管理", "管理网关策略，并查看审批通过后的自动分配结果。"],
         releases: ["配置发布", "汇总路由与策略变更，提交审批并查看发布结果。"],
-        monitoring: ["运行监控", "以数据应用和服务产品为范围，关注数据服务是否正常。"],
+        monitoring: ["服务运监", "按应用分类查看运行状态，并按服务类型检查关键指标。"],
         events: ["异常事件", "查看影响数据服务运行的持续异常与恢复结果。"],
         audit: ["审计日志", "统一查看管理操作、系统运行日志、外部数据调用与中台数据加工留痕。"]
       };
+
+      // Offline fixtures share one source for the overview, instance views and drawers.
+      // P95 is a separate aggregate observation, never an average of service percentiles.
+      var runtimeServices = [
+        { name: "客户信息查询", instance: "gateway-api", endpoint: "service-customer:8080", protocol: "HTTP", status: "正常", qps: 128.4, upstream: 128.3, success: 99.98, p95: 92, failures: 23, exception: "—", route: "/api/customers", app: "客户服务门户", version: "v1.2" },
+        { name: "订单明细查询", instance: "gateway-api", endpoint: "service-order:8080", protocol: "HTTP", status: "正常", qps: 96.7, upstream: 96.5, success: 99.91, p95: 184, failures: 78, exception: "12:58 已恢复", route: "/api/orders", app: "订单分析应用", version: "v2.1" },
+        { name: "产品推荐模型", instance: "gateway-ai", endpoint: "model-recommend:443", protocol: "模型推理", status: "正常", qps: 61.2, upstream: 61.0, success: 99.84, p95: 426, failures: 88, exception: "—", route: "/ai/recommend", app: "产品推荐应用", version: "v1.3" },
+        { name: "智能问答服务", instance: "gateway-ai", endpoint: "agent-assistant:443", protocol: "Agent", status: "降级", qps: 48.9, upstream: 47.7, success: 98.72, p95: 1260, failures: 563, exception: "13:32 模型降级", route: "/ai/assistant", app: "经营分析助手", version: "v2.0" },
+        { name: "客户画像查询", instance: "gateway-api", endpoint: "service-profile:8090", protocol: "HTTP", status: "异常", qps: 31.6, upstream: 25.9, success: 91.28, p95: 2486, failures: 2480, exception: "13:41 成功率下降", route: "/api/profiles", app: "客户洞察应用", version: "v1.1" },
+        { name: "历史账单下载", instance: "gateway-task", endpoint: "worker-billing:9000", protocol: "任务执行", status: "已停流", qps: null, upstream: null, success: null, p95: null, failures: null, exception: "11:20 紧急停流", route: "/tasks/billing", app: "账单归档应用", version: "v1.0" }
+      ];
+      var runtimeGroups = [
+        { name: "网关", instances: [
+          { id: "gateway-api", name: "公共 API 入口", status: "异常", p95: 486, hint: "3 个服务 · 1 项异常", scope: "API、数据流", entry: "内网 / 外网", checked: "13:45:12" },
+          { id: "gateway-ai", name: "智能能力入口", status: "降级", p95: 986, hint: "2 个服务 · 1 项降级", scope: "模型、Agent、MCP", entry: "外网", checked: "13:45:08" },
+          { id: "gateway-task", name: "任务执行入口", status: "已停流", p95: null, hint: "1 个服务 · 已停流", scope: "Skill、Worker", entry: "内网", checked: "13:44:58" }
+        ] },
+        { name: "注册中心", instances: [{ id: "registry-main", name: "服务注册中心", status: "未知", hint: "暂无运行数据" }] },
+        { name: "AI 治理中心", instances: [{ id: "governance-main", name: "智能能力治理中心", status: "未知", hint: "暂无运行数据" }] },
+        { name: "沙箱", instances: [{ id: "sandbox-analysis", name: "经营分析助手沙箱", status: "未知", hint: "暂无运行数据" }] }
+      ];
+      var runtimeTrendSamples = {
+        "gateway-api": [190, 216, 205, 240, 230, 285, 270, 306, 299, 326],
+        "gateway-ai": [80, 91, 87, 104, 99, 121, 113, 131, 127, 148]
+      };
+      // Type-specific observations are offline fixtures, not connected collectors.
+      // Native inventories and adapter-derived interval events are kept separate.
+      var runtimeProfiles = {
+        "registry-main": {
+          type: "registry", status: "降级", checked: "13:45:12",
+          scope: "生产 / DEFAULT_GROUP", metadata: ["服务发现", "1 个注册目标不健康"],
+          records: [
+            { id: "reg-customer", name: "客户查询服务", targets: 3, healthy: 3, subscribers: 6, pushes: 400, failed: 0 },
+            { id: "reg-order", name: "订单查询服务", targets: 4, healthy: 3, subscribers: 5, pushes: 350, failed: 2 },
+            { id: "reg-model", name: "推荐推理服务", targets: 3, healthy: 3, subscribers: 4, pushes: 250, failed: 0 },
+            { id: "reg-agent", name: "分析助手服务", targets: 2, healthy: 2, subscribers: 3, pushes: 200, failed: 1 }
+          ],
+          trend: [{ total: 200, failed: 0 }, { total: 220, failed: 1 }, { total: 240, failed: 0 }, { total: 260, failed: 0 }, { total: 280, failed: 2 }],
+          events: [{ time: "13:43", title: "订单查询服务有 1 个注册目标不健康", detail: "健康检查未通过；请核对目标心跳与注册信息。", record: "reg-order" },
+            { time: "13:44", title: "订单查询服务推送失败 2 次", detail: "该服务本时段有 2 次推送失败；请核对订阅连接与重试结果。", record: "reg-order", failures: 2 },
+            { time: "13:44", title: "分析助手服务推送失败 1 次", detail: "该服务本时段有 1 次推送失败；请核对订阅连接与重试结果。", record: "reg-agent", failures: 1 }]
+        },
+        "governance-main": {
+          type: "governance", status: "降级", checked: "13:45:10",
+          scope: "生产 / 经营分析", metadata: ["Skill 资源与版本分发", "固定版本引用"],
+          records: [
+            { id: "skill-query", name: "数据查询", downloads: 860, requests: 80, failed: 0, versions: [{ version: "v1.2.0", status: "已上线" }, { version: "v1.3.0", status: "待审核" }] },
+            { id: "skill-chart", name: "图表生成", downloads: 640, requests: 70, failed: 2, versions: [{ version: "v2.0.1", status: "已上线" }, { version: "v1.9.0", status: "已下线" }] },
+            { id: "skill-report", name: "报告汇总", downloads: 390, requests: 50, failed: 0, versions: [{ version: "v1.1.0", status: "已上线" }] },
+            { id: "skill-export", name: "结果导出", downloads: 0, requests: 0, failed: 0, versions: [{ version: "v0.1.0", status: "草稿" }] }
+          ],
+          trend: [{ total: 28, failed: 0 }, { total: 35, failed: 0 }, { total: 42, failed: 1 }, { total: 45, failed: 0 }, { total: 50, failed: 1 }],
+          events: [{ time: "13:44", title: "图表生成版本包下载失败 2 次", detail: "对象存储下载超时；请核对分发通道与重试结果，尚未确认恢复。", record: "skill-chart" }]
+        },
+        "sandbox-analysis": {
+          type: "sandbox", status: "正常", checked: "13:45:18",
+          scope: "经营分析助手 × 生产", metadata: ["生命周期：运行中", "执行器就绪", "到期时间：14:30"],
+          records: [
+            { id: "exec-101", name: "读取分析数据", status: "成功", start: "13:31:00", end: "13:31:08", duration: 8, budget: 60 },
+            { id: "exec-102", name: "清洗数据", status: "成功", start: "13:34:00", end: "13:34:12", duration: 12, budget: 60 },
+            { id: "exec-103", name: "统计销售分布", status: "成功", start: "13:36:00", end: "13:36:20", duration: 20, budget: 60 },
+            { id: "exec-104", name: "生成趋势图", status: "成功", start: "13:38:00", end: "13:38:24", duration: 24, budget: 60 },
+            { id: "exec-105", name: "汇总分析报告", status: "成功", start: "13:40:00", end: "13:40:36", duration: 36, budget: 120 },
+            { id: "exec-106", name: "导出明细文件", status: "超时", start: "13:42:00", end: "13:44:00", duration: 120, budget: 120 },
+            { id: "exec-107", name: "生成补充图表", status: "运行中", start: "13:44:40", end: null, duration: null, budget: 60 },
+            { id: "exec-108", name: "核对报告结果", status: "运行中", start: "13:44:50", end: null, duration: null, budget: 60 }
+          ],
+          trend: [{ total: 1, failed: 0 }, { total: 1, failed: 0 }, { total: 2, failed: 0 }, { total: 1, failed: 0 }, { total: 1, failed: 1 }],
+          events: [{ time: "13:44", title: "导出明细文件执行超时", detail: "执行达到 120 秒上限并终止；沙箱执行器仍就绪。请检查任务输入规模。", record: "exec-106" }]
+        }
+      };
+
+      function getRuntimeProfile(id) {
+        var source = runtimeProfiles[id];
+        if (!source) return null;
+        var records = source.records;
+        var sum = function (key) { return records.reduce(function (total, item) { return total + item[key]; }, 0); };
+        var rate = function (total, failed) { return total ? ((total - failed) / total * 100).toFixed(2) + "%" : "—"; };
+        var card = function (label, value, note, help) { return { label: label, value: String(value), note: note, help: help }; };
+        var result = { type: source.type, status: source.status, checked: source.checked, scope: source.scope,
+          metadata: source.metadata, trend: source.trend, events: source.events };
+        if (source.type === "registry") {
+          result.cards = [
+            card("注册服务数", records.length, "当前快照", "按命名空间、分组和服务名去重；不等同于网关逻辑实例数。"),
+            card("健康注册目标", sum("healthy") + " / " + sum("targets"), "健康 / 已注册", "使用注册目标真实健康状态；healthy 与 enabled 不同，健康不代表必然被路由选中。"),
+            card("订阅关系数", sum("subscribers"), "当前快照", "按服务与订阅客户端关系去重；同一客户端订阅两个服务计两条。"),
+            card("推送成功率", rate(sum("pushes"), sum("failed")), "近 15 分钟", "成功推送次数 / 总推送次数。窗口内每次尝试单独计数；无推送时显示 —。")
+          ];
+          result.hint = records.length + " 个服务 · " + (sum("targets") - sum("healthy")) + " 个目标不健康";
+          result.objects = records.length + " 个服务";
+          result.tableTitle = "服务注册明细";
+          result.columns = ["服务名称", "健康 / 注册目标", "订阅关系", "推送 / 失败", "健康状态"];
+          result.rows = records.map(function (item) { return { id: item.id, name: item.name,
+            cells: [item.name, item.healthy + " / " + item.targets, String(item.subscribers), item.pushes + " / " + item.failed, item.healthy < item.targets ? "异常" : "正常"],
+            extra: [["服务分组", "DEFAULT_GROUP"], ["统计范围", "目标健康与订阅为当前快照；推送为近 15 分钟"], ["健康说明", "目标健康与是否启用分别采集；此处不推断流量可达性。"]] }; });
+          result.trendTitle = "服务变更推送次数"; result.failureTitle = "推送失败次数";
+          result.tableHelp = "推送列单位为次，统计近 15 分钟；目标健康状态不包含推送结果。";
+        } else if (source.type === "governance") {
+          var versions = records.reduce(function (all, item) { return all.concat(item.versions); }, []);
+          var online = versions.filter(function (item) { return item.status === "已上线"; }).length;
+          var reviewing = versions.filter(function (item) { return item.status === "待审核"; }).length;
+          result.cards = [
+            card("Skill 资源数", records.length, "当前快照", "按命名空间与资源名称去重；一个资源可有多个版本。"),
+            card("已上线版本", online, "当前快照", "版本生命周期为 online 的数量；上线不等同于调用方已获授权。"),
+            card("待审核版本", reviewing, "当前快照", "版本生命周期为 reviewing 的数量；待审核不作为运行异常。"),
+            card("下载成功率", rate(sum("requests"), sum("failed")), "近 15 分钟", "由分发适配器记录版本包实际传输结果，成功 / 全部已结束尝试；不是 Skill 执行成功率。")
+          ];
+          result.hint = records.length + " 个 Skill · " + online + " 个上线版本";
+          result.objects = records.length + " 个 Skill";
+          result.tableTitle = "Skill 版本与分发";
+          result.columns = ["Skill 名称", "已上线版本", "版本分布", "累计下载", "下载 / 失败"];
+          result.rows = records.map(function (item) { return { id: item.id, name: item.name,
+            cells: [item.name, item.versions.filter(function (v) { return v.status === "已上线"; }).map(function (v) { return v.version; }).join("、") || "—",
+              item.versions.map(function (v) { return v.status; }).join(" / "), item.downloads.toLocaleString("en-US"), item.requests + " / " + item.failed],
+            extra: [["全部固定版本", item.versions.map(function (v) { return v.version + " · " + v.status; }).join("；")],
+              ["统计范围", "累计下载来自资源元数据；下载 / 失败为近 15 分钟适配器观测"], ["分发说明", "引用固定版本；版本包下载成功不代表调用授权通过或执行成功。"]] }; });
+          result.trendTitle = "版本包下载次数"; result.failureTitle = "下载失败次数";
+          result.tableHelp = "累计下载为资源元数据快照；最后一列为近 15 分钟已结束下载尝试 / 失败次数，不从累计值直接推算。";
+        } else if (source.type === "sandbox") {
+          var ended = records.filter(function (item) { return item.end !== null && /^(成功|失败|超时)$/.test(item.status); });
+          var successful = ended.filter(function (item) { return item.status === "成功"; }).length;
+          var running = records.filter(function (item) { return item.status === "运行中"; }).length;
+          var timeouts = ended.filter(function (item) { return item.status === "超时"; }).length;
+          var durations = ended.map(function (item) { return item.duration; }).sort(function (a, b) { return a - b; });
+          var p95 = durations.length ? durations[Math.ceil(durations.length * 0.95) - 1] + " s" : "—";
+          result.cards = [
+            card("当前执行中", running, "当前快照", "按执行 ID 去重的未结束任务；不把连接数或执行上下文数当作并发任务数。"),
+            card("执行成功率", rate(ended.length, ended.length - successful), "已结束 " + ended.length + " 次", "统计近 15 分钟内结束的执行，成功 /（成功 + 失败 + 超时）；进行中、取消与未知结果不进入分母。"),
+            card("超时执行", timeouts, "近 15 分钟", "执行时限触发并终止的次数，属于失败子集；与沙箱生命周期到期不同。"),
+            card("P95 执行耗时", p95, "已结束 " + ended.length + " 次", "对窗口内已结束的成功、失败、超时执行时长取最近秩 P95；不是各任务 P95 的平均值。")
+          ];
+          result.hint = running + " 个执行中 · " + timeouts + " 次超时";
+          result.objects = records.length + " 次执行";
+          result.tableTitle = "执行记录";
+          result.columns = ["执行任务", "开始时间", "执行结果", "耗时（秒）", "时限（秒）"];
+          result.rows = records.slice().reverse().map(function (item) { return { id: item.id, name: item.name,
+            cells: [item.name, item.start, item.status, item.duration === null ? "—" : String(item.duration), String(item.budget)],
+            extra: [["执行 ID", item.id], ["结束时间", item.end || "—"], ["隔离范围", source.scope],
+              ["结果口径", "执行状态来自适配器事件；运行中不填充零耗时，不代表业务分析结果正确。"]] }; });
+          result.trendTitle = "结束执行次数"; result.failureTitle = "失败执行次数（含超时）";
+          result.tableHelp = "本示例展示当前执行中任务与近 15 分钟内结束的任务；当前沙箱生命周期运行中且执行器健康。";
+        } else return null;
+        return result;
+      }
+      var runtimeSelection = "all";
+      var runtimeQuery = "";
+      var runtimeStatus = "";
+
+      // Independent offline application observations, scoped by application + fixed service version.
+      // Application execution is not inferred by summing nested service calls.
+      var inspectionSamples = {
+        portal: { series: [3200, 3500, 3600, 3700, 4000], failed: [30, 40, 80, 60, 90], p95: 340 },
+        analysis: { series: [20, 22, 26, 24, 28], failed: [0, 1, 2, 1, 2], p95: 88, steps: 1320, tools: 420, running: 3, timeouts: 2 },
+        bridge: { series: [12, 14, 18, 16, 20], failed: [0, 0, 1, 0, 1], p95: 240, toolErrors: 1, transportErrors: 1, listCalls: 20,
+          tools: [["查询客户", 50, 1], ["查询订单", 30, 1]] },
+        sync: { series: [40, 42, 48, 50, 60], failed: [0, 1, 1, 0, 2], p95: 8.6, pending: 12, retried: 8, running: 4, oldest: 64, timeouts: 1 },
+        customer: { series: [1700, 1800, 1800, 1800, 1900], failed: [2, 4, 6, 3, 5], p95: 92 },
+        order: { series: [1000, 1200, 1200, 1250, 1350], failed: [1, 1, 3, 2, 3], p95: 184 },
+        profile: { series: [500, 500, 600, 650, 750], failed: [27, 35, 71, 55, 82], p95: 2486 },
+        model: { series: [180, 190, 210, 200, 220], failed: [2, 1, 3, 2, 2], p95: 426, firstToken: 186, input: 120000, output: 48000, fallback: 18, cached: 120,
+          tokens: [28000, 30000, 36000, 36000, 38000] },
+        analysisMcp: { series: [70, 75, 85, 90, 100], failed: [0, 0, 1, 1, 2], p95: 310, toolErrors: 3, transportErrors: 1, listCalls: 30,
+          tools: [["查询客户", 180, 1], ["查询订单", 240, 3]] },
+        chartSkill: { series: [15, 18, 20, 22, 25], failed: [0, 0, 0, 1, 1], p95: 12, scripts: 80 },
+        reportApi: { series: [10, 12, 10, 14, 14], failed: [0, 0, 0, 0, 0], p95: 120 },
+        stream: { series: [20000, 22000, 24000, 26000, 28000], failed: [0, 0, 2, 0, 0], p95: 1.2, lag: 340, lagSeries: [100, 140, 200, 280, 340], subscriptions: 2, checkpointAge: 8 }
+      };
+      var inspectionApps = [
+        { id: "portal", name: "客户服务门户", form: "普通客户端", mode: "外部运行", version: "v3.0", status: "异常", sample: "portal", source: "网关应用身份观测", event: "13:41 客户画像查询响应变慢" },
+        { id: "analysis", name: "经营分析助手", form: "Agent", mode: "平台托管", version: "v2.0", status: "降级", sample: "analysis", source: "应用运行时观测", event: "13:42 部分运行超时，已触发模型降级" },
+        { id: "bridge", name: "数据工具桥接", form: "MCP", mode: "外部运行", version: "v1.4", status: "降级", sample: "bridge", source: "已接入消费方观测适配器", event: "13:44 工具调用发生传输与执行错误" },
+        { id: "report", name: "自动报表脚本", form: "Skill", mode: "外部运行", version: "v1.1", status: "无数据", sample: null, source: "未接入执行观测", event: null },
+        { id: "billing", name: "账单交付任务", form: "Worker", mode: "外部运行", version: "v1.0", status: "无数据", sample: null, source: "未接入执行观测", event: null },
+        { id: "sync", name: "数据同步任务", form: "Worker", mode: "平台托管", version: "v2.2", status: "降级", sample: "sync", source: "任务运行时观测", event: "13:44 等待任务积压，部分任务重试" }
+      ];
+      var inspectionServices = [
+        { id: "portal-customer", app: "portal", name: "客户信息查询", type: "API", version: "v1.2", status: "正常", sample: "customer" },
+        { id: "portal-order", app: "portal", name: "订单明细查询", type: "API", version: "v2.1", status: "正常", sample: "order" },
+        { id: "portal-profile", app: "portal", name: "客户画像查询", type: "API", version: "v1.1", status: "异常", sample: "profile", event: "13:41 P95 响应时间升高至 2,486 ms" },
+        { id: "analysis-agent", app: "analysis", name: "智能问答服务", type: "Agent", version: "v2.0", status: "降级", sample: "analysis", event: "13:42 2 次运行超时" },
+        { id: "analysis-model", app: "analysis", name: "产品推荐模型", type: "模型", version: "v1.3", status: "正常", sample: "model" },
+        { id: "analysis-mcp", app: "analysis", name: "数据查询工具", type: "MCP", version: "v1.2", status: "降级", sample: "analysisMcp", event: "13:44 3 次工具执行错误、1 次传输错误" },
+        { id: "analysis-skill", app: "analysis", name: "图表生成", type: "Skill", version: "v2.0.1", status: "降级", sample: "chartSkill", event: "13:43 2 次脚本执行失败" },
+        { id: "bridge-mcp", app: "bridge", name: "数据查询工具", type: "MCP", version: "v1.2", status: "降级", sample: "bridge", event: "13:44 1 次工具执行错误、1 次传输错误" },
+        { id: "report-skill", app: "report", name: "报告汇总", type: "Skill", version: "v1.1.0", status: "无数据", sample: null },
+        { id: "report-api", app: "report", name: "报表数据查询", type: "API", version: "v1.0", status: "正常", sample: "reportApi" },
+        { id: "billing-worker", app: "billing", name: "账单交付任务", type: "Worker", version: "v1.0", status: "无数据", sample: null },
+        { id: "sync-worker", app: "sync", name: "增量同步任务", type: "Worker", version: "v2.0", status: "降级", sample: "sync", event: "13:44 当前 12 个任务待处理" },
+        { id: "sync-stream", app: "sync", name: "订单变更订阅", type: "数据流", version: "v1.0", status: "降级", sample: "stream", event: "13:44 消费积压升至 340 条" }
+      ];
+      var inspectionSelection = "all";
+      var inspectionQuery = "";
+      var inspectionSearchOpen = false;
+      var inspectionCollapsed = {};
+
+      function inspectionProfile(type, sampleKey) {
+        var sample = inspectionSamples[sampleKey] || null;
+        var total = sample ? sample.series.reduce(function (a, b) { return a + b; }, 0) : null;
+        var failed = sample ? sample.failed.reduce(function (a, b) { return a + b; }, 0) : null;
+        var success = total ? ((total - failed) / total * 100).toFixed(2) + "%" : "—";
+        var value = function (key, unit) { return sample && sample[key] != null ? sample[key].toLocaleString("en-US") + (unit || "") : "—"; };
+        var number = function (count) { return count === null ? "—" : count.toLocaleString("en-US"); };
+        var metric = function (label, val, help, note) { return { label: label, value: String(val), help: help, note: note || "近 15 分钟" }; };
+        var result = { sample: sample, total: total, failed: failed, cards: [], supplement: [], title: "", secondary: "失败次数", secondaryUnit: "次", unit: "次" };
+        if (type === "普通客户端" || type === "API") {
+          result.cards = [metric("请求量", number(total), "按数据应用身份归属的已结束请求；不混入其他应用或服务版本。"),
+            metric("请求成功率", success, "成功请求 / 全部已结束请求；无请求时显示 —。"),
+            metric("P95 响应时间", value("p95", " ms"), "来自该范围的独立延迟分布；不平均多个服务的 P95。"),
+            metric("错误请求", number(failed), "包含传输和服务错误，按请求 ID 去重。")];
+          result.title = "请求量趋势";
+        } else if (type === "Agent") {
+          result.cards = [metric("运行完成数", number(total), "按运行 ID 统计窗口内结束的运行；不是 HTTP 请求数。"),
+            metric("运行成功率", success, "成功结束 /（成功 + 失败 + 超时）；进行中、取消和未知终态不进入分母。"),
+            metric("平均执行步骤", total ? (sample.steps / total).toFixed(1) + " 步" : "—", "已结束运行的步骤总数 / 已结束运行数，不把工具调用等同于执行步骤。"),
+            metric("工具调用次数", value("tools"), "对应已结束运行内的工具调用次数，包括失败尝试。")];
+          result.title = "结束运行趋势"; result.secondary = "失败运行次数";
+          result.supplement = [["当前执行中", value("running", " 个")], ["运行超时", value("timeouts", " 次")], ["P95 运行耗时", value("p95", " s")]];
+        } else if (type === "MCP") {
+          result.cards = [metric("工具调用次数", number(total), "只统计已结束 tools/call；tools/list 等方法单独统计。"),
+            metric("工具调用成功率", success, "传输失败、JSON-RPC 错误及结果 isError=true 都是失败；按调用 ID 去重，不能仅看 HTTP 200。"),
+            metric("工具执行错误", value("toolErrors"), "仅统计返回 isError=true 的工具结果；与传输/协议错误互斥归类。"),
+            metric("P95 工具耗时", value("p95", " ms"), "从发起工具调用到终态；异步调用需要等待最终工具结果。")];
+          result.title = "工具调用趋势"; result.secondary = "失败工具调用";
+          result.supplement = [["传输 / 协议错误", value("transportErrors", " 次")], ["工具发现请求", value("listCalls", " 次")]];
+        } else if (type === "Skill") {
+          result.cards = [metric("Skill 激活", number(total), "由执行端上报激活事件；下载包或读取说明不等于激活。"),
+            metric("脚本执行", value("scripts"), "由受管运行时上报已结束脚本执行；外部执行不可由网关请求推断。"),
+            metric("脚本失败", number(failed), "脚本执行错误或超时；外部运行未接入观测时保持未知。"),
+            metric("P95 脚本耗时", value("p95", " s"), "从已结束脚本时长分布汇总，不使用版本下载耗时。")];
+          result.title = "Skill 激活趋势"; result.secondary = "脚本失败次数";
+        } else if (type === "Worker") {
+          result.cards = [metric("任务完成数", number(total), "按逻辑任务 ID 统计已结束任务；重试不重复增加逻辑任务数。"),
+            metric("任务成功率", success, "成功终态 /（成功 + 失败 + 超时终态）；排队与执行中不计入。"),
+            metric("待处理任务", value("pending"), "当前排队快照，不与窗口完成量相加。", "当前快照"),
+            metric("重试次数", value("retried"), "执行尝试的重试次数，与逻辑任务完成数分别计量。")];
+          result.title = "任务完成趋势"; result.secondary = "失败任务次数";
+          result.supplement = [["当前执行中", value("running", " 个")], ["最久等待时间", value("oldest", " s")], ["P95 任务耗时", value("p95", " s")], ["超时任务", value("timeouts", " 个")]];
+        } else if (type === "模型") {
+          result.cards = [metric("输入 Token", value("input"), "模型返回或适配器确认的输入 Token，不把缺失用量当零。"),
+            metric("输出 Token", value("output"), "模型返回或适配器确认的输出 Token；与输入分别展示。"),
+            metric("首 Token P95", value("firstToken", " ms"), "只统计流式请求，发起请求至首 Token 的时间分布；非流式不适用。"),
+            metric("请求成功率", success, "以模型请求终态判断，流中途失败也算失败。")];
+          result.title = "模型请求趋势"; result.secondary = "Token 消耗趋势"; result.secondaryUnit = "Token";
+          result.supplement = [["模型请求量", number(total)], ["失败请求", number(failed)], ["候选模型降级", value("fallback", " 次")], ["缓存命中", value("cached", " 次")], ["P95 完整响应", value("p95", " ms")]];
+        } else if (type === "数据流") {
+          result.cards = [metric("消费消息", number(total), "按订阅方确认消费的业务消息计量；不等同于 TCP 字节数。"),
+            metric("平均消费速率", total === null ? "—" : (total / 900).toFixed(1) + " 条/s", "同一 15 分钟窗口的确认消费量 / 900 秒。"),
+            metric("消费积压", value("lag", " 条"), "当前订阅范围尚未消费的消息；与窗口消费量分开。", "当前快照"),
+            metric("P95 交付延迟", value("p95", " s"), "消息可消费至订阅方确认的时长分布；不是请求响应延迟。")];
+          result.title = "消息消费趋势"; result.unit = "条"; result.secondary = "消费积压趋势"; result.secondaryUnit = "条";
+          result.supplement = [["活跃订阅", value("subscriptions", " 个")], ["最近检查点距今", value("checkpointAge", " s")], ["失败交付尝试", number(failed)]];
+        }
+        return result;
+      }
+
+      function inspectionMatches() {
+        var query = inspectionQuery.trim().toLowerCase();
+        return inspectionApps.map(function (app) {
+          var appMatch = app.name.toLowerCase().indexOf(query) !== -1;
+          var services = inspectionServices.filter(function (service) {
+            return service.app === app.id && (!query || appMatch || service.name.toLowerCase().indexOf(query) !== -1);
+          });
+          return { app: app, services: services };
+        }).filter(function (item) { return item.services.length > 0 || !query || item.app.name.toLowerCase().indexOf(query) !== -1; });
+      }
+
+      function getInspectionView(selection) {
+        var matches = inspectionMatches();
+        var services = matches.reduce(function (all, item) { return all.concat(item.services); }, []);
+        if (selection === "all") return { name: "应用运行总览", matches: matches, services: services, scope: "all" };
+        if (selection.indexOf("app:") === 0) {
+          var item = matches.find(function (match) { return match.app.id === selection.slice(4); });
+          return item ? { name: item.app.name, app: item.app, matches: [item], services: item.services, scope: "app", profile: inspectionProfile(item.app.form, item.app.sample) } : null;
+        }
+        if (selection.indexOf("service:") === 0) {
+          var service = services.find(function (item) { return item.id === selection.slice(8); });
+          var app = service && inspectionApps.find(function (item) { return item.id === service.app; });
+          return service ? { name: service.name, app: app, service: service, services: [service], scope: "service", profile: inspectionProfile(service.type, service.sample) } : null;
+        }
+        return null;
+      }
+
+      function inspectionChoice(id, name, meta, className) {
+        var selected = getInspectionView(inspectionSelection);
+        var current = Boolean(inspectionSelection === id || (selected && selected.app && id === "app:" + selected.app.id));
+        return '<button class="runtime-choice ' + (className || '') + '" type="button" data-inspection-select="' + escapeHtml(id) + '" aria-current="' + current +
+          '"><span class="runtime-choice-name">' + escapeHtml(name) + '</span><span class="runtime-choice-meta">' + escapeHtml(meta) + '</span></button>';
+      }
+
+      function renderInspectionTree() {
+        var matches = inspectionMatches();
+        document.getElementById("inspection-directory-heading").hidden = inspectionSearchOpen;
+        document.getElementById("inspection-search-panel").hidden = !inspectionSearchOpen;
+        document.getElementById("inspection-search-toggle").setAttribute("aria-expanded", String(inspectionSearchOpen));
+        document.getElementById("inspection-search-toggle").setAttribute("aria-label", inspectionSearchOpen ? "收起并清除名称查询" : "展开名称查询");
+        document.getElementById("inspection-search-toggle").setAttribute("title", inspectionSearchOpen ? "收起并清除名称查询" : "展开名称查询");
+        document.getElementById("inspection-search-icon").setAttribute("href", inspectionSearchOpen ? "#i-close" : "#i-search");
+        var tree = inspectionChoice("all", "总览", matches.length + " 个应用" + (inspectionQuery ? " · 名称查询结果" : " · 全部应用"));
+        ["普通客户端", "Agent", "MCP", "Skill", "Worker"].forEach(function (form) {
+          var group = matches.filter(function (item) { return item.app.form === form; });
+          if (!group.length) return;
+          tree += '<details class="runtime-group" data-inspection-group="' + form + '"' + (!inspectionCollapsed[form] ? ' open' : '') + '><summary>' + form + '<span class="runtime-group-count">' + group.length + '</span></summary>' +
+            group.map(function (item) {
+              var app = item.app;
+              return inspectionChoice("app:" + app.id, app.name, app.mode + " · " + app.status);
+            }).join("") + '</details>';
+        });
+        document.getElementById("inspection-tree").innerHTML = tree;
+      }
+
+      function renderInspectionChart(values, title, unit, danger, snapshot) {
+        if (!values || !values.length) return '<article class="panel"><h3 class="panel-title">' + escapeHtml(title) + '</h3><div class="runtime-empty">暂无趋势数据</div></article>';
+        var max = Math.max.apply(null, values) || 1;
+        var ticks = ["13:33", "13:36", "13:39", "13:42", "13:45"];
+        var path = values.map(function (value, index) { return (index ? "L" : "M") + (46 + index * 68) + " " + (142 - value / max * 108).toFixed(1); }).join(" ");
+        return '<article class="panel"><div class="panel-head"><h3 class="panel-title">' + escapeHtml(title) + '</h3><span class="panel-extra">' + unit + (snapshot ? ' · 时点快照' : ' / 3 分钟') + '</span></div>' +
+          '<svg class="chart" viewBox="0 0 360 180" role="img" aria-label="' + escapeHtml(title + '：' + values.join('、') + unit) + '"><path class="chart-grid" d="M46 34H328M46 88H328M46 142H328"/>' +
+          '<text class="chart-label" x="0" y="38">' + max.toLocaleString("en-US") + '</text><text class="chart-label" x="26" y="146">0</text><path class="' + (danger ? "chart-danger" : "chart-primary") + '" d="' + path + '"/>' +
+          values.map(function (value, index) { return '<circle cx="' + (46 + index * 68) + '" cy="' + (142 - value / max * 108).toFixed(1) + '" r="3" class="' + (danger ? 'runtime-bar-danger' : 'runtime-bar') + '"><title>' + ticks[index] + '：' + value + unit + '</title></circle><text class="chart-label" x="' + (46 + index * 68) + '" y="173" text-anchor="middle">' + ticks[index] + '</text>'; }).join("") + '</svg></article>';
+      }
+
+      function renderInspectionMetrics(profile, source) {
+        var cards = profile.cards.map(function (card) { return runtimeMetric(escapeHtml(card.label) + runtimeHelp(card.help), escapeHtml(card.value), escapeHtml(card.note)); }).join("");
+        var chart = '<div class="grid-2">' + renderInspectionChart(profile.sample && profile.sample.series, profile.title, profile.unit, false) +
+          renderInspectionChart(profile.sample && (profile.sample.tokens || profile.sample.lagSeries || profile.sample.failed), profile.secondary, profile.secondaryUnit, !profile.sample || (!profile.sample.tokens && !profile.sample.lagSeries), profile.sample && profile.sample.lagSeries) + '</div>';
+        var supplement = profile.supplement.length ? '<article class="panel"><h3 class="inspection-section-title">运行补充信息</h3><div class="inspection-supplement">' +
+          profile.supplement.map(function (item) { return detailItem(item[0], escapeHtml(item[1])); }).join("") + '</div></article>' : '';
+        return '<section data-inspection-metrics><div class="metric-grid runtime-profile">' + cards + '</div></section>' +
+          (!profile.sample ? '<div class="inline-alert">暂无运行观测 · ' + escapeHtml(source) + '。平台侧服务调用可单独查看，不据此推断外部执行结果。</div>' : '') + chart + supplement;
+      }
+
+      function renderInspectionTable(services) {
+        return '<article class="table-card"><div class="table-toolbar"><h3 class="table-title">服务运行清单</h3><span class="panel-extra">' + services.length + ' 项应用服务引用</span></div>' +
+          '<div class="table-scroll"><table class="inspection-table"><caption class="sr-only">按应用和固定服务版本隔离的运行清单</caption><thead><tr>' +
+          ["服务 / 固定版本", "数据应用", "类型", "运行状态", "类型指标", "操作"].map(function (text) { return '<th scope="col">' + text + '</th>'; }).join("") +
+          '</tr></thead><tbody>' + services.map(function (service) {
+            var app = inspectionApps.find(function (item) { return item.id === service.app; });
+            var profile = inspectionProfile(service.type, service.sample);
+            return '<tr><td><div class="cell-main">' + escapeHtml(service.name) + '</div><div class="cell-sub">' + escapeHtml(service.version) + '</div></td><td>' + escapeHtml(app.name) +
+              '</td><td>' + service.type + '</td><td>' + statusChip(service.status) + '</td><td><div>' + profile.cards[0].label + ' ' + profile.cards[0].value + '</div><div class="cell-sub">' + profile.cards[1].label + ' ' + profile.cards[1].value +
+              '</div></td><td><button class="btn btn-text btn-small" type="button" data-inspection-select="service:' + service.id + '">查看运行</button></td></tr>';
+          }).join("") + '</tbody></table></div><div class="pagination">已显示全部 ' + services.length + ' 项</div></article>';
+      }
+
+      function renderInspectionMcp(profile) {
+        if (!profile.sample || !profile.sample.tools) return "";
+        return '<div class="grid-2"><article class="panel"><h3 class="inspection-section-title">Method 分布</h3>' +
+          '<div class="detail-row"><span>tools/call</span><span>' + profile.total + ' 次</span></div><div class="detail-row"><span>tools/list</span><span>' + profile.sample.listCalls + ' 次</span></div></article>' +
+          '<article class="table-card"><div class="table-toolbar"><h3 class="table-title">工具调用明细</h3></div><div class="table-scroll"><table><caption class="sr-only">工具调用次数与失败次数</caption><thead><tr><th scope="col">工具</th><th scope="col">调用</th><th scope="col">失败</th></tr></thead><tbody>' +
+          profile.sample.tools.map(function (row) { return '<tr><td>' + escapeHtml(row[0]) + '</td><td>' + row[1] + '</td><td>' + row[2] + '</td></tr>'; }).join("") + '</tbody></table></div></article></div>';
+      }
+
+      function renderInspection() {
+        var view = getInspectionView(inspectionSelection);
+        if (!view) { inspectionSelection = "all"; view = getInspectionView("all"); }
+        renderInspectionTree();
+        var root = document.getElementById("inspection-dashboard");
+        if (!view.services.length && (!view.matches || !view.matches.length)) {
+          root.innerHTML = '<section class="panel runtime-empty"><h2 class="panel-title">没有符合条件的应用或服务</h2><p>请调整应用或服务名称后重试。</p><button class="btn" type="button" data-inspection-reset>清除名称查询</button></section>';
+          return;
+        }
+        var sampleLabel = '<div class="runtime-coverage"><span>示例数据 · 08-28 13:30–13:45</span><span>当前环境：生产</span></div>';
+        if (view.scope === "all") {
+          var apps = view.matches.map(function (item) { return item.app; });
+          var heading = '<div class="runtime-heading"><div><h2>应用运行总览</h2><p>按应用消费形态查看运行，不合并不同类型的执行指标。</p></div>' + statusChip("原型示例") + '</div>';
+          var summary = '<div class="metric-grid">' + runtimeMetric("匹配应用", apps.length, "当前筛选范围") +
+            runtimeMetric("异常 / 降级应用", apps.filter(function (app) { return /^(异常|降级)$/.test(app.status); }).length, "应用自身观测状态") +
+            runtimeMetric("服务引用", view.services.length, "按应用与固定版本区分") +
+            runtimeMetric("缺少应用观测", apps.filter(function (app) { return !app.sample; }).length, "不推断为正常") + '</div>';
+          var cards = '<section><h3 class="inspection-section-title">应用运行情况</h3><div class="inspection-app-grid">' + view.matches.map(function (item) {
+            var app = item.app, profile = inspectionProfile(app.form, app.sample);
+            return '<article class="panel inspection-app-card"><div class="panel-head"><div><h3 class="panel-title">' + escapeHtml(app.name) + '</h3><div class="cell-sub">' + app.form + ' · ' + app.mode +
+              '</div></div>' + statusChip(app.status) + '</div><div class="inspection-card-metrics">' + profile.cards.slice(0, 2).map(function (card) { return '<div><span class="inspection-metric-note">' + card.label + '</span><strong class="numeric">' + card.value + '</strong></div>'; }).join("") +
+              '</div><div class="inspection-card-footer"><span class="inspection-metric-note">' + item.services.length + ' 项匹配服务</span><button class="btn btn-small" type="button" data-inspection-select="app:' + app.id + '">查看应用</button></div></article>';
+          }).join("") + '</div></section>';
+          root.innerHTML = heading + sampleLabel + summary + cards + renderInspectionTable(view.services);
+          return;
+        }
+        var item = view.service || view.app;
+        var heading = '<div class="runtime-heading"><div><h2>' + escapeHtml(view.name) + '</h2><p>' +
+          (view.scope === "service" ? escapeHtml(view.app.name) + ' / ' + item.type + ' · 固定版本 ' + item.version : item.form + ' 应用 · ' + item.mode + ' · 应用版本 ' + item.version) +
+          '</p></div>' + statusChip(item.status) + '</div>';
+        var context = '<div class="inspection-toolbar"><span class="inspection-metric-note">' +
+          (view.scope === "app" ? escapeHtml(view.app.source) + ' · 应用自身指标，名称查询只影响下方清单' : '仅此数据应用的服务调用 · 不混入其他应用') +
+          '</span>' + (view.scope === "service" ? '<div class="inspection-actions"><button class="btn btn-text" type="button" data-inspection-select="app:' + view.app.id + '">返回应用</button><button class="btn" type="button" data-inspection-detail="' + item.id + '">查看详情</button></div>' : '') + '</div>';
+        var events = '<article class="panel"><h3 class="inspection-section-title">最近异常</h3>' +
+          (item.event ? '<div class="runtime-event">' + escapeHtml(item.event) + '</div>' : '<div class="runtime-empty">' + (view.profile.sample ? '该时段暂无异常记录' : '缺少观测数据，无法判断异常') + '</div>') + '</article>';
+        root.innerHTML = heading + sampleLabel + context + renderInspectionMetrics(view.profile, view.app.source) +
+          ((view.service ? view.service.type : view.app.form) === "MCP" ? renderInspectionMcp(view.profile) : '') +
+          (view.scope === "app" ? renderInspectionTable(view.services) : '') + events;
+      }
+
+      function selectInspection(id) {
+        var view = getInspectionView(id);
+        if (!view) return;
+        inspectionSelection = id;
+        if (view.app) inspectionCollapsed[view.app.form] = false;
+        closeDrawer();
+        renderInspection();
+        document.getElementById("inspection-dashboard").scrollTop = 0;
+      }
+
+      function filterInspection() {
+        closeDrawer();
+        if (!getInspectionView(inspectionSelection)) inspectionSelection = "all";
+        renderInspection();
+        document.getElementById("inspection-dashboard").scrollTop = 0;
+      }
+
+      function openInspectionDetail(id) {
+        var current = getInspectionView(inspectionSelection);
+        if (!current || !current.services.some(function (item) { return item.id === id; })) return;
+        var view = getInspectionView("service:" + id);
+        if (!view) return;
+        var service = view.service;
+        var body = detailSection("服务运监 · 示例数据", '<div class="detail-grid">' +
+          detailItem("数据应用", escapeHtml(view.app.name)) + detailItem("应用消费形态", view.app.form) +
+          detailItem("服务产品", escapeHtml(service.name)) + detailItem("固定版本", service.version) +
+          detailItem("服务类型", service.type) + detailItem("观测状态", statusChip(service.status)) + '</div>') +
+          detailSection("运行指标", '<div class="detail-grid">' + view.profile.cards.map(function (card) { return detailItem(card.label, escapeHtml(card.value) + '<div class="cell-sub">' + escapeHtml(card.note) + '</div>'); }).join("") + '</div>') +
+          detailSection("最近异常", escapeHtml(service.event || (view.profile.sample ? "该时段暂无异常记录" : "暂无运行观测，不能推断正常")));
+        openDrawer(service.name, body, '<button class="btn" type="button" data-close-drawer>关闭</button>');
+      }
+
+      function getRuntimeView(id) {
+        var instance = null;
+        var kind = "";
+        runtimeGroups.forEach(function (group) {
+          group.instances.forEach(function (item) {
+            if (item.id === id) { instance = item; kind = group.name; }
+          });
+        });
+        if (id !== "all" && !instance) return null;
+        var services = runtimeServices.filter(function (item) { return id === "all" || item.instance === id; });
+        var active = services.filter(function (item) { return item.qps !== null; });
+        var downstream = active.reduce(function (total, item) { return total + item.qps; }, 0);
+        var upstream = active.reduce(function (total, item) { return total + item.upstream; }, 0);
+        var successful = active.reduce(function (total, item) { return total + item.qps * item.success / 100; }, 0);
+        var trend = id === "all"
+          ? runtimeTrendSamples["gateway-api"].map(function (value, index) { return value + runtimeTrendSamples["gateway-ai"][index]; })
+          : (runtimeTrendSamples[id] || []);
+        var p95 = id === "all" ? 982 : instance.p95;
+        var profile = getRuntimeProfile(id);
+        return {
+          id: id, name: id === "all" ? "运行总览" : instance.name, kind: kind,
+          status: id === "all" ? "原型示例" : profile ? profile.status : instance.status, services: services,
+          profile: profile,
+          hasGatewayData: id === "all" || kind === "网关",
+          trend: trend, upstreamRatio: downstream ? upstream / downstream : 0,
+          metrics: {
+            downstream: active.length ? downstream.toFixed(1) : "—",
+            upstream: active.length ? upstream.toFixed(1) : "—",
+            success: downstream ? (successful / downstream * 100).toFixed(2) + "%" : "—",
+            p95: p95 == null ? "—" : p95.toLocaleString("en-US") + " ms"
+          }
+        };
+      }
+
+      function renderRuntimeDirectory() {
+        function choice(id, name, hint) {
+          return '<button class="runtime-choice" type="button" data-runtime-select="' + id + '" aria-current="' + (runtimeSelection === id) + '">' +
+            '<span class="runtime-choice-name">' + escapeHtml(name) + '</span><span class="runtime-choice-meta">' + escapeHtml(hint) + '</span></button>';
+        }
+        document.getElementById("runtime-directory").innerHTML =
+          choice("all", "总览", "全部实例 · 运行数据汇总") +
+          runtimeGroups.map(function (group, index) {
+            return '<details class="runtime-group" data-runtime-group="' + index + '"' + (group.expanded !== false ? ' open' : '') + '><summary>' + escapeHtml(group.name) +
+              '<span class="runtime-group-count">' + group.instances.length + '</span></summary>' +
+              group.instances.map(function (item) { var profile = getRuntimeProfile(item.id); return choice(item.id, item.name, profile ? profile.hint : item.hint); }).join("") + '</details>';
+          }).join("");
+      }
+
+      function renderRuntimeOverview() {
+        var all = getRuntimeView("all");
+        var normal = all.services.filter(function (item) { return item.status === "正常"; }).length;
+        var abnormal = all.services.filter(function (item) { return item.status === "异常" || item.status === "降级"; }).length;
+        var requests = all.services.reduce(function (total, item) { return total + (item.qps || 0) * 900; }, 0);
+        document.getElementById("runtime-overview-metrics").innerHTML =
+          runtimeMetric("正常服务", normal + " / " + all.services.length, "网关关联服务 · 示例") +
+          runtimeMetric("异常与降级服务", String(abnormal), "1 项异常 · 1 项降级") +
+          runtimeMetric("近 15 分钟请求量", Math.round(requests).toLocaleString("en-US"), "示例时段 13:30–13:45") +
+          runtimeMetric("请求成功率", all.metrics.success, "按请求量汇总 · 示例");
+        document.getElementById("runtime-overview-rows").innerHTML = runtimeGroups.map(function (group) {
+          return group.instances.map(function (item) {
+            var view = getRuntimeView(item.id);
+            return '<tr><td><div class="cell-main">' + escapeHtml(item.name) +
+              '</div></td><td>' + escapeHtml(group.name) + '</td><td>' + escapeHtml(item.scope || (view.profile ? view.profile.scope : "—")) +
+              '</td><td>' + escapeHtml(item.entry || "—") + '</td><td>' + statusChip(view.status) +
+              '</td><td>' + (view.hasGatewayData ? view.services.length + " 个服务" : view.profile ? view.profile.objects : "—") +
+              '</td><td class="numeric">' + (view.profile ? view.profile.checked : item.checked || "—") + '</td><td><button class="btn btn-text btn-small" type="button" data-open-gateway="' +
+              escapeHtml(item.name) + '" aria-label="查看' + escapeHtml(item.name) + '">查看</button></td></tr>';
+          }).join("");
+        }).join("");
+      }
+
+      function runtimeMetric(label, value, note) {
+        return '<article class="metric-card"><div class="metric-label">' + label + '</div><div class="metric-value numeric">' +
+          value + '</div><div class="metric-note">' + note + '</div></article>';
+      }
+
+      function renderRuntimeTrend(view) {
+        if (!view.trend.length) return '<div class="runtime-empty"><span>暂无趋势数据</span><p>' +
+          (view.status === "已停流" ? "该实例在示例统计时段内已停流。" : "当前原型尚未提供该类型的趋势数据。") + '</p></div>';
+        var max = Math.ceil(Math.max.apply(null, view.trend) / 50) * 50;
+        function line(ratio) {
+          return view.trend.map(function (value, index) {
+            return (index ? "L" : "M") + (48 + index * 600 / 9).toFixed(1) + " " + (148 - value * ratio / max * 128).toFixed(1);
+          }).join(" ");
+        }
+        return '<svg class="chart" viewBox="0 0 680 180" role="img" aria-label="' + escapeHtml(view.name) + '近15分钟上下游QPS示例趋势">' +
+          '<path class="chart-grid" d="M48 20H648M48 84H648M48 148H648"/>' +
+          '<text class="chart-label" x="4" y="24">' + max + '</text><text class="chart-label" x="4" y="88">' + max / 2 + '</text><text class="chart-label" x="4" y="152">0</text>' +
+          '<path class="chart-primary" d="' + line(1) + '"/><path class="chart-secondary" d="' + line(view.upstreamRatio) + '"/>' +
+          '<text class="chart-label" x="48" y="176">13:30</text><text class="chart-label" x="324" y="176">13:37</text><text class="chart-label" x="612" y="176">13:45</text></svg>';
+      }
+
+      function runtimeRows(services) {
+        if (!services.length) return '<tr><td colspan="8"><div class="runtime-empty">未找到符合条件的运行项。</div></td></tr>';
+        return services.map(function (item) {
+          return '<tr><td><div class="cell-main">' + escapeHtml(item.name) + '</div><div class="cell-sub">' + escapeHtml(item.endpoint) +
+            '</div></td><td>' + escapeHtml(item.protocol) + '</td><td>' + statusChip(item.status) + '</td><td class="numeric">' +
+            (item.qps === null ? "—" : item.qps.toFixed(1)) + '</td><td class="numeric">' +
+            (item.success === null ? "—" : item.success.toFixed(2) + "%") + '</td><td class="numeric">' +
+            (item.p95 === null ? "—" : item.p95.toLocaleString("en-US") + " ms") + '</td><td>' + escapeHtml(item.exception) +
+            '</td><td><button class="btn btn-text btn-small" type="button" data-open-route="' + escapeHtml(item.name) +
+            '" data-route-status="' + item.status + '" aria-label="查看' + escapeHtml(item.name) + '">查看</button></td></tr>';
+        }).join("");
+      }
+
+      function runtimeRanking(view, key) {
+        var ranked = view.services.filter(function (item) { return item[key] !== null; }).slice()
+          .sort(function (a, b) { return b[key] - a[key]; }).slice(0, 5);
+        var title = key === "failures" ? "失败请求 Top 5" : "慢响应 Top 5";
+        var content = ranked.length ? '<ol class="ranking-list">' + ranked.map(function (item, index) {
+          var value = key === "failures" ? "失败 " + item.failures.toLocaleString("en-US") + " 次" : item.p95.toLocaleString("en-US") + " ms";
+          var width = ranked[0][key] ? Math.round(item[key] / ranked[0][key] * 1000) / 10 : 0;
+          return '<li><button class="runtime-rank-button" type="button" data-open-route="' + escapeHtml(item.name) + '" data-route-status="' + item.status +
+            '"><span class="rank' + (index < 2 ? " top" : "") + '">' + (index + 1) + '</span><span class="ranking-content"><span class="ranking-title" title="' +
+            escapeHtml(item.name) + '">' + escapeHtml(item.name) + '</span><span class="ranking-meta numeric">' + value +
+            '</span></span><span class="bar-track" aria-hidden="true"><span class="bar-fill' + (key === "failures" ? " danger" : "") +
+            '" style="width:' + width + '%"></span></span></button></li>';
+        }).join("") + '</ol>' : '<div class="runtime-empty">暂无可排名数据</div>';
+        return '<article class="panel"><div class="panel-head"><h3 class="panel-title">' + title +
+          '</h3><span class="panel-extra">' + (key === "p95" ? "P95" : "近 15 分钟") + '</span></div>' + content + '</article>';
+      }
+
+      function runtimeHelp(text) {
+        return '<span class="runtime-help" tabindex="0" aria-label="' + escapeHtml(text) + '"><svg class="icon" aria-hidden="true"><use href="#i-help"></use></svg><span class="runtime-help-text" role="tooltip">' + escapeHtml(text) + '</span></span>';
+      }
+
+      function renderProfileCards(profile) {
+        return profile.cards.map(function (card) { return runtimeMetric(escapeHtml(card.label) + runtimeHelp(card.help), escapeHtml(card.value), escapeHtml(card.note)); }).join("");
+      }
+
+      function renderProfileChart(profile, key, title) {
+        var values = profile.trend.map(function (bin) { return bin[key]; });
+        if (!values.length) return '<article class="panel"><h3 class="panel-title">' + escapeHtml(title) + '</h3><div class="runtime-empty">暂无趋势数据</div></article>';
+        var max = Math.max.apply(null, values) || 1;
+        var ticks = ["13:33", "13:36", "13:39", "13:42", "13:45"];
+        var chart = '<svg class="chart" viewBox="0 0 360 190" role="img" aria-label="' + escapeHtml(title + '，每3分钟，' + values.join('、') + '次') + '">' +
+          '<path class="chart-grid" d="M34 26H346M34 88H346M34 150H346"/><text class="chart-label" x="2" y="30">' + max + '</text><text class="chart-label" x="10" y="154">0</text>';
+        values.forEach(function (value, index) {
+          var x = 48 + index * 60, height = value / max * 112;
+          chart += '<rect class="runtime-bar' + (key === "failed" ? ' runtime-bar-danger' : '') + '" x="' + x + '" y="' + (150 - height) + '" width="28" height="' + height + '"><title>' + ticks[index] + '：' + value + ' 次</title></rect>' +
+            '<text class="chart-label" x="' + (x + 14) + '" y="' + (142 - height) + '" text-anchor="middle">' + value + '</text><text class="chart-label" x="' + (x + 14) + '" y="178" text-anchor="middle">' + ticks[index] + '</text>';
+        });
+        return '<article class="panel"><div class="panel-head"><h3 class="panel-title">' + escapeHtml(title) + '</h3><span class="panel-extra">次 / 3 分钟</span></div>' + chart + '</svg></article>';
+      }
+
+      function renderRuntimeProfile(view) {
+        var profile = view.profile;
+        var metadata = '<div class="runtime-coverage">' + [profile.scope].concat(profile.metadata).map(function (text) { return '<span>' + escapeHtml(text) + '</span>'; }).join("") + '</div>';
+        var table = '<article class="table-card"><div class="table-toolbar"><h3 class="table-title">' + profile.tableTitle + runtimeHelp(profile.tableHelp) +
+          '</h3><span class="panel-extra">' + profile.rows.length + ' 条 · 示例数据</span></div><div class="table-scroll"><table class="runtime-profile-table"><caption class="sr-only">' +
+          escapeHtml(view.name + ' · ' + profile.tableTitle) + '</caption><thead><tr>' + profile.columns.concat(["操作"]).map(function (label) { return '<th scope="col">' + escapeHtml(label) + '</th>'; }).join("") + '</tr></thead><tbody>' +
+          profile.rows.map(function (row) { return '<tr>' + row.cells.map(function (value, index) {
+            if (index === 0) return '<td><div class="cell-main">' + escapeHtml(value) + '</div></td>';
+            var status = /^(正常|异常|成功|超时|运行中)$/.test(value);
+            return '<td>' + (status ? statusChip(value) : escapeHtml(value)) + '</td>';
+          }).join("") + '<td><button class="btn btn-text btn-small" type="button" data-runtime-record="' + row.id + '" aria-label="查看' + escapeHtml(row.name) + '">查看</button></td></tr>'; }).join("") +
+          '</tbody></table></div><div class="pagination">已显示全部 ' + profile.rows.length + ' 条</div></article>';
+        var events = '<article class="panel"><div class="panel-head"><h3 class="panel-title">最近异常</h3><span class="panel-extra">近 15 分钟</span></div>' +
+          (profile.events.length ? profile.events.map(function (event) { return '<div class="runtime-event"><span class="numeric">' + event.time + '</span><div class="ranking-content"><span>' + escapeHtml(event.title) +
+            '</span><p>' + escapeHtml(event.detail) + '</p></div><button class="btn btn-text btn-small" type="button" data-runtime-record="' + event.record + '">查看</button></div>'; }).join("") : '<div class="runtime-empty">该时段暂无异常记录</div>') + '</article>';
+        return metadata + '<div class="metric-grid runtime-profile">' + renderProfileCards(profile) + '</div><div class="grid-2">' +
+          renderProfileChart(profile, "total", profile.trendTitle) + renderProfileChart(profile, "failed", profile.failureTitle) + '</div>' + table + events;
+      }
+
+      function renderRuntimeTypeSummary() {
+        return '<section class="panel"><div class="panel-head"><h3 class="panel-title">分类运行摘要</h3><span class="panel-extra">各类型独立统计</span></div><div class="runtime-summary-grid">' +
+          runtimeGroups.slice(1).map(function (group) {
+            var item = group.instances[0], profile = getRuntimeProfile(item.id);
+            return '<button class="runtime-choice" type="button" data-runtime-select="' + item.id + '"><span class="runtime-choice-name">' + escapeHtml(group.name) +
+              '</span><span class="runtime-choice-meta">' + escapeHtml(profile ? profile.hint : "暂无运行数据") + '</span></button>';
+          }).join("") + '</div></section>';
+      }
+
+      function openRuntimeRecord(id) {
+        var view = getRuntimeView(runtimeSelection);
+        if (!view || !view.profile) return;
+        var profile = view.profile;
+        var row = profile.rows.find(function (item) { return item.id === id; });
+        if (!row) return;
+        var fields = profile.columns.map(function (label, index) { return [label, row.cells[index]]; }).concat(row.extra);
+        openDrawer(row.name, detailSection("运行明细 · 示例数据", '<div class="detail-grid">' +
+          detailItem("所属实例", escapeHtml(view.name)) + fields.map(function (field) { return detailItem(field[0], escapeHtml(field[1])); }).join("") + '</div>'),
+          '<button class="btn" type="button" data-close-drawer>关闭</button>');
+      }
+
+      function renderRuntime() {
+        var view = getRuntimeView(runtimeSelection);
+        renderRuntimeDirectory();
+        var header = '<div class="runtime-heading"><div><h2>' + escapeHtml(view.name) + '</h2><p>' +
+          (view.id === "all" ? "近 15 分钟 · 网关运行数据汇总" : escapeHtml(view.kind) + " · 当前环境：生产") +
+          '</p></div>' + statusChip(view.status) + '</div>';
+        var coverage = '<div class="runtime-coverage"><span>示例数据 · 统计时段 13:30–13:45</span>' +
+          (view.id === "all" ? '<span>以下请求指标仅汇总网关服务</span>' : '') + '</div>';
+        if (view.profile) {
+          document.getElementById("runtime-dashboard").innerHTML = header + coverage + renderRuntimeProfile(view);
+          return;
+        }
+        var metricHtml = view.hasGatewayData
+          ? runtimeMetric("下游 QPS", view.metrics.downstream, "近 15 分钟均值") +
+            runtimeMetric("上游 QPS", view.metrics.upstream, "近 15 分钟均值") +
+            runtimeMetric("请求成功率", view.metrics.success, "按请求量汇总") +
+            runtimeMetric("P95 响应时间", view.metrics.p95, "独立汇总统计")
+          : runtimeMetric("运行状态", "未知", "暂无健康观测") + runtimeMetric("关联对象", "—", "暂无关联统计") +
+            runtimeMetric("最近检查", "—", "暂无检查记录") + runtimeMetric("最近异常", "—", "暂无异常记录");
+        var trend = '<article class="panel"><div class="panel-head"><div><h3 class="panel-title">' +
+          (view.hasGatewayData ? "上下游 QPS 趋势" : "运行趋势") + '</h3>' +
+          (view.hasGatewayData ? '<div class="chart-legend"><span class="legend-item"><span class="legend-line"></span>下游</span><span class="legend-item"><span class="legend-line success"></span>上游</span></div>' : '') +
+          '</div><span class="panel-extra">近 15 分钟</span></div>' + renderRuntimeTrend(view) + '</article>';
+        var details = view.hasGatewayData
+          ? '<article class="table-card"><div class="table-toolbar"><h3 class="table-title">网关服务运行清单</h3><span class="panel-extra" id="runtime-count">' + view.services.length + ' 条运行项</span></div>' +
+            '<div class="filter-bar"><div class="filter-field grow"><label class="filter-label" for="runtime-query">搜索服务</label><input class="input" type="search" id="runtime-query" placeholder="输入服务名称或端口" value="' + escapeHtml(runtimeQuery) + '"></div>' +
+            '<div class="filter-field"><label class="filter-label" for="runtime-status">运行状态</label><select class="select" id="runtime-status">' +
+            ["", "正常", "降级", "异常", "已停流", "未知"].map(function (status) { return '<option value="' + status + '"' + (status === runtimeStatus ? ' selected' : '') + '>' + (status || "全部状态") + '</option>'; }).join("") +
+            '</select></div><button class="btn" type="button" data-runtime-reset>重置</button></div>' +
+            '<div class="table-scroll"><table><caption class="sr-only">所选实例的网关服务运行清单，服务筛选不影响上方实例指标</caption><thead><tr>' +
+            ["后端服务与端口", "调用协议", "运行状态", "QPS", "成功率", "P95", "最近异常", "操作"].map(function (label) { return '<th scope="col">' + label + '</th>'; }).join("") +
+            '</tr></thead><tbody id="runtime-table-body">' + runtimeRows(view.services) + '</tbody></table></div><div class="pagination" id="runtime-table-summary">已显示全部 ' + view.services.length + ' 条</div></article>' +
+            '<div class="grid-2">' + runtimeRanking(view, "failures") + runtimeRanking(view, "p95") + '</div>'
+          : '<article class="panel"><h3 class="panel-title">运行明细</h3><div class="runtime-empty"><span>暂无运行数据</span><p>当前原型尚未提供' + escapeHtml(view.kind) + '的观测数据，不表示实例正常或异常。</p></div></article>';
+        document.getElementById("runtime-dashboard").innerHTML = header + coverage + '<div class="metric-grid">' + metricHtml + '</div>' + trend + details + (view.id === "all" ? renderRuntimeTypeSummary() : '');
+        filterRuntimeServices();
+      }
+
+      function filterRuntimeServices() {
+        var view = getRuntimeView(runtimeSelection);
+        if (!view.hasGatewayData) return;
+        var query = runtimeQuery.trim().toLowerCase();
+        var rows = view.services.filter(function (item) {
+          return (!query || (item.name + " " + item.endpoint).toLowerCase().indexOf(query) !== -1) && (!runtimeStatus || item.status === runtimeStatus);
+        });
+        document.getElementById("runtime-table-body").innerHTML = runtimeRows(rows);
+        document.getElementById("runtime-count").textContent = (rows.length === view.services.length ? rows.length : rows.length + " / " + view.services.length) + " 条运行项";
+        document.getElementById("runtime-table-summary").textContent = "已显示全部 " + rows.length + " 条筛选结果";
+      }
+
+      function selectRuntime(id) {
+        if (!getRuntimeView(id)) return;
+        runtimeGroups.forEach(function (group) {
+          if (group.instances.some(function (item) { return item.id === id; })) group.expanded = true;
+        });
+        runtimeSelection = id;
+        runtimeQuery = "";
+        runtimeStatus = "";
+        closeDrawer();
+        renderRuntime();
+        document.getElementById("runtime-dashboard").scrollTop = 0;
+      }
 
       var drawerLayer = document.getElementById("drawer-layer");
       var drawerTitle = document.getElementById("drawer-title");
@@ -1338,9 +1881,9 @@
 
       function statusClass(status) {
         if (/正常|成功|已生效|已恢复|通过/.test(status)) return "status-success";
-        if (/异常|失败|拒绝/.test(status)) return "status-danger";
+        if (/异常|失败|拒绝|超时/.test(status)) return "status-danger";
         if (/降级|待发布|持续中/.test(status)) return "status-warning";
-        if (/审批中|进行中|草稿/.test(status)) return "status-info";
+        if (/审批中|进行中|草稿|运行中/.test(status)) return "status-info";
         return "status-neutral";
       }
 
@@ -1367,6 +1910,10 @@
 
       function navigate(page) {
         if (!pageMeta[page]) return;
+        document.querySelector(".page-scroll").classList.toggle("runtime-mode", page === "routes" || page === "monitoring");
+        if (page === "routes") renderRuntime();
+        if (page === "monitoring") renderInspection();
+        if (page === "overview") renderRuntimeOverview();
         document.querySelectorAll("[data-page-section]").forEach(function (section) {
           section.hidden = section.dataset.pageSection !== page;
         });
@@ -1459,43 +2006,42 @@
         document.querySelectorAll("[data-last-refresh]").forEach(function (node) {
           node.textContent = time;
         });
-        showToast("状态已刷新，当前为最新数据");
+        showToast("展示已刷新，运行指标仍为原型示例数据");
       }
 
       function openGateway(name) {
-        var degraded = name === "智能能力入口";
-        var scope = name === "公共 API 入口" ? "API、数据流" : (degraded ? "模型、Agent、MCP" : "Skill、Worker");
-        var entry = name === "公共 API 入口" ? "内网 / 外网" : (degraded ? "外网" : "内网");
-        var body = detailSection("基本信息",
+        var instance;
+        runtimeGroups.forEach(function (group) {
+          group.instances.forEach(function (item) { if (item.name === name) instance = item; });
+        });
+        if (!instance) return;
+        var view = getRuntimeView(instance.id);
+        var body = detailSection("实例信息",
           '<div class="detail-grid">' +
-          detailItem("逻辑实例", escapeHtml(name)) +
-          detailItem("运行状态", statusChip(degraded ? "降级" : "正常")) +
-          detailItem("能力范围", escapeHtml(scope)) +
-          detailItem("访问入口", escapeHtml(entry)) +
-          "</div>") +
-          detailSection("当前健康",
+          detailItem("实例名称", escapeHtml(view.name)) +
+          detailItem("实例类型", escapeHtml(view.kind)) +
+          detailItem("运行状态", statusChip(view.status)) +
+          detailItem("当前环境", "生产") +
+          detailItem("能力范围", escapeHtml(instance.scope || (view.profile ? view.profile.scope : "—"))) +
+          detailItem("访问入口", escapeHtml(instance.entry || "—")) + '</div>') +
+          (view.hasGatewayData ? detailSection("近 15 分钟指标 · 示例",
             '<div class="detail-grid">' +
-            detailItem("近 15 分钟 QPS", degraded ? "110.1" : "376.1") +
-            detailItem("请求成功率", degraded ? "98.94%" : "99.95%") +
-            detailItem("P95", degraded ? "986 ms" : "176 ms") +
-            detailItem("配置一致性", statusChip("一致")) +
-            "</div>") +
-          detailSection("最近异常",
-            degraded
-              ? '<div class="inline-alert">13:32 智能问答服务触发候选模型降级，主服务仍可访问。</div>'
-              : '<div class="detail-row"><span>近 15 分钟</span><span>未发现影响访问的异常</span></div>');
-        openDrawer(name, body,
+            detailItem("下游 QPS", view.metrics.downstream) +
+            detailItem("上游 QPS", view.metrics.upstream) +
+            detailItem("请求成功率", view.metrics.success) +
+            detailItem("P95", view.metrics.p95) + '</div>') : view.profile ? detailSection("类型指标 · 示例数据", '<div class="detail-grid">' + view.profile.cards.map(function (card) { return detailItem(card.label, escapeHtml(card.value)); }).join('') + '</div>') :
+            '<div class="runtime-empty"><span>暂无运行数据</span><p>当前原型未提供该类型的观测数据。</p></div>');
+        openDrawer(view.name, body,
           '<button class="btn" type="button" data-close-drawer>关闭</button>' +
-          '<button class="btn" type="button" data-page-link="routes">查看注册与路由</button>' +
-          '<button class="btn btn-primary" type="button" data-page-link="monitoring">查看运行监控</button>');
+          '<button class="btn btn-primary" type="button" data-page-link="routes" data-runtime-select="' + instance.id + '">查看运行情况</button>');
       }
 
       function openRoute(name, status) {
-        var isAI = /模型|问答/.test(name);
-        var port = name === "客户画像查询" ? "service-profile:8090" :
-          (name === "智能问答服务" ? "agent-assistant:443" :
-          (name === "历史账单下载" ? "worker-billing:9000" : "service-entry:443"));
-        var protocol = isAI ? (name.indexOf("模型") >= 0 ? "模型推理" : "Agent") : (name.indexOf("下载") >= 0 ? "任务执行" : "HTTP");
+        var item = runtimeServices.find(function (service) { return service.name === name; });
+        if (!item) return;
+        status = item.status;
+        var port = item.endpoint;
+        var protocol = item.protocol;
         var body = detailSection("运行摘要",
           '<div class="detail-grid">' +
           detailItem("服务产品", escapeHtml(name)) +
@@ -1505,23 +2051,23 @@
           "</div>") +
           detailSection("近 15 分钟指标",
             '<div class="detail-grid">' +
-            detailItem("QPS", status === "已停流" ? "—" : (status === "异常" ? "31.6" : "96.7")) +
-            detailItem("成功率", status === "已停流" ? "—" : (status === "异常" ? "91.28%" : "99.91%")) +
-            detailItem("错误率", status === "已停流" ? "—" : (status === "异常" ? "8.72%" : "0.09%")) +
-            detailItem("P95", status === "已停流" ? "—" : (status === "异常" ? "2,486 ms" : "184 ms")) +
+            detailItem("QPS", item.qps === null ? "—" : item.qps.toFixed(1)) +
+            detailItem("成功率", item.success === null ? "—" : item.success.toFixed(2) + "%") +
+            detailItem("错误率", item.success === null ? "—" : (100 - item.success).toFixed(2) + "%") +
+            detailItem("P95", item.p95 === null ? "—" : item.p95.toLocaleString("en-US") + " ms") +
             "</div>") +
           detailSection("关联信息",
-            '<div class="detail-row"><span>关联数据应用</span><span>客户服务门户</span></div>' +
-            '<div class="detail-row"><span>服务版本</span><span>固定版本随服务生效</span></div>' +
-            '<div class="detail-row"><span>路由入口</span><span>/data-service/runtime</span></div>') +
+            '<div class="detail-row"><span>关联数据应用</span><span>' + escapeHtml(item.app) + '</span></div>' +
+            '<div class="detail-row"><span>服务版本</span><span>' + escapeHtml(item.version) + '</span></div>' +
+            '<div class="detail-row"><span>路由入口</span><span>' + escapeHtml(item.route) + '</span></div>') +
           '<details class="detail-section"><summary class="detail-heading">技术映射</summary>' +
           '<div class="detail-row"><span>匹配方式</span><span>前缀匹配</span></div>' +
           '<div class="detail-row"><span>健康检查</span><span>已启用</span></div></details>' +
           (status === "异常" ? '<div class="inline-alert danger" style="margin-top:20px">13:41 起成功率持续低于健康目标，运行版本仍在提供服务。</div>' : "");
         var footer = '<button class="btn" type="button" data-close-drawer>关闭</button>' +
-          '<button class="btn btn-primary" type="button" data-page-link="monitoring">查看运行监控</button>';
+          '<button class="btn btn-primary" type="button" data-page-link="monitoring">查看服务运监</button>';
         if (status !== "已停流") {
-          footer = '<button class="btn btn-danger" type="button" data-emergency-stop="' + escapeHtml(name + " · /data-service/runtime") + '">紧急停流</button>' + footer;
+          footer = '<button class="btn btn-danger" type="button" data-emergency-stop="' + escapeHtml(name + " · " + item.route) + '">紧急停流</button>' + footer;
         }
         openDrawer(name, body, footer);
       }
@@ -1646,31 +2192,6 @@
         openDrawer(id, body, footer);
       }
 
-      function openMonitor(name, status, type) {
-        var ai = type === "模型" || type === "Agent";
-        var body = detailSection("当前状态",
-          '<div class="detail-grid">' +
-          detailItem("服务产品", escapeHtml(name)) +
-          detailItem("能力类型", escapeHtml(type)) +
-          detailItem("运行状态", statusChip(status)) +
-          detailItem("数据应用", type === "Worker" ? "账单交付任务" : "客户服务门户") +
-          "</div>") +
-          detailSection("近 15 分钟指标",
-            '<div class="detail-grid">' +
-            detailItem("QPS", status === "无数据" ? "—" : (status === "异常" ? "31.6" : "96.7")) +
-            detailItem("成功率", status === "无数据" ? "—" : (status === "异常" ? "91.28%" : "99.91%")) +
-            detailItem("错误率", status === "无数据" ? "—" : (status === "异常" ? "8.72%" : "0.09%")) +
-            detailItem("P95", status === "无数据" ? "—" : (status === "异常" ? "2,486 ms" : "184 ms")) +
-            "</div>") +
-          (ai ? detailSection("AI 健康", '<div class="detail-row"><span>首 Token P95</span><span>186 ms</span></div><div class="detail-row"><span>候选目标降级</span><span>18 次</span></div>') : "") +
-          detailSection("最近异常",
-            status === "异常" || status === "降级"
-              ? '<div class="inline-alert">当前存在影响健康目标的异常，可前往异常事件查看时间线。</div>'
-              : '<div class="detail-row"><span>近 15 分钟</span><span>未发现异常</span></div>');
-        openDrawer(name, body,
-          '<button class="btn" type="button" data-close-drawer>关闭</button>' +
-          '<button class="btn btn-primary" type="button" data-page-link="events">查看异常事件</button>');
-      }
 
       function openAudit(id, type, action, result) {
         var subject = "周岚";
@@ -1802,7 +2323,32 @@
         if (target.hasAttribute("data-scope-message")) showToast("本轮原型聚焦运行管理");
         if (target.dataset.toast) showToast(target.dataset.toast);
         if (target.hasAttribute("data-refresh")) refreshStatus();
+        if (target.dataset.runtimeSelect) selectRuntime(target.dataset.runtimeSelect);
+        if (target.hasAttribute("data-runtime-reset")) {
+          runtimeQuery = "";
+          runtimeStatus = "";
+          document.getElementById("runtime-query").value = "";
+          document.getElementById("runtime-status").value = "";
+          filterRuntimeServices();
+        }
         if (target.dataset.openGateway) openGateway(target.dataset.openGateway);
+        if (target.dataset.runtimeRecord) openRuntimeRecord(target.dataset.runtimeRecord);
+        if (target.dataset.inspectionSelect) selectInspection(target.dataset.inspectionSelect);
+        if (target.dataset.inspectionDetail) openInspectionDetail(target.dataset.inspectionDetail);
+        if (target.hasAttribute("data-inspection-search-toggle")) {
+          inspectionSearchOpen = !inspectionSearchOpen;
+          if (!inspectionSearchOpen) {
+            inspectionQuery = "";
+            document.getElementById("inspection-query").value = "";
+          }
+          filterInspection();
+          if (inspectionSearchOpen) document.getElementById("inspection-query").focus();
+        }
+        if (target.hasAttribute("data-inspection-reset")) {
+          inspectionQuery = "";
+          document.getElementById("inspection-query").value = "";
+          filterInspection();
+        }
         if (target.dataset.openRoute) openRoute(target.dataset.openRoute, target.dataset.routeStatus);
         if (target.dataset.openPolicyDetail) openPolicyDetail(target.dataset.openPolicyDetail, target.dataset.policyCategory);
         if (target.hasAttribute("data-open-policy")) openPolicyForm("", "限流与配额");
@@ -1811,7 +2357,6 @@
           openPolicyForm(target.dataset.editPolicy, target.dataset.policyCategory || (policyRow ? policyRow.dataset.category : "限流与配额"));
         }
         if (target.dataset.openRelease) openRelease(target.dataset.openRelease, target.dataset.releaseStatus);
-        if (target.dataset.openMonitor) openMonitor(target.dataset.openMonitor, target.dataset.monitorStatus, target.dataset.monitorType);
         if (target.dataset.openAudit) openAudit(target.dataset.openAudit, target.dataset.auditType, target.dataset.auditAction, target.dataset.auditResult);
         if (target.hasAttribute("data-release-confirm")) confirmRelease();
         if (target.hasAttribute("data-close-drawer")) closeDrawer();
@@ -1840,15 +2385,6 @@
             showToast("回滚申请已生成，等待审批");
           }, true);
         }
-        if (target.dataset.range) {
-          document.querySelectorAll("[data-range]").forEach(function (button) {
-            button.classList.toggle("active", button === target);
-          });
-          document.querySelectorAll("[data-range-label]").forEach(function (node) {
-            node.textContent = target.dataset.range;
-          });
-          showToast("监控范围已切换为" + target.dataset.range);
-        }
         if (target.hasAttribute("data-reset-filters")) {
           var tableId = target.dataset.resetFilters;
           document.querySelectorAll('[data-filter-input="' + tableId + '"]').forEach(function (input) { input.value = ""; });
@@ -1857,7 +2393,22 @@
         }
       });
 
+      document.addEventListener("toggle", function (event) {
+        if (event.target.dataset.inspectionGroup) inspectionCollapsed[event.target.dataset.inspectionGroup] = !event.target.open;
+        var index = event.target.dataset.runtimeGroup;
+        if (index !== undefined && runtimeGroups[index]) runtimeGroups[index].expanded = event.target.open;
+      }, true);
+
       document.addEventListener("input", function (event) {
+        if (event.target.id === "inspection-query") {
+          inspectionQuery = event.target.value;
+          inspectionSearchOpen = true;
+          filterInspection();
+        }
+        if (event.target.id === "runtime-query") {
+          runtimeQuery = event.target.value;
+          filterRuntimeServices();
+        }
         if (event.target.dataset.filterInput) filterTable(event.target.dataset.filterInput);
         if (event.target.id === "policy-name" && event.target.value.trim()) {
           event.target.removeAttribute("aria-invalid");
@@ -1867,6 +2418,10 @@
       });
 
       document.addEventListener("change", function (event) {
+        if (event.target.id === "runtime-status") {
+          runtimeStatus = event.target.value;
+          filterRuntimeServices();
+        }
         if (event.target.dataset.filterSelect) filterTable(event.target.dataset.filterSelect);
         if (event.target.id === "policy-category") updatePolicyPanel();
       });
