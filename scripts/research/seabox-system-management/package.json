@@ -1,0 +1,12 @@
+{
+  "name": "seabox-system-management-capture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "capture": "node capture-system-management-details.mjs",
+    "dry-run": "node capture-system-management-details.mjs --dry-run"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>资产总览设计 QA 对比</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px; color: #1a1d2e; background: #dfe2eb; font: 14px/1.5 Inter, system-ui, sans-serif; }
+    h1 { margin: 0 0 18px; font-size: 20px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    figure { margin: 0; padding: 10px; background: #fff; border-radius: 12px; box-shadow: 0 8px 24px rgba(31,35,55,.12); }
+    figcaption { margin-bottom: 8px; font-weight: 650; }
+    img { display: block; width: 100%; height: auto; border: 1px solid #dfe1ec; }
+    h2 { margin: 24px 0 12px; font-size: 16px; }
+    .crop { position: relative; height: 220px; overflow: hidden; border: 1px solid #dfe1ec; background: #f8f9fc; }
+    .crop img { position: absolute; width: 1440px; max-width: none; border: 0; }
+    .crop.header img { left: 0; top: 0; }
+    .crop.content img { left: -235px; top: -55px; }
+  </style>
+</head>
+<body>
+  <h1>资产总览：源站现场证据 vs 静态仿真原型</h1>
+  <div class="grid">
+    <figure><figcaption>源站 · 1440×900</figcaption><img src="../reference/source-asset-overview-1440x900.png" alt="源站资产总览" /></figure>
+    <figure><figcaption>实现 · 1440×900</figcaption><img src="implementation-asset-overview-1440x900.png" alt="实现资产总览" /></figure>
+  </div>
+  <h2>顶部栏与导航细节（1:1）</h2>
+  <div class="grid">
+    <figure><figcaption>源站细节</figcaption><div class="crop header"><img src="../reference/source-asset-overview-1440x900.png" alt="源站顶部细节" /></div></figure>
+    <figure><figcaption>实现细节</figcaption><div class="crop header"><img src="implementation-asset-overview-1440x900.png" alt="实现顶部细节" /></div></figure>
+  </div>
+  <h2>内容头部与指标卡细节（1:1）</h2>
+  <div class="grid">
+    <figure><figcaption>源站细节</figcaption><div class="crop content"><img src="../reference/source-asset-overview-1440x900.png" alt="源站内容细节" /></div></figure>
+    <figure><figcaption>实现细节</figcaption><div class="crop content"><img src="implementation-asset-overview-1440x900.png" alt="实现内容细节" /></div></figure>
+  </div>
+</body>
+</html>

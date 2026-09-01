@@ -1,0 +1,73 @@
+{
+  "pages": [
+    {
+      "url": "/index.html",
+      "viewport": "1440x900",
+      "horizontalOverflow": false,
+      "title": "资产总览 · 东方金信仿真原型"
+    },
+    {
+      "url": "/047-asset-map.html",
+      "viewport": "1440x900",
+      "horizontalOverflow": false,
+      "title": "数据地图 · 东方金信仿真原型"
+    },
+    {
+      "url": "/110-config-system-config.html",
+      "viewport": "1440x900",
+      "horizontalOverflow": false,
+      "title": "系统配置 · 东方金信仿真原型"
+    },
+    {
+      "url": "/011-oa-approval-management.html",
+      "viewport": "1440x900",
+      "horizontalOverflow": false,
+      "title": "审批管理 · 东方金信仿真原型"
+    },
+    {
+      "url": "/001-index-qa-agent-uuid-task-uuid.html",
+      "viewport": "1440x900",
+      "horizontalOverflow": false,
+      "title": "Data Agentic OS · 东方金信仿真原型"
+    },
+    {
+      "url": "/095-knowledge-kb.html",
+      "viewport": "1440x900",
+      "horizontalOverflow": false,
+      "title": "知识库 · 东方金信仿真原型"
+    },
+    {
+      "url": "/index.html",
+      "viewport": "1200x900",
+      "horizontalOverflow": false
+    },
+    {
+      "url": "/index.html",
+      "viewport": "390x844",
+      "horizontalOverflow": false,
+      "derivedState": true
+    }
+  ],
+  "interactions": [
+    {
+      "name": "command-search",
+      "passed": true
+    },
+    {
+      "name": "notification-popover",
+      "passed": true
+    },
+    {
+      "name": "tab-link",
+      "passed": true,
+      "href": "./043-asset-overview-tab-58e2d41.html"
+    },
+    {
+      "name": "mobile-navigation-drawer",
+      "passed": true
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "passed": true
+}

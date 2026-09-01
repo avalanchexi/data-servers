@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据应用 — 数据服务平台</title>
+<style>
+  :root {
+    --ds-color-white: #ffffff;
+    --ds-color-black: #000000;
+    --ds-color-primary-1: #e8f3ff;
+    --ds-color-primary-2: #bedaff;
+    --ds-color-primary-5: #4080ff;
+    --ds-color-primary-6: #165dff;
+    --ds-color-primary-7: #0e42d2;
+    --ds-color-gray-1: #f7f8fa;
+    --ds-color-gray-2: #f2f3f5;
+    --ds-color-gray-3: #e5e6eb;
+    --ds-color-gray-4: #c9cdd4;
+    --ds-color-gray-6: #86909c;
+    --ds-color-gray-8: #4e5969;
+    --ds-color-gray-9: #272e3b;
+    --ds-color-gray-10: #1d2129;
+    --ds-color-success: #00b42a;
+    --ds-color-success-light: #e8ffea;
+    --ds-color-success-text: #087a24;
+    --ds-color-warning: #ff7d00;
+    --ds-color-warning-light: #fff7e8;
+    --ds-color-warning-text: #a84b00;
+    --ds-color-danger: #f53f3f;
+    --ds-color-danger-light: #ffece8;
+    --ds-color-danger-text: #cb2634;
+    --ds-bg-canvas: var(--ds-color-gray-2);
+    --ds-bg-surface: var(--ds-color-white);
+    --ds-bg-fill: var(--ds-color-gray-2);
+    --ds-text-1: var(--ds-color-gray-10);
+    --ds-text-2: var(--ds-color-gray-8);
+    --ds-text-3: var(--ds-color-gray-6);
+    --ds-border-2: var(--ds-color-gray-3);
+    --ds-focus-ring: 0 0 0 2px rgb(22 93 255 / 18%);
+    --ds-font-sans: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    --ds-font-size-12: 12px;
+    --ds-font-size-14: 14px;
+    --ds-font-size-16: 16px;
+    --ds-font-size-20: 20px;
+    --ds-font-size-24: 24px;
+    --ds-font-weight-regular: 400;
+    --ds-font-weight-medium: 500;
+    --ds-font-weight-semibold: 600;
+    --ds-line-height-base: 1.5715;
+    --ds-space-2: 4px;
+    --ds-space-3: 6px;
+    --ds-space-4: 8px;
+    --ds-space-5: 10px;
+    --ds-space-6: 12px;
+    --ds-space-7: 16px;
+    --ds-space-8: 20px;
+    --ds-space-9: 24px;
+    --ds-space-10: 32px;
+    --ds-radius-small: 2px;
+    --ds-radius-medium: 4px;
+    --ds-radius-large: 8px;
+    --ds-shadow-1: 0 2px 5px rgb(0 0 0 / 10%);
+    --ds-shadow-2: 0 4px 10px rgb(0 0 0 / 10%);
+    --ds-duration-fast: 100ms;
+    --ds-duration-base: 200ms;
+    --ds-ease-standard: cubic-bezier(0.34, 0.69, 0.1, 1);
+    --ds-control-default: 32px;
+    --ds-nav-height: 60px;
+    --ds-sidebar-width: 220px;
+    --ds-table-cell-padding-inline: 12px;
+    --ds-table-cell-padding-block: 9px;
+  }
+  @media (prefers-reduced-motion: reduce) { :root { --ds-duration-fast: 0ms; --ds-duration-base: 0ms; } }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--ds-font-sans);
+    font-size: var(--ds-font-size-14);
+    line-height: var(--ds-line-height-base);
+    color: var(--ds-text-1);
+    background: var(--ds-bg-canvas);
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; }
+  a { color: var(--ds-color-primary-6); text-decoration: none; }
+  a:hover { color: var(--ds-color-primary-7); }
+  :focus-visible { outline: none; box-shadow: var(--ds-focus-ring); }
+
+  .topnav { height: var(--ds-nav-height); background: var(--ds-color-white); border-bottom: 1px solid var(--ds-border-2); display: flex; align-items: center; padding: 0 var(--ds-space-9); position: sticky; top: 0; z-index: 10; }
+  .brand { display: flex; align-items: center; gap: var(--ds-space-3); font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-semibold); color: var(--ds-text-1); margin-right: var(--ds-space-10); }
+  .brand-mark { width: 28px; height: 28px; border-radius: var(--ds-radius-medium); background: linear-gradient(135deg, var(--ds-color-primary-5), var(--ds-color-primary-7)); display: grid; place-items: center; color: var(--ds-color-white); }
+  .topnav-spacer { flex: 1; }
+  .user-chip { display: flex; align-items: center; gap: var(--ds-space-3); font-size: var(--ds-font-size-14); color: var(--ds-text-2); }
+  .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--ds-color-primary-1); color: var(--ds-color-primary-7); display: grid; place-items: center; font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-medium); }
+
+  .shell { display: flex; min-height: calc(100vh - var(--ds-nav-height)); }
+  .sidebar { width: var(--ds-sidebar-width); background: var(--ds-color-white); border-right: 1px solid var(--ds-border-2); padding: var(--ds-space-7) 0; flex-shrink: 0; }
+  .nav-title { font-size: var(--ds-font-size-12); color: var(--ds-text-3); padding: 0 var(--ds-space-7) var(--ds-space-4); letter-spacing: 0.4px; }
+  .nav-item { display: flex; align-items: center; gap: var(--ds-space-6); padding: 0 var(--ds-space-7); height: 40px; color: var(--ds-text-2); border-radius: var(--ds-radius-small); cursor: pointer; font-size: var(--ds-font-size-14); text-decoration: none; position: relative; }
+  .nav-item:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .nav-item[aria-current="page"] { background: var(--ds-color-primary-1); color: var(--ds-color-primary-6); font-weight: var(--ds-font-weight-medium); }
+  .nav-item[aria-current="page"]::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px; background: var(--ds-color-primary-6); border-radius: 0 2px 2px 0; }
+  .nav-item svg { flex-shrink: 0; }
+  .nav-section { margin-top: var(--ds-space-2); }
+  .nav-parent { display: flex; align-items: center; gap: var(--ds-space-6); padding: 0 var(--ds-space-7); height: 40px; color: var(--ds-text-2); border-radius: var(--ds-radius-small); cursor: pointer; font-size: var(--ds-font-size-14); user-select: none; text-decoration: none; position: relative; }
+  .nav-parent:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .nav-parent .chev { margin-left: auto; transition: transform var(--ds-duration-fast) var(--ds-ease-standard); }
+  .nav-parent.is-open .chev { transform: rotate(90deg); }
+  .nav-children { display: none; padding: var(--ds-space-2) 0 var(--ds-space-3); }
+  .nav-children.is-open { display: block; }
+  .nav-child { display: flex; align-items: center; gap: var(--ds-space-6); padding: 0 var(--ds-space-7) 0 42px; height: 36px; color: var(--ds-text-2); border-radius: var(--ds-radius-small); cursor: pointer; font-size: var(--ds-font-size-14); text-decoration: none; position: relative; }
+  .nav-child:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .nav-child[aria-current="page"] { background: var(--ds-color-primary-1); color: var(--ds-color-primary-6); font-weight: var(--ds-font-weight-medium); }
+
+  .main { flex: 1; min-width: 0; padding: var(--ds-space-9); display: flex; flex-direction: column; gap: var(--ds-space-7); }
+  .page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--ds-space-7); }
+  .page-head h1 { margin: 0; font-size: var(--ds-font-size-24); font-weight: var(--ds-font-weight-medium); color: var(--ds-text-1); }
+  .page-head p { margin: var(--ds-space-2) 0 0; font-size: var(--ds-font-size-12); color: var(--ds-text-3); max-width: 640px; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--ds-space-3); height: var(--ds-control-default); padding: 0 15px; border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-small); background: var(--ds-color-white); color: var(--ds-text-1); font-size: var(--ds-font-size-14); cursor: pointer; white-space: nowrap; }
+  .btn:hover { border-color: var(--ds-color-primary-5); color: var(--ds-color-primary-6); }
+  .btn-primary { background: var(--ds-color-primary-6); border-color: var(--ds-color-primary-6); color: var(--ds-color-white); }
+  .btn-primary:hover { background: var(--ds-color-primary-7); border-color: var(--ds-color-primary-7); color: var(--ds-color-white); }
+
+  .toolbar { display: flex; align-items: center; gap: var(--ds-space-4); padding: var(--ds-space-4) var(--ds-space-6); background: var(--ds-bg-surface); border: 1px solid var(--ds-border-2); border-bottom: none; border-radius: var(--ds-radius-medium) var(--ds-radius-medium) 0 0; }
+  .search { flex: 1; max-width: 320px; height: var(--ds-control-default); padding: 0 var(--ds-space-6); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-small); background: var(--ds-color-white); color: var(--ds-text-1); font-size: var(--ds-font-size-14); }
+  .search::placeholder { color: var(--ds-text-3); }
+  .search:focus { border-color: var(--ds-color-primary-5); }
+  .filter-select { height: var(--ds-control-default); padding: 0 var(--ds-space-6); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-small); background: var(--ds-color-white); color: var(--ds-text-2); font-size: var(--ds-font-size-14); cursor: pointer; }
+
+  .table-wrap { background: var(--ds-bg-surface); border: 1px solid var(--ds-border-2); border-radius: 0 0 var(--ds-radius-medium) var(--ds-radius-medium); overflow: hidden; }
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; padding: var(--ds-space-4) var(--ds-table-cell-padding-inline); background: var(--ds-color-gray-1); font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-medium); color: var(--ds-text-2); border-bottom: 1px solid var(--ds-border-2); white-space: nowrap; }
+  td { padding: var(--ds-table-cell-padding-block) var(--ds-table-cell-padding-inline); font-size: var(--ds-font-size-14); color: var(--ds-text-1); border-bottom: 1px solid var(--ds-color-gray-1); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--ds-color-gray-1); }
+  .app-name { font-weight: var(--ds-font-weight-medium); color: var(--ds-color-primary-6); cursor: pointer; }
+  .app-name:hover { color: var(--ds-color-primary-7); }
+  .row-actions { display: flex; align-items: center; gap: var(--ds-space-3); flex-wrap: nowrap; }
+  .action-link { font-size: var(--ds-font-size-12); color: var(--ds-color-primary-6); background: none; border: none; cursor: pointer; padding: 0; white-space: nowrap; text-decoration: none; }
+  .action-link:hover { color: var(--ds-color-primary-7); }
+  .action-link:disabled { color: var(--ds-color-gray-4); cursor: not-allowed; }
+  .action-link.danger { color: var(--ds-color-danger-text); }
+  .action-link.danger:hover { color: var(--ds-color-danger); }
+  .action-sep { color: var(--ds-color-gray-4); font-size: var(--ds-font-size-12); user-select: none; }
+
+  .tag { display: inline-flex; align-items: center; gap: var(--ds-space-2); padding: 2px var(--ds-space-4); font-size: var(--ds-font-size-12); border-radius: var(--ds-radius-small); line-height: 20px; }
+  .tag-success { color: var(--ds-color-success-text); background: var(--ds-color-success-light); }
+  .tag-warning { color: var(--ds-color-warning-text); background: var(--ds-color-warning-light); }
+  .tag-neutral { color: var(--ds-text-2); background: var(--ds-color-gray-2); }
+  .tag .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .tag-success .dot { background: var(--ds-color-success); }
+  .tag-warning .dot { background: var(--ds-color-warning); }
+  .tag-neutral .dot { background: var(--ds-color-gray-6); }
+
+  .pagination { display: flex; align-items: center; gap: var(--ds-space-3); padding: var(--ds-space-4) var(--ds-space-6); justify-content: space-between; background: var(--ds-bg-surface); border: 1px solid var(--ds-border-2); border-top: none; border-radius: 0 0 var(--ds-radius-medium) var(--ds-radius-medium); }
+  .pagination-info { font-size: var(--ds-font-size-12); color: var(--ds-text-3); }
+  .pagination-controls { display: flex; gap: var(--ds-space-2); }
+  .page-btn { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-small); background: var(--ds-color-white); color: var(--ds-text-2); cursor: pointer; font-size: var(--ds-font-size-12); }
+  .page-btn:hover:not(:disabled) { border-color: var(--ds-color-primary-5); color: var(--ds-color-primary-6); }
+  .page-btn[aria-current="page"] { background: var(--ds-color-primary-6); border-color: var(--ds-color-primary-6); color: var(--ds-color-white); }
+  .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .toast { position: fixed; top: calc(var(--ds-nav-height) + var(--ds-space-7)); left: 50%; transform: translateX(-50%); background: var(--ds-color-gray-10); color: var(--ds-color-white); padding: var(--ds-space-5) var(--ds-space-7); border-radius: var(--ds-radius-medium); box-shadow: var(--ds-shadow-2); z-index: 1003; font-size: var(--ds-font-size-14); display: none; align-items: center; gap: var(--ds-space-4); }
+  .toast[aria-hidden="false"] { display: inline-flex; }
+
+  .modal-mask { position: fixed; inset: 0; background: var(--ds-color-gray-10); opacity: 0; visibility: hidden; transition: opacity var(--ds-duration-base) var(--ds-ease-standard); z-index: 1001; display: flex; align-items: center; justify-content: center; }
+  .modal-mask.is-open { opacity: 0.5; visibility: visible; }
+  .modal { background: var(--ds-color-white); border-radius: var(--ds-radius-large); box-shadow: var(--ds-shadow-2); width: 420px; transform: translateY(-8px); transition: transform var(--ds-duration-base) var(--ds-ease-standard); }
+  .modal-mask.is-open .modal { transform: translateY(0); }
+  .modal-head { padding: var(--ds-space-7) var(--ds-space-8) var(--ds-space-5); }
+  .modal-head h2 { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); display: flex; align-items: center; gap: var(--ds-space-4); }
+  .danger-icon { width: 20px; height: 20px; border-radius: 50%; background: var(--ds-color-danger-light); color: var(--ds-color-danger); display: inline-grid; place-items: center; flex-shrink: 0; }
+  .modal-body { padding: 0 var(--ds-space-8) var(--ds-space-6); font-size: var(--ds-font-size-14); color: var(--ds-text-2); line-height: 1.5; }
+  .modal-body .impact { margin-top: var(--ds-space-5); padding: var(--ds-space-5) var(--ds-space-6); background: var(--ds-color-danger-light); border-radius: var(--ds-radius-medium); font-size: var(--ds-font-size-12); color: var(--ds-color-danger-text); }
+  .modal-foot { display: flex; justify-content: flex-end; gap: var(--ds-space-4); padding: var(--ds-space-5) var(--ds-space-8) var(--ds-space-7); border-top: 1px solid var(--ds-color-gray-1); }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--ds-space-3); height: var(--ds-control-default); padding: 0 15px; border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-small); background: var(--ds-color-white); color: var(--ds-text-1); font-size: var(--ds-font-size-14); cursor: pointer; white-space: nowrap; }
+  .btn:hover { border-color: var(--ds-color-primary-5); color: var(--ds-color-primary-6); }
+  .btn-primary { background: var(--ds-color-primary-6); border-color: var(--ds-color-primary-6); color: var(--ds-color-white); }
+  .btn-primary:hover { background: var(--ds-color-primary-7); border-color: var(--ds-color-primary-7); color: var(--ds-color-white); }
+  .btn-danger { background: var(--ds-color-danger); border-color: var(--ds-color-danger); color: var(--ds-color-white); }
+  .btn-danger:hover { background: var(--ds-color-danger-text); border-color: var(--ds-color-danger-text); color: var(--ds-color-white); }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 2L14 5V11L8 14L2 11V5L8 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+        <path d="M8 5V11M5 6.5L11 9.5M11 6.5L5 9.5" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+    </span>
+    数据服务平台
+  </div>
+  <div class="topnav-spacer"></div>
+  <div class="user-chip">
+    <span class="avatar" aria-hidden="true">王</span>
+    <span>王超 · 平台人员</span>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar-mount" data-current="data-app" data-hide="ds,market" aria-label="主导航"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h1>数据应用</h1>
+        <p>每个数据应用对应一个外部消费场景，关联已上线的 API 服务取得调用能力，统一管理授权、凭证、版本与运行观测。</p>
+      </div>
+      <a class="btn btn-primary" href="prototype-data-app-create.html" id="btn-create">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        新建数据应用
+      </a>
+    </div>
+
+    <div>
+      <div class="toolbar">
+        <input type="text" class="search" placeholder="搜索数据应用名称或外部消费场景" id="search-input">
+        <select class="filter-select" id="filter-domain">
+          <option value="">全部业务域</option>
+          <option value="调度">调度业务</option>
+          <option value="生产">生产管理</option>
+          <option value="设备">设备监控</option>
+          <option value="安全">安全环保</option>
+        </select>
+        <select class="filter-select" id="filter-status">
+          <option value="">全部状态</option>
+          <option value="running">运行中</option>
+          <option value="dev">开发中</option>
+          <option value="pending">待发版</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>数据应用</th>
+                <th>外部消费场景</th>
+                <th>业务域</th>
+                <th>关联 API</th>
+                <th>运行版本状态</th>
+                <th>最近发版</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="app-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="pagination">
+        <span class="pagination-info" id="page-info">共 4 条</span>
+        <div class="pagination-controls">
+          <button class="page-btn" disabled aria-label="上一页">‹</button>
+          <button class="page-btn" aria-current="page">1</button>
+          <button class="page-btn" disabled aria-label="下一页">›</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" aria-hidden="true">
+  <span id="toast-msg">提示</span>
+</div>
+
+<!-- 删除确认弹窗 -->
+<div class="modal-mask" id="modal-delete" aria-hidden="true">
+  <div class="modal" role="dialog" aria-labelledby="del-title" aria-modal="true">
+    <div class="modal-head">
+      <h2 id="del-title"><span class="danger-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 3v3.5M6 8.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/></svg></span>删除数据应用</h2>
+    </div>
+    <div class="modal-body">
+      确认删除数据应用「<strong id="del-name">—</strong>」吗？
+      <div class="impact" id="del-impact">删除后该应用的凭证立即失效，已关联的 API 授权将被撤销，外部系统将无法继续调用。此操作不可恢复。</div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" id="del-cancel">取消</button>
+      <button class="btn btn-danger" id="del-confirm">确认删除</button>
+    </div>
+  </div>
+</div>
+
+<!-- 下线确认弹窗 -->
+<div class="modal-mask" id="modal-offline" aria-hidden="true">
+  <div class="modal" role="dialog" aria-labelledby="off-title" aria-modal="true">
+    <div class="modal-head">
+      <h2 id="off-title"><span class="danger-icon" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 3v3.5M6 8.5v.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/></svg></span>下线数据应用</h2>
+    </div>
+    <div class="modal-body">
+      确认下线数据应用「<strong id="off-name">—</strong>」的运行版本吗？
+      <div class="impact">下线后该应用的凭证立即失效，外部系统将无法调用已关联的 API；重新发版后可恢复服务。</div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" id="off-cancel">取消</button>
+      <button class="btn btn-danger" id="off-confirm">确认下线</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var APPS = [
+  { id: 'DA-2024-001', name: '调度大屏数据服务', scene: '生产调度指挥大屏', domain: '调度', apiCount: 3, version: 'v2.1', status: 'running', lastPublish: '2026-08-15 14:30' },
+  { id: 'DA-2024-002', name: '设备巡检移动应用', scene: '巡检员移动端数据查询', domain: '设备', apiCount: 2, version: 'v1.3', status: 'running', lastPublish: '2026-07-22 09:15' },
+  { id: 'DA-2024-003', name: '安全预警接入服务', scene: '安环平台实时预警数据接入', domain: '安全', apiCount: 1, version: 'v1.0', status: 'pending', lastPublish: '—' },
+  { id: 'DA-2024-004', name: '生产日报生成器', scene: '生产管理系统日报数据拉取', domain: '生产', version: 'dev', status: 'dev', apiCount: 0, lastPublish: '—' }
+];
+
+var STATUS_MAP = {
+  running: { cls: 'tag-success', text: '运行中' },
+  dev: { cls: 'tag-neutral', text: '开发中' },
+  pending: { cls: 'tag-warning', text: '待发版' }
+};
+
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+function renderTable(list) {
+  var tbody = document.getElementById('app-tbody');
+  if (!list.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--ds-text-3)">暂无匹配的数据应用</td></tr>';
+    return;
+  }
+  tbody.innerHTML = list.map(function(a) {
+    var s = STATUS_MAP[a.status] || STATUS_MAP.dev;
+    // 按状态控制操作可用性
+    var canPublish = a.status === 'dev' || a.status === 'pending';
+    var canOffline = a.status === 'running';
+    var canDelete = a.status !== 'running'; // 运行中不可删除，需先下线
+    var sep = '<span class="action-sep">·</span>';
+    var actions = '<div class="row-actions">' +
+      '<a class="action-link" href="prototype-data-app-detail.html?id=' + encodeURIComponent(a.id) + '">查看</a>' + sep +
+      '<a class="action-link" href="prototype-data-app-create.html?id=' + encodeURIComponent(a.id) + '&mode=edit">编辑</a>' + sep +
+      '<button class="action-link" data-action="publish" data-id="' + esc(a.id) + '"' + (canPublish ? '' : ' disabled') + '>发布</button>' + sep +
+      '<button class="action-link" data-action="offline" data-id="' + esc(a.id) + '"' + (canOffline ? '' : ' disabled') + '>下线</button>' + sep +
+      '<a class="action-link" href="prototype-data-app-detail.html?id=' + encodeURIComponent(a.id) + '&tab=versions">版本</a>' + sep +
+      '<button class="action-link danger" data-action="delete" data-id="' + esc(a.id) + '" data-name="' + esc(a.name) + '"' + (canDelete ? '' : ' disabled title="运行中的应用需先下线"') + '>删除</button>' +
+      '</div>';
+    return '<tr>' +
+      '<td><a class="app-name" href="prototype-data-app-detail.html?id=' + encodeURIComponent(a.id) + '">' + esc(a.name) + '</a><div style="font-size:12px;color:var(--ds-text-3);margin-top:2px">' + esc(a.id) + '</div></td>' +
+      '<td>' + esc(a.scene) + '</td>' +
+      '<td>' + esc(a.domain) + '</td>' +
+      '<td>' + (a.apiCount > 0 ? a.apiCount + ' 个 API' : '—') + '</td>' +
+      '<td><span class="tag ' + s.cls + '"><span class="dot"></span>' + s.text + (a.version && a.version !== 'dev' ? ' · ' + esc(a.version) : '') + '</span></td>' +
+      '<td style="color:var(--ds-text-2)">' + esc(a.lastPublish) + '</td>' +
+      '<td>' + actions + '</td>' +
+      '</tr>';
+  }).join('');
+  bindRowActions();
+}
+
+function filterApps() {
+  var kw = document.getElementById('search-input').value.trim().toLowerCase();
+  var domain = document.getElementById('filter-domain').value;
+  var status = document.getElementById('filter-status').value;
+  var filtered = APPS.filter(function(a) {
+    var matchKw = !kw || a.name.toLowerCase().indexOf(kw) >= 0 || a.scene.toLowerCase().indexOf(kw) >= 0;
+    var matchDomain = !domain || a.domain === domain;
+    var matchStatus = !status || a.status === status;
+    return matchKw && matchDomain && matchStatus;
+  });
+  renderTable(filtered);
+  document.getElementById('page-info').textContent = '共 ' + filtered.length + ' 条';
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.setAttribute('aria-hidden', 'false');
+  setTimeout(function() { t.setAttribute('aria-hidden', 'true'); }, 2200);
+}
+
+// 弹窗开关
+function openModal(id) {
+  var m = document.getElementById(id);
+  m.classList.add('is-open');
+  m.setAttribute('aria-hidden', 'false');
+}
+function closeModal(id) {
+  var m = document.getElementById(id);
+  m.classList.remove('is-open');
+  m.setAttribute('aria-hidden', 'true');
+}
+
+// 行操作绑定
+function bindRowActions() {
+  document.querySelectorAll('[data-action="publish"]').forEach(function(btn) {
+    if (btn.disabled) return;
+    btn.addEventListener('click', function() {
+      var id = btn.getAttribute('data-id');
+      var app = APPS.find(function(a) { return a.id === id; });
+      if (!app) return;
+      showToast('已提交「' + app.name + '」发版申请，授权项将分项审批');
+      // 模拟状态变更
+      app.status = 'pending';
+      setTimeout(function() { filterApps(); }, 800);
+    });
+  });
+
+  document.querySelectorAll('[data-action="offline"]').forEach(function(btn) {
+    if (btn.disabled) return;
+    btn.addEventListener('click', function() {
+      var id = btn.getAttribute('data-id');
+      var app = APPS.find(function(a) { return a.id === id; });
+      if (!app) return;
+      document.getElementById('off-name').textContent = app.name;
+      openModal('modal-offline');
+      document.getElementById('off-confirm').onclick = function() {
+        app.status = 'dev';
+        app.version = 'dev';
+        app.lastPublish = '—';
+        closeModal('modal-offline');
+        showToast('「' + app.name + '」已下线，凭证已失效');
+        setTimeout(function() { filterApps(); }, 600);
+      };
+    });
+  });
+
+  document.querySelectorAll('[data-action="delete"]').forEach(function(btn) {
+    if (btn.disabled) return;
+    btn.addEventListener('click', function() {
+      var id = btn.getAttribute('data-id');
+      var name = btn.getAttribute('data-name');
+      var app = APPS.find(function(a) { return a.id === id; });
+      document.getElementById('del-name').textContent = name;
+      document.getElementById('del-impact').style.display = app && app.apiCount > 0 ? '' : 'none';
+      openModal('modal-delete');
+      document.getElementById('del-confirm').onclick = function() {
+        var idx = APPS.indexOf(app);
+        if (idx >= 0) APPS.splice(idx, 1);
+        closeModal('modal-delete');
+        showToast('「' + name + '」已删除，凭证和授权已撤销');
+        setTimeout(function() { filterApps(); }, 600);
+      };
+    });
+  });
+}
+
+// 弹窗取消
+document.getElementById('del-cancel').addEventListener('click', function() { closeModal('modal-delete'); });
+document.getElementById('off-cancel').addEventListener('click', function() { closeModal('modal-offline'); });
+document.querySelectorAll('.modal-mask').forEach(function(mask) {
+  mask.addEventListener('click', function(e) {
+    if (e.target === mask) { mask.classList.remove('is-open'); mask.setAttribute('aria-hidden', 'true'); }
+  });
+});
+
+document.getElementById('search-input').addEventListener('input', filterApps);
+document.getElementById('filter-domain').addEventListener('change', filterApps);
+document.getElementById('filter-status').addEventListener('change', filterApps);
+
+renderTable(APPS);
+</script>
+<script src="menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+:root {
+  color-scheme: light;
+
+  /* 字体族 — 集中管理，全局统一 */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'Fira Code', Menlo, Monaco, 'Courier New', monospace;
+
+  /* 基础背景与卡片 */
+  --color-bg: #f0f2f8;
+  --color-bg-hover: #e8ebf5;
+  --color-card: #ffffff;
+  --color-card-elevated: #f5f3ff;
+  --color-border: #e2e4ee;
+  --color-card-border: #dfe1ec;
+  --color-text: #1a1d2e;
+  --color-text-secondary: #555b6e;
+  --color-text-tertiary: #8b8fa3;
+  --color-text-inverse: #ffffff;
+
+  /* 侧边栏 */
+  --color-sidebar-bg: #fafafe;
+  --color-sidebar-hover: #f0edff;
+  --color-sidebar-active: #5b6cf0;
+  --color-sidebar-text: #555b6e;
+  --color-sidebar-text-dim: #8b8fa3;
+
+  /* 聊天区域 */
+  --color-chat-user: #f0edff;
+  --color-chat-assistant: #f5f3ff;
+  --color-chat-system: #f0edff;
+
+  /* 主色：蓝紫色（AI产品标志性色） */
+  --color-primary: #5b6cf0;
+  --color-primary-hover: #4a5ad4;
+  --color-primary-light: #f0edff;
+
+  /* 滚动条 */
+  --color-scroll-thumb: #c4c0d6;
+  --color-scroll-thumb-hover: #9e99b8;
+
+  /* 语义色 */
+  --color-info: #5b6cf0;
+  --color-info-light: #e8e5ff;
+  --color-info-bg: #e8e5ff;
+  --color-success: #10b981;
+  --color-success-light: #d1fae5;
+  --color-success-bg: #d1fae5;
+  --color-warning: #f59e0b;
+  --color-warning-light: #fef3c7;
+  --color-warning-bg: #fef3c7;
+  --color-error: #ef4444;
+  --color-error-light: #fee2e2;
+  --color-error-bg: #fee2e2;
+
+  /* 强调色（紫色，用于待处理/等待状态） */
+  --color-accent: #7c3aed;
+  --color-accent-bg: #ddd6fe;
+
+  /* 同步中状态（纯蓝，与 accent 紫色区分） */
+  --color-sync: #3b82f6;
+  --color-sync-bg: #dbeafe;
+
+  /* 表格/代码块专用背景 */
+  --color-table-header-bg: #f9fafb;
+  --color-code-bg: #f3f4f6;
+
+  /* 用户气泡 */
+  --color-bubble-user-bg: linear-gradient(135deg, #f0edff 0%, #e8e5ff 100%);
+  --color-bubble-user-text: #2d2a5e;
+  --color-bubble-user-border: #d4cff5;
+
+  /* 建议条 */
+  --color-suggestion-text: #4a4a6a;
+  --color-suggestion-btn-border: #d0d0e0;
+
+  /* 图标语义色（思考步骤面板按功能组着色） */
+  --color-icon-ai: #8b5cf6;
+  --color-icon-route: #6366f1;
+  --color-icon-data: #059669;
+  --color-icon-output: #6b7280;
+
+  /* 主色光晕/交互阴影（亮色模式） */
+  --color-primary-glow: rgba(91, 108, 240, 0.3);
+  --color-primary-glow-sm: rgba(91, 108, 240, 0.15);
+  --color-primary-glow-xs: rgba(91, 108, 240, 0.08);
+  --color-shadow-effect: rgba(91, 108, 240, 0.25);
+  --color-shadow-effect-sm: rgba(91, 108, 240, 0.14);
+  --color-shadow-effect-xs: rgba(91, 108, 240, 0.10);
+
+  /* 遮罩/固定阴影 */
+  --color-modal-overlay: rgba(15, 23, 42, 0.55);
+  --color-shadow-fixed: rgba(0, 0, 0, 0.08);
+
+  /* 状态色（用于 StatusBadge 等） */
+  --color-state-default: #8b8fa3;
+  --color-state-info: #5b6cf0;
+  --color-state-success: #10b981;
+  --color-state-error: #ef4444;
+
+  /* 灰度色阶 */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 22px;
+
+  /* 阴影 */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 8px 24px rgba(91, 108, 240, 0.055);
+  --shadow-card-lg: 0 14px 36px rgba(91, 108, 240, 0.09);
+  --shadow-card-xl: 0 24px 60px rgba(91, 108, 240, 0.12);
+
+  /* 间距 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* 渐变色 */
+  --gradient-primary: linear-gradient(135deg, #5b7cfa 0%, #8b5cf6 100%);
+  --gradient-primary-subtle: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+  --gradient-header: linear-gradient(90deg, #5b6cf0 0%, #7c3aed 50%, #06b6d4 100%);
+  --gradient-header-bg: linear-gradient(135deg, rgba(91, 108, 240, 0.04) 0%, rgba(139, 92, 246, 0.02) 50%, rgba(6, 182, 212, 0.03) 100%);
+  --gradient-sidebar-active: linear-gradient(90deg, rgba(91, 108, 240, 0.12) 0%, rgba(139, 92, 246, 0.06) 100%);
+
+  /* 光效 */
+  --glow-primary: 0 0 20px rgba(91, 108, 240, 0.3), 0 0 40px rgba(139, 92, 246, 0.15);
+  --glow-primary-sm: 0 0 12px rgba(91, 108, 240, 0.25);
+  --glow-border: 0 0 0 1px rgba(91, 108, 240, 0.3);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* 基础背景与卡片 — 深邃紫黑底 */
+  --color-bg: #0c0e1a;
+  --color-bg-hover: #1e1f35;
+  --color-card: #161829;
+  --color-card-elevated: #1e2040;
+  --color-border: #2e2f4a;
+  --color-card-border: #383a58;
+  --color-text: #ece9ff;
+  --color-text-secondary: #b8b5d4;
+  --color-text-tertiary: #8a87a8;
+  --color-text-inverse: #ffffff;
+
+  /* 侧边栏 */
+  --color-sidebar-bg: #0e1020;
+  --color-sidebar-hover: #222248;
+  --color-sidebar-active: #2a2560;
+  --color-sidebar-text: #b8b5d4;
+  --color-sidebar-text-dim: #8a87a8;
+
+  /* 聊天区域 */
+  --color-chat-user: rgba(139, 124, 247, 0.20);
+  --color-chat-assistant: #161829;
+  --color-chat-system: #1e2040;
+
+  /* 主色：亮蓝紫（暗色下更醒目） */
+  --color-primary: #8b7cf7;
+  --color-primary-hover: #a494ff;
+  --color-primary-light: rgba(139, 124, 247, 0.18);
+
+  /* 滚动条 */
+  --color-scroll-thumb: #3a3850;
+  --color-scroll-thumb-hover: #52506e;
+
+  /* 语义色 */
+  --color-info: #8b7cf7;
+  --color-info-light: rgba(139, 124, 247, 0.15);
+  --color-info-bg: rgba(139, 124, 247, 0.15);
+  --color-success: #34d399;
+  --color-success-light: rgba(52, 211, 153, 0.15);
+  --color-success-bg: rgba(52, 211, 153, 0.15);
+  --color-warning: #fbbf24;
+  --color-warning-light: rgba(251, 191, 36, 0.15);
+  --color-warning-bg: rgba(251, 191, 36, 0.15);
+  --color-error: #f87171;
+  --color-error-light: rgba(248, 113, 113, 0.15);
+  --color-error-bg: rgba(248, 113, 113, 0.15);
+
+  /* 强调色（暗色） */
+  --color-accent: #a78bfa;
+  --color-accent-bg: rgba(139, 92, 246, 0.22);
+
+  /* 同步中状态（暗色） */
+  --color-sync: #60a5fa;
+  --color-sync-bg: rgba(96, 165, 250, 0.15);
+
+  /* 表格/代码块专用背景 */
+  --color-table-header-bg: #1e2040;
+  --color-code-bg: #1e2040;
+
+  /* 用户气泡（暗色） */
+  --color-bubble-user-bg: rgba(139, 124, 247, 0.20);
+  --color-bubble-user-text: #ece9ff;
+  --color-bubble-user-border: rgba(139, 124, 247, 0.30);
+
+  /* 建议条（暗色） */
+  --color-suggestion-text: #b8b5d4;
+  --color-suggestion-btn-border: #3a3850;
+
+  /* 图标语义色（暗色下提亮一阶保证对比度） */
+  --color-icon-ai: #a78bfa;
+  --color-icon-route: #818cf8;
+  --color-icon-data: #34d399;
+  --color-icon-output: #9ca3af;
+
+  /* 灰度色阶（暗色反转） */
+  --color-gray-50: #1f2937;
+  --color-gray-100: #374151;
+  --color-gray-200: #4b5563;
+  --color-gray-300: #6b7280;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #d1d5db;
+  --color-gray-600: #e5e7eb;
+  --color-gray-700: #f3f4f6;
+  --color-gray-800: #f9fafb;
+  --color-gray-900: #ffffff;
+
+  /* 圆角 */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* 阴影 */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-card-lg: 0 4px 16px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.3);
+  --shadow-card-xl: 0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  /* 间距 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* 渐变色（暗色模式） */
+  --gradient-primary: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+  --gradient-primary-subtle: linear-gradient(135deg, rgba(139, 124, 247, 0.10) 0%, rgba(167, 139, 250, 0.10) 100%);
+  --gradient-header: linear-gradient(90deg, #8b7cf7 0%, #a78bfa 50%, #22d3ee 100%);
+  --gradient-header-bg: linear-gradient(135deg, rgba(139, 124, 247, 0.06) 0%, rgba(167, 139, 250, 0.03) 50%, rgba(34, 211, 238, 0.04) 100%);
+  --gradient-sidebar-active: linear-gradient(90deg, rgba(139, 124, 247, 0.15) 0%, rgba(167, 139, 250, 0.08) 100%);
+
+  /* 主色光晕/交互阴影（暗色模式 — 提高不透明度以在深底上可见） */
+  --color-primary-glow: rgba(139, 124, 247, 0.4);
+  --color-primary-glow-sm: rgba(139, 124, 247, 0.22);
+  --color-primary-glow-xs: rgba(139, 124, 247, 0.12);
+  --color-shadow-effect: rgba(139, 124, 247, 0.30);
+  --color-shadow-effect-sm: rgba(139, 124, 247, 0.18);
+  --color-shadow-effect-xs: rgba(139, 124, 247, 0.12);
+
+  /* 遮罩/固定阴影（暗色） */
+  --color-modal-overlay: rgba(0, 0, 0, 0.65);
+  --color-shadow-fixed: rgba(0, 0, 0, 0.3);
+
+  /* 光效（暗色模式） */
+  --glow-primary: 0 0 24px rgba(139, 124, 247, 0.35), 0 0 48px rgba(167, 139, 250, 0.15);
+  --glow-primary-sm: 0 0 14px rgba(139, 124, 247, 0.30);
+  --glow-border: 0 0 0 1px rgba(139, 124, 247, 0.3);
+}

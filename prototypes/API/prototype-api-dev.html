@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API 开发 — 客户授信额度查询 — 数据服务平台</title>
+<style>
+  :root {
+    --ds-color-white: #ffffff;
+    --ds-color-black: #000000;
+    --ds-color-primary-1: #e8f3ff;
+    --ds-color-primary-2: #bedaff;
+    --ds-color-primary-3: #94bfff;
+    --ds-color-primary-4: #6aa1ff;
+    --ds-color-primary-5: #4080ff;
+    --ds-color-primary-6: #165dff;
+    --ds-color-primary-7: #0e42d2;
+    --ds-color-gray-1: #f7f8fa;
+    --ds-color-gray-2: #f2f3f5;
+    --ds-color-gray-3: #e5e6eb;
+    --ds-color-gray-4: #c9cdd4;
+    --ds-color-gray-5: #a9aeb8;
+    --ds-color-gray-6: #86909c;
+    --ds-color-gray-7: #6b7785;
+    --ds-color-gray-8: #4e5969;
+    --ds-color-gray-9: #272e3b;
+    --ds-color-gray-10: #1d2129;
+    --ds-color-success: #00b42a;
+    --ds-color-success-light: #e8ffea;
+    --ds-color-success-text: #087a24;
+    --ds-color-warning: #ff7d00;
+    --ds-color-warning-light: #fff7e8;
+    --ds-color-warning-text: #a84b00;
+    --ds-color-danger: #f53f3f;
+    --ds-color-danger-light: #ffece8;
+    --ds-color-danger-text: #cb2634;
+    --ds-bg-canvas: var(--ds-color-gray-2);
+    --ds-bg-surface: var(--ds-color-white);
+    --ds-bg-elevated: var(--ds-color-white);
+    --ds-bg-fill: var(--ds-color-gray-2);
+    --ds-bg-fill-hover: var(--ds-color-gray-3);
+    --ds-text-1: var(--ds-color-gray-10);
+    --ds-text-2: var(--ds-color-gray-8);
+    --ds-text-3: var(--ds-color-gray-6);
+    --ds-text-4: var(--ds-color-gray-4);
+    --ds-border-1: var(--ds-color-gray-2);
+    --ds-border-2: var(--ds-color-gray-3);
+    --ds-border-3: var(--ds-color-gray-4);
+    --ds-focus-ring: 0 0 0 2px rgb(22 93 255 / 18%);
+    --ds-mask: rgb(29 33 41 / 60%);
+    --ds-font-sans: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    --ds-font-mono: Consolas, Menlo, Monaco, monospace;
+    --ds-font-size-12: 12px;
+    --ds-font-size-14: 14px;
+    --ds-font-size-16: 16px;
+    --ds-font-size-20: 20px;
+    --ds-font-size-24: 24px;
+    --ds-font-weight-regular: 400;
+    --ds-font-weight-medium: 500;
+    --ds-font-weight-semibold: 600;
+    --ds-line-height-base: 1.5715;
+    --ds-line-height-tight: 1.35;
+    --ds-space-1: 2px;
+    --ds-space-2: 4px;
+    --ds-space-3: 6px;
+    --ds-space-4: 8px;
+    --ds-space-5: 10px;
+    --ds-space-6: 12px;
+    --ds-space-7: 16px;
+    --ds-space-8: 20px;
+    --ds-space-9: 24px;
+    --ds-space-10: 32px;
+    --ds-radius-small: 2px;
+    --ds-radius-medium: 4px;
+    --ds-radius-large: 8px;
+    --ds-shadow-1: 0 2px 5px rgb(0 0 0 / 10%);
+    --ds-shadow-2: 0 4px 10px rgb(0 0 0 / 10%);
+    --ds-shadow-3: 0 8px 20px rgb(0 0 0 / 10%);
+    --ds-duration-fast: 100ms;
+    --ds-duration-base: 200ms;
+    --ds-duration-slow: 300ms;
+    --ds-ease-standard: cubic-bezier(0.34, 0.69, 0.1, 1);
+    --ds-control-mini: 24px;
+    --ds-control-small: 28px;
+    --ds-control-default: 32px;
+    --ds-control-large: 36px;
+    --ds-nav-height: 60px;
+    --ds-sidebar-width: 220px;
+    --ds-content-max: 1440px;
+    --ds-grid-gutter: 16px;
+    --ds-page-padding: 24px;
+    --ds-z-popup: 1000;
+    --ds-z-modal: 1001;
+    --ds-z-message: 1003;
+    --ds-button-height: var(--ds-control-default);
+    --ds-button-radius: var(--ds-radius-small);
+    --ds-button-padding-inline: 15px;
+    --ds-input-height: var(--ds-control-default);
+    --ds-input-radius: var(--ds-radius-small);
+    --ds-form-item-gap: 20px;
+    --ds-table-cell-padding-inline: 12px;
+    --ds-table-cell-padding-block: 9px;
+    --ds-pagination-item-size: 32px;
+    --ds-modal-width: 520px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :root { --ds-duration-fast: 0ms; --ds-duration-base: 0ms; --ds-duration-slow: 0ms; }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--ds-font-sans);
+    font-size: var(--ds-font-size-14);
+    line-height: var(--ds-line-height-base);
+    color: var(--ds-text-1);
+    background: var(--ds-bg-canvas);
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; }
+  a { color: var(--ds-color-primary-6); text-decoration: none; }
+  a:hover { color: var(--ds-color-primary-7); }
+  :focus-visible { outline: none; box-shadow: var(--ds-focus-ring); }
+
+  /* 顶部导航 */
+  .topnav {
+    height: var(--ds-nav-height);
+    background: var(--ds-color-white);
+    border-bottom: 1px solid var(--ds-border-2);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--ds-space-9);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    font-size: var(--ds-font-size-16);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-text-1);
+    margin-right: var(--ds-space-10);
+  }
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--ds-radius-medium);
+    background: linear-gradient(135deg, var(--ds-color-primary-5), var(--ds-color-primary-7));
+    display: grid;
+    place-items: center;
+    color: var(--ds-color-white);
+  }
+  .topnav-spacer { flex: 1; }
+  .topnav-actions { display: flex; align-items: center; gap: var(--ds-space-7); }
+  .env-switch {
+    display: inline-flex;
+    align-items: center;
+    background: var(--ds-bg-fill);
+    border-radius: var(--ds-radius-small);
+    padding: 2px;
+  }
+  .env-switch button {
+    border: none;
+    background: transparent;
+    padding: 4px 12px;
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-2);
+    border-radius: var(--ds-radius-small);
+    cursor: pointer;
+    line-height: 20px;
+  }
+  .env-switch button[aria-pressed="true"] {
+    background: var(--ds-color-white);
+    color: var(--ds-color-primary-6);
+    box-shadow: var(--ds-shadow-1);
+    font-weight: var(--ds-font-weight-medium);
+  }
+  .user-chip {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-2);
+  }
+  .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--ds-color-primary-2);
+    color: var(--ds-color-primary-7);
+    display: grid;
+    place-items: center;
+    font-size: var(--ds-font-size-12);
+    font-weight: var(--ds-font-weight-medium);
+  }
+
+  /* 主体布局 */
+  .shell {
+    display: flex;
+    min-height: calc(100vh - var(--ds-nav-height));
+  }
+  .main {
+    flex: 1;
+    min-width: 0;
+    padding: var(--ds-space-9);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-7);
+  }
+  .crumb {
+    display: flex;
+    gap: var(--ds-space-3);
+    align-items: center;
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-3);
+    margin-bottom: var(--ds-space-3);
+  }
+  .crumb a { color: var(--ds-text-3); }
+  .crumb a:hover { color: var(--ds-color-primary-6); }
+  .crumb .sep { color: var(--ds-text-4); }
+
+  /* 按钮 */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ds-space-3);
+    height: var(--ds-button-height);
+    padding: 0 var(--ds-button-padding-inline);
+    border-radius: var(--ds-button-radius);
+    font-size: var(--ds-font-size-14);
+    border: 1px solid var(--ds-border-2);
+    background: var(--ds-color-white);
+    color: var(--ds-text-1);
+    cursor: pointer;
+    line-height: 1;
+    transition: background var(--ds-duration-fast) var(--ds-ease-standard), border-color var(--ds-duration-fast) var(--ds-ease-standard);
+    text-decoration: none;
+  }
+  .btn:hover { background: var(--ds-bg-fill); border-color: var(--ds-border-3); color: var(--ds-text-1); }
+  .btn-primary {
+    background: var(--ds-color-primary-6);
+    border-color: var(--ds-color-primary-6);
+    color: var(--ds-color-white);
+  }
+  .btn-primary:hover {
+    background: var(--ds-color-primary-7);
+    border-color: var(--ds-color-primary-7);
+    color: var(--ds-color-white);
+  }
+  .btn-text {
+    border-color: transparent;
+    background: transparent;
+    color: var(--ds-color-primary-6);
+    padding: 2px 6px;
+    height: auto;
+  }
+  .btn-text:hover { background: var(--ds-color-primary-1); }
+  .btn .chev { transition: transform var(--ds-duration-fast) var(--ds-ease-standard); }
+
+  /* 表单控件 */
+  .select {
+    height: var(--ds-control-default);
+    padding: 0 28px 0 10px;
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-input-radius);
+    background: var(--ds-color-white) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5L6 7.5L9 4.5' stroke='%2386909c' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 8px center;
+    appearance: none;
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-1);
+    cursor: pointer;
+  }
+  .select:hover { border-color: var(--ds-border-3); }
+  .select:focus { border-color: var(--ds-color-primary-6); outline: none; box-shadow: var(--ds-focus-ring); }
+
+  /* 卡片 / 表格 */
+  .card {
+    background: var(--ds-bg-surface);
+    border-radius: var(--ds-radius-medium);
+    border: 1px solid var(--ds-border-2);
+    overflow: hidden;
+  }
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-7);
+    padding: var(--ds-space-6) var(--ds-space-7);
+    border-bottom: 1px solid var(--ds-border-1);
+  }
+  .card-head .card-title {
+    font-size: var(--ds-font-size-14);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-text-1);
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+  }
+  .card-head .card-meta {
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-3);
+  }
+  .card-head .spacer { flex: 1; }
+  .table-scroll { overflow-x: auto; }
+  table.data {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: var(--ds-font-size-14);
+  }
+  table.data thead th {
+    background: var(--ds-bg-fill);
+    color: var(--ds-text-2);
+    font-weight: var(--ds-font-weight-medium);
+    text-align: left;
+    padding: 10px var(--ds-table-cell-padding-inline);
+    border-bottom: 1px solid var(--ds-border-2);
+    white-space: nowrap;
+    font-size: var(--ds-font-size-12);
+  }
+  table.data thead th.center { text-align: center; }
+  table.data thead th.right { text-align: right; }
+  table.data tbody td {
+    padding: 8px var(--ds-table-cell-padding-inline);
+    border-bottom: 1px solid var(--ds-border-1);
+    color: var(--ds-text-1);
+    vertical-align: middle;
+  }
+  table.data tbody tr:hover { background: var(--ds-bg-fill); }
+  table.data tbody tr:last-child td { border-bottom: none; }
+  .row-actions { display: inline-flex; gap: var(--ds-space-3); justify-content: flex-end; }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: var(--ds-radius-small);
+    font-size: var(--ds-font-size-12);
+    line-height: 1;
+    border: 1px solid transparent;
+  }
+  .tag-info { background: var(--ds-color-primary-1); color: var(--ds-color-primary-7); }
+  .tag-neutral { background: var(--ds-bg-fill); color: var(--ds-text-2); }
+  .type-pill {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: var(--ds-radius-small);
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-2);
+    background: var(--ds-bg-fill);
+    border: 1px solid var(--ds-border-2);
+    font-weight: var(--ds-font-weight-regular);
+  }
+  .type-pill.is-primary { color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); border-color: var(--ds-color-primary-2); }
+
+  /* 下拉菜单 */
+  .dropdown { position: relative; display: inline-flex; }
+  .dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 4px);
+    background: var(--ds-bg-elevated);
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-radius-medium);
+    box-shadow: var(--ds-shadow-2);
+    padding: var(--ds-space-2) 0;
+    min-width: 168px;
+    z-index: var(--ds-z-popup);
+    display: none;
+  }
+  .dropdown.is-open .dropdown-menu { display: block; }
+  .dropdown-menu button {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 7px var(--ds-space-7);
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-1);
+    cursor: pointer;
+    text-align: left;
+  }
+  .dropdown-menu button:hover { background: var(--ds-bg-fill); }
+
+  /* 表单字段 */
+  .field { display: flex; flex-direction: column; gap: var(--ds-space-3); }
+  .field > label { font-size: var(--ds-font-size-14); color: var(--ds-text-1); }
+  .field .req { color: var(--ds-color-danger); margin-left: 2px; }
+  .field .help { font-size: var(--ds-font-size-12); color: var(--ds-text-3); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-7); }
+  .field-switch {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-4);
+    height: var(--ds-input-height);
+  }
+  .field-switch .switch-label { font-size: var(--ds-font-size-14); color: var(--ds-text-1); }
+  .field-switch .switch-hint { font-size: var(--ds-font-size-12); color: var(--ds-text-3); }
+  /* 字段范围双栏(原生式数据集圈选) */
+  .field-range {
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-radius-medium);
+    overflow: hidden;
+  }
+  .field-range-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--ds-space-4) var(--ds-space-7);
+    background: var(--ds-bg-fill);
+    border-bottom: 1px solid var(--ds-border-2);
+  }
+  .field-range-title { font-size: var(--ds-font-size-14); font-weight: var(--ds-font-weight-semibold); color: var(--ds-text-1); }
+  .field-range-meta { font-size: var(--ds-font-size-12); color: var(--ds-text-3); }
+  .field-range-body { padding: var(--ds-space-4) var(--ds-space-7); display: flex; flex-direction: column; gap: var(--ds-space-3); max-height: 200px; overflow-y: auto; }
+  .field-check {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-5);
+    padding: var(--ds-space-2) var(--ds-space-3);
+    border-radius: var(--ds-radius-small);
+    cursor: pointer;
+    font-size: var(--ds-font-size-14);
+  }
+  .field-check:hover { background: var(--ds-bg-fill); }
+  .field-check input { margin: 0; cursor: pointer; }
+  .field-check .fc-name { font-family: var(--ds-font-mono); color: var(--ds-text-1); min-width: 140px; }
+  .field-check .fc-meta { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+  .switch {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+  .switch input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .switch-track {
+    position: absolute;
+    inset: 0;
+    background: var(--ds-color-gray-5);
+    border-radius: 10px;
+    transition: background var(--ds-duration-fast) var(--ds-ease-standard);
+    pointer-events: none;
+  }
+  .switch-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: var(--ds-color-white);
+    border-radius: 50%;
+    transition: transform var(--ds-duration-fast) var(--ds-ease-standard);
+    box-shadow: var(--ds-shadow-1);
+    pointer-events: none;
+  }
+  .switch input:checked ~ .switch-track { background: var(--ds-color-primary-6); }
+  .switch input:checked ~ .switch-thumb { transform: translateX(16px); }
+  .switch input:focus-visible ~ .switch-track { box-shadow: var(--ds-focus-ring); }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: calc(var(--ds-nav-height) + var(--ds-space-7));
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ds-color-gray-10);
+    color: var(--ds-color-white);
+    padding: var(--ds-space-5) var(--ds-space-7);
+    border-radius: var(--ds-radius-medium);
+    box-shadow: var(--ds-shadow-2);
+    z-index: var(--ds-z-message);
+    font-size: var(--ds-font-size-14);
+    display: none;
+    align-items: center;
+    gap: var(--ds-space-4);
+  }
+  .toast[aria-hidden="false"] { display: inline-flex; }
+
+  /* ===== API 开发页新增样式 ===== */
+  .dev-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--ds-space-7);
+    flex-wrap: wrap;
+  }
+  .dev-title-block { display: flex; flex-direction: column; min-width: 0; }
+  .dev-header h1 {
+    margin: 0;
+    font-size: var(--ds-font-size-20);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-text-1);
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-4);
+    flex-wrap: wrap;
+  }
+  .dev-header .head-actions {
+    display: flex;
+    gap: var(--ds-space-4);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* 类型 Tab */
+  .type-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--ds-border-2);
+    background: var(--ds-color-white);
+    border-radius: var(--ds-radius-medium) var(--ds-radius-medium) 0 0;
+    padding: 0 var(--ds-space-4);
+  }
+  .tab {
+    border: none;
+    background: transparent;
+    padding: 11px 16px;
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-2);
+    cursor: pointer;
+    position: relative;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color var(--ds-duration-fast) var(--ds-ease-standard);
+  }
+  .tab:hover { color: var(--ds-text-1); }
+  .tab[aria-selected="true"] {
+    color: var(--ds-color-primary-6);
+    font-weight: var(--ds-font-weight-medium);
+    border-bottom-color: var(--ds-color-primary-6);
+  }
+
+  /* 开发视图容器 */
+  .dev-view {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-7);
+  background: var(--ds-color-white);
+    border: 1px solid var(--ds-border-2);
+    border-top: none;
+    border-radius: 0 0 var(--ds-radius-medium) var(--ds-radius-medium);
+    padding: var(--ds-space-8);
+  }
+  .dev-view[hidden] { display: none; }
+
+  /* 逻辑表选择行 */
+  .logic-row {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-7);
+    flex-wrap: wrap;
+  }
+  .logic-row .logic-label {
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-2);
+    flex-shrink: 0;
+  }
+  .logic-row .chips {
+    display: inline-flex;
+    gap: var(--ds-space-3);
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .logic-count { font-size: var(--ds-font-size-12); color: var(--ds-text-3); }
+  .table-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 26px;
+    padding: 0 4px 0 10px;
+    border-radius: var(--ds-radius-small);
+    background: var(--ds-color-primary-1);
+    border: 1px solid var(--ds-color-primary-2);
+    color: var(--ds-color-primary-7);
+    font-family: var(--ds-font-mono);
+    font-size: var(--ds-font-size-12);
+  }
+  .table-chip .chip-name { white-space: nowrap; }
+  .table-chip button {
+    border: none;
+    background: transparent;
+    color: var(--ds-color-primary-7);
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    padding: 0;
+  }
+  .table-chip button:hover { background: var(--ds-color-primary-2); }
+
+  /* SQL 编辑器 */
+  .editor-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-4);
+    padding: var(--ds-space-4) 0;
+    flex-wrap: wrap;
+  }
+  .sql-editor {
+    width: 100%;
+    min-height: 168px;
+    padding: 12px 14px;
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-radius-medium);
+    background: var(--ds-color-gray-1);
+    font-family: var(--ds-font-mono);
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-1);
+    resize: vertical;
+    line-height: 1.65;
+    white-space: pre;
+    overflow: auto;
+  }
+  .sql-editor:focus { border-color: var(--ds-color-primary-6); outline: none; box-shadow: var(--ds-focus-ring); }
+
+  /* 小节 Tab */
+  .section-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--ds-border-2);
+    padding: 0 var(--ds-space-7);
+  }
+  .section-tab {
+    border: none;
+    background: transparent;
+    padding: 10px 14px;
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-2);
+    cursor: pointer;
+    position: relative;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color var(--ds-duration-fast) var(--ds-ease-standard);
+  }
+  .section-tab:hover { color: var(--ds-text-1); }
+  .section-tab[aria-selected="true"] {
+    color: var(--ds-color-primary-6);
+    font-weight: var(--ds-font-weight-medium);
+    border-bottom-color: var(--ds-color-primary-6);
+  }
+  .section-panel { padding: var(--ds-space-6) var(--ds-space-7) var(--ds-space-7); }
+  .section-panel[hidden] { display: none; }
+
+  /* 参数表工具条 */
+  .param-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-4);
+    padding: 0 0 var(--ds-space-4);
+    flex-wrap: wrap;
+  }
+  .param-toolbar .pt-meta { font-size: var(--ds-font-size-12); color: var(--ds-text-3); }
+  .param-toolbar .spacer { flex: 1; }
+
+  /* 表格内单元格控件 */
+  .cell-input {
+    width: 100%;
+    height: 28px;
+    padding: 0 8px;
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-radius-small);
+    background: var(--ds-color-white);
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-1);
+    font-family: inherit;
+  }
+  .cell-input.mono { font-family: var(--ds-font-mono); }
+  .cell-input:focus { border-color: var(--ds-color-primary-6); outline: none; box-shadow: var(--ds-focus-ring); }
+  .cell-select {
+    width: 100%;
+    height: 28px;
+    padding: 0 22px 0 8px;
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-radius-small);
+    background: var(--ds-color-white) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5L6 7.5L9 4.5' stroke='%2386909c' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 6px center;
+    appearance: none;
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-1);
+    cursor: pointer;
+  }
+  .cell-select:focus { border-color: var(--ds-color-primary-6); outline: none; box-shadow: var(--ds-focus-ring); }
+  .cell-check { width: 16px; height: 16px; cursor: pointer; }
+  td.cell-center { text-align: center; }
+  td.cell-actions { text-align: right; }
+
+  /* 单选行 */
+  .radio-row { display: flex; gap: var(--ds-space-7); align-items: center; }
+  .radio {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-1);
+    cursor: pointer;
+  }
+  .radio input { width: 14px; height: 14px; cursor: pointer; }
+
+  /* 缓存配置行 */
+  .cache-row { display: flex; align-items: center; gap: var(--ds-space-4); flex-wrap: wrap; }
+  .cache-row .select { width: 220px; }
+  .cache-row .cell-input { width: 120px; }
+
+  /* 高级配置栅格 */
+  .adv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--ds-space-8) var(--ds-space-9);
+    max-width: 760px;
+  }
+  .adv-grid .full { grid-column: 1 / -1; }
+
+  /* 向导式:数据表信息块 */
+  .info-block {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-7);
+    padding: var(--ds-space-6) var(--ds-space-7);
+    background: var(--ds-color-gray-1);
+    border: 1px dashed var(--ds-border-2);
+    border-radius: var(--ds-radius-medium);
+    flex-wrap: wrap;
+  }
+  .info-block .info-name { font-family: var(--ds-font-mono); font-size: var(--ds-font-size-14); color: var(--ds-text-1); font-weight: var(--ds-font-weight-medium); }
+  .info-block .info-item { font-size: var(--ds-font-size-12); color: var(--ds-text-3); }
+  .info-block .info-item strong { color: var(--ds-text-1); font-weight: var(--ds-font-weight-medium); }
+
+  .sub-title {
+    font-size: var(--ds-font-size-14);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-text-1);
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    margin: 0;
+  }
+  .sub-title .tag { font-weight: var(--ds-font-weight-regular); }
+
+  @media (max-width: 1280px) {
+    .adv-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 2L14 5V11L8 14L2 11V5L8 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+        <path d="M8 5V11M5 6.5L11 9.5M11 6.5L5 9.5" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+    </span>
+    数据服务平台
+  </div>
+
+  <div class="topnav-spacer"></div>
+
+  <div class="topnav-actions">
+    <div class="env-switch" role="group" aria-label="环境切换">
+      <button type="button" aria-pressed="false">开发</button>
+      <button type="button" aria-pressed="false">测试</button>
+      <button type="button" aria-pressed="true">生产</button>
+    </div>
+    <span style="color: var(--ds-border-2);">|</span>
+    <div class="user-chip">
+      <span class="avatar" aria-hidden="true">王</span>
+      <span>王超 · 数据开发</span>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar-mount" data-current="api-dev" data-hide="ds,market" aria-label="主导航"></aside>
+
+  <main class="main">
+    <!-- 开发头 -->
+    <div class="dev-header">
+      <div class="dev-title-block">
+        <nav class="crumb" aria-label="面包屑">
+          <a href="prototype-api-list.html">API</a>
+          <span class="sep">/</span>
+          <a href="prototype-api-list.html" id="crumbFolder">风控服务/授信查询</a>
+          <span class="sep">/</span>
+          <span id="crumbApiName">客户授信额度查询</span>
+        </nav>
+        <h1>
+          <span id="devApiName">客户授信额度查询</span>
+          <span class="type-pill is-primary" title="版本">v2.1</span>
+          <span class="type-pill" id="typeBadge">脚本式</span>
+        </h1>
+      </div>
+      <div class="head-actions">
+        <a class="btn" href="prototype-api-list.html" id="btnBack">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          返回列表
+        </a>
+        <div class="dropdown" id="saveDropdown">
+          <button class="btn btn-primary" type="button" id="btnSaveToggle" aria-haspopup="menu" aria-expanded="false">
+            保存
+            <svg class="chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="dropdown-menu" role="menu">
+            <button type="button" data-save="save">保存</button>
+            <button type="button" data-save="version">另存为新版本</button>
+            <button type="button" data-save="newapi">另存为新API</button>
+          </div>
+        </div>
+        <button class="btn" type="button" id="btnTest">测试</button>
+      </div>
+    </div>
+
+    <!-- 类型 Tab -->
+    <div class="type-tabs" role="tablist" aria-label="开发方式">
+      <button class="tab" role="tab" id="tab-script" aria-controls="view-script" aria-selected="true">脚本式</button>
+      <button class="tab" role="tab" id="tab-guide" aria-controls="view-guide" aria-selected="false">向导式</button>
+      <button class="tab" role="tab" id="tab-native" aria-controls="view-native" aria-selected="false">原生式</button>
+    </div>
+
+    <!-- ===== 脚本式 ===== -->
+    <div class="dev-view" id="view-script" role="tabpanel" aria-labelledby="tab-script">
+
+      <!-- 逻辑表 + SQL 编辑器 -->
+      <section class="card">
+        <div class="card-head">
+          <span class="card-title">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><ellipse cx="7" cy="3.5" rx="5" ry="1.6" stroke="currentColor" stroke-width="1.2"/><path d="M2 3.5v4c0 .9 2.2 1.6 5 1.6s5-.7 5-1.6v-4" stroke="currentColor" stroke-width="1.2"/></svg>
+            SQL 脚本
+          </span>
+          <span class="card-meta">基于逻辑表编写 SQL,通过占位符绑定请求参数</span>
+          <span class="spacer"></span>
+        </div>
+        <div style="padding: var(--ds-space-7) var(--ds-space-7) var(--ds-space-8);">
+          <div class="logic-row" style="margin-bottom: var(--ds-space-6);">
+            <span class="logic-label">逻辑表</span>
+            <select class="select" id="logicSelect" aria-label="选择逻辑表" style="width: 220px;">
+              <option value="">选择逻辑表…</option>
+              <option value="dwh_risk_credit_t">dwh_risk_credit_t</option>
+              <option value="dwh_risk_credit_log_t">dwh_risk_credit_log_t</option>
+              <option value="dwh_cust_basic_t">dwh_cust_basic_t</option>
+              <option value="dwh_risk_credit_limit_t">dwh_risk_credit_limit_t</option>
+            </select>
+            <div class="chips" id="scriptChips" data-max="10">
+              <span class="table-chip">
+                <span class="chip-name">dwh_risk_credit_t</span>
+                <button type="button" aria-label="移除 dwh_risk_credit_t"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+              </span>
+              <span class="logic-count" id="scriptChips-count">已选 1/10 张</span>
+            </div>
+          </div>
+
+          <div class="editor-toolbar">
+            <button class="btn btn-primary" type="button" id="btnRun">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 2l6 4-6 4V2z" fill="currentColor"/></svg>
+              运行
+            </button>
+            <button class="btn" type="button" id="btnParse">解析请求参数</button>
+            <button class="btn" type="button" id="btnFields">表字段</button>
+            <button class="btn" type="button" id="btnFormat">格式化</button>
+            <button class="btn" type="button" id="btnFull">全屏</button>
+            <span class="spacer"></span>
+            <span class="tag tag-neutral" id="sqlStatus">未运行</span>
+          </div>
+
+          <textarea class="sql-editor" id="sqlEditor" spellcheck="false" aria-label="SQL 编辑器">SELECT cust_id, credit_limit, effective_date
+FROM dwh_risk_credit_t
+WHERE cust_id = #{cust_id}</textarea>
+        </div>
+      </section>
+
+      <!-- 参数与配置 -->
+      <section class="card">
+        <div class="section-tabs" role="tablist" aria-label="参数与配置">
+          <button class="section-tab" role="tab" aria-controls="panel-req" aria-selected="true">请求参数</button>
+          <button class="section-tab" role="tab" aria-controls="panel-resp" aria-selected="false">返回参数</button>
+          <button class="section-tab" role="tab" aria-controls="panel-adv-script" aria-selected="false">高级配置</button>
+        </div>
+
+        <!-- 请求参数 -->
+        <div class="section-panel" id="panel-req" role="tabpanel">
+          <div class="param-toolbar">
+            <span class="pt-meta">已配置 2 个请求参数</span>
+            <span class="spacer"></span>
+            <button class="btn btn-primary" type="button" data-add="reqBody">+ 添加参数</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data" style="min-width: 1040px;">
+              <colgroup>
+                <col style="width:140px"><col style="width:140px"><col style="width:92px"><col style="width:96px"><col style="width:60px"><col style="width:110px"><col style="width:80px"><col style="width:100px"><col style="width:140px"><col style="width:100px">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>参数名称</th><th>绑定逻辑表字段</th><th>参数类型</th><th>操作符</th><th class="center">是否必选</th><th>示例值</th><th>缺省值</th><th>安全等级</th><th>参数描述</th><th class="right">操作</th>
+                </tr>
+              </thead>
+              <tbody id="reqBody">
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="cust_id"></td>
+                  <td><input class="cell-input mono" type="text" value="cust_id"></td>
+                  <td><select class="cell-select"><option selected>string</option><option>int</option><option>long</option><option>double</option><option>date</option><option>datetime</option><option>boolean</option></select></td>
+                  <td><select class="cell-select"><option selected>等于</option><option>LIKE</option><option>IN</option><option>NOT IN</option><option>NOT LIKE</option><option>!=</option><option>&gt;</option><option>&lt;</option><option>&gt;=</option><option>&lt;=</option></select></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="C001"></td>
+                  <td><input class="cell-input" type="text" value="—"></td>
+                  <td><select class="cell-select"><option>L1 公开</option><option>L2 内部</option><option selected>L3 秘密</option><option>L4 机密</option></select></td>
+                  <td><input class="cell-input" type="text" value="客户ID"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-copy>复制</button><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="credit_type"></td>
+                  <td><input class="cell-input mono" type="text" value="credit_type"></td>
+                  <td><select class="cell-select"><option selected>string</option><option>int</option><option>long</option><option>double</option><option>date</option><option>datetime</option><option>boolean</option></select></td>
+                  <td><select class="cell-select"><option>等于</option><option selected>LIKE</option><option>IN</option><option>NOT IN</option><option>NOT LIKE</option><option>!=</option><option>&gt;</option><option>&lt;</option><option>&gt;=</option><option>&lt;=</option></select></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="普惠"></td>
+                  <td><input class="cell-input" type="text" value="—"></td>
+                  <td><select class="cell-select"><option>L1 公开</option><option selected>L2 内部</option><option>L3 秘密</option><option>L4 机密</option></select></td>
+                  <td><input class="cell-input" type="text" value="授信类型"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-copy>复制</button><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 返回参数 -->
+        <div class="section-panel" id="panel-resp" role="tabpanel" hidden>
+          <div class="param-toolbar">
+            <span class="pt-meta">已配置 3 个返回参数</span>
+            <span class="spacer"></span>
+            <button class="btn btn-primary" type="button" data-add="respBody">+ 添加参数</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data" style="min-width: 1040px;">
+              <colgroup>
+                <col style="width:140px"><col style="width:140px"><col style="width:92px"><col style="width:70px"><col style="width:60px"><col style="width:110px"><col style="width:80px"><col style="width:100px"><col style="width:140px"><col style="width:100px">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>参数名称</th><th>绑定逻辑表字段</th><th>参数类型</th><th class="center">是否排序参数</th><th class="center">是否必选</th><th>示例值</th><th>缺省值</th><th>安全等级</th><th>参数描述</th><th class="right">操作</th>
+                </tr>
+              </thead>
+              <tbody id="respBody">
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="cust_id"></td>
+                  <td><input class="cell-input mono" type="text" value="cust_id"></td>
+                  <td><select class="cell-select"><option selected>string</option><option>int</option><option>long</option><option>double</option><option>date</option><option>datetime</option><option>boolean</option></select></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="是否排序参数"></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="C001"></td>
+                  <td><input class="cell-input" type="text" value="—"></td>
+                  <td><select class="cell-select"><option>L1 公开</option><option>L2 内部</option><option selected>L3 秘密</option><option>L4 机密</option></select></td>
+                  <td><input class="cell-input" type="text" value="客户ID"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-copy>复制</button><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="credit_limit"></td>
+                  <td><input class="cell-input mono" type="text" value="credit_limit"></td>
+                  <td><select class="cell-select"><option>string</option><option>int</option><option>long</option><option selected>double</option><option>date</option><option>datetime</option><option>boolean</option></select></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" aria-label="是否排序参数"></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="500000.00"></td>
+                  <td><input class="cell-input" type="text" value="—"></td>
+                  <td><select class="cell-select"><option>L1 公开</option><option>L2 内部</option><option selected>L3 秘密</option><option>L4 机密</option></select></td>
+                  <td><input class="cell-input" type="text" value="授信额度"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-copy>复制</button><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="effective_date"></td>
+                  <td><input class="cell-input mono" type="text" value="effective_date"></td>
+                  <td><select class="cell-select"><option>string</option><option>int</option><option>long</option><option>double</option><option selected>date</option><option>datetime</option><option>boolean</option></select></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="是否排序参数"></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="2026-01-01"></td>
+                  <td><input class="cell-input" type="text" value="—"></td>
+                  <td><select class="cell-select"><option>L1 公开</option><option selected>L2 内部</option><option>L3 秘密</option><option>L4 机密</option></select></td>
+                  <td><input class="cell-input" type="text" value="生效日期"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-copy>复制</button><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 高级配置(脚本) -->
+        <div class="section-panel" id="panel-adv-script" role="tabpanel" hidden>
+          <div class="adv-grid">
+            <div class="field">
+              <label>返回结果格式</label>
+              <div class="radio-row">
+                <label class="radio"><input type="radio" name="respFmt-script" value="JSON" checked> JSON</label>
+                <label class="radio"><input type="radio" name="respFmt-script" value="JSONCompact"> JSONCompact</label>
+              </div>
+              <span class="help">JSON 为标准结构;JSONCompact 适用于大数据量返回</span>
+            </div>
+            <div class="field">
+              <label>数据缓存时间</label>
+              <div class="cache-row">
+                <select class="select js-cache-select">
+                  <option value="system" selected>系统策略(默认600s)</option>
+                  <option value="custom">用户自定义</option>
+                  <option value="off">关闭</option>
+                </select>
+                <input class="cell-input js-cache-input" type="number" min="0" step="1" placeholder="秒" style="display:none">
+                <span class="help js-cache-hint">默认 600 秒</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== 向导式 ===== -->
+    <div class="dev-view" id="view-guide" role="tabpanel" aria-labelledby="tab-guide" hidden>
+
+      <!-- 表选择 -->
+      <section class="card">
+        <div class="card-head">
+          <span class="card-title">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><ellipse cx="7" cy="3.5" rx="5" ry="1.6" stroke="currentColor" stroke-width="1.2"/><path d="M2 3.5v4c0 .9 2.2 1.6 5 1.6s5-.7 5-1.6v-4" stroke="currentColor" stroke-width="1.2"/></svg>
+            数据源
+          </span>
+          <span class="card-meta">选择一张逻辑表作为数据来源</span>
+          <span class="spacer"></span>
+        </div>
+        <div style="padding: var(--ds-space-7) var(--ds-space-7) var(--ds-space-8); display: flex; flex-direction: column; gap: var(--ds-space-6);">
+          <div class="logic-row">
+            <span class="logic-label">数据表</span>
+            <select class="select" id="guideTableSelect" aria-label="选择数据表" style="width: 260px;">
+              <option value="dwh_risk_credit_t" selected>dwh_risk_credit_t</option>
+              <option value="dwh_risk_credit_log_t">dwh_risk_credit_log_t</option>
+              <option value="dwh_cust_basic_t">dwh_cust_basic_t</option>
+              <option value="dwh_risk_credit_limit_t">dwh_risk_credit_limit_t</option>
+            </select>
+          </div>
+          <div class="info-block" id="guideTableInfo">
+            <span class="info-name">dwh_risk_credit_t</span>
+            <span class="info-item">字段数:<strong class="info-fields">24</strong></span>
+            <span class="info-item">数据量级:<strong>约 1.2 亿</strong></span>
+            <span class="info-item">更新频率:<strong>T+1</strong></span>
+            <span class="info-item">责任人:<strong>风控数据中心</strong></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 参数设置 -->
+      <section class="card">
+        <div class="card-head">
+          <span class="card-title">参数设置</span>
+          <span class="card-meta">配置 Where 条件与 Select 字段</span>
+          <span class="spacer"></span>
+        </div>
+
+        <!-- 请求参数 Where -->
+        <div style="padding: var(--ds-space-7) var(--ds-space-7) 0;">
+          <h3 class="sub-title">请求参数 <span class="tag tag-neutral">Where 条件</span></h3>
+        </div>
+        <div class="section-panel">
+          <div class="param-toolbar">
+            <span class="pt-meta">已配置 2 个条件</span>
+            <span class="spacer"></span>
+            <button class="btn btn-primary" type="button" data-add="guideReqBody">+ 添加</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data" style="min-width: 640px;">
+              <colgroup><col style="width:200px"><col style="width:120px"><col style="width:90px"><col style="width:160px"><col style="width:auto"></colgroup>
+              <thead>
+                <tr><th>字段</th><th>操作符</th><th class="center">是否必选</th><th>示例值</th><th>参数描述</th></tr>
+              </thead>
+              <tbody id="guideReqBody">
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="cust_id"></td>
+                  <td><select class="cell-select"><option selected>等于</option><option>LIKE</option><option>IN</option><option>NOT IN</option><option>!=</option><option>&gt;</option><option>&lt;</option><option>&gt;=</option><option>&lt;=</option></select></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="C001"></td>
+                  <td><input class="cell-input" type="text" value="客户ID"></td>
+                </tr>
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="credit_type"></td>
+                  <td><select class="cell-select"><option>等于</option><option selected>LIKE</option><option>IN</option><option>NOT IN</option><option>!=</option><option>&gt;</option><option>&lt;</option><option>&gt;=</option><option>&lt;=</option></select></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="普惠"></td>
+                  <td><input class="cell-input" type="text" value="授信类型"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 返回参数 Select -->
+        <div style="padding: 0 var(--ds-space-7); border-top: 1px solid var(--ds-border-1);">
+          <h3 class="sub-title" style="padding-top: var(--ds-space-6);">返回参数 <span class="tag tag-neutral">Select 字段</span></h3>
+        </div>
+        <div class="section-panel">
+          <div class="param-toolbar">
+            <span class="pt-meta">已选 2 个字段</span>
+            <span class="spacer"></span>
+            <button class="btn btn-primary" type="button" data-add="guideRespBody">+ 批量添加</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data" style="min-width: 600px;">
+              <colgroup><col style="width:48px"><col style="width:220px"><col style="width:90px"><col style="width:160px"><col style="width:auto"></colgroup>
+              <thead>
+                <tr><th class="center">选</th><th>字段</th><th class="center">是否必选</th><th>示例值</th><th>参数描述</th></tr>
+              </thead>
+              <tbody id="guideRespBody">
+                <tr>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="选择字段"></td>
+                  <td><input class="cell-input mono" type="text" value="cust_id"></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="C001"></td>
+                  <td><input class="cell-input" type="text" value="客户ID"></td>
+                </tr>
+                <tr>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="选择字段"></td>
+                  <td><input class="cell-input mono" type="text" value="credit_limit"></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="500000.00"></td>
+                  <td><input class="cell-input" type="text" value="授信额度"></td>
+                </tr>
+                <tr>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" aria-label="选择字段"></td>
+                  <td><input class="cell-input mono" type="text" value="effective_date"></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="2026-01-01"></td>
+                  <td><input class="cell-input" type="text" value="生效日期"></td>
+                </tr>
+                <tr>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" aria-label="选择字段"></td>
+                  <td><input class="cell-input mono" type="text" value="expire_date"></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="2026-12-31"></td>
+                  <td><input class="cell-input" type="text" value="失效日期"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 高级配置(向导) -->
+      <section class="card">
+        <div class="card-head"><span class="card-title">高级配置</span><span class="spacer"></span></div>
+        <div class="section-panel">
+          <div class="adv-grid">
+            <div class="field">
+              <label>返回结果格式</label>
+              <div class="radio-row">
+                <label class="radio"><input type="radio" name="respFmt-guide" value="JSON" checked> JSON</label>
+                <label class="radio"><input type="radio" name="respFmt-guide" value="JSONCompact"> JSONCompact</label>
+              </div>
+            </div>
+            <div class="field">
+              <label>数据缓存时间</label>
+              <div class="cache-row">
+                <select class="select js-cache-select">
+                  <option value="system" selected>系统策略(默认600s)</option>
+                  <option value="custom">用户自定义</option>
+                  <option value="off">关闭</option>
+                </select>
+                <input class="cell-input js-cache-input" type="number" min="0" step="1" placeholder="秒" style="display:none">
+                <span class="help js-cache-hint">默认 600 秒</span>
+              </div>
+            </div>
+            <div class="field-switch full">
+              <span class="switch">
+                <input type="checkbox" id="pageToggle">
+                <span class="switch-track"></span>
+                <span class="switch-thumb"></span>
+              </span>
+              <span class="switch-label">开启分页</span>
+              <span class="switch-hint" id="pageHint">当前:已关闭</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== 原生式 ===== -->
+    <div class="dev-view" id="view-native" role="tabpanel" aria-labelledby="tab-native" hidden>
+
+      <!-- 数据集圈选 -->
+      <section class="card">
+        <div class="card-head">
+          <span class="card-title">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><ellipse cx="7" cy="3.5" rx="5" ry="1.6" stroke="currentColor" stroke-width="1.2"/><path d="M2 3.5v4c0 .9 2.2 1.6 5 1.6s5-.7 5-1.6v-4" stroke="currentColor" stroke-width="1.2"/></svg>
+            数据集圈选
+          </span>
+          <span class="card-meta">圈选同源逻辑表与可查询字段范围,供调用方灵活重组查询</span>
+          <span class="spacer"></span>
+        </div>
+        <div style="padding: var(--ds-space-7) var(--ds-space-7) var(--ds-space-8); display: flex; flex-direction: column; gap: var(--ds-space-6);">
+          <div class="logic-row">
+            <span class="logic-label">逻辑表</span>
+            <select class="select" id="nativeLogicSelect" aria-label="选择逻辑表" style="width: 220px;">
+              <option value="">选择逻辑表…</option>
+              <option value="dwh_risk_credit_t" selected>dwh_risk_credit_t</option>
+              <option value="dwh_risk_credit_log_t">dwh_risk_credit_log_t</option>
+              <option value="dwh_cust_basic_t">dwh_cust_basic_t</option>
+              <option value="dwh_risk_credit_limit_t">dwh_risk_credit_limit_t</option>
+            </select>
+            <div class="chips" id="nativeChips" data-max="5">
+              <span class="table-chip">
+                <span class="chip-name">dwh_risk_credit_t</span>
+                <button type="button" aria-label="移除 dwh_risk_credit_t"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+              </span>
+              <span class="table-chip">
+                <span class="chip-name">dwh_cust_basic_t</span>
+                <button type="button" aria-label="移除 dwh_cust_basic_t"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+              </span>
+              <span class="logic-count" id="nativeChips-count">已选 2/5 张</span>
+            </div>
+          </div>
+
+          <!-- 字段范围:维度 / 度量 双栏 -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-7);">
+            <div class="field-range">
+              <div class="field-range-head">
+                <span class="field-range-title">维度字段</span>
+                <span class="field-range-meta">可分组、可筛选</span>
+              </div>
+              <div class="field-range-body">
+                <label class="field-check"><input type="checkbox" checked><span class="fc-name mono">cust_id</span><span class="fc-meta">客户ID</span></label>
+                <label class="field-check"><input type="checkbox" checked><span class="fc-name mono">credit_type</span><span class="fc-meta">授信类型</span></label>
+                <label class="field-check"><input type="checkbox" checked><span class="fc-name mono">branch_id</span><span class="fc-meta">机构号</span></label>
+                <label class="field-check"><input type="checkbox"><span class="fc-name mono">effective_date</span><span class="fc-meta">生效日期</span></label>
+                <label class="field-check"><input type="checkbox"><span class="fc-name mono">cust_level</span><span class="fc-meta">客户等级</span></label>
+              </div>
+            </div>
+            <div class="field-range">
+              <div class="field-range-head">
+                <span class="field-range-title">度量字段</span>
+                <span class="field-range-meta">可聚合统计</span>
+              </div>
+              <div class="field-range-body">
+                <label class="field-check"><input type="checkbox" checked><span class="fc-name mono">credit_limit</span><span class="fc-meta">授信额度</span></label>
+                <label class="field-check"><input type="checkbox" checked><span class="fc-name mono">used_amount</span><span class="fc-meta">已用额度</span></label>
+                <label class="field-check"><input type="checkbox" checked><span class="fc-name mono">available_amount</span><span class="fc-meta">可用额度</span></label>
+                <label class="field-check"><input type="checkbox"><span class="fc-name mono">risk_score</span><span class="fc-meta">风险评分</span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 查询重组 -->
+      <section class="card">
+        <div class="card-head">
+          <span class="card-title">查询重组</span>
+          <span class="card-meta">配置维度分组、度量聚合与筛选条件,系统自动生成灵活查询语句</span>
+          <span class="spacer"></span>
+        </div>
+
+        <!-- 维度分组 -->
+        <div style="padding: var(--ds-space-7) var(--ds-space-7) 0;">
+          <h3 class="sub-title">维度分组 <span class="tag tag-neutral">GROUP BY</span></h3>
+        </div>
+        <div class="section-panel">
+          <div class="param-toolbar">
+            <span class="pt-meta">已配置 2 个分组维度</span>
+            <span class="spacer"></span>
+            <button class="btn btn-primary" type="button" data-add="nativeDimBody">+ 添加维度</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data" style="min-width: 720px;">
+              <colgroup><col style="width:200px"><col style="width:140px"><col style="width:120px"><col style="width:160px"><col style="width:100px"></colgroup>
+              <thead>
+                <tr><th>字段</th><th>来源表</th><th>维度类型</th><th>输出别名</th><th class="right">操作</th></tr>
+              </thead>
+              <tbody id="nativeDimBody">
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="branch_id"></td>
+                  <td><select class="cell-select"><option selected>dwh_cust_basic_t</option><option>dwh_risk_credit_t</option></select></td>
+                  <td><select class="cell-select"><option selected>普通维度</option><option>时间维度-日</option><option>时间维度-月</option></select></td>
+                  <td><input class="cell-input mono" type="text" value="机构号"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-copy>复制</button><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="credit_type"></td>
+                  <td><select class="cell-select"><option>dwh_cust_basic_t</option><option selected>dwh_risk_credit_t</option></select></td>
+                  <td><select class="cell-select"><option selected>普通维度</option><option>时间维度-日</option><option>时间维度-月</option></select></td>
+                  <td><input class="cell-input mono" type="text" value="授信类型"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-copy>复制</button><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 度量聚合 -->
+        <div style="padding: 0 var(--ds-space-7); border-top: 1px solid var(--ds-border-1);">
+          <h3 class="sub-title" style="padding-top: var(--ds-space-6);">度量聚合 <span class="tag tag-neutral">AGG</span></h3>
+        </div>
+        <div class="section-panel">
+          <div class="param-toolbar">
+            <span class="pt-meta">已配置 3 个度量</span>
+            <span class="spacer"></span>
+            <button class="btn btn-primary" type="button" data-add="nativeMetricBody">+ 添加度量</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data" style="min-width: 760px;">
+              <colgroup><col style="width:180px"><col style="width:140px"><col style="width:150px"><col style="width:120px"><col style="width:100px"><col style="width:100px"></colgroup>
+              <thead>
+                <tr><th>字段</th><th>来源表</th><th>聚合函数</th><th>输出别名</th><th class="center">是否必选</th><th class="right">操作</th></tr>
+              </thead>
+              <tbody id="nativeMetricBody">
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="credit_limit"></td>
+                  <td><select class="cell-select"><option selected>dwh_risk_credit_t</option><option>dwh_risk_credit_limit_t</option></select></td>
+                  <td><select class="cell-select"><option selected>SUM</option><option>AVG</option><option>MAX</option><option>MIN</option><option>COUNT</option><option>COUNT DISTINCT</option></select></td>
+                  <td><input class="cell-input mono" type="text" value="总授信额度"></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="是否必选"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-copy>复制</button><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="used_amount"></td>
+                  <td><select class="cell-select"><option selected>dwh_risk_credit_t</option><option>dwh_risk_credit_limit_t</option></select></td>
+                  <td><select class="cell-select"><option>SUM</option><option>AVG</option><option>MAX</option><option>MIN</option><option selected>COUNT</option><option>COUNT DISTINCT</option></select></td>
+                  <td><input class="cell-input mono" type="text" value="用信笔数"></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" aria-label="是否必选"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-copy>复制</button><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="available_amount"></td>
+                  <td><select class="cell-select"><option selected>dwh_risk_credit_t</option><option>dwh_risk_credit_limit_t</option></select></td>
+                  <td><select class="cell-select"><option selected>AVG</option><option>SUM</option><option>MAX</option><option>MIN</option><option>COUNT</option><option>COUNT DISTINCT</option></select></td>
+                  <td><input class="cell-input mono" type="text" value="平均可用额度"></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="是否必选"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-copy>复制</button><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 筛选条件 -->
+        <div style="padding: 0 var(--ds-space-7); border-top: 1px solid var(--ds-border-1);">
+          <h3 class="sub-title" style="padding-top: var(--ds-space-6);">筛选条件 <span class="tag tag-neutral">WHERE</span></h3>
+        </div>
+        <div class="section-panel">
+          <div class="param-toolbar">
+            <span class="pt-meta">已配置 2 个筛选条件</span>
+            <span class="spacer"></span>
+            <button class="btn btn-primary" type="button" data-add="nativeFilterBody">+ 添加筛选</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data" style="min-width: 720px;">
+              <colgroup><col style="width:180px"><col style="width:120px"><col style="width:90px"><col style="width:120px"><col style="width:auto"><col style="width:100px"></colgroup>
+              <thead>
+                <tr><th>字段</th><th>操作符</th><th class="center">是否必选</th><th>示例值</th><th>参数描述</th><th class="right">操作</th></tr>
+              </thead>
+              <tbody id="nativeFilterBody">
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="cust_id"></td>
+                  <td><select class="cell-select"><option selected>等于</option><option>IN</option><option>LIKE</option><option>!=</option><option>&gt;</option><option>&lt;</option></select></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" checked aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="C001"></td>
+                  <td><input class="cell-input" type="text" value="客户ID"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-copy>复制</button><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="effective_date"></td>
+                  <td><select class="cell-select"><option selected>&gt;=</option><option>&gt;</option><option>等于</option><option>IN</option><option>BETWEEN</option></select></td>
+                  <td class="cell-center"><input class="cell-check" type="checkbox" aria-label="是否必选"></td>
+                  <td><input class="cell-input mono" type="text" value="2026-01-01"></td>
+                  <td><input class="cell-input" type="text" value="生效日期起"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-copy>复制</button><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 排序与限制 -->
+        <div style="padding: 0 var(--ds-space-7); border-top: 1px solid var(--ds-border-1);">
+          <h3 class="sub-title" style="padding-top: var(--ds-space-6);">排序与限制 <span class="tag tag-neutral">ORDER BY / LIMIT</span></h3>
+        </div>
+        <div class="section-panel">
+          <div class="param-toolbar">
+            <span class="pt-meta">已配置 1 个排序</span>
+            <span class="spacer"></span>
+            <button class="btn" type="button" data-add="nativeSortBody">+ 添加排序</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data" style="min-width: 560px;">
+              <colgroup><col style="width:200px"><col style="width:140px"><col style="width:120px"><col style="width:100px"></colgroup>
+              <thead>
+                <tr><th>字段</th><th>排序方向</th><th>优先级</th><th class="right">操作</th></tr>
+              </thead>
+              <tbody id="nativeSortBody">
+                <tr>
+                  <td><input class="cell-input mono" type="text" value="credit_limit"></td>
+                  <td><select class="cell-select"><option selected>降序</option><option>升序</option></select></td>
+                  <td><input class="cell-input" type="text" value="1"></td>
+                  <td class="cell-actions"><div class="row-actions"><button class="btn-text" type="button" data-del>删除</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="adv-grid" style="margin-top: var(--ds-space-6);">
+            <div class="field">
+              <label>返回行数上限 (LIMIT)</label>
+              <input class="cell-input" type="number" min="1" step="1" value="1000" style="width: 160px;">
+              <span class="help">单次查询最大返回行数</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 高级配置(原生) -->
+      <section class="card">
+        <div class="card-head"><span class="card-title">高级配置</span><span class="spacer"></span></div>
+        <div class="section-panel">
+          <div class="adv-grid">
+            <div class="field">
+              <label>返回结果格式</label>
+              <div class="radio-row">
+                <label class="radio"><input type="radio" name="respFmt-native" value="JSON" checked> JSON</label>
+                <label class="radio"><input type="radio" name="respFmt-native" value="JSONCompact"> JSONCompact</label>
+              </div>
+            </div>
+            <div class="field">
+              <label>数据缓存时间</label>
+              <div class="cache-row">
+                <select class="select js-cache-select">
+                  <option value="system" selected>系统策略(默认600s)</option>
+                  <option value="custom">用户自定义</option>
+                  <option value="off">关闭</option>
+                </select>
+                <input class="cell-input js-cache-input" type="number" min="0" step="1" placeholder="秒" style="display:none">
+                <span class="help js-cache-hint">默认 600 秒</span>
+              </div>
+            </div>
+            <div class="field-switch full">
+              <span class="switch">
+                <input type="checkbox" id="nativePageToggle" checked>
+                <span class="switch-track"></span>
+                <span class="switch-thumb"></span>
+              </span>
+              <span class="switch-label">开启分页</span>
+              <span class="switch-hint" id="nativePageHint">当前:已开启(默认 1-20)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite" aria-hidden="true">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span id="toastMsg">已保存</span>
+</div>
+
+<script>
+  // ===== Toast =====
+  let toastTimer = null;
+  function showToast(msg, type) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    toast.style.background = type === 'warn' ? 'var(--ds-color-warning-text)' : 'var(--ds-color-gray-10)';
+    toast.setAttribute('aria-hidden', 'false');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.setAttribute('aria-hidden', 'true'), 2400);
+  }
+
+  // ===== 环境切换 =====
+  document.querySelectorAll('.env-switch button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.env-switch button').forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      showToast('环境已切换至 ' + b.textContent);
+    });
+  });
+
+  // ===== 类型 Tab 切换 =====
+  const typeBadge = document.getElementById('typeBadge');
+  document.querySelectorAll('.type-tabs .tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.type-tabs .tab').forEach(t => t.setAttribute('aria-selected', 'false'));
+      tab.setAttribute('aria-selected', 'true');
+      const target = tab.getAttribute('aria-controls');
+      document.querySelectorAll('.dev-view').forEach(v => v.hidden = (v.id !== target));
+      const label = tab.textContent.trim();
+      typeBadge.textContent = label;
+      showToast('已切换到 ' + label + ' 开发');
+    });
+  });
+
+  // ===== URL 参数:自动定位 API 与开发方式 =====
+  (function initFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const type = params.get('type');
+    const folder = params.get('folder');
+    if (name) {
+      document.getElementById('devApiName').textContent = name;
+      document.getElementById('crumbApiName').textContent = name;
+      document.title = `API 开发 — ${name} — 数据服务平台`;
+    }
+    if (folder) {
+      document.getElementById('crumbFolder').textContent = folder;
+    } else if (name) {
+      document.getElementById('crumbFolder').textContent = 'API 目录';
+    }
+    const typeMap = { script: 'tab-script', guide: 'tab-guide', native: 'tab-native' };
+    const tabId = typeMap[type] || 'tab-script';
+    const tab = document.getElementById(tabId);
+    if (tab) {
+      // 切换视图(静默,不弹 toast)
+      document.querySelectorAll('.type-tabs .tab').forEach(t => t.setAttribute('aria-selected', 'false'));
+      tab.setAttribute('aria-selected', 'true');
+      const target = tab.getAttribute('aria-controls');
+      document.querySelectorAll('.dev-view').forEach(v => v.hidden = (v.id !== target));
+      typeBadge.textContent = tab.textContent.trim();
+    }
+  })();
+
+  // ===== 小节 Tab 切换 =====
+  document.querySelectorAll('.section-tabs').forEach(group => {
+    group.querySelectorAll('.section-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        group.querySelectorAll('.section-tab').forEach(t => t.setAttribute('aria-selected', 'false'));
+        tab.setAttribute('aria-selected', 'true');
+        const target = tab.getAttribute('aria-controls');
+        const card = group.closest('.card');
+        card.querySelectorAll('.section-panel').forEach(p => p.hidden = (p.id !== target));
+      });
+    });
+  });
+
+  // ===== 保存下拉 =====
+  const saveDropdown = document.getElementById('saveDropdown');
+  const saveToggle = document.getElementById('btnSaveToggle');
+  saveToggle.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = saveDropdown.classList.toggle('is-open');
+    saveToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', () => {
+    saveDropdown.classList.remove('is-open');
+    saveToggle.setAttribute('aria-expanded', 'false');
+  });
+  saveDropdown.querySelectorAll('.dropdown-menu button').forEach(b => {
+    b.addEventListener('click', e => {
+      e.stopPropagation();
+      saveDropdown.classList.remove('is-open');
+      saveToggle.setAttribute('aria-expanded', 'false');
+      const action = b.dataset.save;
+      const map = { save: 'API 配置已保存', version: '已另存为新版本 v2.2', newapi: '已另存为新 API(原型演示)' };
+      showToast(map[action]);
+    });
+  });
+
+  // ===== 顶部操作按钮 =====
+  document.getElementById('btnTest').addEventListener('click', () => showToast('测试请求已发送,HTTP 200,返回 1 条数据'));
+  document.getElementById('btnRun').addEventListener('click', () => {
+    document.getElementById('sqlStatus').textContent = '运行成功 · 3 条';
+    showToast('SQL 已运行,返回 3 条结果');
+  });
+  document.getElementById('btnParse').addEventListener('click', () => showToast('已从 SQL 解析出 1 个请求参数'));
+  document.getElementById('btnFields').addEventListener('click', () => showToast('已加载表字段列表(原型演示)'));
+  document.getElementById('btnFormat').addEventListener('click', () => showToast('SQL 已格式化'));
+  document.getElementById('btnFull').addEventListener('click', () => showToast('已进入全屏编辑(原型演示)'));
+
+  // ===== 参数表:增 / 删 / 复制 =====
+  function updateParamMeta() {
+    document.querySelectorAll('.param-toolbar').forEach(tb => {
+      const card = tb.closest('.section-panel');
+      const body = card.querySelector('tbody');
+      if (!body) return;
+      const meta = tb.querySelector('.pt-meta');
+      if (!meta) return;
+      const n = body.children.length;
+      if (body.id === 'guideRespBody') {
+        const picked = body.querySelectorAll('tr td:first-child input[type="checkbox"]:checked').length;
+        meta.textContent = '已选 ' + picked + ' 个字段';
+      } else if (body.id === 'guideReqBody') {
+        meta.textContent = '已配置 ' + n + ' 个条件';
+      } else {
+        meta.textContent = '已配置 ' + n + ' 个参数';
+      }
+    });
+  }
+  function clearInputs(tr) {
+    tr.querySelectorAll('input[type="text"], input[type="number"]').forEach(el => el.value = '');
+    tr.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
+    tr.querySelectorAll('select').forEach(el => { el.selectedIndex = 0; });
+  }
+  document.querySelectorAll('[data-add]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const bodyId = btn.dataset.add;
+      const body = document.getElementById(bodyId);
+      const tpl = body.querySelector('tr');
+      const row = tpl.cloneNode(true);
+      clearInputs(row);
+      body.appendChild(row);
+      updateParamMeta();
+      showToast('已添加参数行');
+    });
+  });
+  document.addEventListener('click', e => {
+    const del = e.target.closest('[data-del]');
+    if (del) {
+      const row = del.closest('tr');
+      const body = row.parentNode;
+      if (body.children.length <= 1) {
+        clearInputs(row);
+        showToast('至少保留一行参数', 'warn');
+        return;
+      }
+      row.remove();
+      updateParamMeta();
+      showToast('已删除参数行');
+      return;
+    }
+    const copy = e.target.closest('[data-copy]');
+    if (copy) {
+      const row = copy.closest('tr');
+      const clone = row.cloneNode(true);
+      row.parentNode.insertBefore(clone, row.nextSibling);
+      updateParamMeta();
+      showToast('已复制参数行');
+    }
+  });
+  // 字段选择 checkbox 联动计数
+  document.getElementById('guideRespBody').addEventListener('change', e => {
+    if (e.target.matches('td:first-child input[type="checkbox"]')) updateParamMeta();
+  });
+
+  // ===== 逻辑表 chip 增删 =====
+  function updateChipCount(containerId) {
+    const c = document.getElementById(containerId);
+    const max = c.getAttribute('data-max');
+    const count = c.querySelectorAll('.table-chip').length;
+    const el = document.getElementById(containerId + '-count');
+    if (el) el.textContent = '已选 ' + count + '/' + max + ' 张';
+  }
+  function bindChips(containerId) {
+    const c = document.getElementById(containerId);
+    c.addEventListener('click', e => {
+      const btn = e.target.closest('.table-chip button');
+      if (btn) {
+        btn.closest('.table-chip').remove();
+        updateChipCount(containerId);
+        showToast('已移除逻辑表');
+      }
+    });
+  }
+  function addChip(containerId, select) {
+    const c = document.getElementById(containerId);
+    const max = parseInt(c.getAttribute('data-max'), 10);
+    const name = select.value;
+    if (!name) return;
+    if (c.querySelectorAll('.table-chip').length >= max) {
+      showToast('最多选择 ' + max + ' 张逻辑表', 'warn');
+      return;
+    }
+    const dup = Array.from(c.querySelectorAll('.table-chip .chip-name')).some(n => n.textContent.trim() === name);
+    if (dup) {
+      showToast('该逻辑表已选择', 'warn');
+      return;
+    }
+    const chip = document.createElement('span');
+    chip.className = 'table-chip';
+    chip.innerHTML = '<span class="chip-name">' + name + '</span><button type="button" aria-label="移除 ' + name + '"><svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 2l6 6M8 2l-6 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>';
+    const countEl = document.getElementById(containerId + '-count');
+    c.insertBefore(chip, countEl);
+    updateChipCount(containerId);
+    showToast('已添加逻辑表 ' + name);
+  }
+  document.getElementById('logicSelect').addEventListener('change', e => { addChip('scriptChips', e.target); e.target.value = ''; });
+  document.getElementById('nativeLogicSelect').addEventListener('change', e => { addChip('nativeChips', e.target); e.target.value = ''; });
+  bindChips('scriptChips');
+  bindChips('nativeChips');
+
+  // ===== 向导式:数据表选择 =====
+  const tableFields = { 'dwh_risk_credit_t': 24, 'dwh_risk_credit_log_t': 18, 'dwh_cust_basic_t': 32, 'dwh_risk_credit_limit_t': 12 };
+  document.getElementById('guideTableSelect').addEventListener('change', e => {
+    const info = document.getElementById('guideTableInfo');
+    const name = e.target.value;
+    info.querySelector('.info-name').textContent = name;
+    info.querySelector('.info-fields').textContent = tableFields[name] || 20;
+    showToast('已选择数据表 ' + name);
+  });
+
+  // ===== 高级配置:缓存时间联动 =====
+  document.querySelectorAll('.js-cache-select').forEach(sel => {
+    sel.addEventListener('change', e => {
+      const row = sel.closest('.cache-row');
+      const input = row.querySelector('.js-cache-input');
+      const hint = row.querySelector('.js-cache-hint');
+      if (e.target.value === 'custom') { input.style.display = ''; hint.textContent = '请输入缓存秒数'; }
+      else if (e.target.value === 'off') { input.style.display = 'none'; hint.textContent = '不缓存'; }
+      else { input.style.display = 'none'; hint.textContent = '默认 600 秒'; }
+    });
+  });
+
+  // ===== 向导式:分页开关 =====
+  const pageToggle = document.getElementById('pageToggle');
+  const pageHint = document.getElementById('pageHint');
+  pageToggle.addEventListener('change', () => {
+    pageHint.textContent = '当前:' + (pageToggle.checked ? '已开启' : '已关闭');
+    showToast(pageToggle.checked ? '已开启分页' : '已关闭分页');
+  });
+</script>
+<script src="menu.js"></script>
+</body>
+</html>

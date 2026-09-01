@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API 编排 — 数据服务平台</title>
+<style>
+  :root {
+    --ds-color-white: #ffffff;
+    --ds-color-primary-1: #e8f3ff;
+    --ds-color-primary-2: #bedaff;
+    --ds-color-primary-5: #4080ff;
+    --ds-color-primary-6: #165dff;
+    --ds-color-primary-7: #0e42d2;
+    --ds-color-gray-1: #f7f8fa;
+    --ds-color-gray-2: #f2f3f5;
+    --ds-color-gray-3: #e5e6eb;
+    --ds-color-gray-4: #c9cdd4;
+    --ds-color-gray-6: #86909c;
+    --ds-color-gray-8: #4e5969;
+    --ds-color-gray-10: #1d2129;
+    --ds-color-success: #00b42a;
+    --ds-color-success-light: #e8ffea;
+    --ds-color-success-text: #087a24;
+    --ds-color-warning: #ff7d00;
+    --ds-color-warning-light: #fff7e8;
+    --ds-color-warning-text: #a84b00;
+    --ds-color-danger: #f53f3f;
+    --ds-color-danger-light: #ffece8;
+    --ds-color-danger-text: #cb2634;
+    --ds-bg-canvas: var(--ds-color-gray-2);
+    --ds-bg-surface: var(--ds-color-white);
+    --ds-bg-fill: var(--ds-color-gray-2);
+    --ds-bg-fill-hover: var(--ds-color-gray-3);
+    --ds-text-1: var(--ds-color-gray-10);
+    --ds-text-2: var(--ds-color-gray-8);
+    --ds-text-3: var(--ds-color-gray-6);
+    --ds-border-1: var(--ds-color-gray-2);
+    --ds-border-2: var(--ds-color-gray-3);
+    --ds-border-3: var(--ds-color-gray-4);
+    --ds-focus-ring: 0 0 0 2px rgb(22 93 255 / 18%);
+    --ds-mask: rgb(29 33 41 / 60%);
+    --ds-font-sans: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+    --ds-font-mono: Consolas, Menlo, Monaco, monospace;
+    --ds-font-size-12: 12px;
+    --ds-font-size-14: 14px;
+    --ds-font-size-16: 16px;
+    --ds-font-size-20: 20px;
+    --ds-font-size-24: 24px;
+    --ds-font-weight-regular: 400;
+    --ds-font-weight-medium: 500;
+    --ds-font-weight-semibold: 600;
+    --ds-line-height-base: 1.5715;
+    --ds-line-height-tight: 1.35;
+    --ds-space-1: 2px;
+    --ds-space-2: 4px;
+    --ds-space-3: 6px;
+    --ds-space-4: 8px;
+    --ds-space-5: 10px;
+    --ds-space-6: 12px;
+    --ds-space-7: 16px;
+    --ds-space-8: 20px;
+    --ds-space-9: 24px;
+    --ds-space-10: 32px;
+    --ds-radius-small: 2px;
+    --ds-radius-medium: 4px;
+    --ds-radius-circle: 50%;
+    --ds-shadow-1: 0 2px 5px rgb(0 0 0 / 10%);
+    --ds-shadow-3: 0 8px 20px rgb(0 0 0 / 10%);
+    --ds-duration-fast: 100ms;
+    --ds-duration-base: 200ms;
+    --ds-ease-standard: cubic-bezier(0.34, 0.69, 0.1, 1);
+    --ds-control-default: 32px;
+    --ds-control-large: 36px;
+    --ds-nav-height: 60px;
+    --ds-sidebar-width: 220px;
+    --ds-desktop-min: 1200px;
+    --ds-content-max: 1440px;
+    --ds-page-padding: 24px;
+    --ds-z-popup: 1000;
+    --ds-z-modal: 1001;
+    --ds-z-message: 1003;
+    --ds-button-height: var(--ds-control-default);
+    --ds-button-radius: var(--ds-radius-small);
+    --ds-button-padding-inline: 15px;
+    --ds-input-height: var(--ds-control-default);
+    --ds-input-radius: var(--ds-radius-small);
+    --ds-table-cell-padding-inline: 16px;
+    --ds-table-cell-padding-block: 9px;
+    --ds-pagination-item-size: 32px;
+    --ds-modal-width: 520px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :root { --ds-duration-fast: 0ms; --ds-duration-base: 0ms; }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-width: var(--ds-desktop-min); min-height: 100%; }
+  body {
+    font-family: var(--ds-font-sans);
+    font-size: var(--ds-font-size-14);
+    line-height: var(--ds-line-height-base);
+    color: var(--ds-text-1);
+    background: var(--ds-bg-canvas);
+    -webkit-font-smoothing: antialiased;
+  }
+  button, input, select, textarea { font: inherit; }
+  a { color: var(--ds-color-primary-6); text-decoration: none; }
+  a:hover { color: var(--ds-color-primary-7); }
+  :focus-visible { outline: none; box-shadow: var(--ds-focus-ring); }
+  [hidden] { display: none !important; }
+
+  .topnav {
+    height: var(--ds-nav-height);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--ds-space-9);
+    background: var(--ds-bg-surface);
+    border-bottom: 1px solid var(--ds-border-2);
+  }
+  .brand { display: flex; align-items: center; gap: var(--ds-space-3); font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-semibold); }
+  .brand-mark { width: 28px; height: 28px; display: grid; place-items: center; color: var(--ds-color-white); background: var(--ds-color-primary-6); border-radius: var(--ds-radius-medium); }
+  .topnav-spacer { flex: 1; }
+  .user-chip { display: flex; align-items: center; gap: var(--ds-space-4); color: var(--ds-text-2); }
+  .avatar { width: 28px; height: 28px; border-radius: var(--ds-radius-circle); display: grid; place-items: center; background: var(--ds-color-primary-2); color: var(--ds-color-primary-7); font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-medium); }
+  .shell { display: flex; min-height: calc(100vh - var(--ds-nav-height)); }
+  .sidebar { width: var(--ds-sidebar-width); flex-shrink: 0; padding: var(--ds-space-7) var(--ds-space-4); background: var(--ds-bg-surface); border-right: 1px solid var(--ds-border-2); }
+  .nav-item, .nav-parent, .nav-child {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-6);
+    min-height: 40px;
+    padding: 0 var(--ds-space-7);
+    color: var(--ds-text-2);
+    border-radius: var(--ds-radius-small);
+  }
+  .nav-child { min-height: 36px; padding-left: 42px; }
+  button.nav-parent { width: 100%; border: 0; font: inherit; text-align: left; background: transparent; cursor: pointer; }
+  .nav-item:hover, .nav-parent:hover, .nav-child:hover { color: var(--ds-text-1); background: var(--ds-bg-fill); }
+  .nav-parent svg:last-child { margin-left: auto; transition: transform var(--ds-duration-fast) var(--ds-ease-standard); }
+  .nav-parent[aria-expanded="true"] svg:last-child { transform: rotate(90deg); }
+  .nav-children { padding: var(--ds-space-2) 0 var(--ds-space-4); }
+  .nav-child[aria-current="page"] { color: var(--ds-color-primary-6); background: var(--ds-color-primary-1); font-weight: var(--ds-font-weight-medium); }
+  .nav-child[aria-current="page"]::before { content: ""; position: absolute; left: 32px; top: 8px; bottom: 8px; width: 3px; background: var(--ds-color-primary-6); border-radius: 0 2px 2px 0; }
+  .nav-separator { height: 1px; margin: var(--ds-space-7); background: var(--ds-border-1); }
+  .main { flex: 1; min-width: 0; padding: var(--ds-page-padding); }
+  .content { width: 100%; max-width: var(--ds-content-max); margin: 0 auto; }
+  .crumb { display: flex; align-items: center; gap: var(--ds-space-3); margin-bottom: var(--ds-space-4); font-size: var(--ds-font-size-12); color: var(--ds-text-3); }
+  .crumb a { color: var(--ds-text-3); }
+  .page-head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--ds-space-7); margin-bottom: var(--ds-space-8); }
+  .page-head h1 { margin: 0; font-size: var(--ds-font-size-24); line-height: var(--ds-line-height-tight); font-weight: var(--ds-font-weight-medium); }
+  .page-head p { margin: var(--ds-space-3) 0 0; color: var(--ds-text-2); }
+  .btn {
+    min-height: var(--ds-button-height);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ds-space-3);
+    padding: 0 var(--ds-button-padding-inline);
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-button-radius);
+    background: var(--ds-bg-surface);
+    color: var(--ds-text-1);
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--ds-bg-fill); border-color: var(--ds-border-3); }
+  .btn-primary { color: var(--ds-color-white); background: var(--ds-color-primary-6); border-color: var(--ds-color-primary-6); }
+  .btn-primary:hover { background: var(--ds-color-primary-7); border-color: var(--ds-color-primary-7); }
+  .btn-danger { color: var(--ds-color-white); background: var(--ds-color-danger); border-color: var(--ds-color-danger); }
+  .btn-danger:hover { color: var(--ds-color-white); background: var(--ds-color-danger-text); border-color: var(--ds-color-danger-text); }
+  .btn:disabled { color: var(--ds-text-3); background: var(--ds-bg-fill); cursor: not-allowed; }
+  .btn-text, .link-button { min-height: 28px; padding: 0 var(--ds-space-2); color: var(--ds-color-primary-6); background: transparent; border: 0; cursor: pointer; }
+  .btn-text:hover, .link-button:hover { color: var(--ds-color-primary-7); background: var(--ds-color-primary-1); }
+  .icon-btn { width: var(--ds-control-default); height: var(--ds-control-default); display: inline-grid; place-items: center; padding: 0; color: var(--ds-text-2); background: transparent; border: 0; border-radius: var(--ds-radius-small); cursor: pointer; }
+  .icon-btn:hover { color: var(--ds-text-1); background: var(--ds-bg-fill); }
+  .name-link { font-weight: var(--ds-font-weight-medium); }
+  .filters { display: flex; align-items: flex-end; gap: var(--ds-space-6); margin-bottom: var(--ds-space-7); padding: var(--ds-space-7); background: var(--ds-bg-surface); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); }
+  .filter-field { display: flex; flex-direction: column; gap: var(--ds-space-2); }
+  .filter-field label { font-size: var(--ds-font-size-12); color: var(--ds-text-2); }
+  .filter-field.grow { flex: 1; max-width: 360px; }
+  input, select, textarea { min-height: var(--ds-input-height); border: 1px solid var(--ds-border-2); border-radius: var(--ds-input-radius); background: var(--ds-bg-surface); color: var(--ds-text-1); }
+  input, textarea { padding: 0 var(--ds-space-5); }
+  select { min-width: 148px; padding: 0 28px 0 var(--ds-space-5); }
+  textarea { min-height: 84px; padding-block: var(--ds-space-4); resize: vertical; }
+  input:hover, select:hover, textarea:hover { border-color: var(--ds-border-3); }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--ds-color-primary-6); box-shadow: var(--ds-focus-ring); }
+  .card { overflow: hidden; background: var(--ds-bg-surface); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); }
+  .card-head { display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding: 0 var(--ds-space-7); border-bottom: 1px solid var(--ds-border-1); }
+  .card-title { font-weight: var(--ds-font-weight-medium); }
+  .card-meta { margin-left: var(--ds-space-3); color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; min-width: 1160px; border-collapse: collapse; table-layout: fixed; }
+  caption { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  th, td { padding: var(--ds-table-cell-padding-block) var(--ds-table-cell-padding-inline); text-align: left; vertical-align: middle; border-bottom: 1px solid var(--ds-border-1); }
+  th { color: var(--ds-text-2); background: var(--ds-color-gray-1); font-weight: var(--ds-font-weight-medium); }
+  tbody tr:hover { background: var(--ds-color-gray-1); }
+  tbody tr:last-child td { border-bottom: 0; }
+  .path { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--ds-font-mono); font-size: var(--ds-font-size-12); color: var(--ds-text-2); }
+  .tag { display: inline-flex; align-items: center; gap: var(--ds-space-2); min-height: 24px; padding: 0 var(--ds-space-4); border-radius: var(--ds-radius-small); font-size: var(--ds-font-size-12); white-space: nowrap; }
+  .tag::before { content: ""; width: 6px; height: 6px; border-radius: var(--ds-radius-circle); background: currentColor; }
+  .tag-neutral { color: var(--ds-text-2); background: var(--ds-bg-fill); }
+  .tag-warning { color: var(--ds-color-warning-text); background: var(--ds-color-warning-light); }
+  .tag-success { color: var(--ds-color-success-text); background: var(--ds-color-success-light); }
+  .tag-danger { color: var(--ds-color-danger-text); background: var(--ds-color-danger-light); }
+  th.name-col, td.name-col { position: sticky; left: 0; z-index: 1; background: var(--ds-bg-surface); box-shadow: 1px 0 0 var(--ds-border-1); }
+  th.name-col { z-index: 2; background: var(--ds-color-gray-1); }
+  tbody tr:hover td.name-col { background: var(--ds-color-gray-1); }
+  th.action-col, td.action-col { position: sticky; right: 0; z-index: 1; background: var(--ds-bg-surface); box-shadow: -1px 0 0 var(--ds-border-1); }
+  th.action-col { z-index: 2; background: var(--ds-color-gray-1); }
+  tbody tr:hover td.action-col { background: var(--ds-color-gray-1); }
+  .row-actions { display: grid; grid-template-columns: repeat(4, 42px) var(--ds-control-default); justify-content: end; align-items: center; gap: var(--ds-space-2); min-width: 0; white-space: nowrap; }
+  .row-actions .btn-text { width: 42px; min-height: var(--ds-control-small); display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+  .row-actions .btn-text:disabled { color: var(--ds-text-4); background: transparent; cursor: not-allowed; }
+  .row-actions .btn-text:disabled:hover { color: var(--ds-text-4); background: transparent; }
+  .more-trigger { width: var(--ds-control-default); height: var(--ds-control-default); display: inline-grid; place-items: center; padding: 0; color: var(--ds-text-2); background: transparent; border: 0; border-radius: var(--ds-radius-small); cursor: pointer; }
+  .more-trigger:hover, .more-trigger[aria-expanded="true"] { color: var(--ds-text-1); background: var(--ds-bg-fill); }
+  .action-menu { position: fixed; z-index: var(--ds-z-popup); min-width: 180px; padding: var(--ds-space-2); background: var(--ds-bg-surface); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); box-shadow: var(--ds-shadow-1); }
+  .action-menu[hidden] { display: none; }
+  .menu-item { width: 100%; min-height: var(--ds-control-default); display: flex; align-items: center; padding: 0 var(--ds-space-5); color: var(--ds-text-1); background: transparent; border: 0; border-radius: var(--ds-radius-small); cursor: pointer; text-align: left; }
+  .menu-item:hover { background: var(--ds-bg-fill); }
+  .menu-item.is-danger { color: var(--ds-color-danger-text); }
+  .menu-item.is-danger:hover { background: var(--ds-color-danger-light); }
+  .menu-separator { height: 1px; margin: var(--ds-space-2) var(--ds-space-4); background: var(--ds-border-1); }
+  .pagination { min-height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 var(--ds-space-7); border-top: 1px solid var(--ds-border-1); }
+  .pagination-info { color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+  .pagination-actions { display: flex; align-items: center; gap: var(--ds-space-4); }
+  .empty { padding: 64px var(--ds-space-9); text-align: center; color: var(--ds-text-2); }
+  .empty strong { display: block; margin-bottom: var(--ds-space-3); color: var(--ds-text-1); font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+  .modal-mask { position: fixed; inset: 0; z-index: var(--ds-z-modal); display: grid; place-items: center; padding: var(--ds-space-9); background: var(--ds-mask); }
+  .modal-mask[aria-hidden="true"] { display: none; }
+  .modal { width: min(var(--ds-modal-width), 100%); max-height: calc(100vh - 64px); overflow: auto; background: var(--ds-bg-surface); border-radius: var(--ds-radius-medium); box-shadow: var(--ds-shadow-3); }
+  .modal-head, .modal-foot { min-height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 var(--ds-space-8); }
+  .modal-head { border-bottom: 1px solid var(--ds-border-1); }
+  .modal-head h2 { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+  .modal-body { display: grid; gap: var(--ds-space-7); padding: var(--ds-space-8); }
+  .modal-foot { justify-content: flex-end; gap: var(--ds-space-4); border-top: 1px solid var(--ds-border-1); }
+  .field { display: flex; flex-direction: column; gap: var(--ds-space-3); }
+  .field label { font-weight: var(--ds-font-weight-medium); }
+  .required { color: var(--ds-color-danger); }
+  .help { color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+  .field-error { color: var(--ds-color-danger-text); font-size: var(--ds-font-size-12); }
+  .modal-summary { display: grid; gap: var(--ds-space-5); color: var(--ds-text-2); }
+  .modal-summary p { margin: 0; }
+  .impact { padding: var(--ds-space-6); color: var(--ds-color-warning-text); background: var(--ds-color-warning-light); border: 1px solid var(--ds-color-warning); border-radius: var(--ds-radius-medium); }
+  .impact.is-danger { color: var(--ds-color-danger-text); background: var(--ds-color-danger-light); border-color: var(--ds-color-danger); }
+  .process-list { display: grid; gap: var(--ds-space-5); margin: 0; padding: 0; list-style: none; }
+  .process-item { display: grid; grid-template-columns: 20px 1fr auto; align-items: start; gap: var(--ds-space-4); }
+  .process-marker { width: 18px; height: 18px; display: grid; place-items: center; border-radius: var(--ds-radius-circle); color: var(--ds-text-2); background: var(--ds-bg-fill); font-size: var(--ds-font-size-12); }
+  .process-item.is-done .process-marker { color: var(--ds-color-success-text); background: var(--ds-color-success-light); }
+  .process-item.is-failed .process-marker { color: var(--ds-color-danger-text); background: var(--ds-color-danger-light); }
+  .process-state { color: var(--ds-text-2); font-size: var(--ds-font-size-12); white-space: nowrap; }
+  .toast { position: fixed; right: var(--ds-space-9); bottom: var(--ds-space-9); z-index: var(--ds-z-message); display: flex; align-items: center; gap: var(--ds-space-3); max-width: 360px; padding: var(--ds-space-6) var(--ds-space-7); color: var(--ds-text-1); background: var(--ds-bg-surface); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); box-shadow: var(--ds-shadow-1); transition: opacity var(--ds-duration-base) var(--ds-ease-standard); }
+  .toast[aria-hidden="true"] { opacity: 0; pointer-events: none; }
+</style>
+</head>
+<body>
+<header class="topnav">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l6 3v6l-6 3-6-3V5l6-3zM5 6.5h6M5 9.5h6" stroke="currentColor" stroke-width="1.3"/></svg>
+    </span>
+    <span>数据服务平台</span>
+  </div>
+  <div class="topnav-spacer"></div>
+  <div class="user-chip"><span>开发者</span><span class="avatar" aria-hidden="true">王</span><span>王超</span></div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar-mount" data-current="api-orch" data-hide="ds,market" aria-label="主导航"></aside>
+
+  <main class="main">
+    <div class="content">
+      <nav class="crumb" aria-label="面包屑"><a href="prototype-api-list.html">数据服务</a><span>›</span><span>API 编排</span></nav>
+      <div class="page-head">
+        <div><h1>API 编排</h1><p>通过节点连接已有 API 与函数服务，形成可测试、可发布的数据服务。</p></div>
+        <button type="button" class="btn btn-primary" id="openCreate">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          新建 API 编排
+        </button>
+      </div>
+
+      <section class="filters" aria-label="API 编排筛选">
+        <div class="filter-field grow"><label for="keyword">搜索</label><input id="keyword" type="search" placeholder="搜索名称、编排 ID 或路径"></div>
+        <div class="filter-field"><label for="statusFilter">服务状态</label><select id="statusFilter"><option value="">全部状态</option><option>草稿</option><option>待上线审核</option><option>上线中</option><option>已上线</option><option>待下线审核</option><option>下线中</option><option>已下线</option><option>上线失败</option><option>下线失败</option></select></div>
+        <div class="filter-field"><label for="domainFilter">业务域</label><select id="domainFilter"><option value="">全部业务域</option><option>风险管理</option><option>客户管理</option><option>营销运营</option><option>交易分析</option></select></div>
+        <button type="button" class="btn" id="resetFilters">重置</button>
+      </section>
+
+      <section class="card" aria-labelledby="listTitle">
+        <div class="card-head"><div><span class="card-title" id="listTitle">编排列表</span><span class="card-meta" id="resultCount">共 12 条</span></div><span class="card-meta">最近更新优先</span></div>
+        <div class="table-scroll">
+          <table>
+            <caption>API 编排列表</caption>
+            <thead><tr><th scope="col" class="name-col" style="width:16%">名称</th><th scope="col" style="width:10%">服务状态</th><th scope="col" style="width:9%">业务域</th><th scope="col" style="width:14%">调用路径</th><th scope="col" style="width:7%">当前版本</th><th scope="col" style="width:7%">负责人</th><th scope="col" style="width:12%">更新时间</th><th scope="col" class="action-col" style="width:25%">操作</th></tr></thead>
+            <tbody id="listBody"></tbody>
+          </table>
+          <div class="empty" id="emptyState" hidden><strong>没有符合条件的 API 编排</strong><span>调整搜索条件或重置筛选后重试。</span></div>
+        </div>
+        <div class="pagination">
+          <span class="pagination-info" id="pageInfo">第 1–10 条，共 12 条</span>
+          <div class="pagination-actions"><button type="button" class="btn" id="prevPage" disabled>上一页</button><span id="pageNumber">1 / 2</span><button type="button" class="btn" id="nextPage">下一页</button></div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<div class="modal-mask" id="createModal" role="dialog" aria-modal="true" aria-labelledby="createTitle" aria-hidden="true">
+  <div class="modal">
+    <div class="modal-head"><h2 id="createTitle">新建 API 编排</h2><button type="button" class="icon-btn" data-close-create aria-label="关闭新建窗口"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+    <form id="createForm" novalidate>
+      <div class="modal-body">
+        <div class="field"><label for="createName">编排名称 <span class="required">*</span></label><input id="createName" maxlength="50" aria-describedby="createNameHelp createNameError"><span class="help" id="createNameHelp">名称在当前目录内保持唯一，最多 50 个字符。</span><span class="field-error" id="createNameError" hidden>请输入 API 编排名称。</span></div>
+        <div class="field"><label for="createPath">调用路径 <span class="required">*</span></label><input id="createPath" value="/api/v1/orchestration/" aria-describedby="createPathHelp createPathError"><span class="help" id="createPathHelp">调用路径在当前租户内保持唯一。</span><span class="field-error" id="createPathError" hidden>请输入未被使用的调用路径。</span></div>
+        <div class="field"><label for="createFolder">存储目录 <span class="required">*</span></label><select id="createFolder"><option>风控服务</option><option>客户服务</option><option>营销服务</option></select></div>
+        <div class="field"><label for="createDescription">描述</label><textarea id="createDescription" placeholder="说明该编排解决的业务问题"></textarea></div>
+      </div>
+      <div class="modal-foot"><button type="button" class="btn" data-close-create>取消</button><button type="submit" class="btn btn-primary" id="createSubmit">创建并进入画布</button></div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-mask" id="actionModal" role="dialog" aria-modal="true" aria-labelledby="actionModalTitle" aria-hidden="true">
+  <div class="modal">
+    <div class="modal-head"><h2 id="actionModalTitle">确认操作</h2><button type="button" class="icon-btn" data-close-action aria-label="关闭操作窗口"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button></div>
+    <div class="modal-body" id="actionModalBody"></div>
+    <div class="modal-foot" id="actionModalFoot" hidden><button type="button" class="btn" data-close-action>取消</button><button type="button" class="btn btn-primary" id="actionModalConfirm">确认</button></div>
+  </div>
+</div>
+
+<div class="action-menu" id="moreMenu" role="menu" aria-label="编排操作" hidden></div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" aria-hidden="true">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 7v4M8 5h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+  <span id="toastMessage"></span>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var storageKey = "prototype-api-orchestration-rows-v3";
+  var baseRows = [
+    { id:"ORC-2026-0042", name:"客户风险评级聚合", status:"草稿", domain:"风险管理", path:"/api/v1/risk/orch/credit-rating", version:"v0.3", owner:"王超", updated:"2026-08-27 10:18" },
+    { id:"ORC-2026-0041", name:"客户统一画像查询", status:"待上线审核", domain:"客户管理", path:"/api/v1/customer/profile", version:"v1.2", owner:"张伟", updated:"2026-08-26 16:40" },
+    { id:"ORC-2026-0038", name:"客户授信摘要", status:"已上线", domain:"风险管理", path:"/api/v1/risk/credit-summary", version:"v2.1", owner:"李敏", updated:"2026-08-25 11:22" },
+    { id:"ORC-2026-0035", name:"交易风险明细", status:"上线中", domain:"交易分析", path:"/api/v1/trade/risk-detail", version:"v1.6", owner:"周涛", updated:"2026-08-23 14:08" },
+    { id:"ORC-2026-0032", name:"营销名单筛选", status:"上线失败", domain:"营销运营", path:"/api/v1/marketing/audience-filter", version:"v0.9", owner:"孙悦", updated:"2026-08-22 09:54", failedStep:"生产环境部署" },
+    { id:"ORC-2026-0029", name:"历史行为聚合", status:"已下线", domain:"客户管理", path:"/api/v1/customer/behavior-history", version:"v1.3", owner:"张伟", updated:"2026-08-20 17:12" },
+    { id:"ORC-2026-0027", name:"逾期风险评估", status:"草稿", domain:"风险管理", path:"/api/v1/risk/overdue-assess", version:"v0.2", owner:"王超", updated:"2026-08-19 15:31" },
+    { id:"ORC-2026-0024", name:"客户联系信息聚合", status:"待下线审核", domain:"客户管理", path:"/api/v1/customer/contact", version:"v1.0", owner:"李敏", updated:"2026-08-18 13:42" },
+    { id:"ORC-2026-0020", name:"优惠资格判定", status:"下线中", domain:"营销运营", path:"/api/v1/marketing/eligibility", version:"v3.0", owner:"孙悦", updated:"2026-08-16 10:20" },
+    { id:"ORC-2026-0018", name:"交易汇总查询", status:"下线失败", domain:"交易分析", path:"/api/v1/trade/summary", version:"v1.8", owner:"周涛", updated:"2026-08-14 18:05", failedStep:"停止生产流量" },
+    { id:"ORC-2026-0013", name:"额度使用趋势", status:"已上线", domain:"风险管理", path:"/api/v1/risk/quota-trend", version:"v1.1", owner:"王超", updated:"2026-08-12 11:09" },
+    { id:"ORC-2026-0009", name:"客户标签合并", status:"已下线", domain:"客户管理", path:"/api/v1/customer/tag-merge", version:"v1.1", owner:"张伟", updated:"2026-08-08 09:16" }
+  ];
+  var rows = loadRows() || baseRows.map(function (row) { return Object.assign({}, row); });
+  var page = 1;
+  var pageSize = 10;
+  var toastTimer = 0;
+  var modalConfirmHandler = null;
+  var activeMenuRowId = null;
+
+  function esc(value) {
+    return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+  function loadRows() {
+    try {
+      if (!window.sessionStorage) return null;
+      var saved = JSON.parse(window.sessionStorage.getItem(storageKey));
+      return Array.isArray(saved) && saved.length ? saved : null;
+    } catch (error) {
+      return null;
+    }
+  }
+  function saveRows() {
+    try {
+      if (window.sessionStorage) window.sessionStorage.setItem(storageKey, JSON.stringify(rows));
+    } catch (error) {}
+  }
+  function nowText() {
+    var now = new Date();
+    return now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" +
+      String(now.getDate()).padStart(2, "0") + " " + String(now.getHours()).padStart(2, "0") + ":" +
+      String(now.getMinutes()).padStart(2, "0");
+  }
+  function nextId() {
+    var max = rows.reduce(function (value, row) {
+      var number = Number(String(row.id).split("-").pop()) || 0;
+      return Math.max(value, number);
+    }, 0);
+    return "ORC-2026-" + String(max + 1).padStart(4, "0");
+  }
+  function statusClass(status) {
+    if (status === "已上线") return "tag-success";
+    if (status === "上线失败" || status === "下线失败") return "tag-danger";
+    if (status === "草稿" || status.indexOf("审核") >= 0 || status.indexOf("中") >= 0) return "tag-warning";
+    return "tag-neutral";
+  }
+  function detailHref(row, mode) {
+    return "prototype-api-orchestration-detail.html?mode=" + encodeURIComponent(mode) +
+      "&name=" + encodeURIComponent(row.name) +
+      "&id=" + encodeURIComponent(row.id) +
+      "&status=" + encodeURIComponent(row.status) +
+      "&path=" + encodeURIComponent(row.path) +
+      "&version=" + encodeURIComponent(row.version);
+  }
+  function visibleActionsHtml(row) {
+    var canEdit = row.status === "草稿";
+    var canOnline = row.status === "草稿" || row.status === "已下线";
+    var edit = canEdit
+      ? '<a class="btn-text" href="' + esc(detailHref(row, "edit")) + '">编辑</a>'
+      : '<button type="button" class="btn-text" disabled title="当前状态不可编辑">编辑</button>';
+    var onlineAction = row.status === "已下线" ? "reonline" : "submit_online";
+    var online = canOnline
+      ? '<button type="button" class="btn-text" data-row-action="' + onlineAction + '" data-row-id="' + esc(row.id) + '">上线</button>'
+      : '<button type="button" class="btn-text" disabled title="当前状态不可上线">上线</button>';
+    var copy = '<button type="button" class="btn-text" data-row-action="copy" data-row-id="' + esc(row.id) + '">复制</button>';
+    var versions = '<a class="btn-text" href="' + esc(detailHref(row, "view") + "&tab=version") + '">版本</a>';
+    return edit + online + copy + versions + moreTriggerHtml(row);
+  }
+  function moreTriggerHtml(row) {
+    return '<button type="button" class="more-trigger" data-more-row="' + esc(row.id) +
+      '" aria-haspopup="menu" aria-expanded="false" aria-label="更多操作：' + esc(row.name) + '">' +
+      '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="3" cy="8" r="1.2" fill="currentColor"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/><circle cx="13" cy="8" r="1.2" fill="currentColor"/></svg></button>';
+  }
+  function filteredRows() {
+    var keyword = document.getElementById("keyword").value.trim().toLowerCase();
+    var status = document.getElementById("statusFilter").value;
+    var domain = document.getElementById("domainFilter").value;
+    return rows.filter(function (row) {
+      var matchKeyword = !keyword || [row.name, row.id, row.path].join(" ").toLowerCase().indexOf(keyword) >= 0;
+      return matchKeyword && (!status || row.status === status) && (!domain || row.domain === domain);
+    });
+  }
+  function render() {
+    closeMoreMenu();
+    var result = filteredRows();
+    var pages = Math.max(1, Math.ceil(result.length / pageSize));
+    if (page > pages) page = pages;
+    var start = (page - 1) * pageSize;
+    var visible = result.slice(start, start + pageSize);
+    document.getElementById("resultCount").textContent = "共 " + result.length + " 条";
+    document.getElementById("listBody").innerHTML = visible.map(function (row) {
+      var name = '<a class="name-link" href="' + esc(detailHref(row, "view")) + '">' + esc(row.name) + '</a>';
+      return '<tr><td class="name-col">' + name + '<div class="card-meta">' + esc(row.id) + '</div></td>' +
+        '<td><span class="tag ' + statusClass(row.status) + '">' + esc(row.status) + '</span></td>' +
+        '<td>' + esc(row.domain) + '</td><td><div class="path" title="' + esc(row.path) + '">' + esc(row.path) + '</div></td>' +
+        '<td>' + esc(row.version) + '</td><td>' + esc(row.owner) + '</td><td>' + esc(row.updated) + '</td>' +
+        '<td class="action-col"><div class="row-actions">' + visibleActionsHtml(row) + '</div></td></tr>';
+    }).join("");
+    document.getElementById("emptyState").hidden = result.length !== 0;
+    document.querySelector("table").hidden = result.length === 0;
+    document.getElementById("pageInfo").textContent = result.length ? "第 " + (start + 1) + "–" + (start + visible.length) + " 条，共 " + result.length + " 条" : "共 0 条";
+    document.getElementById("pageNumber").textContent = page + " / " + pages;
+    document.getElementById("prevPage").disabled = page === 1;
+    document.getElementById("nextPage").disabled = page === pages || result.length === 0;
+    bindRowActions();
+  }
+  function bindRowActions() {
+    document.querySelectorAll("[data-main-action]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var row = findRow(button.getAttribute("data-row-id"));
+        if (row) handleMainAction(button.getAttribute("data-main-action"), row);
+      });
+    });
+    document.querySelectorAll("[data-row-action]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var row = findRow(button.getAttribute("data-row-id"));
+        if (row) handleMenuAction(button.getAttribute("data-row-action"), row);
+      });
+    });
+    document.querySelectorAll("[data-more-row]").forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        event.stopPropagation();
+        var row = findRow(button.getAttribute("data-more-row"));
+        if (row) openMoreMenu(button, row);
+      });
+    });
+  }
+  function findRow(id) {
+    return rows.find(function (row) { return row.id === id; });
+  }
+  function commonMoreActions(row) {
+    var actions = [{ key:"view", label:"查看详情" }];
+    if (row.status === "草稿") actions.push({ key:"delete", label:"删除草稿", danger:true, separated:true });
+    if (row.status === "待上线审核" || row.status === "待下线审核") {
+      actions.push({ key:"review", label:"查看审核进度", separated:true });
+      actions.push({ key:row.status === "待上线审核" ? "withdraw_online" : "withdraw_downline", label:"撤回申请" });
+    }
+    if (row.status === "已上线") {
+      actions.push({ key:"new_version", label:"创建新版本", separated:true });
+      actions.push({ key:"submit_downline", label:"提交下线", danger:true });
+    }
+    if (row.status === "上线中" || row.status === "下线中") {
+      actions.push({ key:"progress", label:row.status === "上线中" ? "查看上线进度" : "查看下线进度", separated:true });
+    }
+    if (row.status === "上线失败" || row.status === "下线失败") {
+      actions.push({ key:"failure", label:"查看失败原因", separated:true });
+    }
+    return actions;
+  }
+  function openMoreMenu(button, row) {
+    var menu = document.getElementById("moreMenu");
+    closeMoreMenu();
+    activeMenuRowId = row.id;
+    button.setAttribute("aria-expanded", "true");
+    menu.innerHTML = commonMoreActions(row).map(function (action) {
+      return (action.separated ? '<div class="menu-separator" role="separator"></div>' : "") +
+        '<button type="button" role="menuitem" class="menu-item' + (action.danger ? " is-danger" : "") +
+        '" data-menu-action="' + action.key + '">' + esc(action.label) + '</button>';
+    }).join("");
+    menu.hidden = false;
+    var rect = button.getBoundingClientRect();
+    var top = Math.min(window.innerHeight - menu.offsetHeight - 8, rect.bottom + 4);
+    menu.style.top = Math.max(8, top) + "px";
+    menu.style.left = Math.max(8, rect.right - menu.offsetWidth) + "px";
+    var first = menu.querySelector(".menu-item");
+    if (first) first.focus();
+  }
+  function closeMoreMenu() {
+    var menu = document.getElementById("moreMenu");
+    menu.hidden = true;
+    activeMenuRowId = null;
+    document.querySelectorAll("[data-more-row][aria-expanded=true]").forEach(function (button) {
+      button.setAttribute("aria-expanded", "false");
+    });
+  }
+  function handleMainAction(action, row) {
+    if (action === "review") return openReview(row);
+    if (action === "progress") return openProgress(row);
+    if (action === "failure") return openFailure(row);
+    if (action === "reonline") return openReonline(row);
+  }
+  function updateRowStatus(row, status, message) {
+    row.status = status;
+    row.updated = nowText();
+    delete row.failedStep;
+    saveRows();
+    render();
+    showToast(message);
+  }
+  function showToast(message) {
+    clearTimeout(toastTimer);
+    document.getElementById("toastMessage").textContent = message;
+    document.getElementById("toast").setAttribute("aria-hidden", "false");
+    toastTimer = setTimeout(function () { document.getElementById("toast").setAttribute("aria-hidden", "true"); }, 2400);
+  }
+  function openModal(id) {
+    document.getElementById(id).setAttribute("aria-hidden", "false");
+  }
+  function closeModal(id) {
+    document.getElementById(id).setAttribute("aria-hidden", "true");
+  }
+  function openActionModal(options) {
+    document.getElementById("actionModalTitle").textContent = options.title;
+    document.getElementById("actionModalBody").innerHTML = options.body;
+    var foot = document.getElementById("actionModalFoot");
+    var confirm = document.getElementById("actionModalConfirm");
+    modalConfirmHandler = options.onConfirm || null;
+    foot.hidden = !options.confirmText;
+    if (options.confirmText) {
+      confirm.textContent = options.confirmText;
+      confirm.className = "btn " + (options.danger ? "btn-danger" : "btn-primary");
+    }
+    openModal("actionModal");
+  }
+  function closeActionModal() {
+    closeModal("actionModal");
+    modalConfirmHandler = null;
+  }
+  function processList(items) {
+    return '<ol class="process-list">' + items.map(function (item) {
+      return '<li class="process-item ' + esc(item.state) + '"><span class="process-marker">' +
+        (item.state === "is-done" ? "✓" : item.state === "is-failed" ? "!" : "·") +
+        '</span><span>' + esc(item.name) + '</span><span class="process-state">' + esc(item.label) + '</span></li>';
+    }).join("") + "</ol>";
+  }
+  function openReview(row) {
+    var isDownline = row.status === "待下线审核";
+    openActionModal({
+      title: isDownline ? "下线审核进度" : "上线审核进度",
+      body: '<div class="modal-summary"><p><strong>' + esc(row.name) + '</strong></p><p>申请编号：REQ-2026-' + esc(row.id.slice(-4)) + '</p>' +
+        processList([
+          { name:"提交申请", state:"is-done", label:"已完成" },
+          { name:"负责人审核", state:"", label:"处理中" },
+          { name:isDownline ? "执行下线" : "执行上线", state:"", label:"未开始" }
+        ]) + '<p class="help">审核完成后，执行结果会回到当前 API 服务。</p></div>'
+    });
+  }
+  function openProgress(row) {
+    var isDownline = row.status === "下线中";
+    openActionModal({
+      title: isDownline ? "下线执行进度" : "上线执行进度",
+      body: '<div class="modal-summary"><p><strong>' + esc(row.name) + '</strong></p>' +
+        processList(isDownline ? [
+          { name:"集市可见状态失效", state:"is-done", label:"已完成" },
+          { name:"暂停服务授权", state:"is-done", label:"已完成" },
+          { name:"停止生产流量", state:"", label:"执行中" }
+        ] : [
+          { name:"发布服务版本", state:"is-done", label:"已完成" },
+          { name:"部署生产环境", state:"", label:"执行中" },
+          { name:"集市可见状态生效", state:"", label:"未开始" }
+        ]) + '</div>'
+    });
+  }
+  function openFailure(row) {
+    var isDownline = row.status === "下线失败";
+    var failedStep = row.failedStep || (isDownline ? "停止生产流量" : "生产环境部署");
+    openActionModal({
+      title: isDownline ? "下线失败原因" : "上线失败原因",
+      body: '<div class="modal-summary"><p><strong>' + esc(row.name) + '</strong></p>' +
+        processList(isDownline ? [
+          { name:"集市可见状态失效", state:"is-done", label:"已完成" },
+          { name:"暂停服务授权", state:"is-done", label:"已完成" },
+          { name:failedStep, state:"is-failed", label:"执行失败" }
+        ] : [
+          { name:"发布服务版本", state:"is-done", label:"已完成" },
+          { name:failedStep, state:"is-failed", label:"执行失败" },
+          { name:"集市可见状态生效", state:"", label:"未开始" }
+        ]) + '<div class="impact is-danger">失败步骤：' + esc(failedStep) + '。重试只会重新执行该步骤，不会修改已完成的历史记录。</div></div>',
+      confirmText:"重试失败步骤",
+      onConfirm:function () {
+        updateRowStatus(row, isDownline ? "下线中" : "上线中", row.name + "已重新进入" + (isDownline ? "下线" : "上线") + "流程");
+      }
+    });
+  }
+  function openReonline(row) {
+    openActionModal({
+      title:"重新上线",
+      body:'<div class="modal-summary"><p>确认重新上线 <strong>' + esc(row.name) + '</strong>？</p><div class="impact">上线成功后，将恢复仍在有效期内且未撤销的原服务授权；已过期或已撤销授权不会恢复。</div></div>',
+      confirmText:"提交上线",
+      onConfirm:function () { updateRowStatus(row, "待上线审核", row.name + "已提交重新上线审核"); }
+    });
+  }
+  function openCopy(row) {
+    var copyName = row.name + " - 副本";
+    var copyPath = row.path.replace(/\/$/, "") + "-copy";
+    openActionModal({
+      title:"复制为新草稿",
+      body:'<div class="field"><label for="copyName">编排名称 <span class="required">*</span></label><input id="copyName" value="' + esc(copyName) + '" aria-describedby="copyNameError"><span class="field-error" id="copyNameError" hidden>请输入不重复的编排名称。</span></div>' +
+        '<div class="field"><label for="copyPath">调用路径 <span class="required">*</span></label><input id="copyPath" value="' + esc(copyPath) + '" aria-describedby="copyPathError"><span class="field-error" id="copyPathError" hidden>请输入未被使用的调用路径。</span></div>' +
+        '<p class="help">只复制画布、参数映射和基本配置，不复制版本历史、授权、部署或运行数据。</p>',
+      confirmText:"创建草稿",
+      onConfirm:function () {
+        var nameInput = document.getElementById("copyName");
+        var pathInput = document.getElementById("copyPath");
+        var name = nameInput.value.trim();
+        var path = pathInput.value.trim();
+        var nameInvalid = !name || rows.some(function (item) { return item.name === name; });
+        var pathInvalid = !path || rows.some(function (item) { return item.path === path; });
+        nameInput.setAttribute("aria-invalid", String(nameInvalid));
+        pathInput.setAttribute("aria-invalid", String(pathInvalid));
+        document.getElementById("copyNameError").hidden = !nameInvalid;
+        document.getElementById("copyPathError").hidden = !pathInvalid;
+        if (nameInvalid || pathInvalid) return false;
+        rows.unshift({ id:nextId(), name:name, status:"草稿", domain:row.domain, path:path, version:"v0.1", owner:"王超", updated:nowText() });
+        page = 1;
+        saveRows();
+        render();
+        showToast(name + "已创建为独立草稿");
+      }
+    });
+  }
+  function openLifecycleAction(key, row) {
+    var actions = {
+      submit_online: {
+        title:"提交上线",
+        body:'<div class="modal-summary"><p>提交 <strong>' + esc(row.name) + '</strong> 的当前草稿进入上线审核？</p><p class="help">提交后当前版本在审核期间不可编辑。</p></div>',
+        confirmText:"提交审核",
+        next:"待上线审核",
+        message:row.name + "已提交上线审核"
+      },
+      withdraw_online: {
+        title:"撤回上线申请",
+        body:'<div class="modal-summary"><p>撤回 <strong>' + esc(row.name) + '</strong> 的上线申请？</p><p class="help">撤回后服务返回草稿，可继续编辑。</p></div>',
+        confirmText:"撤回申请",
+        next:"草稿",
+        message:row.name + "的上线申请已撤回"
+      },
+      submit_downline: {
+        title:"提交下线",
+        body:'<div class="modal-summary"><p>提交 <strong>' + esc(row.name) + '</strong> 的下线申请？</p><div class="impact is-danger">下线执行成功后将停止生产流量，并暂停现有服务授权。</div></div>',
+        confirmText:"提交下线",
+        danger:true,
+        next:"待下线审核",
+        message:row.name + "已提交下线审核"
+      },
+      withdraw_downline: {
+        title:"撤回下线申请",
+        body:'<div class="modal-summary"><p>撤回 <strong>' + esc(row.name) + '</strong> 的下线申请？</p><p class="help">撤回后服务继续保持已上线。</p></div>',
+        confirmText:"撤回申请",
+        next:"已上线",
+        message:row.name + "的下线申请已撤回"
+      }
+    };
+    var config = actions[key];
+    openActionModal({
+      title:config.title,
+      body:config.body,
+      confirmText:config.confirmText,
+      danger:config.danger,
+      onConfirm:function () { updateRowStatus(row, config.next, config.message); }
+    });
+  }
+  function openDelete(row) {
+    openActionModal({
+      title:"删除草稿",
+      body:'<div class="modal-summary"><p>确认永久删除草稿 <strong>' + esc(row.name) + '</strong>？</p><div class="impact is-danger">画布、参数映射和未发布配置将被移除，此操作无法撤销。</div></div>',
+      confirmText:"删除草稿",
+      danger:true,
+      onConfirm:function () {
+        rows = rows.filter(function (item) { return item.id !== row.id; });
+        saveRows();
+        render();
+        showToast(row.name + "草稿已删除");
+      }
+    });
+  }
+  function handleMenuAction(action, row) {
+    if (action === "review" || action === "progress" || action === "failure" || action === "reonline") {
+      return handleMainAction(action, row);
+    }
+    if (action === "view") {
+      window.location.href = detailHref(row, "view");
+      return;
+    }
+    if (action === "new_version") {
+      window.location.href = detailHref(row, "new-version");
+      return;
+    }
+    if (action === "copy") return openCopy(row);
+    if (action === "versions") {
+      window.location.href = detailHref(row, "view") + "&tab=version";
+      return;
+    }
+    if (action === "delete") return openDelete(row);
+    openLifecycleAction(action, row);
+  }
+
+  ["keyword", "statusFilter", "domainFilter"].forEach(function (id) {
+    document.getElementById(id).addEventListener(id === "keyword" ? "input" : "change", function () { page = 1; render(); });
+  });
+  document.getElementById("resetFilters").addEventListener("click", function () {
+    document.getElementById("keyword").value = "";
+    document.getElementById("statusFilter").value = "";
+    document.getElementById("domainFilter").value = "";
+    page = 1;
+    render();
+  });
+  document.getElementById("prevPage").addEventListener("click", function () { if (page > 1) { page -= 1; render(); } });
+  document.getElementById("nextPage").addEventListener("click", function () { if (page < Math.ceil(filteredRows().length / pageSize)) { page += 1; render(); } });
+  document.getElementById("openCreate").addEventListener("click", function () {
+    openModal("createModal");
+    document.getElementById("createName").focus();
+  });
+  document.querySelectorAll("[data-close-create]").forEach(function (button) {
+    button.addEventListener("click", function () { closeModal("createModal"); });
+  });
+  document.querySelectorAll("[data-close-action]").forEach(function (button) {
+    button.addEventListener("click", closeActionModal);
+  });
+  document.getElementById("actionModalConfirm").addEventListener("click", function () {
+    if (!modalConfirmHandler) return;
+    var result = modalConfirmHandler();
+    if (result !== false) closeActionModal();
+  });
+  document.getElementById("moreMenu").addEventListener("click", function (event) {
+    var item = event.target.closest("[data-menu-action]");
+    if (!item || !activeMenuRowId) return;
+    var row = findRow(activeMenuRowId);
+    var action = item.getAttribute("data-menu-action");
+    closeMoreMenu();
+    if (row) handleMenuAction(action, row);
+  });
+  document.getElementById("createForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    var nameInput = document.getElementById("createName");
+    var pathInput = document.getElementById("createPath");
+    var name = nameInput.value.trim();
+    var path = pathInput.value.trim();
+    var nameInvalid = !name || rows.some(function (row) { return row.name === name; });
+    var pathInvalid = !path || rows.some(function (row) { return row.path === path; });
+    nameInput.setAttribute("aria-invalid", String(nameInvalid));
+    pathInput.setAttribute("aria-invalid", String(pathInvalid));
+    document.getElementById("createNameError").hidden = !nameInvalid;
+    document.getElementById("createPathError").hidden = !pathInvalid;
+    if (nameInvalid || pathInvalid) return;
+    var folder = document.getElementById("createFolder").value;
+    var domain = folder === "风控服务" ? "风险管理" : folder === "营销服务" ? "营销运营" : "客户管理";
+    var row = { id:nextId(), name:name, status:"草稿", domain:domain, path:path, version:"v0.1", owner:"王超", updated:nowText() };
+    rows.unshift(row);
+    saveRows();
+    window.location.href = detailHref(row, "new");
+  });
+  document.addEventListener("click", function (event) {
+    if (!event.target.closest("[data-more-row]") && !event.target.closest("#moreMenu")) closeMoreMenu();
+  });
+  document.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape") return;
+    closeMoreMenu();
+    closeModal("createModal");
+    closeActionModal();
+  });
+  if (window.addEventListener) {
+    window.addEventListener("resize", closeMoreMenu);
+    window.addEventListener("scroll", closeMoreMenu, true);
+  }
+  render();
+})();
+</script>
+<script src="menu.js"></script>
+</body>
+</html>

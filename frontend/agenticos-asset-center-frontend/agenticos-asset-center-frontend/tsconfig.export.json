@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "src/vite-env.d.ts",
+    "src/pages/home/asset-center/**/*.ts",
+    "src/pages/home/asset-center/**/*.tsx",
+    "src/components/asset/**/*.ts",
+    "src/components/asset/**/*.tsx",
+    "src/components/ui/**/*.ts",
+    "src/components/ui/**/*.tsx",
+    "src/components/cards/chartTheme.ts",
+    "src/hooks/useUrlTab.ts",
+    "src/hooks/useDebouncedValue.ts",
+    "src/hooks/useCanWrite.ts",
+    "src/store/authStore.ts",
+    "src/permission/writeScope.tsx"
+  ],
+  "exclude": [
+    "**/__tests__/**",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
+}

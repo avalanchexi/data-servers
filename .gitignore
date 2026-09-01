@@ -1,5 +1,6 @@
 .tmp/
 .gstack/
+output/playwright/
 
 __pycache__/
 *.py[cod]

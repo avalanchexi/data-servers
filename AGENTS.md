@@ -12,6 +12,6 @@
 
 本仓库采用单上下文领域文档布局。详见 `docs/agents/domain.md`。
 
-### 原型设计规范 Skill
+### 前端规范
 
-设计、生成、修改或审查桌面 Web 原型时使用 `$enterprise-prototype-design`；仓库唯一规则位于 `.agents/skills/enterprise-prototype-design/`，平台产品术语仍以 `CONTEXT.md` 为准。
+涉及前端规范、设计、原型、实现或评审时，先读取 `frontend/alignment.md`。原 `$enterprise-prototype-design` Skill 与旧设计系统已经弃用，不再作为规范来源；平台产品术语仍以 `CONTEXT.md` 为准。

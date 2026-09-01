@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API 开发 — 客户授信额度查询</title>
+<style>
+  :root {
+    --ds-color-white: #ffffff;
+    --ds-color-primary-1: #e8f3ff;
+    --ds-color-primary-2: #bedaff;
+    --ds-color-primary-5: #4080ff;
+    --ds-color-primary-6: #165dff;
+    --ds-color-primary-7: #0e42d2;
+    --ds-color-gray-1: #f7f8fa;
+    --ds-color-gray-2: #f2f3f5;
+    --ds-color-gray-3: #e5e6eb;
+    --ds-color-gray-4: #c9cdd4;
+    --ds-color-gray-5: #a9aeb8;
+    --ds-color-gray-6: #86909c;
+    --ds-color-gray-7: #6b7785;
+    --ds-color-gray-8: #4e5969;
+    --ds-color-gray-9: #272e3b;
+    --ds-color-gray-10: #1d2129;
+    --ds-color-success: #00b42a;
+    --ds-color-success-light: #e8ffea;
+    --ds-color-success-text: #087a24;
+    --ds-color-warning: #ff7d00;
+    --ds-color-warning-light: #fff7e8;
+    --ds-color-warning-text: #a84b00;
+    --ds-color-danger: #f53f3f;
+    --ds-color-danger-light: #ffece8;
+    --ds-color-danger-text: #cb2634;
+    --ds-bg-canvas: var(--ds-color-gray-2);
+    --ds-bg-surface: var(--ds-color-white);
+    --ds-bg-fill: var(--ds-color-gray-2);
+    --ds-bg-fill-hover: var(--ds-color-gray-3);
+    --ds-text-1: var(--ds-color-gray-10);
+    --ds-text-2: var(--ds-color-gray-8);
+    --ds-text-3: var(--ds-color-gray-6);
+    --ds-text-4: var(--ds-color-gray-4);
+    --ds-border-1: var(--ds-color-gray-2);
+    --ds-border-2: var(--ds-color-gray-3);
+    --ds-border-3: var(--ds-color-gray-4);
+    --ds-focus-ring: 0 0 0 2px rgb(22 93 255 / 18%);
+    --ds-mask: rgb(29 33 41 / 60%);
+    --ds-font-sans: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    --ds-font-mono: Consolas, Menlo, Monaco, monospace;
+    --ds-font-size-12: 12px;
+    --ds-font-size-14: 14px;
+    --ds-font-size-16: 16px;
+    --ds-font-size-20: 20px;
+    --ds-font-size-24: 24px;
+    --ds-font-weight-regular: 400;
+    --ds-font-weight-medium: 500;
+    --ds-font-weight-semibold: 600;
+    --ds-line-height-base: 1.5715;
+    --ds-space-2: 4px;
+    --ds-space-3: 6px;
+    --ds-space-4: 8px;
+    --ds-space-5: 10px;
+    --ds-space-6: 12px;
+    --ds-space-7: 16px;
+    --ds-space-8: 20px;
+    --ds-space-9: 24px;
+    --ds-space-10: 32px;
+    --ds-radius-small: 2px;
+    --ds-radius-medium: 4px;
+    --ds-radius-large: 8px;
+    --ds-shadow-1: 0 2px 5px rgb(0 0 0 / 10%);
+    --ds-shadow-2: 0 4px 10px rgb(0 0 0 / 10%);
+    --ds-shadow-3: 0 8px 20px rgb(0 0 0 / 10%);
+    --ds-duration-fast: 100ms;
+    --ds-ease-standard: cubic-bezier(0.34, 0.69, 0.1, 1);
+    --ds-control-default: 32px;
+    --ds-nav-height: 60px;
+    --ds-sidebar-width: 220px;
+    --ds-page-padding: 24px;
+    --ds-z-modal: 1001;
+    --ds-z-message: 1003;
+    --ds-button-height: var(--ds-control-default);
+    --ds-button-radius: var(--ds-radius-small);
+    --ds-button-padding-inline: 15px;
+    --ds-input-height: var(--ds-control-default);
+    --ds-input-radius: var(--ds-radius-small);
+    --ds-form-item-gap: 20px;
+    --ds-table-cell-padding-inline: 16px;
+    --ds-table-cell-padding-block: 9px;
+    --ds-pagination-item-size: 32px;
+    --ds-modal-width: 520px;
+  }
+  @media (prefers-reduced-motion: reduce) { :root { --ds-duration-fast: 0ms; } }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--ds-font-sans);
+    font-size: var(--ds-font-size-14);
+    line-height: var(--ds-line-height-base);
+    color: var(--ds-text-1);
+    background: var(--ds-bg-canvas);
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; }
+  a { color: var(--ds-color-primary-6); text-decoration: none; }
+  :focus-visible { outline: none; box-shadow: var(--ds-focus-ring); }
+
+  /* 顶部导航 */
+  .topnav {
+    height: var(--ds-nav-height);
+    background: var(--ds-color-white);
+    border-bottom: 1px solid var(--ds-border-2);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--ds-space-9);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    font-size: var(--ds-font-size-16);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-text-1);
+    margin-right: var(--ds-space-10);
+  }
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--ds-radius-medium);
+    background: linear-gradient(135deg, var(--ds-color-primary-5), var(--ds-color-primary-7));
+    display: grid;
+    place-items: center;
+    color: var(--ds-color-white);
+  }
+  .topnav-spacer { flex: 1; }
+  .user-chip { display: flex; align-items: center; gap: var(--ds-space-3); font-size: var(--ds-font-size-14); color: var(--ds-text-2); }
+  .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--ds-color-primary-2); color: var(--ds-color-primary-7); display: grid; place-items: center; font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-medium); }
+
+  .shell { display: flex; min-height: calc(100vh - var(--ds-nav-height)); }
+  .sidebar {
+    width: var(--ds-sidebar-width);
+    background: var(--ds-color-white);
+    border-right: 1px solid var(--ds-border-2);
+    padding: var(--ds-space-7) 0;
+    flex-shrink: 0;
+  }
+  .nav-title { font-size: var(--ds-font-size-12); color: var(--ds-text-3); padding: 0 var(--ds-space-7) var(--ds-space-4); letter-spacing: 0.4px; }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-6);
+    padding: 0 var(--ds-space-7);
+    height: 40px;
+    color: var(--ds-text-2);
+    border-radius: var(--ds-radius-small);
+    cursor: pointer;
+    font-size: var(--ds-font-size-14);
+    text-decoration: none;
+    position: relative;
+  }
+  .nav-item:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .nav-item[aria-current="page"] { background: var(--ds-color-primary-1); color: var(--ds-color-primary-6); font-weight: var(--ds-font-weight-medium); }
+  .nav-item[aria-current="page"]::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px; background: var(--ds-color-primary-6); border-radius: 0 2px 2px 0; }
+  .nav-item svg { flex-shrink: 0; }
+  .nav-section { margin-top: var(--ds-space-2); }
+  .nav-parent { display: flex; align-items: center; gap: var(--ds-space-6); padding: 0 var(--ds-space-7); height: 40px; color: var(--ds-text-2); border-radius: var(--ds-radius-small); cursor: pointer; font-size: var(--ds-font-size-14); user-select: none; text-decoration: none; position: relative; }
+  .nav-parent:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .nav-parent .chev { margin-left: auto; transition: transform var(--ds-duration-fast) var(--ds-ease-standard); }
+  .nav-parent.is-open .chev { transform: rotate(90deg); }
+  .nav-children { display: none; padding: var(--ds-space-2) 0 var(--ds-space-3); }
+  .nav-children.is-open { display: block; }
+  .nav-child { display: flex; align-items: center; gap: var(--ds-space-6); padding: 0 var(--ds-space-7) 0 42px; height: 36px; color: var(--ds-text-2); border-radius: var(--ds-radius-small); cursor: pointer; font-size: var(--ds-font-size-14); text-decoration: none; position: relative; }
+  .nav-child:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .nav-child[aria-current="page"] { background: var(--ds-color-primary-1); color: var(--ds-color-primary-6); font-weight: var(--ds-font-weight-medium); }
+  .nav-child[aria-current="page"]::before { content: ""; position: absolute; left: 32px; top: 8px; bottom: 8px; width: 3px; background: var(--ds-color-primary-6); border-radius: 0 2px 2px 0; }
+
+  /* 主区 */
+  .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .editor-head {
+    background: var(--ds-color-white);
+    border-bottom: 1px solid var(--ds-border-2);
+    padding: var(--ds-space-7) var(--ds-space-9);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--ds-space-7);
+  }
+  .crumb { display: flex; gap: var(--ds-space-3); align-items: center; font-size: var(--ds-font-size-12); color: var(--ds-text-3); margin-bottom: var(--ds-space-3); }
+  .crumb a { color: var(--ds-text-3); }
+  .crumb a:hover { color: var(--ds-color-primary-6); }
+  .editor-title h1 { margin: 0; font-size: var(--ds-font-size-20); font-weight: var(--ds-font-weight-medium); display: flex; align-items: center; gap: var(--ds-space-5); }
+  .editor-title .meta { display: flex; gap: var(--ds-space-7); margin-top: var(--ds-space-3); font-size: var(--ds-font-size-12); color: var(--ds-text-3); flex-wrap: wrap; }
+  .editor-title .meta b { color: var(--ds-text-2); font-weight: var(--ds-font-weight-medium); margin-right: var(--ds-space-3); }
+  .head-actions { display: flex; gap: var(--ds-space-4); align-items: center; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ds-space-3);
+    height: var(--ds-button-height);
+    padding: 0 var(--ds-button-padding-inline);
+    border-radius: var(--ds-button-radius);
+    font-size: var(--ds-font-size-14);
+    border: 1px solid var(--ds-border-2);
+    background: var(--ds-color-white);
+    color: var(--ds-text-1);
+    cursor: pointer;
+    line-height: 1;
+  }
+  .btn:hover { background: var(--ds-bg-fill); border-color: var(--ds-border-3); }
+  .btn-primary { background: var(--ds-color-primary-6); border-color: var(--ds-color-primary-6); color: var(--ds-color-white); }
+  .btn-primary:hover { background: var(--ds-color-primary-7); border-color: var(--ds-color-primary-7); }
+  .btn-text { border-color: transparent; background: transparent; color: var(--ds-color-primary-6); padding: 0 4px; height: auto; }
+  .btn-text:hover { background: var(--ds-color-primary-1); }
+  .icon-btn { width: 28px; height: 28px; display: inline-grid; place-items: center; border: 1px solid var(--ds-border-2); background: var(--ds-color-white); border-radius: var(--ds-radius-small); cursor: pointer; color: var(--ds-text-2); }
+  .icon-btn:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+
+  .tag { display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: var(--ds-radius-small); font-size: var(--ds-font-size-12); line-height: 1; border: 1px solid transparent; }
+  .tag-warning { background: var(--ds-color-warning-light); color: var(--ds-color-warning-text); }
+  .tag-neutral { background: var(--ds-bg-fill); color: var(--ds-text-2); }
+  .tag-info { background: var(--ds-color-primary-1); color: var(--ds-color-primary-7); }
+  .tag-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  /* Tab 区 */
+  .tabs-bar { display: flex; gap: var(--ds-space-3); padding: 0 var(--ds-space-9); background: var(--ds-color-white); border-bottom: 1px solid var(--ds-border-2); }
+  .tab {
+    border: none;
+    background: transparent;
+    padding: var(--ds-space-7) var(--ds-space-7) calc(var(--ds-space-7) - 1px);
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-2);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tab:hover { color: var(--ds-text-1); }
+  .tab[aria-selected="true"] { color: var(--ds-color-primary-6); border-bottom-color: var(--ds-color-primary-6); font-weight: var(--ds-font-weight-medium); }
+  .tab-panel { display: none; padding: var(--ds-space-9); gap: var(--ds-space-7); flex-direction: column; flex: 1; }
+  .tab-panel[aria-hidden="false"] { display: flex; }
+
+  .card {
+    background: var(--ds-bg-surface);
+    border-radius: var(--ds-radius-medium);
+    border: 1px solid var(--ds-border-2);
+    overflow: hidden;
+  }
+  .card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--ds-space-7) var(--ds-space-9);
+    border-bottom: 1px solid var(--ds-border-1);
+  }
+  .card-head h2 { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+  .card-head .actions { display: flex; gap: var(--ds-space-4); align-items: center; }
+  .card-body { padding: var(--ds-space-9); }
+
+  /* SQL 编辑器 */
+  .editor-toolbar { display: flex; gap: var(--ds-space-4); padding: var(--ds-space-5) var(--ds-space-7); border-bottom: 1px solid var(--ds-border-1); background: var(--ds-bg-fill); align-items: center; flex-wrap: wrap; }
+  .editor-toolbar .label { font-size: var(--ds-font-size-12); color: var(--ds-text-3); margin-right: var(--ds-space-3); }
+  .table-chip { display: inline-flex; align-items: center; gap: var(--ds-space-3); background: var(--ds-color-primary-1); color: var(--ds-color-primary-7); padding: 4px 10px; border-radius: var(--ds-radius-small); font-size: var(--ds-font-size-12); }
+  .table-chip .x { cursor: pointer; color: inherit; opacity: .6; }
+  .table-chip .x:hover { opacity: 1; }
+  .editor-toolbar .spacer { flex: 1; }
+  .editor-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 360px;
+    border-top: 1px solid var(--ds-border-1);
+  }
+  .code-pane { display: flex; flex-direction: column; min-width: 0; border-right: 1px solid var(--ds-border-1); }
+  .code-pane:last-child { border-right: none; }
+  .pane-head { display: flex; align-items: center; justify-content: space-between; padding: var(--ds-space-5) var(--ds-space-7); border-bottom: 1px solid var(--ds-border-1); background: var(--ds-bg-fill); }
+  .pane-head h3 { margin: 0; font-size: var(--ds-font-size-12); color: var(--ds-text-2); font-weight: var(--ds-font-weight-medium); }
+  .pane-body { padding: var(--ds-space-7); overflow: auto; }
+  .code-editor {
+    font-family: var(--ds-font-mono);
+    font-size: var(--ds-font-size-12);
+    line-height: 1.7;
+    background: var(--ds-color-gray-1);
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-radius-small);
+    padding: var(--ds-space-7);
+    min-height: 280px;
+    white-space: pre;
+    overflow: auto;
+    color: var(--ds-text-1);
+  }
+  .kw { color: var(--ds-color-primary-6); font-weight: var(--ds-font-weight-medium); }
+  .str { color: var(--ds-color-success-text); }
+  .cmt { color: var(--ds-text-4); font-style: italic; }
+  .ph { color: var(--ds-color-warning-text); }
+  .log-pane { font-family: var(--ds-font-mono); font-size: var(--ds-font-size-12); }
+  .log-line { padding: 4px var(--ds-space-7); border-bottom: 1px solid var(--ds-border-1); color: var(--ds-text-2); display: flex; gap: var(--ds-space-7); }
+  .log-line.success { color: var(--ds-color-success-text); }
+  .log-line .ts { color: var(--ds-text-4); width: 80px; flex-shrink: 0; }
+
+  /* 参数表 */
+  .table-scroll { overflow-x: auto; }
+  table.data { width: 100%; border-collapse: collapse; font-size: var(--ds-font-size-14); }
+  table.data thead th { background: var(--ds-bg-fill); color: var(--ds-text-2); font-weight: var(--ds-font-weight-medium); text-align: left; padding: var(--ds-table-cell-padding-block) var(--ds-table-cell-padding-inline); border-bottom: 1px solid var(--ds-border-2); white-space: nowrap; }
+  table.data tbody td { padding: var(--ds-table-cell-padding-block) var(--ds-table-cell-padding-inline); border-bottom: 1px solid var(--ds-border-1); color: var(--ds-text-1); vertical-align: middle; }
+  table.data tbody tr:hover { background: var(--ds-bg-fill); }
+  table.data tbody tr:last-child td { border-bottom: none; }
+  .input-cell { display: inline-flex; align-items: center; gap: var(--ds-space-3); width: 100%; }
+  .input-cell input, .input-cell select {
+    width: 100%;
+    height: 28px;
+    padding: 0 8px;
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-radius-small);
+    background: var(--ds-color-white);
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-1);
+    font-family: inherit;
+  }
+  .input-cell input:focus, .input-cell select:focus { border-color: var(--ds-color-primary-6); outline: none; box-shadow: var(--ds-focus-ring); }
+
+  /* 表单字段 */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-9) var(--ds-space-9); }
+  .field { display: flex; flex-direction: column; gap: var(--ds-space-3); }
+  .field.full { grid-column: 1 / -1; }
+  .field > label { font-size: var(--ds-font-size-14); color: var(--ds-text-1); }
+  .field .req { color: var(--ds-color-danger); }
+  .field input, .field select, .field textarea {
+    height: var(--ds-input-height);
+    padding: 0 var(--ds-space-7);
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-input-radius);
+    background: var(--ds-color-white);
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-1);
+    font-family: inherit;
+  }
+  .field textarea { padding: 8px 12px; height: auto; resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--ds-color-primary-6); outline: none; box-shadow: var(--ds-focus-ring); }
+  .field .help { font-size: var(--ds-font-size-12); color: var(--ds-text-3); }
+  .radio-row { display: flex; gap: var(--ds-space-7); padding-top: 2px; }
+  .radio-row label { display: inline-flex; align-items: center; gap: var(--ds-space-3); font-size: var(--ds-font-size-14); color: var(--ds-text-1); cursor: pointer; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: calc(var(--ds-nav-height) + var(--ds-space-7));
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ds-color-gray-10);
+    color: var(--ds-color-white);
+    padding: var(--ds-space-5) var(--ds-space-7);
+    border-radius: var(--ds-radius-medium);
+    box-shadow: var(--ds-shadow-2);
+    z-index: var(--ds-z-message);
+    font-size: var(--ds-font-size-14);
+    display: none;
+    align-items: center;
+    gap: var(--ds-space-4);
+  }
+  .toast[aria-hidden="false"] { display: inline-flex; }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 2L14 5V11L8 14L2 11V5L8 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+        <path d="M8 5V11M5 6.5L11 9.5M11 6.5L5 9.5" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+    </span>
+    数据服务平台
+  </div>
+  <div class="topnav-spacer"></div>
+  <div style="display: flex; gap: var(--ds-space-7); align-items: center;">
+    <div class="user-chip">
+      <span class="avatar" aria-hidden="true">王</span>
+      <span>王超 · 数据开发</span>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar-mount" data-current="api-dev" data-hide="ds,market" aria-label="主导航"></aside>
+
+  <main class="main">
+    <!-- 编辑器头 -->
+    <div class="editor-head">
+      <div class="editor-title">
+        <nav class="crumb" aria-label="面包屑">
+          <a href="#" data-back>API</a>
+          <span>›</span>
+          <a href="#">风控服务</a>
+          <span>›</span>
+          <a href="#">授信查询</a>
+          <span>›</span>
+          <span>客户授信额度查询</span>
+        </nav>
+        <h1>
+          客户授信额度查询
+          <span class="tag tag-warning"><span class="tag-dot"></span>草稿</span>
+        </h1>
+        <div class="meta">
+          <span><b>API ID</b>170xxxx0485</span>
+          <span><b>路径</b>/api/v1/risk/credit/query</span>
+          <span><b>类型</b>脚本式</span>
+          <span><b>版本</b>v0.2</span>
+          <span><b>最近保存</b>2026-08-26 17:42</span>
+        </div>
+      </div>
+      <div class="head-actions">
+        <button type="button" class="btn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M4 2L1 5l3 3M10 2l3 3-3 3M8 1L6 9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          历史版本
+        </button>
+        <button type="button" class="btn" id="btnTest">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3-3 3 3-3 3-3-3zM9 4l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          测试
+        </button>
+        <button type="button" class="btn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 2h6l3 3v7H3V2zM6 6h4M6 9h4" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          另存为新版本
+        </button>
+        <button type="button" class="btn btn-primary" id="btnSave">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2h10v8l-3 4H2V2zM5 5h4M5 8h4" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          保存
+        </button>
+        <button type="button" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 2v10M5 4l3 3-3 3M3 2l8 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          提交上线
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-bar" role="tablist" aria-label="API 开发标签">
+      <button type="button" role="tab" id="tab-sql" aria-selected="true" aria-controls="panel-sql" class="tab">SQL 编辑</button>
+      <button type="button" role="tab" id="tab-req" aria-selected="false" aria-controls="panel-req" class="tab" tabindex="-1">请求参数</button>
+      <button type="button" role="tab" id="tab-resp" aria-selected="false" aria-controls="panel-resp" class="tab" tabindex="-1">返回参数</button>
+      <button type="button" role="tab" id="tab-adv" aria-selected="false" aria-controls="panel-adv" class="tab" tabindex="-1">高级配置</button>
+      <button type="button" role="tab" id="tab-test" aria-selected="false" aria-controls="panel-test" class="tab" tabindex="-1">测试</button>
+    </div>
+
+    <!-- SQL 编辑 -->
+    <section id="panel-sql" role="tabpanel" aria-labelledby="tab-sql" class="tab-panel" aria-hidden="false">
+      <div class="card">
+        <div class="editor-toolbar">
+          <span class="label">引用逻辑表:</span>
+          <span class="table-chip">
+            ads_credit_limit
+            <span class="x" role="button" tabindex="0" aria-label="移除">×</span>
+          </span>
+          <span class="table-chip">
+            ads_credit_dimension
+            <span class="x" role="button" tabindex="0" aria-label="移除">×</span>
+          </span>
+          <button type="button" class="btn-text">+ 添加逻辑表</button>
+          <span class="spacer"></span>
+          <button type="button" class="icon-btn" aria-label="表字段" title="表字段">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><rect x="2" y="2" width="10" height="10" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M5 2v10M9 2v10" stroke="currentColor" stroke-width="1.3"/></svg>
+          </button>
+          <button type="button" class="icon-btn" aria-label="格式化" title="格式化">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 4h10M4 7h6M6 10h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </button>
+          <button type="button" class="btn btn-primary" id="btnRun">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 2l7 4-7 4V2z" fill="currentColor"/></svg>
+            运行
+          </button>
+        </div>
+        <div class="editor-area">
+          <div class="code-pane">
+            <div class="pane-head">
+              <h3>SQL 编辑器</h3>
+              <div style="display: flex; gap: var(--ds-space-4);">
+                <button type="button" class="icon-btn" aria-label="解析请求参数" title="解析请求参数">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h6M5 4l3 3-3 3M9 3h3v8H9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button type="button" class="icon-btn" aria-label="全屏" title="全屏">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 5V2h3M9 2h3v3M12 9v3H9M5 12H2V9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="pane-body">
+              <pre class="code-editor" id="sqlEditor" contenteditable="true" spellcheck="false"><span class="cmt">-- 客户授信额度查询:支持按客户号、产品类型查询当前可用额度</span>
+<span class="kw">SELECT</span>
+    a.cust_no,
+    a.cust_name,
+    a.product_type,
+    a.credit_limit,
+    a.used_limit,
+    a.available_limit,
+    b.risk_level
+<span class="kw">FROM</span> ads_credit_limit a
+<span class="kw">LEFT JOIN</span> ads_credit_dimension b
+    <span class="kw">ON</span> a.cust_no = b.cust_no
+<span class="kw">WHERE</span>
+    a.cust_no = <span class="ph">${custNo}</span>
+    <span class="kw">AND</span> a.product_type = <span class="ph">${productType}</span>
+    <span class="kw">AND</span> a.status = <span class="str">'ACTIVE'</span>
+<span class="kw">ORDER BY</span> a.credit_limit <span class="kw">DESC</span>
+<span class="cmt">-- 系统自动识别,无需分号结尾</span></pre>
+            </div>
+          </div>
+          <div class="code-pane log-pane">
+            <div class="pane-head">
+              <h3>运行结果</h3>
+              <span style="font-size: var(--ds-font-size-12); color: var(--ds-text-3);">耗时 <b style="color: var(--ds-color-success-text);">126 ms</b></span>
+            </div>
+            <div class="pane-body" style="padding: 0;">
+              <div class="log-line success">
+                <span class="ts">14:32:08</span>
+                <span>SQL 解析成功,生成请求参数 2 个,返回参数 7 个</span>
+              </div>
+              <div class="log-line">
+                <span class="ts">14:32:08</span>
+                <span>解析占位符 ${custNo} → ads_credit_limit.cust_no (STRING)</span>
+              </div>
+              <div class="log-line">
+                <span class="ts">14:32:08</span>
+                <span>解析占位符 ${productType} → ads_credit_limit.product_type (STRING)</span>
+              </div>
+              <div class="log-line success">
+                <span class="ts">14:32:09</span>
+                <span>查询返回 3 条记录</span>
+              </div>
+              <div class="log-line">
+                <span class="ts">14:32:09</span>
+                <span>{"cust_no":"C20240001","cust_name":"张三","credit_limit":500000,...}</span>
+              </div>
+              <div class="log-line">
+                <span class="ts">14:32:09</span>
+                <span>{"cust_no":"C20240002","cust_name":"李四","credit_limit":200000,...}</span>
+              </div>
+              <div class="log-line">
+                <span class="ts">14:32:09</span>
+                <span>{"cust_no":"C20240003","cust_name":"王五","credit_limit":100000,...}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 请求参数 -->
+    <section id="panel-req" role="tabpanel" aria-labelledby="tab-req" class="tab-panel" aria-hidden="true">
+      <div class="card">
+        <div class="card-head">
+          <h2>请求参数</h2>
+          <div class="actions">
+            <button type="button" class="btn-text" id="btnParseReq">+ 解析请求参数</button>
+            <button type="button" class="btn-primary btn">+ 添加参数</button>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>参数名称</th>
+                <th>绑定逻辑表字段</th>
+                <th>类型</th>
+                <th>操作符</th>
+                <th>必选</th>
+                <th>示例值</th>
+                <th>安全等级</th>
+                <th>描述</th>
+                <th style="text-align: right">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="input-cell"><input type="text" value="custNo" aria-label="参数名称"></div>
+                </td>
+                <td>
+                  <div class="input-cell"><select aria-label="绑定字段"><option>ads_credit_limit.cust_no</option></select></div>
+                </td>
+                <td>STRING</td>
+                <td>
+                  <div class="input-cell"><select aria-label="操作符"><option>=</option><option>LIKE</option><option>IN</option></select></div>
+                </td>
+                <td><input type="checkbox" checked aria-label="必选"></td>
+                <td>
+                  <div class="input-cell"><input type="text" value="C20240001" aria-label="示例值"></div>
+                </td>
+                <td>
+                  <div class="input-cell"><select aria-label="安全等级"><option>L2 内部</option><option>L3 秘密</option></select></div>
+                </td>
+                <td>
+                  <div class="input-cell"><input type="text" value="客户号" aria-label="描述"></div>
+                </td>
+                <td style="text-align: right; white-space: nowrap;">
+                  <button type="button" class="btn-text">复制</button>
+                  <button type="button" class="btn-text" style="color: var(--ds-color-danger);">删除</button>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="input-cell"><input type="text" value="productType" aria-label="参数名称"></div>
+                </td>
+                <td>
+                  <div class="input-cell"><select aria-label="绑定字段"><option>ads_credit_limit.product_type</option></select></div>
+                </td>
+                <td>STRING</td>
+                <td>
+                  <div class="input-cell"><select aria-label="操作符"><option>=</option></select></div>
+                </td>
+                <td><input type="checkbox" checked aria-label="必选"></td>
+                <td>
+                  <div class="input-cell"><input type="text" value="LOAN" aria-label="示例值"></div>
+                </td>
+                <td>
+                  <div class="input-cell"><select aria-label="安全等级"><option>L1 公开</option><option selected>L2 内部</option></select></div>
+                </td>
+                <td>
+                  <div class="input-cell"><input type="text" value="产品类型" aria-label="描述"></div>
+                </td>
+                <td style="text-align: right; white-space: nowrap;">
+                  <button type="button" class="btn-text">复制</button>
+                  <button type="button" class="btn-text" style="color: var(--ds-color-danger);">删除</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 返回参数 -->
+    <section id="panel-resp" role="tabpanel" aria-labelledby="tab-resp" class="tab-panel" aria-hidden="true">
+      <div class="card">
+        <div class="card-head">
+          <h2>返回参数</h2>
+          <div class="actions">
+            <button type="button" class="btn-text">+ 从运行结果解析</button>
+            <button type="button" class="btn-primary btn">+ 添加参数</button>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>参数名称</th>
+                <th>绑定逻辑表字段</th>
+                <th>类型</th>
+                <th>排序</th>
+                <th>必返</th>
+                <th>示例值</th>
+                <th>安全等级</th>
+                <th>描述</th>
+                <th style="text-align: right">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="input-cell"><input type="text" value="cust_no" aria-label="参数名称"></div></td>
+                <td><div class="input-cell"><select aria-label="绑定字段"><option>ads_credit_limit.cust_no</option></select></div></td>
+                <td>STRING</td>
+                <td><input type="checkbox" aria-label="排序"></td>
+                <td><input type="checkbox" checked aria-label="必返"></td>
+                <td><div class="input-cell"><input type="text" value="C20240001" aria-label="示例值"></div></td>
+                <td><div class="input-cell"><select aria-label="安全等级"><option selected>L2 内部</option><option>L3 秘密</option></select></div></td>
+                <td><div class="input-cell"><input type="text" value="客户号" aria-label="描述"></div></td>
+                <td style="text-align: right; white-space: nowrap;"><button type="button" class="btn-text">复制</button> <button type="button" class="btn-text" style="color: var(--ds-color-danger);">删除</button></td>
+              </tr>
+              <tr>
+                <td><div class="input-cell"><input type="text" value="cust_name" aria-label="参数名称"></div></td>
+                <td><div class="input-cell"><select aria-label="绑定字段"><option>ads_credit_limit.cust_name</option></select></div></td>
+                <td>STRING</td>
+                <td><input type="checkbox" aria-label="排序"></td>
+                <td><input type="checkbox" checked aria-label="必返"></td>
+                <td><div class="input-cell"><input type="text" value="张三" aria-label="示例值"></div></td>
+                <td><div class="input-cell"><select aria-label="安全等级"><option selected>L2 内部</option></select></div></td>
+                <td><div class="input-cell"><input type="text" value="客户名称" aria-label="描述"></div></td>
+                <td style="text-align: right; white-space: nowrap;"><button type="button" class="btn-text">复制</button> <button type="button" class="btn-text" style="color: var(--ds-color-danger);">删除</button></td>
+              </tr>
+              <tr>
+                <td><div class="input-cell"><input type="text" value="credit_limit" aria-label="参数名称"></div></td>
+                <td><div class="input-cell"><select aria-label="绑定字段"><option>ads_credit_limit.credit_limit</option></select></div></td>
+                <td>DECIMAL</td>
+                <td><input type="checkbox" checked aria-label="排序"></td>
+                <td><input type="checkbox" checked aria-label="必返"></td>
+                <td><div class="input-cell"><input type="text" value="500000.00" aria-label="示例值"></div></td>
+                <td><div class="input-cell"><select aria-label="安全等级"><option selected>L3 秘密</option><option>L4 机密</option></select></div></td>
+                <td><div class="input-cell"><input type="text" value="授信额度" aria-label="描述"></div></td>
+                <td style="text-align: right; white-space: nowrap;"><button type="button" class="btn-text">复制</button> <button type="button" class="btn-text" style="color: var(--ds-color-danger);">删除</button></td>
+              </tr>
+              <tr>
+                <td><div class="input-cell"><input type="text" value="available_limit" aria-label="参数名称"></div></td>
+                <td><div class="input-cell"><select aria-label="绑定字段"><option>ads_credit_limit.available_limit</option></select></div></td>
+                <td>DECIMAL</td>
+                <td><input type="checkbox" aria-label="排序"></td>
+                <td><input type="checkbox" checked aria-label="必返"></td>
+                <td><div class="input-cell"><input type="text" value="320000.00" aria-label="示例值"></div></td>
+                <td><div class="input-cell"><select aria-label="安全等级"><option selected>L3 秘密</option></select></div></td>
+                <td><div class="input-cell"><input type="text" value="可用额度" aria-label="描述"></div></td>
+                <td style="text-align: right; white-space: nowrap;"><button type="button" class="btn-text">复制</button> <button type="button" class="btn-text" style="color: var(--ds-color-danger);">删除</button></td>
+              </tr>
+              <tr>
+                <td><div class="input-cell"><input type="text" value="risk_level" aria-label="参数名称"></div></td>
+                <td><div class="input-cell"><select aria-label="绑定字段"><option>ads_credit_dimension.risk_level</option></select></div></td>
+                <td>STRING</td>
+                <td><input type="checkbox" aria-label="排序"></td>
+                <td><input type="checkbox" aria-label="必返"></td>
+                <td><div class="input-cell"><input type="text" value="A" aria-label="示例值"></div></td>
+                <td><div class="input-cell"><select aria-label="安全等级"><option selected>L3 秘密</option></select></div></td>
+                <td><div class="input-cell"><input type="text" value="风险等级" aria-label="描述"></div></td>
+                <td style="text-align: right; white-space: nowrap;"><button type="button" class="btn-text">复制</button> <button type="button" class="btn-text" style="color: var(--ds-color-danger);">删除</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 高级配置 -->
+    <section id="panel-adv" role="tabpanel" aria-labelledby="tab-adv" class="tab-panel" aria-hidden="true">
+      <div class="card">
+        <div class="card-head"><h2>高级配置</h2></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field">
+              <label>返回结果格式</label>
+              <select aria-label="返回格式">
+                <option selected>JSON</option>
+                <option>JSONCompact(二维数组)</option>
+              </select>
+              <span class="help">JSONCompact 在保存并发布当前版本后生效,已对接 API 谨慎修改</span>
+            </div>
+            <div class="field">
+              <label>数据缓存策略</label>
+              <select aria-label="缓存策略">
+                <option>系统策略(默认 600s)</option>
+                <option selected>用户自定义</option>
+                <option>关闭缓存(实时查询)</option>
+              </select>
+              <span class="help">高频查询可启用缓存,数据实时性要求高时关闭</span>
+            </div>
+            <div class="field">
+              <label>缓存时间(秒)</label>
+              <input type="number" value="300" min="0" aria-label="缓存时间">
+            </div>
+            <div class="field">
+              <label>最大 limit</label>
+              <input type="number" value="1000" min="1" aria-label="最大 limit">
+              <span class="help">API 查询返回的最大记录数</span>
+            </div>
+            <div class="field">
+              <label>开启分页</label>
+              <div class="radio-row">
+                <label><input type="radio" name="page" value="off" checked> 不分页</label>
+                <label><input type="radio" name="page" value="on"> 开启分页(pageNum / pageSize)</label>
+              </div>
+              <span class="help">开启分页后自动新增公共请求与返回参数</span>
+            </div>
+            <div class="field">
+              <label>报警模板</label>
+              <div class="radio-row">
+                <label><input type="radio" name="alert" value="on" checked> 开启默认报警</label>
+                <label><input type="radio" name="alert" value="off"> 关闭</label>
+              </div>
+              <span class="help">报警接收人为 API 负责人,可在 API 详情中修改</span>
+            </div>
+            <div class="field full">
+              <label>版本描述</label>
+              <textarea rows="3" aria-label="版本描述" placeholder="说明本次版本变更点">新增 risk_level 字段,补充反欺诈维度数据</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 测试 -->
+    <section id="panel-test" role="tabpanel" aria-labelledby="tab-test" class="tab-panel" aria-hidden="true">
+      <div class="card">
+        <div class="card-head">
+          <h2>API 测试</h2>
+          <div class="actions">
+            <label style="font-size: var(--ds-font-size-12); color: var(--ds-text-2); display: inline-flex; align-items: center; gap: var(--ds-space-3);">
+              <input type="checkbox"> dryRun(只返回 SQL 不执行)
+            </label>
+            <button type="button" class="btn btn-primary" id="btnRunTest">发送请求</button>
+          </div>
+        </div>
+        <div class="card-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-9);">
+          <div>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--ds-space-7);">
+              <h3 style="margin: 0; font-size: var(--ds-font-size-14);">请求参数</h3>
+              <div style="display: flex; gap: var(--ds-space-3); align-items: center;">
+                <label style="font-size: var(--ds-font-size-12); color: var(--ds-text-3);">
+                  <input type="radio" name="fmt" value="form" checked> 表单
+                </label>
+                <label style="font-size: var(--ds-font-size-12); color: var(--ds-text-3);">
+                  <input type="radio" name="fmt" value="json"> JSON
+                </label>
+              </div>
+            </div>
+            <div class="field" style="margin-bottom: var(--ds-space-7);">
+              <label>custNo <span class="req">*</span></label>
+              <input type="text" value="C20240001">
+            </div>
+            <div class="field" style="margin-bottom: var(--ds-space-7);">
+              <label>productType <span class="req">*</span></label>
+              <input type="text" value="LOAN">
+            </div>
+          </div>
+          <div>
+            <h3 style="margin: 0 0 var(--ds-space-7); font-size: var(--ds-font-size-14);">响应结果</h3>
+            <pre class="code-editor" style="min-height: 200px;">{
+  "code": 0,
+  "msg": "success",
+  "data": [
+    {
+      "cust_no": "C20240001",
+      "cust_name": "张三",
+      "product_type": "LOAN",
+      "credit_limit": 500000.00,
+      "used_limit": 180000.00,
+      "available_limit": 320000.00,
+      "risk_level": "A"
+    }
+  ],
+  "total": 1,
+  "cost_ms": 126
+}</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" aria-hidden="true">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span id="toastMsg">已保存</span>
+</div>
+
+<script>
+  // Tab 切换
+  const tabs = document.querySelectorAll('[role="tab"]');
+  const panels = document.querySelectorAll('[role="tabpanel"]');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => { t.setAttribute('aria-selected', 'false'); t.setAttribute('tabindex', '-1'); });
+      tab.setAttribute('aria-selected', 'true');
+      tab.setAttribute('tabindex', '0');
+      panels.forEach(p => p.setAttribute('aria-hidden', 'true'));
+      const panel = document.getElementById(tab.getAttribute('aria-controls'));
+      panel.setAttribute('aria-hidden', 'false');
+    });
+  });
+
+  // 运行
+  document.getElementById('btnRun').addEventListener('click', () => showToast('SQL 已执行,返回 3 条记录'));
+  document.getElementById('btnTest').addEventListener('click', () => {
+    document.getElementById('tab-test').click();
+  });
+  document.getElementById('btnRunTest').addEventListener('click', () => showToast('请求已发送,响应耗时 126ms'));
+  document.getElementById('btnSave').addEventListener('click', () => showToast('已保存到 v0.2'));
+  document.getElementById('btnParseReq').addEventListener('click', () => showToast('已解析 2 个请求参数'));
+
+  // 面包屑返回
+  document.querySelectorAll('[data-back]').forEach(a => {
+    a.addEventListener('click', (e) => { e.preventDefault(); showToast('返回到 API 列表'); });
+  });
+
+  let toastTimer = null;
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    toast.setAttribute('aria-hidden', 'false');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.setAttribute('aria-hidden', 'true'), 2200);
+  }
+</script>
+<script src="menu.js"></script>
+</body>
+</html>

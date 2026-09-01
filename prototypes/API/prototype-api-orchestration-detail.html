@@ -1,0 +1,2610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API 编排详情 — 客户风险评级聚合 — 数据服务平台</title>
+<style>
+  :root {
+    --ds-color-white: #ffffff;
+    --ds-color-black: #000000;
+    --ds-color-primary-1: #e8f3ff;
+    --ds-color-primary-2: #bedaff;
+    --ds-color-primary-3: #94bfff;
+    --ds-color-primary-4: #6aa1ff;
+    --ds-color-primary-5: #4080ff;
+    --ds-color-primary-6: #165dff;
+    --ds-color-primary-7: #0e42d2;
+    --ds-color-primary-8: #072ca6;
+    --ds-color-gray-1: #f7f8fa;
+    --ds-color-gray-2: #f2f3f5;
+    --ds-color-gray-3: #e5e6eb;
+    --ds-color-gray-4: #c9cdd4;
+    --ds-color-gray-5: #a9aeb8;
+    --ds-color-gray-6: #86909c;
+    --ds-color-gray-7: #6b7785;
+    --ds-color-gray-8: #4e5969;
+    --ds-color-gray-9: #272e3b;
+    --ds-color-gray-10: #1d2129;
+    --ds-color-success: #00b42a;
+    --ds-color-success-light: #e8ffea;
+    --ds-color-success-text: #087a24;
+    --ds-color-warning: #ff7d00;
+    --ds-color-warning-light: #fff7e8;
+    --ds-color-warning-text: #a84b00;
+    --ds-color-danger: #f53f3f;
+    --ds-color-danger-light: #ffece8;
+    --ds-color-danger-text: #cb2634;
+    --ds-bg-canvas: var(--ds-color-gray-2);
+    --ds-bg-surface: var(--ds-color-white);
+    --ds-bg-elevated: var(--ds-color-white);
+    --ds-bg-fill: var(--ds-color-gray-2);
+    --ds-bg-fill-hover: var(--ds-color-gray-3);
+    --ds-text-1: var(--ds-color-gray-10);
+    --ds-text-2: var(--ds-color-gray-8);
+    --ds-text-3: var(--ds-color-gray-6);
+    --ds-text-4: var(--ds-color-gray-4);
+    --ds-border-1: var(--ds-color-gray-2);
+    --ds-border-2: var(--ds-color-gray-3);
+    --ds-border-3: var(--ds-color-gray-4);
+    --ds-focus-ring: 0 0 0 2px rgb(22 93 255 / 18%);
+    --ds-mask: rgb(29 33 41 / 60%);
+    --ds-font-sans: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    --ds-font-mono: Consolas, Menlo, Monaco, monospace;
+    --ds-font-size-12: 12px;
+    --ds-font-size-14: 14px;
+    --ds-font-size-16: 16px;
+    --ds-font-size-20: 20px;
+    --ds-font-size-24: 24px;
+    --ds-font-size-36: 36px;
+    --ds-font-weight-regular: 400;
+    --ds-font-weight-medium: 500;
+    --ds-font-weight-semibold: 600;
+    --ds-line-height-base: 1.5715;
+    --ds-line-height-tight: 1.35;
+    --ds-space-0: 0;
+    --ds-space-1: 2px;
+    --ds-space-2: 4px;
+    --ds-space-3: 6px;
+    --ds-space-4: 8px;
+    --ds-space-5: 10px;
+    --ds-space-6: 12px;
+    --ds-space-7: 16px;
+    --ds-space-8: 20px;
+    --ds-space-9: 24px;
+    --ds-space-10: 32px;
+    --ds-space-11: 36px;
+    --ds-space-12: 40px;
+    --ds-space-13: 48px;
+    --ds-space-16: 64px;
+    --ds-radius-none: 0;
+    --ds-radius-small: 2px;
+    --ds-radius-medium: 4px;
+    --ds-radius-large: 8px;
+    --ds-radius-circle: 50%;
+    --ds-shadow-none: none;
+    --ds-shadow-1: 0 2px 5px rgb(0 0 0 / 10%);
+    --ds-shadow-2: 0 4px 10px rgb(0 0 0 / 10%);
+    --ds-shadow-3: 0 8px 20px rgb(0 0 0 / 10%);
+    --ds-duration-fast: 100ms;
+    --ds-duration-base: 200ms;
+    --ds-duration-slow: 300ms;
+    --ds-ease-standard: cubic-bezier(0.34, 0.69, 0.1, 1);
+    --ds-control-mini: 24px;
+    --ds-control-small: 28px;
+    --ds-control-default: 32px;
+    --ds-control-large: 36px;
+    --ds-nav-height: 60px;
+    --ds-sidebar-width: 220px;
+    --ds-desktop-min: 1200px;
+    --ds-content-max: 1440px;
+    --ds-grid-gutter: 16px;
+    --ds-page-padding: 24px;
+    --ds-z-popup: 1000;
+    --ds-z-modal: 1001;
+    --ds-z-message: 1003;
+    --ds-button-height: var(--ds-control-default);
+    --ds-button-radius: var(--ds-radius-small);
+    --ds-button-padding-inline: 15px;
+    --ds-input-height: var(--ds-control-default);
+    --ds-input-radius: var(--ds-radius-small);
+    --ds-form-item-gap: 20px;
+    --ds-table-cell-padding-inline: 16px;
+    --ds-table-cell-padding-block: 9px;
+    --ds-pagination-item-size: 32px;
+    --ds-modal-width: 520px;
+  }
+  @media (prefers-reduced-motion: reduce) { :root { --ds-duration-fast: 0ms; --ds-duration-base: 0ms; --ds-duration-slow: 0ms; } }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+  body { display: flex; flex-direction: column;
+    font-family: var(--ds-font-sans);
+    font-size: var(--ds-font-size-14);
+    line-height: var(--ds-line-height-base);
+    color: var(--ds-text-1);
+    background: var(--ds-bg-canvas);
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; }
+  a { color: var(--ds-color-primary-6); text-decoration: none; }
+  a:hover { color: var(--ds-color-primary-7); }
+  :focus-visible { outline: none; box-shadow: var(--ds-focus-ring); }
+
+  /* 顶部导航 */
+  .topnav {
+    height: var(--ds-nav-height);
+    background: var(--ds-color-white);
+    border-bottom: 1px solid var(--ds-border-2);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--ds-space-9);
+    flex-shrink: 0;
+    z-index: 10;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    font-size: var(--ds-font-size-16);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-text-1);
+    margin-right: var(--ds-space-10);
+  }
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--ds-radius-medium);
+    background: linear-gradient(135deg, var(--ds-color-primary-5), var(--ds-color-primary-7));
+    display: grid;
+    place-items: center;
+    color: var(--ds-color-white);
+  }
+  .topnav-spacer { flex: 1; }
+  .user-chip { display: flex; align-items: center; gap: var(--ds-space-3); font-size: var(--ds-font-size-14); color: var(--ds-text-2); }
+  .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--ds-color-primary-2); color: var(--ds-color-primary-7); display: grid; place-items: center; font-size: var(--ds-font-size-12); font-weight: var(--ds-font-weight-medium); }
+
+  .shell { display: flex; flex: 1; min-height: 0; }
+  /* 一级侧栏 */
+  .sidebar {
+    width: var(--ds-sidebar-width);
+    background: var(--ds-color-white);
+    border-right: 1px solid var(--ds-border-2);
+    padding: var(--ds-space-7) 0;
+    flex-shrink: 0;
+  }
+  .nav-title { font-size: var(--ds-font-size-12); color: var(--ds-text-2); padding: 0 var(--ds-space-7) var(--ds-space-4); letter-spacing: 0.4px; }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-6);
+    padding: 0 var(--ds-space-7);
+    height: 40px;
+    color: var(--ds-text-2);
+    border-radius: var(--ds-radius-small);
+    cursor: pointer;
+    font-size: var(--ds-font-size-14);
+    text-decoration: none;
+    position: relative;
+  }
+  .nav-item:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .nav-item[aria-current="page"] { background: var(--ds-color-primary-1); color: var(--ds-color-primary-6); font-weight: var(--ds-font-weight-medium); }
+  .nav-item[aria-current="page"]::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 8px; width: 3px; background: var(--ds-color-primary-6); border-radius: 0 2px 2px 0; }
+  .nav-item svg { flex-shrink: 0; }
+  .nav-section { margin-top: var(--ds-space-2); }
+  .nav-parent { display: flex; align-items: center; gap: var(--ds-space-6); padding: 0 var(--ds-space-7); height: 40px; color: var(--ds-text-2); border-radius: var(--ds-radius-small); cursor: pointer; font-size: var(--ds-font-size-14); user-select: none; text-decoration: none; position: relative; }
+  button.nav-parent { width: 100%; border: 0; background: transparent; font-family: inherit; text-align: left; }
+  .nav-parent:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .nav-parent .chev { margin-left: auto; transition: transform var(--ds-duration-fast) var(--ds-ease-standard); }
+  .nav-parent.is-open .chev { transform: rotate(90deg); }
+  .nav-children { display: none; padding: var(--ds-space-2) 0 var(--ds-space-3); }
+  .nav-children.is-open { display: block; }
+  .nav-child { display: flex; align-items: center; gap: var(--ds-space-6); padding: 0 var(--ds-space-7) 0 42px; height: 36px; color: var(--ds-text-2); border-radius: var(--ds-radius-small); cursor: pointer; font-size: var(--ds-font-size-14); text-decoration: none; position: relative; }
+  .nav-child:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .nav-child[aria-current="page"] { background: var(--ds-color-primary-1); color: var(--ds-color-primary-6); font-weight: var(--ds-font-weight-medium); }
+  .nav-child[aria-current="page"]::before { content: ""; position: absolute; left: 32px; top: 8px; bottom: 8px; width: 3px; background: var(--ds-color-primary-6); border-radius: 0 2px 2px 0; }
+
+  /* 主区 */
+  .main { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+  .editor-head {
+    background: var(--ds-color-white);
+    border-bottom: 1px solid var(--ds-border-2);
+    padding: var(--ds-space-7) var(--ds-space-9);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--ds-space-7);
+    flex-shrink: 0;
+  }
+  .crumb { display: flex; gap: var(--ds-space-3); align-items: center; font-size: var(--ds-font-size-12); color: var(--ds-text-2); margin-bottom: var(--ds-space-3); flex-wrap: wrap; }
+  .crumb a { color: var(--ds-text-2); }
+  .crumb a:hover { color: var(--ds-color-primary-6); }
+  .editor-title h1 { margin: 0; font-size: var(--ds-font-size-20); font-weight: var(--ds-font-weight-medium); display: flex; align-items: center; gap: var(--ds-space-5); flex-wrap: wrap; }
+  .editor-title .meta { display: flex; gap: var(--ds-space-7); margin-top: var(--ds-space-3); font-size: var(--ds-font-size-12); color: var(--ds-text-2); flex-wrap: wrap; }
+  .editor-title .meta b { color: var(--ds-text-2); font-weight: var(--ds-font-weight-medium); margin-right: var(--ds-space-3); }
+  .head-actions { display: flex; gap: var(--ds-space-4); align-items: center; flex-shrink: 0; }
+
+  /* 按钮 */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ds-space-3);
+    height: var(--ds-button-height);
+    padding: 0 var(--ds-button-padding-inline);
+    border-radius: var(--ds-button-radius);
+    font-size: var(--ds-font-size-14);
+    border: 1px solid var(--ds-border-2);
+    background: var(--ds-color-white);
+    color: var(--ds-text-1);
+    cursor: pointer;
+    line-height: 1;
+    transition: background var(--ds-duration-fast) var(--ds-ease-standard), border-color var(--ds-duration-fast) var(--ds-ease-standard);
+  }
+  .btn:hover { background: var(--ds-bg-fill); border-color: var(--ds-border-3); }
+  .btn-primary { background: var(--ds-color-primary-6); border-color: var(--ds-color-primary-6); color: var(--ds-color-white); }
+  .btn-primary:hover { background: var(--ds-color-primary-7); border-color: var(--ds-color-primary-7); }
+  .btn:disabled, .icon-btn:disabled, .zoom-btn:disabled, .tb-text-btn:disabled { cursor: not-allowed; opacity: 0.55; }
+  .btn-primary:disabled, .btn-primary:disabled:hover { background: var(--ds-color-primary-3); border-color: var(--ds-color-primary-3); }
+  .btn-text { border-color: transparent; background: transparent; color: var(--ds-color-primary-6); padding: 0 4px; height: auto; }
+  .btn-text:hover { background: var(--ds-color-primary-1); }
+  .btn-danger { color: var(--ds-color-danger); }
+  .icon-btn { width: var(--ds-control-default); height: var(--ds-control-default); display: inline-grid; place-items: center; border: 1px solid var(--ds-border-2); background: var(--ds-color-white); border-radius: var(--ds-radius-small); cursor: pointer; color: var(--ds-text-2); }
+  .icon-btn:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .icon-btn.is-danger:hover { background: var(--ds-color-danger-light); color: var(--ds-color-danger); border-color: var(--ds-color-danger); }
+
+  .tag { display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: var(--ds-radius-small); font-size: var(--ds-font-size-12); line-height: 1; border: 1px solid transparent; }
+  .tag-warning { background: var(--ds-color-warning-light); color: var(--ds-color-warning-text); }
+  .tag-success { background: var(--ds-color-success-light); color: var(--ds-color-success-text); }
+  .tag-neutral { background: var(--ds-bg-fill); color: var(--ds-text-2); }
+  .tag-info { background: var(--ds-color-primary-1); color: var(--ds-color-primary-7); }
+  .tag-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  /* Tab 区 */
+  .tabs-bar { display: flex; gap: var(--ds-space-3); padding: 0 var(--ds-space-9); background: var(--ds-color-white); border-bottom: 1px solid var(--ds-border-2); flex-shrink: 0; }
+  .tab {
+    border: none;
+    background: transparent;
+    padding: var(--ds-space-7) var(--ds-space-7) calc(var(--ds-space-7) - 1px);
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-2);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tab:hover { color: var(--ds-text-1); }
+  .tab[aria-selected="true"] { color: var(--ds-color-primary-6); border-bottom-color: var(--ds-color-primary-6); font-weight: var(--ds-font-weight-medium); }
+  .tab-panel { display: none; flex: 1; min-width: 0; min-height: 0; }
+  .tab-panel[aria-hidden="false"] { display: flex; }
+
+  /* 画布编排布局 */
+  #panel-canvas { overflow: hidden; }
+  .orch-layout { display: flex; flex: 1; width: 100%; min-width: 0; min-height: 0; overflow: hidden; }
+  .palette {
+    width: 188px;
+    background: var(--ds-color-white);
+    border-right: 1px solid var(--ds-border-2);
+    padding: var(--ds-space-7) var(--ds-space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-3);
+    flex-shrink: 0;
+    overflow-y: auto;
+  }
+  .palette-title { font-size: var(--ds-font-size-12); color: var(--ds-text-2); padding: 0 var(--ds-space-3) var(--ds-space-3); letter-spacing: 0.3px; }
+  .palette-item {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-5);
+    padding: var(--ds-space-5);
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-radius-medium);
+    background: var(--ds-color-white);
+    cursor: grab;
+    color: var(--ds-text-2);
+    font-size: var(--ds-font-size-14);
+    user-select: none;
+    width: 100%;
+    min-height: 48px;
+    text-align: left;
+    font-family: inherit;
+  }
+  .palette-item:hover { border-color: var(--ds-color-primary-5); color: var(--ds-text-1); background: var(--ds-color-primary-1); }
+  .palette-item:disabled { opacity: 0.55; cursor: not-allowed; }
+  .palette-item:disabled:hover { border-color: var(--ds-border-2); background: var(--ds-color-white); color: var(--ds-text-2); }
+  .palette-item .pi-icon { width: 26px; height: 26px; border-radius: var(--ds-radius-small); display: grid; place-items: center; flex-shrink: 0; }
+  .pi-icon.start { background: var(--ds-color-success-light); color: var(--ds-color-success-text); }
+  .pi-icon.end { background: var(--ds-color-danger-light); color: var(--ds-color-danger-text); }
+  .pi-icon.api { background: var(--ds-color-primary-1); color: var(--ds-color-primary-7); }
+  .pi-icon.func { background: var(--ds-color-primary-1); color: var(--ds-color-primary-8); }
+  .pi-icon.branch { background: var(--ds-color-warning-light); color: var(--ds-color-warning-text); }
+  .pi-icon.merge { background: var(--ds-bg-fill); color: var(--ds-text-2); }
+  .palette-tip { margin-top: auto; padding: var(--ds-space-5); background: var(--ds-color-gray-1); border-radius: var(--ds-radius-medium); font-size: var(--ds-font-size-12); color: var(--ds-text-2); line-height: 1.6; }
+
+  .canvas-wrap { flex: 1 1 0; width: 0; min-width: 0; min-height: 0; display: flex; flex-direction: column; background: var(--ds-color-gray-1); }
+  .canvas-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    padding: var(--ds-space-4) var(--ds-space-7);
+    background: var(--ds-color-white);
+    border-bottom: 1px solid var(--ds-border-2);
+    flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+  .zoom-group { display: inline-flex; align-items: center; gap: 2px; }
+  .zoom-btn { width: var(--ds-control-default); height: var(--ds-control-default); display: inline-grid; place-items: center; border: 1px solid var(--ds-border-2); background: var(--ds-color-white); border-radius: var(--ds-radius-small); cursor: pointer; color: var(--ds-text-2); }
+  .zoom-btn:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .zoom-val { min-width: 44px; text-align: center; font-size: var(--ds-font-size-12); color: var(--ds-text-2); font-family: var(--ds-font-mono); }
+  .tb-sep { width: 1px; height: 18px; background: var(--ds-border-2); margin: 0 var(--ds-space-3); }
+  .tb-text-btn { display: inline-flex; align-items: center; gap: var(--ds-space-3); min-height: var(--ds-control-default); padding: 0 var(--ds-space-5); border: 1px solid transparent; background: transparent; border-radius: var(--ds-radius-small); color: var(--ds-text-2); font-size: var(--ds-font-size-14); cursor: pointer; }
+  .tb-text-btn:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .tb-text-btn.is-primary { padding-inline: var(--ds-button-padding-inline); color: var(--ds-color-white); background: var(--ds-color-primary-6); border-color: var(--ds-color-primary-6); }
+  .tb-text-btn.is-primary:hover { color: var(--ds-color-white); background: var(--ds-color-primary-7); border-color: var(--ds-color-primary-7); }
+  .canvas-status { margin-left: auto; display: inline-flex; align-items: center; gap: var(--ds-space-5); font-size: var(--ds-font-size-12); color: var(--ds-text-2); }
+  .canvas-status b { color: var(--ds-text-2); font-weight: var(--ds-font-weight-medium); }
+  .canvas-edit-guide { display: flex; align-items: center; gap: var(--ds-space-7); padding: var(--ds-space-4) var(--ds-space-7); background: var(--ds-color-primary-1); border-bottom: 1px solid var(--ds-color-primary-2); flex-shrink: 0; }
+  .canvas-edit-guide strong { color: var(--ds-color-primary-7); font-weight: var(--ds-font-weight-medium); white-space: nowrap; }
+  .canvas-edit-steps { display: flex; align-items: center; gap: var(--ds-space-5); color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+  .canvas-edit-steps span { white-space: nowrap; }
+  .canvas-edit-steps span + span::before { content: "→"; margin-right: var(--ds-space-5); color: var(--ds-text-3); }
+  .canvas-readonly-guide { display: none; align-items: center; gap: var(--ds-space-5); padding: var(--ds-space-4) var(--ds-space-7); background: var(--ds-color-gray-1); border-bottom: 1px solid var(--ds-border-2); color: var(--ds-text-2); font-size: var(--ds-font-size-12); flex-shrink: 0; }
+  .canvas-readonly-guide strong { color: var(--ds-text-1); font-weight: var(--ds-font-weight-medium); white-space: nowrap; }
+
+  .view-mode .palette,
+  .view-mode .config-panel,
+  .view-mode #btnSave,
+  .view-mode #btnTest,
+  .view-mode #btnPublish,
+  .view-mode #btnAddNode,
+  .view-mode #btnFormat,
+  .view-mode #btnRunOrchTest,
+  .view-mode #btnParseParams,
+  .view-mode #btnNodeTest,
+  .view-mode .canvas-edit-guide,
+  .view-mode [data-version-action="edit"],
+  .view-mode [data-detail-action="alarm"] { display: none !important; }
+  .view-mode .canvas-readonly-guide { display: flex; }
+  .view-mode .node { cursor: default; }
+  .view-mode .node:active { cursor: default; }
+  .view-mode .node-tools,
+  .view-mode .node-add-mid,
+  .view-mode .edge-delete { display: none !important; }
+  .view-mode .node-port { pointer-events: none; opacity: 0.45; cursor: default; }
+  .view-mode #panel-config input,
+  .view-mode #panel-config select,
+  .view-mode #panel-config textarea { color: var(--ds-text-2); background: var(--ds-color-gray-1); cursor: default; }
+
+  .canvas-scroll { flex: 1; width: 100%; min-width: 0; overflow: auto; position: relative; }
+  .canvas {
+    position: relative;
+    width: 1440px;
+    height: 620px;
+    cursor: grab;
+    background-color: var(--ds-color-gray-1);
+    background-image:
+      radial-gradient(circle, var(--ds-color-gray-4) 1px, transparent 1px);
+    background-size: 20px 20px;
+    transform-origin: 0 0;
+  }
+  .canvas-scroll.is-panning, .canvas-scroll.is-panning .canvas, .canvas-scroll.is-panning .node { cursor: grabbing; }
+  .canvas svg.edges { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  .canvas svg.edges .edge-path { fill: none; stroke: var(--ds-color-gray-5); stroke-width: 1.6; }
+  .canvas svg.edges .edge-path.is-active { stroke: var(--ds-color-primary-6); stroke-width: 2; }
+  .canvas svg.edges .edge-flow { fill: var(--ds-color-gray-5); }
+  .canvas svg.edges .edge-flow.is-active { fill: var(--ds-color-primary-6); }
+  .canvas svg.edges .edge-group { pointer-events: auto; cursor: pointer; }
+  .canvas svg.edges .edge-hit { stroke: transparent; stroke-width: 14; fill: none; }
+  .canvas svg.edges foreignObject { pointer-events: auto; overflow: visible; }
+  .edge-label { font-size: var(--ds-font-size-12); fill: var(--ds-text-2); font-family: var(--ds-font-sans); }
+
+  .node {
+    position: absolute;
+    width: 156px;
+    background: var(--ds-color-white);
+    border: 1px solid var(--ds-border-3);
+    border-radius: var(--ds-radius-medium);
+    box-shadow: var(--ds-shadow-1);
+    cursor: grab;
+    user-select: none;
+    transition: box-shadow var(--ds-duration-fast) var(--ds-ease-standard), border-color var(--ds-duration-fast) var(--ds-ease-standard);
+  }
+  .node:hover { box-shadow: var(--ds-shadow-2); border-color: var(--ds-color-primary-5); }
+  .node.is-selected { border-color: var(--ds-color-primary-6); box-shadow: 0 0 0 2px rgb(22 93 255 / 22%), var(--ds-shadow-2); }
+  .node:active { cursor: grabbing; }
+  .node-head { display: flex; align-items: center; gap: var(--ds-space-3); padding: 8px 10px; border-bottom: 1px solid var(--ds-border-1); }
+  .node-head .n-icon { width: 22px; height: 22px; border-radius: var(--ds-radius-small); display: grid; place-items: center; flex-shrink: 0; }
+  .n-icon.start { background: var(--ds-color-success-light); color: var(--ds-color-success-text); }
+  .n-icon.end { background: var(--ds-color-danger-light); color: var(--ds-color-danger-text); }
+  .n-icon.api { background: var(--ds-color-primary-1); color: var(--ds-color-primary-7); }
+  .n-icon.func { background: var(--ds-color-primary-1); color: var(--ds-color-primary-8); }
+  .n-icon.branch { background: var(--ds-color-warning-light); color: var(--ds-color-warning-text); }
+  .n-icon.merge { background: var(--ds-bg-fill); color: var(--ds-text-2); }
+  .node-head .n-title { font-size: var(--ds-font-size-14); font-weight: var(--ds-font-weight-medium); color: var(--ds-text-1); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .node-body { padding: 6px 10px 8px; font-size: var(--ds-font-size-12); color: var(--ds-text-2); line-height: 1.5; }
+  .node-body .nb-line { display: flex; gap: 4px; align-items: center; overflow: hidden; }
+  .node-body .nb-line .k { color: var(--ds-text-2); flex-shrink: 0; }
+  .node-body .nb-line .v { color: var(--ds-text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .node-tools { position: absolute; top: -14px; right: 6px; display: none; gap: 2px; }
+  .node.is-selected .node-tools { display: inline-flex; }
+  .node-tools .nt-btn { width: var(--ds-control-small); height: var(--ds-control-small); display: inline-grid; place-items: center; border: 1px solid var(--ds-border-2); background: var(--ds-color-white); border-radius: var(--ds-radius-small); cursor: pointer; color: var(--ds-text-3); }
+  .node-tools .nt-btn:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .node-tools .nt-btn.is-danger:hover { background: var(--ds-color-danger-light); color: var(--ds-color-danger); border-color: var(--ds-color-danger); }
+  .node-port { position: absolute; width: 20px; height: 20px; padding: 0; border: 0; border-radius: var(--ds-radius-circle); background: transparent; top: 50%; transform: translateY(-50%); cursor: crosshair; }
+  .node-port::before { content: ""; position: absolute; inset: 4px; border: 1px solid var(--ds-color-gray-5); border-radius: var(--ds-radius-circle); background: var(--ds-color-white); transition: inset var(--ds-duration-fast) var(--ds-ease-standard), border-color var(--ds-duration-fast) var(--ds-ease-standard), background var(--ds-duration-fast) var(--ds-ease-standard); }
+  .node-port.in { left: -11px; }
+  .node-port.out { right: -11px; }
+  .node:hover .node-port::before, .node-port:hover::before, .node-port:focus-visible::before { inset: 3px; border-color: var(--ds-color-primary-6); }
+  .node-port:focus-visible { box-shadow: none; }
+  .node-port.is-pending::before { inset: 3px; border-color: var(--ds-color-primary-6); background: var(--ds-color-primary-1); box-shadow: var(--ds-focus-ring); }
+  .node-add-mid, .edge-delete { position: relative; width: var(--ds-control-small); height: var(--ds-control-small); border: 0; border-radius: var(--ds-radius-circle); background: transparent; color: var(--ds-text-3); cursor: pointer; font-size: 0; line-height: 1; font-family: inherit; padding: 0; pointer-events: auto; opacity: 0.78; transition: opacity var(--ds-duration-fast) var(--ds-ease-standard); }
+  .node-add-mid::before, .edge-delete::before { content: ""; position: absolute; inset: 4px; border: 1px solid var(--ds-border-3); border-radius: var(--ds-radius-circle); background: var(--ds-color-white); }
+  .node-add-mid::after, .edge-delete::after { position: absolute; inset: 0; display: grid; place-items: center; font-size: var(--ds-font-size-12); line-height: 1; }
+  .node-add-mid::after { content: "+"; }
+  .edge-delete::after { content: "×"; color: var(--ds-color-danger); }
+  .node-add-mid:hover, .node-add-mid:focus-visible, .edge-delete:hover, .edge-delete:focus-visible { opacity: 1; box-shadow: none; }
+  .node-add-mid:hover::before, .node-add-mid:focus-visible::before { border-color: var(--ds-color-primary-6); background: var(--ds-color-primary-1); }
+  .node-add-mid:hover::after, .node-add-mid:focus-visible::after { color: var(--ds-color-primary-6); }
+  .edge-delete:hover::before, .edge-delete:focus-visible::before { border-color: var(--ds-color-danger); background: var(--ds-color-danger-light); }
+
+  /* 节点配置面板 */
+  .config-panel {
+    width: 340px;
+    max-width: 340px;
+    background: var(--ds-color-white);
+    border-left: 1px solid var(--ds-border-2);
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 340px;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .config-head { padding: var(--ds-space-7) var(--ds-space-7) var(--ds-space-5); border-bottom: 1px solid var(--ds-border-1); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .config-head h3 { margin: 0; font-size: var(--ds-font-size-14); font-weight: var(--ds-font-weight-semibold); display: flex; align-items: center; gap: var(--ds-space-4); }
+  .config-head .n-icon { width: 22px; height: 22px; border-radius: var(--ds-radius-small); display: grid; place-items: center; }
+  .config-tabs { display: flex; gap: var(--ds-space-7); padding: 0 var(--ds-space-7); border-bottom: 1px solid var(--ds-border-1); flex-shrink: 0; }
+  .config-tab { border: none; background: transparent; padding: var(--ds-space-5) 0; font-size: var(--ds-font-size-14); color: var(--ds-text-2); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; }
+  .config-tab[aria-selected="true"] { color: var(--ds-color-primary-6); border-bottom-color: var(--ds-color-primary-6); font-weight: var(--ds-font-weight-medium); }
+  .config-body { flex: 1; overflow-y: auto; padding: var(--ds-space-7); }
+  .config-pane { display: none; flex-direction: column; gap: var(--ds-space-7); }
+  .config-pane[aria-hidden="false"] { display: flex; }
+  .config-desc { font-size: var(--ds-font-size-12); color: var(--ds-text-2); line-height: 1.6; padding: var(--ds-space-5); background: var(--ds-color-gray-1); border-radius: var(--ds-radius-medium); }
+
+  /* 表单字段 */
+  .field { display: flex; flex-direction: column; gap: var(--ds-space-3); }
+  .field > label, .field-label { font-size: var(--ds-font-size-14); color: var(--ds-text-1); }
+  .field .req { color: var(--ds-color-danger); margin-left: 2px; }
+  .field input, .field select, .field textarea {
+    height: var(--ds-input-height);
+    padding: 0 var(--ds-space-7);
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-input-radius);
+    background: var(--ds-color-white);
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-1);
+    font-family: inherit;
+  }
+  .field textarea { padding: 8px 10px; height: auto; resize: vertical; line-height: 1.6; }
+  .field select[multiple] { height: 64px; padding: var(--ds-space-3) var(--ds-space-7); }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--ds-color-primary-6); outline: none; box-shadow: var(--ds-focus-ring); }
+  .field .help { font-size: var(--ds-font-size-12); color: var(--ds-text-2); }
+  .field-readonly { font-size: var(--ds-font-size-14); color: var(--ds-text-2); padding: 6px 0; }
+  .field-error { color: var(--ds-color-danger-text); font-size: var(--ds-font-size-12); }
+  .alert { border: 1px solid var(--ds-border-2); border-left: 3px solid var(--ds-color-warning); border-radius: var(--ds-radius-medium); background: var(--ds-color-warning-light); color: var(--ds-color-warning-text); padding: var(--ds-space-6) var(--ds-space-7); font-size: var(--ds-font-size-14); }
+  .alert[hidden] { display: none; }
+
+  /* 参数表(配置面板内) */
+  .mini-table { width: 100%; border-collapse: collapse; font-size: var(--ds-font-size-12); }
+  .mini-table thead th { background: var(--ds-bg-fill); color: var(--ds-text-2); font-weight: var(--ds-font-weight-medium); text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--ds-border-2); white-space: nowrap; }
+  .mini-table tbody td { padding: 5px 8px; border-bottom: 1px solid var(--ds-border-1); color: var(--ds-text-1); vertical-align: middle; }
+  .mini-table tbody tr:hover { background: var(--ds-bg-fill); }
+  .mini-table .input-cell input, .mini-table .input-cell select { width: 100%; height: 26px; padding: 0 6px; border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-small); background: var(--ds-color-white); font-size: var(--ds-font-size-12); color: var(--ds-text-1); font-family: inherit; }
+  .mini-table .input-cell input:focus, .mini-table .input-cell select:focus { border-color: var(--ds-color-primary-6); outline: none; box-shadow: var(--ds-focus-ring); }
+  .mini-action { color: var(--ds-color-primary-6); background: transparent; border: none; cursor: pointer; font-size: var(--ds-font-size-12); padding: 2px 4px; }
+  .mini-action:hover { text-decoration: underline; }
+  .mini-action.danger { color: var(--ds-color-danger); }
+
+  /* 分支配置 */
+  .branch-row { display: flex; flex-direction: column; gap: var(--ds-space-3); padding: var(--ds-space-5); border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-medium); background: var(--ds-color-gray-1); }
+  .branch-row + .branch-row { margin-top: var(--ds-space-4); }
+  .branch-row .br-head { display: flex; align-items: center; justify-content: space-between; font-size: var(--ds-font-size-12); color: var(--ds-text-2); }
+  .branch-cond { display: grid; grid-template-columns: 1fr 64px 1fr; gap: var(--ds-space-3); }
+  .branch-cond input, .branch-cond select { height: 28px; padding: 0 6px; border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-small); background: var(--ds-color-white); font-size: var(--ds-font-size-12); color: var(--ds-text-1); font-family: inherit; }
+  .branch-cond input:focus, .branch-cond select:focus { border-color: var(--ds-color-primary-6); outline: none; box-shadow: var(--ds-focus-ring); }
+
+  /* 卡片(其他 Tab) */
+  .tab-panel.pad { padding: var(--ds-space-9); gap: var(--ds-space-7); flex-direction: column; }
+  .card { background: var(--ds-bg-surface); border-radius: var(--ds-radius-medium); border: 1px solid var(--ds-border-2); overflow: hidden; }
+  .card-head { display: flex; align-items: center; justify-content: space-between; padding: var(--ds-space-7) var(--ds-space-9); border-bottom: 1px solid var(--ds-border-1); gap: var(--ds-space-7); }
+  .card-head h2 { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+  .card-head .actions { display: flex; gap: var(--ds-space-4); align-items: center; }
+  .card-body { padding: var(--ds-space-9); }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-9) var(--ds-space-9); }
+  .field.full { grid-column: 1 / -1; }
+  .radio-row { display: flex; gap: var(--ds-space-7); padding-top: 2px; }
+  .radio-row label { display: inline-flex; align-items: center; gap: var(--ds-space-3); font-size: var(--ds-font-size-14); color: var(--ds-text-1); cursor: pointer; }
+
+  /* 测试面板 */
+  .test-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-9); }
+  .test-pane h3 { margin: 0 0 var(--ds-space-7); font-size: var(--ds-font-size-14); font-weight: var(--ds-font-weight-medium); }
+  .fmt-switch { display: inline-flex; background: var(--ds-bg-fill); border-radius: var(--ds-radius-small); padding: 2px; }
+  .fmt-switch button { min-height: var(--ds-control-default); border: none; background: transparent; padding: 4px 12px; font-size: var(--ds-font-size-12); color: var(--ds-text-2); border-radius: var(--ds-radius-small); cursor: pointer; }
+  .fmt-switch button[aria-pressed="true"] { background: var(--ds-color-white); color: var(--ds-color-primary-6); box-shadow: var(--ds-shadow-1); font-weight: var(--ds-font-weight-medium); }
+  .code-editor {
+    font-family: var(--ds-font-mono);
+    font-size: var(--ds-font-size-12);
+    line-height: 1.7;
+    background: var(--ds-color-gray-1);
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-radius-small);
+    padding: var(--ds-space-7);
+    white-space: pre;
+    overflow: auto;
+    color: var(--ds-text-1);
+    min-height: 200px;
+    width: 100%;
+    resize: vertical;
+  }
+  .log-line { padding: 4px var(--ds-space-7); border-bottom: 1px solid var(--ds-border-1); color: var(--ds-text-2); display: flex; gap: var(--ds-space-7); font-family: var(--ds-font-mono); font-size: var(--ds-font-size-12); }
+  .log-line.success { color: var(--ds-color-success-text); }
+  .log-line.fail { color: var(--ds-color-danger-text); }
+  .log-line .ts { color: var(--ds-text-2); width: 64px; flex-shrink: 0; }
+  .log-line .step { width: 120px; flex-shrink: 0; color: var(--ds-text-2); }
+
+  /* 表格 */
+  .table-scroll { overflow-x: auto; }
+  table.data { width: 100%; border-collapse: collapse; font-size: var(--ds-font-size-14); }
+  table.data thead th { background: var(--ds-bg-fill); color: var(--ds-text-2); font-weight: var(--ds-font-weight-medium); text-align: left; padding: var(--ds-table-cell-padding-block) var(--ds-table-cell-padding-inline); border-bottom: 1px solid var(--ds-border-2); white-space: nowrap; font-size: var(--ds-font-size-12); }
+  table.data tbody td { padding: var(--ds-table-cell-padding-block) var(--ds-table-cell-padding-inline); border-bottom: 1px solid var(--ds-border-1); color: var(--ds-text-1); vertical-align: middle; }
+  table.data tbody tr:hover { background: var(--ds-bg-fill); }
+  table.data tbody tr:last-child td { border-bottom: none; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+  /* Toast */
+  .toast { position: fixed; top: calc(var(--ds-nav-height) + var(--ds-space-7)); left: 50%; transform: translateX(-50%); background: var(--ds-color-gray-10); color: var(--ds-color-white); padding: var(--ds-space-5) var(--ds-space-7); border-radius: var(--ds-radius-medium); box-shadow: var(--ds-shadow-2); z-index: var(--ds-z-message); font-size: var(--ds-font-size-14); display: none; align-items: center; gap: var(--ds-space-4); }
+  .toast[aria-hidden="false"] { display: inline-flex; }
+
+  /* 弹窗 */
+  .modal-mask { position: fixed; inset: 0; background: var(--ds-mask); z-index: var(--ds-z-modal); display: none; align-items: center; justify-content: center; }
+  .modal-mask[aria-hidden="false"] { display: flex; }
+  .modal { width: var(--ds-modal-width); background: var(--ds-bg-elevated); border-radius: var(--ds-radius-large); box-shadow: var(--ds-shadow-3); overflow: hidden; }
+  .modal-head { padding: var(--ds-space-7) var(--ds-space-9); border-bottom: 1px solid var(--ds-border-1); display: flex; align-items: center; justify-content: space-between; }
+  .modal-head h3 { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+  .modal-body { padding: var(--ds-space-9); display: flex; flex-direction: column; gap: var(--ds-space-7); }
+  .modal-foot { padding: var(--ds-space-7) var(--ds-space-9); border-top: 1px solid var(--ds-border-1); display: flex; justify-content: flex-end; gap: var(--ds-space-4); background: var(--ds-bg-fill); }
+  .modal-summary { color: var(--ds-text-2); line-height: var(--ds-line-height-base); }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 2L14 5V11L8 14L2 11V5L8 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+        <path d="M8 5V11M5 6.5L11 9.5M11 6.5L5 9.5" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+    </span>
+    数据服务平台
+  </div>
+  <div class="topnav-spacer"></div>
+  <div style="display: flex; gap: var(--ds-space-7); align-items: center;">
+    <div class="user-chip">
+      <span class="avatar" aria-hidden="true">王</span>
+      <span>王超 · 开发者</span>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar-mount" data-current="api-orch" data-hide="ds,market" aria-label="主导航"></aside>
+
+  <main class="main">
+    <!-- 编辑器头 -->
+    <div class="editor-head">
+      <div class="editor-title">
+        <nav class="crumb" aria-label="面包屑">
+          <a href="prototype-api-list.html">数据服务</a>
+          <span>›</span>
+          <a href="prototype-api-orchestration.html">API 编排</a>
+          <span>›</span>
+          <span>风控服务</span>
+          <span>›</span>
+          <span id="breadcrumbOrchName">客户风险评级聚合</span>
+        </nav>
+        <h1>
+          <span id="currentOrchName">客户风险评级聚合</span>
+          <span class="tag tag-warning" id="lifecycleStatus"><span class="tag-dot"></span><span id="lifecycleStatusText">草稿</span></span>
+        </h1>
+        <div class="meta">
+          <span><b>编排 ID</b><span id="orchIdText">ORC-2026-0042</span></span>
+          <span><b>路径</b><span id="orchPathText">/api/v1/risk/orch/credit-rating</span></span>
+          <span><b>负责人</b>王超</span>
+          <span><b>版本</b><span id="versionText">v0.3</span></span>
+          <span><b>节点</b><span id="headerNodeCount">8</span></span>
+          <span><b>最近保存</b><span id="lastSavedAt">2026-08-27 10:18</span></span>
+        </div>
+      </div>
+      <div class="head-actions">
+        <a class="btn" href="prototype-api-orchestration.html">返回列表</a>
+        <button type="button" class="btn" id="btnHistory">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2a5 5 0 100 10 5 5 0 000-10zM7 4v3l2 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          历史版本
+        </button>
+        <button type="button" class="btn" id="btnTest">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3-3 3 3-3 3-3-3zM9 4l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          测试
+        </button>
+        <button type="button" class="btn" id="btnSave">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 2h10v8l-3 4H2V2zM5 5h4M5 8h4" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          保存
+        </button>
+        <button type="button" class="btn btn-primary" id="btnPublish" disabled title="请先保存并完成编排测试">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 2v10M5 4l3 3-3 3M3 2l8 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          提交上线
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-bar" role="tablist" aria-label="API 编排标签">
+      <button type="button" role="tab" id="tab-canvas" aria-selected="true" aria-controls="panel-canvas" class="tab" tabindex="0">画布编排</button>
+      <button type="button" role="tab" id="tab-test" aria-selected="false" aria-controls="panel-test" class="tab" tabindex="-1">编排测试</button>
+      <button type="button" role="tab" id="tab-config" aria-selected="false" aria-controls="panel-config" class="tab" tabindex="-1">基本配置</button>
+      <button type="button" role="tab" id="tab-version" aria-selected="false" aria-controls="panel-version" class="tab" tabindex="-1">版本信息</button>
+      <button type="button" role="tab" id="tab-detail" aria-selected="false" aria-controls="panel-detail" class="tab" tabindex="-1">编排详情</button>
+    </div>
+
+    <!-- 画布编排 -->
+    <section id="panel-canvas" role="tabpanel" aria-labelledby="tab-canvas" class="tab-panel" aria-hidden="false">
+      <div class="orch-layout">
+        <!-- 节点面板 -->
+        <aside class="palette" aria-label="节点类型">
+          <div class="palette-title">节点类型</div>
+          <button type="button" class="palette-item" data-add="api" draggable="true">
+            <span class="pi-icon api" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4h10M2 7h10M2 10h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </span>
+            <span>API 节点</span>
+          </button>
+          <button type="button" class="palette-item" data-add="func" draggable="true">
+            <span class="pi-icon func" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 2l4 5-4 5M9 2v10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span>函数节点</span>
+          </button>
+          <button type="button" class="palette-item" data-add="branch" draggable="true">
+            <span class="pi-icon branch" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 3h5a3 3 0 013 3v2a3 3 0 003 3M2 11h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span>分支节点</span>
+          </button>
+          <button type="button" class="palette-item" data-add="merge" draggable="true">
+            <span class="pi-icon merge" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4l4 3-4 3M7 4l4 3-4 3M2 7h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span>合并节点</span>
+          </button>
+          <button type="button" class="palette-item" disabled title="开始节点由系统自动创建">
+            <span class="pi-icon start" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span>开始节点</span>
+          </button>
+          <button type="button" class="palette-item" disabled title="结束节点由系统自动创建">
+            <span class="pi-icon end" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3h8v8H3zM5 5l4 4M9 5l-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </span>
+            <span>结束节点</span>
+          </button>
+          <div class="palette-tip">拖动画布空白处可平移视图；单击节点类型即可添加，也可拖拽到画布。单击连线上的“+”可在两个节点之间插入节点。</div>
+        </aside>
+
+        <!-- 画布 -->
+        <div class="canvas-wrap">
+          <div class="canvas-toolbar">
+            <button type="button" class="tb-text-btn is-primary" id="btnAddNode">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              添加节点
+            </button>
+            <span class="tb-sep"></span>
+            <div class="zoom-group">
+              <button type="button" class="zoom-btn" id="zoomOut" aria-label="缩小">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              </button>
+              <span class="zoom-val" id="zoomVal">100%</span>
+              <button type="button" class="zoom-btn" id="zoomIn" aria-label="放大">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 3v8M3 7h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              </button>
+              <button type="button" class="zoom-btn" id="zoomFit" aria-label="适配" title="适配画布">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 5V2h3M9 2h3v3M12 9v3H9M5 12H2V9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+            <span class="tb-sep"></span>
+            <button type="button" class="tb-text-btn" id="btnLocate">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="3.5" stroke="currentColor" stroke-width="1.4"/><path d="M7 1v2M7 11v2M1 7h2M11 7h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              定位
+            </button>
+            <button type="button" class="tb-text-btn" id="btnFormat">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 4h10M4 7h6M6 10h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              格式化
+            </button>
+            <div class="canvas-status">
+              <span><b>节点</b><span id="nodeCount">8</span></span>
+              <span><b>连线</b><span id="edgeCount">8</span></span>
+              <span><b>校验</b><span id="validationStatus" style="color: var(--ds-color-success-text);">通过</span></span>
+            </div>
+          </div>
+          <div class="canvas-edit-guide" role="note" aria-label="画布编辑操作">
+            <strong>画布编辑模式</strong>
+            <div class="canvas-edit-steps"><span>1 添加节点</span><span>2 连接节点端口</span><span>3 在右侧配置参数</span><span>4 保存并测试</span></div>
+          </div>
+          <div class="canvas-readonly-guide" role="note" aria-label="画布只读提示">
+            <strong>只读详情</strong>
+            <span>画布、参数与版本仅供查看；请从列表使用“编辑画布”或“创建新版本”进入编辑模式。</span>
+          </div>
+
+          <div class="canvas-scroll" id="canvasScroll" role="region" aria-label="API 编排画布，拖动空白处可平移视图" tabindex="0">
+            <div class="canvas" id="canvas">
+              <!-- 连线层 -->
+              <svg class="edges" id="edges" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="API 编排依赖连线"></svg>
+              <!-- 节点 by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 节点配置面板 -->
+        <aside class="config-panel" aria-label="节点配置">
+          <div class="config-head">
+            <h3 id="cfgTitle">
+              <span class="n-icon func" id="cfgIcon" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 2l4 5-4 5M9 2v10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span id="cfgName">额度分级</span>
+            </h3>
+            <span class="tag tag-info" id="cfgType">函数节点</span>
+          </div>
+          <div class="config-tabs" role="tablist" aria-label="节点配置标签">
+            <button type="button" role="tab" class="config-tab" id="ctab-base" aria-selected="true" aria-controls="cpane-base">节点配置</button>
+            <button type="button" role="tab" class="config-tab" id="ctab-test" aria-selected="false" aria-controls="cpane-test">节点测试</button>
+          </div>
+          <div class="config-body">
+            <!-- 节点配置(动态) -->
+            <div class="config-pane" id="cpane-base" role="tabpanel" aria-labelledby="ctab-base" aria-hidden="false">
+              <!-- by JS -->
+            </div>
+            <div class="config-pane" id="cpane-test" role="tabpanel" aria-labelledby="ctab-test" aria-hidden="true">
+              <div class="config-desc">为当前节点单独发起测试,验证 API、函数或分支条件是否按预期返回。</div>
+              <div class="field">
+                <label for="nodeTestInput">输入参数(取自上游节点输出)</label>
+                <textarea class="code-editor" style="min-height: 120px; font-size: var(--ds-font-size-12);" id="nodeTestInput" spellcheck="false" aria-describedby="nodeTestError">{
+  "cust_no": "C20240001",
+  "credit_limit": 500000,
+  "risk_level": "A"
+}</textarea>
+                <span class="field-error" id="nodeTestError" hidden></span>
+              </div>
+              <button type="button" class="btn btn-primary" id="btnNodeTest" style="align-self: flex-start;">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 2l7 4-7 4V2z" fill="currentColor"/></svg>
+                测试当前节点
+              </button>
+              <div class="field">
+                <label for="nodeTestResult">返回结果</label>
+                <textarea class="code-editor" style="min-height: 100px; font-size: var(--ds-font-size-12);" id="nodeTestResult" readonly>—</textarea>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 编排测试 -->
+    <section id="panel-test" role="tabpanel" aria-labelledby="tab-test" class="tab-panel pad" aria-hidden="true">
+      <div class="card">
+        <div class="card-head">
+          <h2>编排测试</h2>
+          <div class="actions">
+            <span style="font-size: var(--ds-font-size-12); color: var(--ds-text-2);">请求参数取自【开始节点】</span>
+            <button type="button" class="btn btn-primary" id="btnRunOrchTest">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 2l7 4-7 4V2z" fill="currentColor"/></svg>
+              测试
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="alert" id="orchTestError" role="alert" hidden></div>
+          <div class="test-grid">
+            <div class="test-pane">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--ds-space-7);">
+                <h3>请求参数</h3>
+                <div class="fmt-switch" role="group" aria-label="输入格式">
+                  <button type="button" aria-pressed="true" id="fmtForm">表单</button>
+                  <button type="button" aria-pressed="false" id="fmtJson">JSON</button>
+                </div>
+              </div>
+              <div id="testForm">
+                <div class="field" style="margin-bottom: var(--ds-space-7);">
+                  <label for="testCustNo">custNo <span class="req">*</span></label>
+                  <input type="text" id="testCustNo" value="C20240001" aria-describedby="testCustNoHelp">
+                  <span class="help" id="testCustNoHelp">客户号，字符串</span>
+                </div>
+                <div class="field" style="margin-bottom: var(--ds-space-7);">
+                  <label for="testProductType">productType <span class="req">*</span></label>
+                  <input type="text" id="testProductType" value="LOAN" aria-describedby="testProductTypeHelp">
+                  <span class="help" id="testProductTypeHelp">产品类型，字符串</span>
+                </div>
+              </div>
+              <label class="sr-only" for="testJsonInput">JSON 请求参数</label>
+              <textarea class="code-editor" id="testJsonInput" style="display:none; min-height: 120px;" spellcheck="false">{
+  "custNo": "C20240001",
+  "productType": "LOAN"
+}</textarea>
+            </div>
+            <div class="test-pane">
+              <h3 style="margin-bottom: var(--ds-space-7);">执行轨迹与响应</h3>
+              <div id="orchLog" style="border: 1px solid var(--ds-border-2); border-radius: var(--ds-radius-small); background: var(--ds-color-white); margin-bottom: var(--ds-space-7); max-height: 180px; overflow-y: auto;">
+                <div class="log-line"><span class="ts">—</span><span class="step">等待执行</span><span>单击“测试”开始执行编排工作流</span></div>
+              </div>
+              <h3 style="margin-bottom: var(--ds-space-7);">响应结果</h3>
+              <textarea class="code-editor" id="orchResult" style="min-height: 140px;" readonly aria-label="编排响应结果">—</textarea>
+              <div style="display: flex; gap: var(--ds-space-4); margin-top: var(--ds-space-7);">
+                <button type="button" class="btn-text" id="btnParseParams">解析参数到结束节点</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 基本配置 -->
+    <section id="panel-config" role="tabpanel" aria-labelledby="tab-config" class="tab-panel pad" aria-hidden="true">
+      <div class="card">
+        <div class="card-head"><h2>基本配置</h2></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field">
+              <label for="basicName">API 编排名称 <span class="req">*</span></label>
+              <input type="text" id="basicName" value="客户风险评级聚合" maxlength="100" aria-describedby="basicNameHelp basicNameError">
+              <span class="help" id="basicNameHelp">限 100 个字符以内</span>
+              <span class="field-error" id="basicNameError" hidden>请输入 API 编排名称。</span>
+            </div>
+            <div class="field">
+              <label for="basicFolder">存储目录 <span class="req">*</span></label>
+              <select id="basicFolder">
+                <option>风控服务</option>
+                <option>授信查询</option>
+                <option>反欺诈</option>
+                <option>新建根文件夹</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="basicOwner">负责人 <span class="req">*</span></label>
+              <select id="basicOwner" multiple size="2" aria-describedby="basicOwnerHelp">
+                <option selected>王超</option>
+                <option>李明</option>
+              </select>
+              <span class="help" id="basicOwnerHelp">支持选择多个负责人</span>
+            </div>
+            <div class="field">
+              <label for="basicSecurity">安全等级</label>
+              <select id="basicSecurity">
+                <option>L1 公开</option>
+                <option selected>L2 内部</option>
+                <option>L3 秘密</option>
+                <option>L4 机密</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="basicQps">最大 QPS</label>
+              <input type="number" id="basicQps" value="100" min="1" aria-describedby="basicQpsHelp">
+              <span class="help" id="basicQpsHelp">编排整体调用限流，内部各 API 节点单独计量</span>
+            </div>
+            <div class="field">
+              <label for="basicTimeout">超时时间(毫秒)</label>
+              <input type="number" id="basicTimeout" value="8000" min="100" aria-describedby="basicTimeoutHelp">
+              <span class="help" id="basicTimeoutHelp">整个编排工作流的执行超时</span>
+            </div>
+            <fieldset class="field" style="border:0;padding:0;margin:0" aria-describedby="failStrategyHelp">
+              <legend class="field-label">失败策略</legend>
+              <div class="radio-row">
+                <label><input type="radio" name="fail" value="fast" checked> 快速失败</label>
+                <label><input type="radio" name="fail" value="continue"> 尽量继续</label>
+              </div>
+              <span class="help" id="failStrategyHelp">快速失败：任一节点异常立即返回错误；尽量继续：跳过异常分支。</span>
+            </fieldset>
+            <div class="field">
+              <label for="basicCache">缓存策略</label>
+              <select id="basicCache">
+                <option>关闭缓存(默认)</option>
+                <option>开启缓存 300s</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="basicDescription">描述</label>
+              <textarea id="basicDescription" rows="3" placeholder="说明本次编排的业务目的与变更点">按客户号聚合授信额度、风险等级，按额度阈值分流后合并返回评级结果。</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 版本信息 -->
+    <section id="panel-version" role="tabpanel" aria-labelledby="tab-version" class="tab-panel pad" aria-hidden="true">
+      <div class="card">
+        <div class="card-head">
+          <h2>版本信息</h2>
+          <div class="actions">
+            <span style="font-size: var(--ds-font-size-12); color: var(--ds-text-2);">简单权重灰度在已发布版本的环境部署中配置</span>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="data">
+            <caption class="sr-only">API 编排版本</caption>
+            <thead>
+              <tr>
+                <th scope="col">版本</th>
+                <th scope="col">版本状态</th>
+                <th scope="col">节点数</th>
+                <th scope="col">创建人</th>
+                <th scope="col">创建时间</th>
+                <th scope="col">变更说明</th>
+                <th scope="col" style="text-align: right">操作</th>
+              </tr>
+            </thead>
+            <tbody id="versionTableBody">
+              <tr>
+                <td><strong>v0.3</strong></td>
+                <td><span class="tag tag-warning"><span class="tag-dot"></span>草稿</span></td>
+                <td id="currentVersionNodeCount">8</td>
+                <td>王超</td>
+                <td>2026-08-27 10:18</td>
+                <td>增加额度分流与结果合并</td>
+                <td style="text-align: right;"><button type="button" class="btn-text" data-version-action="edit" data-version="v0.3">继续编辑</button> <button type="button" class="btn-text" data-version-action="compare" data-version="v0.3">对比</button></td>
+              </tr>
+              <tr>
+                <td><strong>v0.2</strong></td>
+                <td><span class="tag tag-neutral"><span class="tag-dot"></span>已废弃</span></td>
+                <td>6</td>
+                <td>王超</td>
+                <td>2026-08-20 15:42</td>
+                <td>增加函数评级节点</td>
+                <td style="text-align: right;"><button type="button" class="btn-text" data-version-action="view" data-version="v0.2">查看</button> <button type="button" class="btn-text" data-version-action="compare" data-version="v0.2">对比</button></td>
+              </tr>
+              <tr>
+                <td><strong>v0.1</strong></td>
+                <td><span class="tag tag-success"><span class="tag-dot"></span>已发布</span></td>
+                <td>4</td>
+                <td>王超</td>
+                <td>2026-08-12 09:05</td>
+                <td>首次发布</td>
+                <td style="text-align: right;"><button type="button" class="btn-text" data-version-action="deployments" data-version="v0.1">查看部署</button> <button type="button" class="btn-text" data-version-action="compare" data-version="v0.1">对比</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 编排详情 -->
+    <section id="panel-detail" role="tabpanel" aria-labelledby="tab-detail" class="tab-panel pad" aria-hidden="true">
+      <div class="card" style="margin-bottom: var(--ds-space-7);">
+        <div class="card-head"><h2>调用信息</h2></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field"><span class="field-label">调用路径</span><div class="field-readonly" id="detailPathText" style="font-family: var(--ds-font-mono);">/api/v1/risk/orch/credit-rating</div></div>
+            <div class="field"><span class="field-label">调用方式</span><div class="field-readonly">POST · application/json</div></div>
+            <div class="field"><span class="field-label">认证方式</span><div class="field-readonly">OAuth 2.0(默认)</div></div>
+            <div class="field"><span class="field-label">返回格式</span><div class="field-readonly">JSON</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom: var(--ds-space-7);">
+        <div class="card-head">
+          <h2>服务授权</h2>
+          <div class="actions"><button type="button" class="btn-text" data-detail-action="applications">查看申请记录</button></div>
+        </div>
+        <div class="table-scroll">
+          <table class="data">
+            <caption class="sr-only">当前 API 编排的服务授权</caption>
+            <thead>
+              <tr><th scope="col">消费应用</th><th scope="col">授权状态</th><th scope="col">环境</th><th scope="col">有效期</th><th scope="col" style="text-align: right">操作</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>风控决策系统</td>
+                <td><span class="tag tag-success"><span class="tag-dot"></span>已生效</span></td>
+                <td>测试</td>
+                <td>2026-12-31</td>
+                <td style="text-align: right;"><button type="button" class="btn-text" data-detail-action="authorization" data-object="风控决策系统">查看</button></td>
+              </tr>
+              <tr>
+                <td>客户主数据平台</td>
+                <td><span class="tag tag-warning"><span class="tag-dot"></span>待审批</span></td>
+                <td>生产</td>
+                <td>—</td>
+                <td style="text-align: right;"><button type="button" class="btn-text" data-detail-action="authorization" data-object="客户主数据平台">查看</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>报警配置</h2><div class="actions"><button type="button" class="btn-text" data-detail-action="alarm">编辑报警配置</button></div></div>
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="field"><span class="field-label">报警接收人</span><div class="field-readonly">王超(负责人，默认)</div></div>
+            <div class="field"><span class="field-label">触发条件</span><div class="field-readonly">错误率 > 1% / 超时率 > 5%</div></div>
+            <div class="field"><span class="field-label">通知渠道</span><div class="field-readonly">站内信 · 邮件</div></div>
+            <div class="field"><span class="field-label">静默期</span><div class="field-readonly">5 分钟</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" aria-hidden="true">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 7v4M8 5h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+  <span id="toastMsg">已保存</span>
+</div>
+
+<div class="modal-mask" id="addNodeModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="addNodeModalTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="addNodeModalTitle">添加节点</h3>
+      <button type="button" class="icon-btn" data-close-add-node aria-label="关闭添加节点弹窗">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="alert" id="addNodeContext">新节点将添加到画布空白区域。</div>
+      <div class="field">
+        <label for="addNodeType">节点类型 <span class="req">*</span></label>
+        <select id="addNodeType">
+          <option value="api">API 节点</option>
+          <option value="func">函数节点</option>
+          <option value="branch">分支节点</option>
+          <option value="merge">合并节点</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="addNodeName">节点名称 <span class="req">*</span></label>
+        <input type="text" id="addNodeName" maxlength="40" value="API 节点" aria-describedby="addNodeNameError">
+        <span class="field-error" id="addNodeNameError" hidden>请输入节点名称。</span>
+      </div>
+      <div class="field">
+        <label for="addNodeDescription">描述</label>
+        <textarea id="addNodeDescription" rows="2" placeholder="说明节点职责与输入输出"></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn" data-close-add-node>取消</button>
+      <button type="button" class="btn btn-primary" id="btnConfirmAddNode">添加节点</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-mask" id="infoModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="infoModalTitle">查看详情</h3>
+      <button type="button" class="icon-btn" data-close-info aria-label="关闭详情弹窗">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="infoModalBody"></div>
+  </div>
+</div>
+
+<script>
+  "use strict";
+
+  var NODE_W = 156;
+  var NODE_H = 70;
+  var nodeSequence = 0;
+  var selectedId = "func";
+  var selectedEdgeIndex = null;
+  var pendingConnectionFrom = null;
+  var insertionEdgeIndex = null;
+  var dragState = null;
+  var panState = null;
+  var zoom = 1;
+  var isReadOnly = false;
+  var isDirty = false;
+  var hasSuccessfulTest = false;
+  var lastTestResult = null;
+  var toastTimer = null;
+
+  function esc(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function optionList(values, selected) {
+    return values.map(function (value) {
+      return '<option value="' + esc(value) + '"' + (value === selected ? " selected" : "") + ">" + esc(value) + "</option>";
+    }).join("");
+  }
+
+  function dataTypeOptions(selected) {
+    return optionList(["STRING", "INT", "DECIMAL", "BOOLEAN"], selected);
+  }
+
+  function sourceOptions(selected) {
+    var values = [
+      "开始.custNo",
+      "开始.productType",
+      "客户授信额度查询.cust_no",
+      "客户授信额度查询.credit_limit",
+      "客户授信额度查询.available_limit",
+      "客户授信额度查询.risk_level",
+      "额度分级.credit_rating",
+      "额度分级.grade_score",
+      "高额度推送.push_status",
+      "低额度记录.log_id"
+    ];
+    if (selected && values.indexOf(selected) === -1) values.push(selected);
+    return optionList(values, selected);
+  }
+
+  var nodes = {
+    start: {
+      id: "start", type: "start", name: "开始", x: 40, y: 260,
+      desc: "编排入口，定义请求参数", readonly: true,
+      params: [
+        { name: "custNo", type: "STRING", required: true, example: "C20240001" },
+        { name: "productType", type: "STRING", required: true, example: "LOAN" }
+      ]
+    },
+    api1: {
+      id: "api1", type: "api", name: "客户授信额度查询", x: 240, y: 260,
+      desc: "查询客户授信额度与风险等级", apiName: "客户授信额度查询",
+      apiPath: "/api/v1/risk/credit/query", apiStatus: "已上线",
+      mappings: [
+        { name: "custNo", type: "STRING", source: "开始.custNo" },
+        { name: "productType", type: "STRING", source: "开始.productType" }
+      ],
+      outputs: [
+        { name: "cust_no", type: "STRING" },
+        { name: "credit_limit", type: "DECIMAL" },
+        { name: "available_limit", type: "DECIMAL" },
+        { name: "risk_level", type: "STRING" }
+      ]
+    },
+    func: {
+      id: "func", type: "func", name: "额度分级", x: 440, y: 260,
+      desc: "通过受治理的函数连接计算额度等级",
+      functionName: "额度规则函数", connection: "函数连接 / credit-grade-v1",
+      inputs: [
+        { name: "cust_no", type: "STRING", source: "客户授信额度查询.cust_no" },
+        { name: "credit_limit", type: "DECIMAL", source: "客户授信额度查询.credit_limit" },
+        { name: "risk_level", type: "STRING", source: "客户授信额度查询.risk_level" }
+      ],
+      outputs: [
+        { name: "credit_rating", type: "STRING" },
+        { name: "grade_score", type: "INT" }
+      ]
+    },
+    branch: {
+      id: "branch", type: "branch", name: "额度判断", x: 640, y: 260,
+      desc: "按可用额度将请求路由到不同下游节点",
+      inputName: "available_limit", inputType: "DECIMAL",
+      inputSource: "客户授信额度查询.available_limit",
+      branches: [
+        { operator: ">", value: "300000", target: "高额度推送" },
+        { operator: "≤", value: "300000", target: "低额度记录" }
+      ]
+    },
+    api2: {
+      id: "api2", type: "api", name: "高额度推送", x: 840, y: 160,
+      desc: "向营销系统推送高价值客户", apiName: "高价值客户推送",
+      apiPath: "/api/v1/mkt/highvalue/push", apiStatus: "已上线",
+      mappings: [
+        { name: "custNo", type: "STRING", source: "客户授信额度查询.cust_no" },
+        { name: "creditRating", type: "STRING", source: "额度分级.credit_rating" }
+      ],
+      outputs: [
+        { name: "cust_no", type: "STRING" },
+        { name: "push_status", type: "INT" }
+      ]
+    },
+    api3: {
+      id: "api3", type: "api", name: "低额度记录", x: 840, y: 360,
+      desc: "记录低额度客户处置结果", apiName: "低额度客户记录",
+      apiPath: "/api/v1/ops/lowcredit/log", apiStatus: "已上线",
+      mappings: [
+        { name: "custNo", type: "STRING", source: "客户授信额度查询.cust_no" },
+        { name: "availableLimit", type: "DECIMAL", source: "客户授信额度查询.available_limit" }
+      ],
+      outputs: [
+        { name: "cust_no", type: "STRING" },
+        { name: "log_id", type: "STRING" }
+      ]
+    },
+    merge: {
+      id: "merge", type: "merge", name: "合并结果", x: 1040, y: 260,
+      desc: "合并两个条件分支的返回字段", mergeMode: "merge",
+      fields: [
+        { field: "cust_no", source: "高额度推送", alias: "cust_no" },
+        { field: "push_status", source: "高额度推送", alias: "push_status" },
+        { field: "log_id", source: "低额度记录", alias: "log_id" }
+      ]
+    },
+    end: {
+      id: "end", type: "end", name: "结束", x: 1240, y: 260,
+      desc: "编排出口，定义返回参数", readonly: true,
+      params: [
+        { name: "cust_no", type: "STRING", source: "客户授信额度查询.cust_no", required: true },
+        { name: "credit_rating", type: "STRING", source: "额度分级.credit_rating", required: true },
+        { name: "available_limit", type: "DECIMAL", source: "客户授信额度查询.available_limit", required: false },
+        { name: "push_status", type: "INT", source: "高额度推送.push_status", required: false }
+      ]
+    }
+  };
+
+  var edges = [
+    { from: "start", to: "api1", label: "" },
+    { from: "api1", to: "func", label: "" },
+    { from: "func", to: "branch", label: "" },
+    { from: "branch", to: "api2", label: "额度 > 30万" },
+    { from: "branch", to: "api3", label: "额度 ≤ 30万" },
+    { from: "api2", to: "merge", label: "" },
+    { from: "api3", to: "merge", label: "" },
+    { from: "merge", to: "end", label: "" }
+  ];
+
+  var iconSvg = {
+    start: '<svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    end: '<svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 3h8v8H3zM5 5l4 4M9 5l-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+    api: '<svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 4h10M2 7h10M2 10h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+    func: '<svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 2l4 5-4 5M9 2v10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    branch: '<svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 3h5a3 3 0 013 3v2a3 3 0 003 3M2 11h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+    merge: '<svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 4l4 3-4 3M7 4l4 3-4 3M2 7h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  };
+
+  var typeLabel = {
+    start: "开始节点",
+    end: "结束节点",
+    api: "API 节点",
+    func: "函数节点",
+    branch: "分支节点",
+    merge: "合并节点"
+  };
+
+  var canvas = document.getElementById("canvas");
+  var canvasScroll = document.getElementById("canvasScroll");
+  var edgesSvg = document.getElementById("edges");
+  var toast = document.getElementById("toast");
+
+  function showToast(message) {
+    clearTimeout(toastTimer);
+    document.getElementById("toastMsg").textContent = message;
+    toast.setAttribute("aria-hidden", "false");
+    toastTimer = setTimeout(function () {
+      toast.setAttribute("aria-hidden", "true");
+    }, 2600);
+  }
+
+  function markDirty() {
+    if (isReadOnly) return;
+    isDirty = true;
+    hasSuccessfulTest = false;
+    document.getElementById("lastSavedAt").textContent = "有未保存更改";
+    updateCanvasStats();
+    updatePublishState();
+  }
+
+  function updatePublishState() {
+    var publish = document.getElementById("btnPublish");
+    var errors = validateGraph();
+    var enabled = !isReadOnly && !isDirty && hasSuccessfulTest && errors.length === 0;
+    publish.disabled = !enabled;
+    publish.title = enabled ? "提交上线审核" : "请先保存、通过校验并完成编排测试";
+  }
+
+  function validateGraph() {
+    var errors = [];
+    var ids = Object.keys(nodes);
+    var names = {};
+    ids.forEach(function (id) {
+      var nd = nodes[id];
+      if (!nd.name || !nd.name.trim()) errors.push("存在未命名节点");
+      if (names[nd.name]) errors.push("节点名称重复：" + nd.name);
+      names[nd.name] = true;
+      if (nd.type === "api" && nd.apiStatus !== "已上线") errors.push(nd.name + "不是已上线 API");
+      if (id !== "start" && !edges.some(function (edge) { return edge.to === id; })) errors.push(nd.name + "缺少上游依赖");
+      if (id !== "end" && !edges.some(function (edge) { return edge.from === id; })) errors.push(nd.name + "缺少下游依赖");
+    });
+    var visited = {};
+    var stack = ["start"];
+    while (stack.length) {
+      var current = stack.pop();
+      if (visited[current]) continue;
+      visited[current] = true;
+      edges.filter(function (edge) { return edge.from === current; }).forEach(function (edge) {
+        stack.push(edge.to);
+      });
+    }
+    if (!visited.end) errors.push("开始节点与结束节点之间没有完整路径");
+    if (hasCycle()) errors.push("工作流存在循环依赖");
+    return Array.from(new Set(errors));
+  }
+
+  function hasCycle(extraEdge) {
+    var adjacency = {};
+    Object.keys(nodes).forEach(function (id) { adjacency[id] = []; });
+    edges.concat(extraEdge ? [extraEdge] : []).forEach(function (edge) {
+      if (adjacency[edge.from]) adjacency[edge.from].push(edge.to);
+    });
+    var visiting = {};
+    var visited = {};
+    function walk(id) {
+      if (visiting[id]) return true;
+      if (visited[id]) return false;
+      visiting[id] = true;
+      var next = adjacency[id] || [];
+      for (var i = 0; i < next.length; i += 1) {
+        if (walk(next[i])) return true;
+      }
+      visiting[id] = false;
+      visited[id] = true;
+      return false;
+    }
+    return Object.keys(nodes).some(walk);
+  }
+
+  function updateCanvasStats() {
+    document.getElementById("nodeCount").textContent = Object.keys(nodes).length;
+    document.getElementById("headerNodeCount").textContent = Object.keys(nodes).length;
+    document.getElementById("currentVersionNodeCount").textContent = Object.keys(nodes).length;
+    document.getElementById("edgeCount").textContent = edges.length;
+    var status = document.getElementById("validationStatus");
+    var errors = validateGraph();
+    if (errors.length) {
+      status.textContent = errors.length + " 项待修复";
+      status.style.color = "var(--ds-color-danger-text)";
+      status.title = errors.join("；");
+    } else {
+      status.textContent = "通过";
+      status.style.color = "var(--ds-color-success-text)";
+      status.title = "节点和依赖校验通过";
+    }
+  }
+
+  function nodeBodyLines(nd) {
+    if (nd.type === "start") {
+      return '<div class="nb-line"><span class="k">入口参数</span><span class="v">' + esc(nd.params.map(function (p) { return p.name; }).join(", ")) + "</span></div>";
+    }
+    if (nd.type === "end") {
+      return '<div class="nb-line"><span class="k">返回参数</span><span class="v">' + esc(nd.params.map(function (p) { return p.name; }).join(", ")) + "</span></div>";
+    }
+    if (nd.type === "api") {
+      return '<div class="nb-line"><span class="k">API</span><span class="v">' + esc(nd.apiName) + '</span></div><div class="nb-line"><span class="k">状态</span><span class="v" style="color:var(--ds-color-success-text)">' + esc(nd.apiStatus) + "</span></div>";
+    }
+    if (nd.type === "func") {
+      return '<div class="nb-line"><span class="k">函数</span><span class="v">' + esc(nd.functionName) + '</span></div><div class="nb-line"><span class="k">调用</span><span class="v">POST · 函数连接</span></div>';
+    }
+    if (nd.type === "branch") {
+      return '<div class="nb-line"><span class="k">分支</span><span class="v">' + nd.branches.length + ' 条</span></div><div class="nb-line"><span class="k">条件</span><span class="v">' + esc(nd.inputName) + "</span></div>";
+    }
+    if (nd.type === "merge") {
+      return '<div class="nb-line"><span class="k">方式</span><span class="v">' + esc(nd.mergeMode) + '</span></div><div class="nb-line"><span class="k">上游</span><span class="v">' + edges.filter(function (edge) { return edge.to === nd.id; }).length + " 个节点</span></div>";
+    }
+    return "";
+  }
+
+  function renderNodes() {
+    canvas.querySelectorAll(".node").forEach(function (node) { node.remove(); });
+    Object.keys(nodes).forEach(function (id) {
+      var nd = nodes[id];
+      var el = document.createElement("div");
+      el.className = "node" + (selectedId === id ? " is-selected" : "");
+      el.style.left = nd.x + "px";
+      el.style.top = nd.y + "px";
+      el.dataset.id = id;
+      el.setAttribute("role", "group");
+      el.setAttribute("tabindex", "0");
+      el.setAttribute("aria-label", nd.name + " · " + typeLabel[nd.type] + (isReadOnly ? "，只读" : "，双击编辑名称"));
+      var tools = "";
+      if (!isReadOnly && !nd.readonly) {
+        tools = '<button type="button" class="nt-btn" data-node-edit="' + esc(id) + '" aria-label="编辑节点名称" title="编辑名称"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 9.5l1.5-4 5-5L11 3l-5 5-4 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></button>' +
+          '<button type="button" class="nt-btn is-danger" data-node-del="' + esc(id) + '" aria-label="删除节点" title="删除节点">' +
+          '<svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.5 4h5M5 4V3a1 1 0 011-1 1 1 0 011 1v1M4.5 4v6a1 1 0 001 1h1a1 1 0 001-1V4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>';
+      }
+      var inputPort = id === "start" ? "" : '<button type="button" class="node-port in" data-port-in="' + esc(id) + '" aria-label="连接到' + esc(nd.name) + '"></button>';
+      var outputPort = id === "end" ? "" : '<button type="button" class="node-port out' + (pendingConnectionFrom === id ? " is-pending" : "") + '" data-port-out="' + esc(id) + '" aria-label="从' + esc(nd.name) + '开始连接"></button>';
+      el.innerHTML =
+        '<div class="node-head"><span class="n-icon ' + esc(nd.type) + '" aria-hidden="true">' + iconSvg[nd.type] + '</span><span class="n-title" title="' + esc(nd.name) + '">' + esc(nd.name) + "</span></div>" +
+        '<div class="node-body">' + nodeBodyLines(nd) + "</div>" +
+        inputPort + outputPort + '<div class="node-tools">' + tools + "</div>";
+      canvas.appendChild(el);
+
+      el.addEventListener("click", function (event) {
+        if (event.target.closest("button")) return;
+        selectNode(id);
+      });
+      el.addEventListener("dblclick", function (event) {
+        if (isReadOnly || event.target.closest("button")) return;
+        beginRename(id);
+      });
+      el.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          selectNode(id);
+        }
+        if (!isReadOnly && event.key === "F2") {
+          event.preventDefault();
+          beginRename(id);
+        }
+      });
+      el.addEventListener("mousedown", function (event) {
+        if (isReadOnly || event.button !== 0 || event.target.closest("button")) return;
+        dragState = {
+          id: id,
+          el: el,
+          startX: event.clientX,
+          startY: event.clientY,
+          origX: nd.x,
+          origY: nd.y,
+          moved: false
+        };
+        event.preventDefault();
+      });
+    });
+
+    canvas.querySelectorAll("[data-node-del]").forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        event.stopPropagation();
+        deleteNode(button.getAttribute("data-node-del"));
+      });
+    });
+    canvas.querySelectorAll("[data-node-edit]").forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        event.stopPropagation();
+        beginRename(button.getAttribute("data-node-edit"));
+      });
+    });
+    canvas.querySelectorAll("[data-port-out]").forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        event.stopPropagation();
+        if (isReadOnly) return;
+        pendingConnectionFrom = button.getAttribute("data-port-out");
+        selectedEdgeIndex = null;
+        renderNodes();
+        renderEdges();
+        showToast("已选择上游节点，请单击下游节点的输入端口");
+      });
+    });
+    canvas.querySelectorAll("[data-port-in]").forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        event.stopPropagation();
+        if (isReadOnly) return;
+        completeConnection(button.getAttribute("data-port-in"));
+      });
+    });
+  }
+
+  function completeConnection(toId) {
+    if (isReadOnly) return;
+    if (!pendingConnectionFrom) {
+      showToast("请先选择一个节点的输出端口");
+      return;
+    }
+    var fromId = pendingConnectionFrom;
+    pendingConnectionFrom = null;
+    if (fromId === toId) {
+      renderNodes();
+      showToast("节点不能连接到自身");
+      return;
+    }
+    if (edges.some(function (edge) { return edge.from === fromId && edge.to === toId; })) {
+      renderNodes();
+      showToast("该依赖已经存在");
+      return;
+    }
+    if (hasCycle({ from: fromId, to: toId, label: "" })) {
+      renderNodes();
+      showToast("不能添加会形成循环的依赖");
+      return;
+    }
+    edges.push({ from: fromId, to: toId, label: "" });
+    selectedEdgeIndex = edges.length - 1;
+    markDirty();
+    renderNodes();
+    renderEdges();
+    showToast("已添加依赖：" + nodes[fromId].name + " → " + nodes[toId].name);
+  }
+
+  function portPoint(nodeId, side) {
+    var nd = nodes[nodeId];
+    return side === "out"
+      ? { x: nd.x + NODE_W, y: nd.y + NODE_H / 2 }
+      : { x: nd.x, y: nd.y + NODE_H / 2 };
+  }
+
+  function edgePath(edge) {
+    var p1 = portPoint(edge.from, "out");
+    var p2 = portPoint(edge.to, "in");
+    var dx = Math.max(40, Math.abs(p2.x - p1.x) * 0.5);
+    return "M " + p1.x + " " + p1.y + " C " + (p1.x + dx) + " " + p1.y + ", " + (p2.x - dx) + " " + p2.y + ", " + p2.x + " " + p2.y;
+  }
+
+  function midPoint(edge) {
+    var p1 = portPoint(edge.from, "out");
+    var p2 = portPoint(edge.to, "in");
+    return { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
+  }
+
+  function makeForeignButton(x, y, className, label, text, dataName, dataValue) {
+    var item = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
+    item.setAttribute("x", x);
+    item.setAttribute("y", y);
+    item.setAttribute("width", "28");
+    item.setAttribute("height", "28");
+    item.style.pointerEvents = "auto";
+    item.innerHTML = '<button xmlns="http://www.w3.org/1999/xhtml" type="button" class="' + className + '" aria-label="' + esc(label) + '" ' + dataName + '="' + dataValue + '">' + text + "</button>";
+    return item;
+  }
+
+  function renderEdges() {
+    edgesSvg.innerHTML =
+      '<defs><marker id="edgeArrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L7,3 z" fill="var(--ds-color-gray-5)"></path></marker></defs>';
+    edges.forEach(function (edge, index) {
+      var d = edgePath(edge);
+      var active = selectedEdgeIndex === index || edge.from === selectedId || edge.to === selectedId;
+      var group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      group.setAttribute("class", "edge-group");
+      group.setAttribute("data-edge", String(index));
+      group.setAttribute("tabindex", "0");
+      group.setAttribute("role", "button");
+      group.setAttribute("aria-label", nodes[edge.from].name + "到" + nodes[edge.to].name + "的依赖");
+      group.innerHTML =
+        '<path class="edge-hit" d="' + d + '"></path>' +
+        '<path class="edge-path' + (active ? " is-active" : "") + '" d="' + d + '" marker-end="url(#edgeArrow)"></path>';
+      edgesSvg.appendChild(group);
+
+      var mid = midPoint(edge);
+      if (!isReadOnly) {
+        edgesSvg.appendChild(makeForeignButton(mid.x - 14, mid.y - 14, "node-add-mid", "在此依赖中插入节点", "+", "data-insert-edge", index));
+      }
+      if (!isReadOnly && selectedEdgeIndex === index) {
+        edgesSvg.appendChild(makeForeignButton(mid.x + 20, mid.y - 14, "edge-delete", "删除当前依赖", "×", "data-delete-edge", index));
+      }
+      if (edge.label) {
+        var width = edge.label.length * 11 + 12;
+        var bg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        bg.setAttribute("x", String(mid.x - width / 2));
+        bg.setAttribute("y", String(mid.y - 29));
+        bg.setAttribute("width", String(width));
+        bg.setAttribute("height", "16");
+        bg.setAttribute("rx", "2");
+        bg.setAttribute("fill", "var(--ds-color-white)");
+        bg.setAttribute("stroke", "var(--ds-border-2)");
+        edgesSvg.appendChild(bg);
+        var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("class", "edge-label");
+        text.setAttribute("x", String(mid.x));
+        text.setAttribute("y", String(mid.y - 17));
+        text.setAttribute("text-anchor", "middle");
+        text.textContent = edge.label;
+        edgesSvg.appendChild(text);
+      }
+    });
+
+    edgesSvg.querySelectorAll(".edge-group").forEach(function (group) {
+      function selectEdge() {
+        selectedEdgeIndex = Number(group.getAttribute("data-edge"));
+        renderEdges();
+      }
+      group.addEventListener("click", selectEdge);
+      group.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          selectEdge();
+        }
+      });
+    });
+    edgesSvg.querySelectorAll("[data-insert-edge]").forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        event.stopPropagation();
+        openAddNodeModal(null, Number(button.getAttribute("data-insert-edge")));
+      });
+    });
+    edgesSvg.querySelectorAll("[data-delete-edge]").forEach(function (button) {
+      button.addEventListener("click", function (event) {
+        event.stopPropagation();
+        deleteEdge(Number(button.getAttribute("data-delete-edge")));
+      });
+    });
+  }
+
+  function deleteEdge(index) {
+    if (isReadOnly) return;
+    var edge = edges[index];
+    if (!edge) return;
+    var message = "确认删除“" + nodes[edge.from].name + " → " + nodes[edge.to].name + "”依赖？删除后工作流可能无法通过校验。";
+    if (!window.confirm(message)) return;
+    edges.splice(index, 1);
+    selectedEdgeIndex = null;
+    markDirty();
+    renderEdges();
+    showToast("依赖已删除，请检查工作流校验结果");
+  }
+
+  function selectNode(id) {
+    if (!nodes[id]) return;
+    selectedId = id;
+    selectedEdgeIndex = null;
+    renderNodes();
+    renderEdges();
+    renderConfig(id);
+  }
+
+  function beginRename(id) {
+    if (isReadOnly) return;
+    selectNode(id);
+    var input = document.getElementById("cfg-" + id + "-name");
+    if (input) {
+      input.focus();
+      input.select();
+      showToast("请修改节点名称后保存节点配置");
+    }
+  }
+
+  function deleteNode(id) {
+    if (isReadOnly) return;
+    var nd = nodes[id];
+    if (!nd || nd.readonly) {
+      showToast("开始、结束节点不可删除");
+      return;
+    }
+    var affected = edges.filter(function (edge) { return edge.from === id || edge.to === id; }).length;
+    if (!window.confirm("确认删除节点“" + nd.name + "”？相关的 " + affected + " 条依赖将一并删除。")) return;
+    delete nodes[id];
+    edges = edges.filter(function (edge) { return edge.from !== id && edge.to !== id; });
+    selectedId = "start";
+    selectedEdgeIndex = null;
+    markDirty();
+    renderNodes();
+    renderEdges();
+    renderConfig(selectedId);
+    showToast("节点及相关依赖已删除");
+  }
+
+  function renderMiniTable(caption, headers, rows) {
+    return '<div class="table-scroll" style="border:1px solid var(--ds-border-2);border-radius:var(--ds-radius-small)">' +
+      '<table class="mini-table"><caption class="sr-only">' + esc(caption) + "</caption><thead><tr>" +
+      headers.map(function (header) { return '<th scope="col">' + esc(header) + "</th>"; }).join("") +
+      "</tr></thead><tbody>" + rows.join("") + "</tbody></table></div>";
+  }
+
+  function commonConfig(nd) {
+    var prefix = "cfg-" + nd.id;
+    return '<div class="field"><label for="' + prefix + '-name">节点名称 <span class="req">*</span></label>' +
+      '<input type="text" id="' + prefix + '-name" value="' + esc(nd.name) + '" maxlength="40" data-node-prop="name"></div>' +
+      '<div class="field"><label for="' + prefix + '-desc">节点描述</label>' +
+      '<textarea id="' + prefix + '-desc" rows="2" data-node-prop="desc">' + esc(nd.desc || "") + "</textarea></div>";
+  }
+
+  function configHtml(nd) {
+    var html = [commonConfig(nd)];
+    var prefix = "cfg-" + nd.id;
+    if (nd.readonly) {
+      html.push('<div class="config-desc">开始与结束节点由系统自动创建，不可删除；请求和返回参数仍可编辑。</div>');
+    }
+
+    if (nd.type === "start") {
+      var startRows = nd.params.map(function (param, index) {
+        return "<tr>" +
+          '<td><div class="input-cell"><input aria-label="请求参数名" value="' + esc(param.name) + '" data-param-collection="params" data-param-index="' + index + '" data-param-prop="name"></div></td>' +
+          '<td><div class="input-cell"><select aria-label="请求参数类型" data-param-collection="params" data-param-index="' + index + '" data-param-prop="type">' + dataTypeOptions(param.type) + "</select></div></td>" +
+          '<td><input type="checkbox" aria-label="' + esc(param.name) + '是否必填" data-param-collection="params" data-param-index="' + index + '" data-param-prop="required"' + (param.required ? " checked" : "") + "></td>" +
+          '<td><div class="input-cell"><input aria-label="请求参数示例值" value="' + esc(param.example || "") + '" data-param-collection="params" data-param-index="' + index + '" data-param-prop="example"></div></td>' +
+          "</tr>";
+      });
+      html.push('<div class="field"><span>请求参数(编排入口)</span>' + renderMiniTable("开始节点请求参数", ["参数名", "类型", "必填", "示例值"], startRows) +
+        '<button type="button" class="btn-text" data-add-param="start">+ 添加参数</button></div>');
+    }
+
+    if (nd.type === "end") {
+      var endRows = nd.params.map(function (param, index) {
+        return "<tr>" +
+          '<td><div class="input-cell"><input aria-label="返回参数名" value="' + esc(param.name) + '" data-param-collection="params" data-param-index="' + index + '" data-param-prop="name"></div></td>' +
+          '<td><div class="input-cell"><select aria-label="返回参数类型" data-param-collection="params" data-param-index="' + index + '" data-param-prop="type">' + dataTypeOptions(param.type) + "</select></div></td>" +
+          '<td><div class="input-cell"><select aria-label="返回参数来源" data-param-collection="params" data-param-index="' + index + '" data-param-prop="source">' + sourceOptions(param.source) + "</select></div></td>" +
+          '<td><input type="checkbox" aria-label="' + esc(param.name) + '是否必返" data-param-collection="params" data-param-index="' + index + '" data-param-prop="required"' + (param.required ? " checked" : "") + "></td>" +
+          "</tr>";
+      });
+      html.push('<div class="field"><span>返回参数(编排出口)</span>' + renderMiniTable("结束节点返回参数", ["参数名", "类型", "来源", "必返"], endRows) +
+        '<div style="display:flex;gap:var(--ds-space-3)"><button type="button" class="btn-text" data-add-param="end">+ 添加参数</button><button type="button" class="btn-text" data-parse-result>解析测试结果</button></div></div>');
+    }
+
+    if (nd.type === "api") {
+      var apiOptions = ["客户授信额度查询", "高价值客户推送", "低额度客户记录", "客户授信历史", "反欺诈风险评分"];
+      html.push('<div class="field"><label for="' + prefix + '-api">选择 API <span class="req">*</span></label>' +
+        '<select id="' + prefix + '-api" data-node-prop="apiName">' + optionList(apiOptions, nd.apiName) + '</select><span class="help">仅可选择已上线的 API 服务</span></div>');
+      html.push('<div class="field"><span>API 路径</span><div class="field-readonly" style="font-family:var(--ds-font-mono)">' + esc(nd.apiPath) + "</div></div>");
+      var mappingRows = nd.mappings.map(function (param, index) {
+        return "<tr><td>" + esc(param.name) + "</td><td>" + esc(param.type) + "</td>" +
+          '<td><div class="input-cell"><select aria-label="' + esc(param.name) + '映射来源" data-param-collection="mappings" data-param-index="' + index + '" data-param-prop="source">' + sourceOptions(param.source) + "</select></div></td></tr>";
+      });
+      html.push('<div class="field"><span>请求参数</span>' + renderMiniTable("API 节点请求参数映射", ["参数名", "类型", "映射来源"], mappingRows) + "</div>");
+      var outputRows = nd.outputs.map(function (param) { return "<tr><td>" + esc(param.name) + "</td><td>" + esc(param.type) + "</td></tr>"; });
+      html.push('<div class="field"><span>返回参数</span>' + renderMiniTable("API 节点返回参数", ["参数名", "类型"], outputRows) + "</div>");
+    }
+
+    if (nd.type === "func") {
+      html.push('<div class="config-desc">函数节点通过平台维护的函数连接发起 POST HTTP 调用，不在原型中保存连接密钥或厂商地址。</div>');
+      html.push('<div class="field"><label for="' + prefix + '-function">函数服务 <span class="req">*</span></label><input id="' + prefix + '-function" value="' + esc(nd.functionName) + '" data-node-prop="functionName"></div>');
+      html.push('<div class="field"><label for="' + prefix + '-connection">连接配置 <span class="req">*</span></label><input id="' + prefix + '-connection" value="' + esc(nd.connection) + '" data-node-prop="connection"></div>');
+      var inputRows = nd.inputs.map(function (param, index) {
+        return "<tr>" +
+          '<td><div class="input-cell"><input aria-label="函数输入参数名" value="' + esc(param.name) + '" data-param-collection="inputs" data-param-index="' + index + '" data-param-prop="name"></div></td>' +
+          '<td><div class="input-cell"><select aria-label="函数输入参数类型" data-param-collection="inputs" data-param-index="' + index + '" data-param-prop="type">' + dataTypeOptions(param.type) + "</select></div></td>" +
+          '<td><div class="input-cell"><select aria-label="函数输入参数来源" data-param-collection="inputs" data-param-index="' + index + '" data-param-prop="source">' + sourceOptions(param.source) + "</select></div></td></tr>";
+      });
+      html.push('<div class="field"><span>输入参数</span>' + renderMiniTable("函数节点输入参数", ["参数名", "类型", "来源"], inputRows) + '<button type="button" class="btn-text" data-add-param="func">+ 添加参数</button></div>');
+      var functionOutputs = nd.outputs.map(function (param) { return "<tr><td>" + esc(param.name) + "</td><td>" + esc(param.type) + "</td></tr>"; });
+      html.push('<div class="field"><span>返回参数</span>' + renderMiniTable("函数节点返回参数", ["参数名", "类型"], functionOutputs) + "</div>");
+    }
+
+    if (nd.type === "branch") {
+      html.push('<div class="config-desc">分支节点根据输入参数的实际值，选择一个满足条件的下游路径。</div>');
+      var branchInput = [
+        "<tr>" +
+        '<td><div class="input-cell"><input aria-label="分支输入参数名" value="' + esc(nd.inputName) + '" data-node-prop="inputName"></div></td>' +
+        '<td><div class="input-cell"><select aria-label="分支输入参数类型" data-node-prop="inputType">' + dataTypeOptions(nd.inputType) + "</select></div></td>" +
+        '<td><div class="input-cell"><select aria-label="分支输入参数来源" data-node-prop="inputSource">' + sourceOptions(nd.inputSource) + "</select></div></td></tr>"
+      ];
+      html.push('<div class="field"><span>输入参数</span>' + renderMiniTable("分支节点输入参数", ["参数名", "类型", "来源"], branchInput) + "</div>");
+      var branchRows = nd.branches.map(function (branch, index) {
+        return '<div class="branch-row"><div class="br-head"><span>分支 ' + (index + 1) + " → " + esc(branch.target) + '</span><button type="button" class="mini-action danger" data-remove-branch="' + index + '">移除</button></div>' +
+          '<div class="branch-cond"><input aria-label="分支参数" value="' + esc(nd.inputName) + '" readonly>' +
+          '<select aria-label="分支运算符" data-param-collection="branches" data-param-index="' + index + '" data-param-prop="operator">' + optionList([">", "≥", "<", "≤", "="], branch.operator) + "</select>" +
+          '<input aria-label="分支阈值" value="' + esc(branch.value) + '" data-param-collection="branches" data-param-index="' + index + '" data-param-prop="value"></div></div>';
+      }).join("");
+      html.push('<div class="field"><span>分支配置</span>' + branchRows + '<button type="button" class="btn-text" data-add-branch>+ 添加分支</button></div>');
+    }
+
+    if (nd.type === "merge") {
+      html.push('<div class="config-desc">append 要求上游字段和类型一致；merge 合并所有返回字段并允许设置别名。</div>');
+      html.push('<fieldset style="border:0;padding:0;margin:0" class="field"><legend>合并方式</legend><div class="radio-row">' +
+        '<label><input type="radio" name="merge-mode" value="append" data-node-prop="mergeMode"' + (nd.mergeMode === "append" ? " checked" : "") + "> append(取相同字段)</label>" +
+        '<label><input type="radio" name="merge-mode" value="merge" data-node-prop="mergeMode"' + (nd.mergeMode === "merge" ? " checked" : "") + "> merge(合并所有字段)</label></div></fieldset>");
+      var mergeRows = nd.fields.map(function (field, index) {
+        return "<tr><td>" + esc(field.field) + "</td><td>" + esc(field.source) + "</td>" +
+          '<td><div class="input-cell"><input aria-label="' + esc(field.field) + '别名" value="' + esc(field.alias) + '" data-param-collection="fields" data-param-index="' + index + '" data-param-prop="alias"></div></td></tr>';
+      });
+      html.push('<div class="field"><span>返回参数</span>' + renderMiniTable("合并节点返回参数", ["字段", "来源节点", "别名"], mergeRows) + "</div>");
+    }
+
+    html.push('<button type="button" class="btn btn-primary" id="btnSaveNode" style="align-self:flex-start">保存节点配置</button>');
+    return html.join("");
+  }
+
+  function renderConfig(id) {
+    var nd = nodes[id];
+    document.getElementById("cfgName").textContent = nd.name;
+    document.getElementById("cfgType").textContent = typeLabel[nd.type];
+    var icon = document.getElementById("cfgIcon");
+    icon.className = "n-icon " + nd.type;
+    icon.innerHTML = iconSvg[nd.type];
+    var pane = document.getElementById("cpane-base");
+    pane.innerHTML = configHtml(nd);
+    activateConfigTab("ctab-base");
+    bindConfigControls(nd, pane);
+    document.getElementById("nodeTestInput").value = JSON.stringify(defaultNodeTestInput(nd), null, 2);
+    document.getElementById("nodeTestResult").value = "—";
+    document.getElementById("nodeTestError").hidden = true;
+  }
+
+  function updateBoundValue(nd, element) {
+    if (isReadOnly) return;
+    var prop = element.getAttribute("data-node-prop");
+    if (!prop) return;
+    if (element.type === "radio" && !element.checked) return;
+    nd[prop] = element.type === "checkbox" ? element.checked : element.value;
+    markDirty();
+    if (prop === "name") {
+      document.getElementById("cfgName").textContent = nd.name || "未命名节点";
+      renderNodes();
+      renderEdges();
+    }
+  }
+
+  function bindConfigControls(nd, pane) {
+    if (isReadOnly) return;
+    pane.querySelectorAll("[data-node-prop]").forEach(function (element) {
+      element.addEventListener("change", function () { updateBoundValue(nd, element); });
+    });
+    pane.querySelectorAll("[data-param-collection]").forEach(function (element) {
+      element.addEventListener("change", function () {
+        var collection = element.getAttribute("data-param-collection");
+        var index = Number(element.getAttribute("data-param-index"));
+        var prop = element.getAttribute("data-param-prop");
+        if (!nd[collection] || !nd[collection][index]) return;
+        nd[collection][index][prop] = element.type === "checkbox" ? element.checked : element.value;
+        markDirty();
+      });
+    });
+    pane.querySelectorAll("[data-add-param]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var target = button.getAttribute("data-add-param");
+        if (target === "start") nd.params.push({ name: "newParam", type: "STRING", required: false, example: "" });
+        if (target === "end") nd.params.push({ name: "new_field", type: "STRING", source: "额度分级.credit_rating", required: false });
+        if (target === "func") nd.inputs.push({ name: "new_input", type: "STRING", source: "开始.custNo" });
+        markDirty();
+        renderConfig(nd.id);
+        showToast("已添加参数，请补充配置");
+      });
+    });
+    pane.querySelectorAll("[data-remove-branch]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        if (nd.branches.length <= 1) {
+          showToast("分支节点至少保留一个分支");
+          return;
+        }
+        nd.branches.splice(Number(button.getAttribute("data-remove-branch")), 1);
+        markDirty();
+        renderConfig(nd.id);
+      });
+    });
+    var addBranch = pane.querySelector("[data-add-branch]");
+    if (addBranch) {
+      addBranch.addEventListener("click", function () {
+        nd.branches.push({ operator: "=", value: "", target: "待连接下游" });
+        markDirty();
+        renderConfig(nd.id);
+      });
+    }
+    var parse = pane.querySelector("[data-parse-result]");
+    if (parse) parse.addEventListener("click", parseResultToEnd);
+    var saveNode = pane.querySelector("#btnSaveNode");
+    if (saveNode) {
+      saveNode.addEventListener("click", function () {
+        if (!nd.name.trim()) {
+          var nameInput = document.getElementById("cfg-" + nd.id + "-name");
+          nameInput.setAttribute("aria-invalid", "true");
+          showToast("请输入节点名称");
+          return;
+        }
+        renderNodes();
+        renderEdges();
+        showToast("已更新“" + nd.name + "”节点配置，请保存编排草稿");
+      });
+    }
+  }
+
+  function defaultNodeTestInput(nd) {
+    if (nd.type === "start") return { custNo: "C20240001", productType: "LOAN" };
+    if (nd.type === "api") return { custNo: "C20240001", productType: "LOAN" };
+    if (nd.type === "func") return { cust_no: "C20240001", credit_limit: 500000, risk_level: "A" };
+    if (nd.type === "branch") return { available_limit: 320000 };
+    if (nd.type === "merge") return { cust_no: "C20240001", push_status: 1 };
+    return { cust_no: "C20240001", credit_rating: "A", available_limit: 320000, push_status: 1 };
+  }
+
+  function simulateNodeTest(nd, input) {
+    if (nd.type === "start") return input;
+    if (nd.type === "api") {
+      if (nd.id === "api1") {
+        return { cust_no: input.custNo || "C20240001", credit_limit: 500000, available_limit: 320000, risk_level: "A" };
+      }
+      if (nd.id === "api2") return { cust_no: input.custNo || "C20240001", push_status: 1 };
+      return { cust_no: input.custNo || "C20240001", log_id: "LOG-20260827-0042" };
+    }
+    if (nd.type === "func") {
+      var limit = Number(input.credit_limit || 0);
+      return { credit_rating: limit >= 300000 ? "A" : "B", grade_score: limit >= 300000 ? 92 : 76 };
+    }
+    if (nd.type === "branch") {
+      var value = Number(input.available_limit || 0);
+      return { matched_branch: value > 300000 ? "高额度推送" : "低额度记录", available_limit: value };
+    }
+    if (nd.type === "merge") return input;
+    return input;
+  }
+
+  function createNode(type, name, desc, x, y) {
+    nodeSequence += 1;
+    var id = "node-" + Date.now() + "-" + nodeSequence;
+    var base = { id: id, type: type, name: name, desc: desc || "待补充节点说明", x: Math.round(x), y: Math.round(y) };
+    if (type === "api") {
+      Object.assign(base, {
+        apiName: "客户授信历史", apiPath: "/api/v1/risk/history", apiStatus: "已上线",
+        mappings: [{ name: "custNo", type: "STRING", source: "开始.custNo" }],
+        outputs: [{ name: "result", type: "STRING" }]
+      });
+    }
+    if (type === "func") {
+      Object.assign(base, {
+        functionName: "规则计算函数", connection: "函数连接 / default-v1",
+        inputs: [{ name: "input", type: "STRING", source: "开始.custNo" }],
+        outputs: [{ name: "result", type: "STRING" }]
+      });
+    }
+    if (type === "branch") {
+      Object.assign(base, {
+        inputName: "result", inputType: "STRING", inputSource: "额度分级.credit_rating",
+        branches: [{ operator: "=", value: "A", target: "待连接下游" }]
+      });
+    }
+    if (type === "merge") {
+      Object.assign(base, { mergeMode: "merge", fields: [{ field: "result", source: "待选择", alias: "result" }] });
+    }
+    nodes[id] = base;
+    return base;
+  }
+
+  function nextFreePosition() {
+    var count = Object.keys(nodes).length;
+    return { x: 620 + (count % 3) * 190, y: 60 + (count % 4) * 120 };
+  }
+
+  function openAddNodeModal(type, edgeIndex) {
+    if (isReadOnly) {
+      showToast("当前为只读详情，请从列表进入编辑模式");
+      return;
+    }
+    insertionEdgeIndex = typeof edgeIndex === "number" ? edgeIndex : null;
+    var modal = document.getElementById("addNodeModal");
+    var select = document.getElementById("addNodeType");
+    if (type) select.value = type;
+    syncAddNodeName();
+    var context = document.getElementById("addNodeContext");
+    if (insertionEdgeIndex !== null && edges[insertionEdgeIndex]) {
+      var edge = edges[insertionEdgeIndex];
+      context.textContent = "新节点将插入“" + nodes[edge.from].name + " → " + nodes[edge.to].name + "”依赖中。";
+    } else {
+      context.textContent = "新节点将添加到画布空白区域；请使用端口补充上下游依赖。";
+    }
+    document.getElementById("addNodeDescription").value = "";
+    document.getElementById("addNodeNameError").hidden = true;
+    modal.setAttribute("aria-hidden", "false");
+    document.getElementById("addNodeName").focus();
+  }
+
+  function closeAddNodeModal() {
+    document.getElementById("addNodeModal").setAttribute("aria-hidden", "true");
+    insertionEdgeIndex = null;
+  }
+
+  function syncAddNodeName() {
+    var type = document.getElementById("addNodeType").value;
+    document.getElementById("addNodeName").value = typeLabel[type] || "节点";
+  }
+
+  function confirmAddNode() {
+    if (isReadOnly) return;
+    var type = document.getElementById("addNodeType").value;
+    var nameInput = document.getElementById("addNodeName");
+    var name = nameInput.value.trim();
+    if (!name) {
+      nameInput.setAttribute("aria-invalid", "true");
+      document.getElementById("addNodeNameError").hidden = false;
+      return;
+    }
+    nameInput.removeAttribute("aria-invalid");
+    var desc = document.getElementById("addNodeDescription").value.trim();
+    var insertedIntoEdge = insertionEdgeIndex !== null;
+    var pos = nextFreePosition();
+    if (insertionEdgeIndex !== null && edges[insertionEdgeIndex]) pos = midPoint(edges[insertionEdgeIndex]);
+    var nd = createNode(type, name, desc, pos.x - NODE_W / 2, pos.y - NODE_H / 2);
+    if (insertionEdgeIndex !== null && edges[insertionEdgeIndex]) {
+      var oldEdge = edges[insertionEdgeIndex];
+      edges.splice(insertionEdgeIndex, 1,
+        { from: oldEdge.from, to: nd.id, label: oldEdge.label },
+        { from: nd.id, to: oldEdge.to, label: "" }
+      );
+    }
+    closeAddNodeModal();
+    selectedId = nd.id;
+    markDirty();
+    renderNodes();
+    renderEdges();
+    renderConfig(nd.id);
+    showToast(insertedIntoEdge ? "节点已插入依赖" : "节点已添加，请配置依赖");
+  }
+
+  function applyZoom() {
+    canvas.style.transform = "scale(" + zoom + ")";
+    document.getElementById("zoomVal").textContent = Math.round(zoom * 100) + "%";
+  }
+
+  function fitCanvas() {
+    var scroll = document.getElementById("canvasScroll");
+    var widthScale = (scroll.clientWidth - 24) / canvas.offsetWidth;
+    var heightScale = (scroll.clientHeight - 24) / canvas.offsetHeight;
+    zoom = Math.max(0.4, Math.min(1, widthScale, heightScale));
+    zoom = Math.floor(zoom * 10) / 10;
+    applyZoom();
+    scroll.scrollLeft = 0;
+    scroll.scrollTop = 0;
+    showToast("画布已适配到 " + Math.round(zoom * 100) + "%");
+  }
+
+  function formatGraph() {
+    if (isReadOnly) return;
+    var indegree = {};
+    var layer = {};
+    Object.keys(nodes).forEach(function (id) { indegree[id] = 0; layer[id] = 0; });
+    edges.forEach(function (edge) { indegree[edge.to] = (indegree[edge.to] || 0) + 1; });
+    var queue = Object.keys(nodes).filter(function (id) { return indegree[id] === 0; });
+    while (queue.length) {
+      var id = queue.shift();
+      edges.filter(function (edge) { return edge.from === id; }).forEach(function (edge) {
+        layer[edge.to] = Math.max(layer[edge.to] || 0, (layer[id] || 0) + 1);
+        indegree[edge.to] -= 1;
+        if (indegree[edge.to] === 0) queue.push(edge.to);
+      });
+    }
+    var rowsByLayer = {};
+    Object.keys(nodes).forEach(function (id) {
+      var currentLayer = layer[id] || 0;
+      rowsByLayer[currentLayer] = rowsByLayer[currentLayer] || [];
+      rowsByLayer[currentLayer].push(id);
+    });
+    Object.keys(rowsByLayer).forEach(function (layerKey) {
+      rowsByLayer[layerKey].forEach(function (id, row) {
+        nodes[id].x = 40 + Number(layerKey) * 200;
+        nodes[id].y = 120 + row * 150;
+      });
+    });
+    markDirty();
+    renderNodes();
+    renderEdges();
+    showToast("已按依赖顺序格式化工作流");
+  }
+
+  function activateConfigTab(tabId) {
+    document.querySelectorAll(".config-tab").forEach(function (tab) {
+      var selected = tab.id === tabId;
+      tab.setAttribute("aria-selected", selected ? "true" : "false");
+      tab.setAttribute("tabindex", selected ? "0" : "-1");
+    });
+    document.getElementById("cpane-base").setAttribute("aria-hidden", tabId === "ctab-base" ? "false" : "true");
+    document.getElementById("cpane-test").setAttribute("aria-hidden", tabId === "ctab-test" ? "false" : "true");
+  }
+
+  function activateMainTab(tabId) {
+    document.querySelectorAll(".tabs-bar .tab").forEach(function (tab) {
+      var selected = tab.id === tabId;
+      tab.setAttribute("aria-selected", selected ? "true" : "false");
+      tab.setAttribute("tabindex", selected ? "0" : "-1");
+    });
+    document.querySelectorAll(".main > .tab-panel").forEach(function (panel) {
+      panel.setAttribute("aria-hidden", panel.getAttribute("aria-labelledby") === tabId ? "false" : "true");
+    });
+    if (tabId === "tab-canvas") {
+      var activeConfig = document.querySelector(".config-tab[aria-selected=true]");
+      activateConfigTab(activeConfig ? activeConfig.id : "ctab-base");
+    }
+  }
+
+  function saveAll() {
+    if (isReadOnly) return;
+    var basicName = document.getElementById("basicName");
+    var value = basicName.value.trim();
+    if (!value) {
+      basicName.setAttribute("aria-invalid", "true");
+      document.getElementById("basicNameError").hidden = false;
+      activateMainTab("tab-config");
+      showToast("请输入 API 编排名称");
+      return;
+    }
+    basicName.removeAttribute("aria-invalid");
+    document.getElementById("basicNameError").hidden = true;
+    document.getElementById("currentOrchName").textContent = value;
+    var now = new Date();
+    var timestamp = now.getFullYear() + "-" +
+      String(now.getMonth() + 1).padStart(2, "0") + "-" +
+      String(now.getDate()).padStart(2, "0") + " " +
+      String(now.getHours()).padStart(2, "0") + ":" +
+      String(now.getMinutes()).padStart(2, "0");
+    isDirty = false;
+    document.getElementById("lastSavedAt").textContent = timestamp;
+    updateCanvasStats();
+    updatePublishState();
+    var errors = validateGraph();
+    showToast(errors.length ? "草稿已保存，仍有 " + errors.length + " 项校验问题" : "草稿已保存，可进行编排测试");
+  }
+
+  function readOrchestrationInput() {
+    var formMode = document.getElementById("fmtForm").getAttribute("aria-pressed") === "true";
+    if (formMode) {
+      var custNo = document.getElementById("testCustNo").value.trim();
+      var productType = document.getElementById("testProductType").value.trim();
+      if (!custNo || !productType) throw new Error("请填写 custNo 和 productType。");
+      return { custNo: custNo, productType: productType };
+    }
+    var parsed = JSON.parse(document.getElementById("testJsonInput").value);
+    if (!parsed.custNo || !parsed.productType) throw new Error("JSON 必须包含 custNo 和 productType。");
+    return parsed;
+  }
+
+  function setTestError(message) {
+    var alert = document.getElementById("orchTestError");
+    alert.textContent = message;
+    alert.hidden = !message;
+  }
+
+  function appendLog(container, step) {
+    var line = document.createElement("div");
+    line.className = "log-line success";
+    var time = document.createElement("span");
+    time.className = "ts";
+    time.textContent = step.time;
+    var name = document.createElement("span");
+    name.className = "step";
+    name.textContent = step.name;
+    var message = document.createElement("span");
+    message.textContent = step.message;
+    line.appendChild(time);
+    line.appendChild(name);
+    line.appendChild(message);
+    container.appendChild(line);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function runOrchestrationTest() {
+    setTestError("");
+    if (isReadOnly) {
+      setTestError("当前为只读详情，不能执行编排测试。");
+      return;
+    }
+    if (isDirty) {
+      setTestError("当前草稿有未保存更改。请先保存，再执行编排测试。");
+      return;
+    }
+    var graphErrors = validateGraph();
+    if (graphErrors.length) {
+      setTestError("工作流校验未通过：" + graphErrors.join("；"));
+      return;
+    }
+    var input;
+    try {
+      input = readOrchestrationInput();
+    } catch (error) {
+      setTestError("测试输入无效：" + error.message);
+      return;
+    }
+    var available = input.productType === "LOAN" ? 320000 : 180000;
+    var high = available > 300000;
+    var data = {
+      cust_no: input.custNo,
+      credit_rating: high ? "A" : "B",
+      available_limit: available
+    };
+    if (high) data.push_status = 1;
+    else data.log_id = "LOG-20260827-0042";
+    var result = { code: 0, message: "success", cost_ms: 1280, data: data };
+    var steps = [
+      { name: "开始", message: "读取请求参数 custNo=" + input.custNo + "，productType=" + input.productType },
+      { name: "客户授信额度查询", message: "API 调用成功，返回可用额度 " + available },
+      { name: "额度分级", message: "函数返回 credit_rating=" + data.credit_rating },
+      { name: "额度判断", message: "命中“" + (high ? "高额度推送" : "低额度记录") + "”分支" },
+      { name: high ? "高额度推送" : "低额度记录", message: high ? "推送成功，push_status=1" : "记录成功，生成审计编号" },
+      { name: "合并结果", message: "合并已执行分支的返回字段" },
+      { name: "结束", message: "编排执行完成，耗时 1280ms" }
+    ];
+    var button = document.getElementById("btnRunOrchTest");
+    var original = button.innerHTML;
+    button.disabled = true;
+    button.style.minWidth = button.offsetWidth + "px";
+    button.textContent = "测试中…";
+    var log = document.getElementById("orchLog");
+    log.innerHTML = "";
+    document.getElementById("orchResult").value = "执行中…";
+    var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var delay = reduced ? 0 : 220;
+    steps.forEach(function (step, index) {
+      step.time = "14:32:" + String(8 + index).padStart(2, "0");
+      setTimeout(function () {
+        appendLog(log, step);
+        if (index === steps.length - 1) {
+          lastTestResult = result;
+          hasSuccessfulTest = true;
+          document.getElementById("orchResult").value = JSON.stringify(result, null, 2);
+          document.getElementById("btnParseParams").disabled = false;
+          button.disabled = false;
+          button.innerHTML = original;
+          button.style.minWidth = "";
+          updatePublishState();
+          showToast("编排测试通过，可解析返回参数或提交上线");
+        }
+      }, index * delay);
+    });
+  }
+
+  function parseResultToEnd() {
+    if (isReadOnly) return;
+    if (!lastTestResult || !lastTestResult.data) {
+      showToast("请先完成一次成功的编排测试");
+      return;
+    }
+    var sourceMap = {
+      cust_no: "客户授信额度查询.cust_no",
+      credit_rating: "额度分级.credit_rating",
+      available_limit: "客户授信额度查询.available_limit",
+      push_status: "高额度推送.push_status",
+      log_id: "低额度记录.log_id"
+    };
+    nodes.end.params = Object.keys(lastTestResult.data).map(function (key) {
+      var value = lastTestResult.data[key];
+      var type = typeof value === "number" ? (Number.isInteger(value) ? "INT" : "DECIMAL") : "STRING";
+      if (key === "available_limit") type = "DECIMAL";
+      return { name: key, type: type, source: sourceMap[key] || "合并结果." + key, required: key === "cust_no" || key === "credit_rating" };
+    });
+    markDirty();
+    renderNodes();
+    if (selectedId === "end") renderConfig("end");
+    showToast("测试返回参数已同步到结束节点，请保存并重新测试");
+  }
+
+  function openInfoModal(title, bodyHtml) {
+    document.getElementById("infoModalTitle").textContent = title;
+    document.getElementById("infoModalBody").innerHTML = bodyHtml;
+    document.getElementById("infoModal").setAttribute("aria-hidden", "false");
+  }
+
+  function closeInfoModal() {
+    document.getElementById("infoModal").setAttribute("aria-hidden", "true");
+  }
+
+  canvas.addEventListener("mousedown", function (event) {
+    if (event.button !== 0 || dragState) return;
+    var interactive = event.target.closest && event.target.closest(".node, button, .edge-group");
+    if (interactive) return;
+    panState = {
+      startX: event.clientX,
+      startY: event.clientY,
+      scrollLeft: canvasScroll.scrollLeft,
+      scrollTop: canvasScroll.scrollTop,
+      moved: false
+    };
+    canvasScroll.classList.add("is-panning");
+    document.body.style.userSelect = "none";
+    event.preventDefault();
+  });
+
+  document.addEventListener("mousemove", function (event) {
+    if (panState) {
+      var panDx = event.clientX - panState.startX;
+      var panDy = event.clientY - panState.startY;
+      if (!panState.moved && (Math.abs(panDx) > 3 || Math.abs(panDy) > 3)) panState.moved = true;
+      if (panState.moved) {
+        canvasScroll.scrollLeft = panState.scrollLeft - panDx;
+        canvasScroll.scrollTop = panState.scrollTop - panDy;
+      }
+      event.preventDefault();
+      return;
+    }
+    if (isReadOnly || !dragState) return;
+    var dx = (event.clientX - dragState.startX) / zoom;
+    var dy = (event.clientY - dragState.startY) / zoom;
+    if (!dragState.moved && (Math.abs(dx) > 3 || Math.abs(dy) > 3)) {
+      dragState.moved = true;
+      dragState.el.style.cursor = "grabbing";
+      document.body.style.userSelect = "none";
+    }
+    if (dragState.moved) {
+      nodes[dragState.id].x = Math.max(0, Math.round(dragState.origX + dx));
+      nodes[dragState.id].y = Math.max(0, Math.round(dragState.origY + dy));
+      dragState.el.style.left = nodes[dragState.id].x + "px";
+      dragState.el.style.top = nodes[dragState.id].y + "px";
+      renderEdges();
+    }
+  });
+
+  document.addEventListener("mouseup", function () {
+    if (panState) {
+      canvasScroll.classList.remove("is-panning");
+      document.body.style.userSelect = "";
+      panState = null;
+      return;
+    }
+    if (!dragState) return;
+    if (dragState.moved) markDirty();
+    dragState.el.style.cursor = "";
+    document.body.style.userSelect = "";
+    dragState = null;
+  });
+
+  document.getElementById("zoomIn").addEventListener("click", function () {
+    zoom = Math.min(1.5, Number((zoom + 0.1).toFixed(2)));
+    applyZoom();
+  });
+  document.getElementById("zoomOut").addEventListener("click", function () {
+    zoom = Math.max(0.4, Number((zoom - 0.1).toFixed(2)));
+    applyZoom();
+  });
+  document.getElementById("zoomFit").addEventListener("click", fitCanvas);
+  document.getElementById("btnLocate").addEventListener("click", function () {
+    var nd = nodes[selectedId] || nodes.start;
+    var scroll = document.getElementById("canvasScroll");
+    scroll.scrollTo({
+      left: Math.max(0, nd.x * zoom - scroll.clientWidth / 2),
+      top: Math.max(0, nd.y * zoom - scroll.clientHeight / 2),
+      behavior: "smooth"
+    });
+    showToast("已定位到节点“" + nd.name + "”");
+  });
+  document.getElementById("btnFormat").addEventListener("click", formatGraph);
+  document.getElementById("btnAddNode").addEventListener("click", function () { openAddNodeModal(null, null); });
+
+  document.querySelectorAll(".palette-item[data-add]").forEach(function (item) {
+    item.addEventListener("click", function () { if (!isReadOnly) openAddNodeModal(item.getAttribute("data-add"), null); });
+    item.addEventListener("dragstart", function (event) {
+      if (isReadOnly) {
+        event.preventDefault();
+        return;
+      }
+      event.dataTransfer.setData("text/plain", item.getAttribute("data-add"));
+    });
+  });
+  canvas.addEventListener("dragover", function (event) { if (!isReadOnly) event.preventDefault(); });
+  canvas.addEventListener("drop", function (event) {
+    if (isReadOnly) return;
+    event.preventDefault();
+    var type = event.dataTransfer.getData("text/plain");
+    if (!type || !typeLabel[type]) return;
+    var rect = canvas.getBoundingClientRect();
+    var x = (event.clientX - rect.left) / zoom;
+    var y = (event.clientY - rect.top) / zoom;
+    var nd = createNode(type, typeLabel[type], "待补充节点说明", x - NODE_W / 2, y - NODE_H / 2);
+    selectedId = nd.id;
+    markDirty();
+    renderNodes();
+    renderEdges();
+    renderConfig(nd.id);
+    showToast("节点已添加，请配置节点和依赖");
+  });
+
+  document.getElementById("addNodeType").addEventListener("change", syncAddNodeName);
+  document.getElementById("btnConfirmAddNode").addEventListener("click", confirmAddNode);
+  document.querySelectorAll("[data-close-add-node]").forEach(function (button) {
+    button.addEventListener("click", closeAddNodeModal);
+  });
+  document.getElementById("addNodeModal").addEventListener("click", function (event) {
+    if (event.target.id === "addNodeModal") closeAddNodeModal();
+  });
+
+  document.querySelectorAll("[data-close-info]").forEach(function (button) {
+    button.addEventListener("click", closeInfoModal);
+  });
+  document.getElementById("infoModal").addEventListener("click", function (event) {
+    if (event.target.id === "infoModal") closeInfoModal();
+  });
+
+  document.querySelectorAll(".config-tab").forEach(function (tab) {
+    tab.addEventListener("click", function () { activateConfigTab(tab.id); });
+  });
+
+  document.querySelectorAll(".tabs-bar .tab").forEach(function (tab) {
+    tab.addEventListener("click", function () { activateMainTab(tab.id); });
+    tab.addEventListener("keydown", function (event) {
+      if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      var tabs = Array.from(document.querySelectorAll(".tabs-bar .tab"));
+      var index = tabs.indexOf(tab);
+      var next = event.key === "ArrowRight" ? (index + 1) % tabs.length : (index - 1 + tabs.length) % tabs.length;
+      tabs[next].focus();
+      activateMainTab(tabs[next].id);
+    });
+  });
+
+  document.getElementById("btnSave").addEventListener("click", saveAll);
+  document.getElementById("btnHistory").addEventListener("click", function () { activateMainTab("tab-version"); });
+  document.getElementById("btnTest").addEventListener("click", function () { activateMainTab("tab-test"); });
+  document.getElementById("btnPublish").addEventListener("click", function () {
+    if (isReadOnly || document.getElementById("btnPublish").disabled) return;
+    if (!window.confirm("提交“" + document.getElementById("currentOrchName").textContent + "”上线审核？管理者将审核服务契约、数据使用范围和生产配置。")) return;
+    document.getElementById("lifecycleStatus").className = "tag tag-info";
+    document.getElementById("lifecycleStatusText").textContent = "待上线审核";
+    document.getElementById("btnPublish").disabled = true;
+    showToast("上线申请已提交，可在审批中心查看进度");
+  });
+
+  document.getElementById("btnRunOrchTest").addEventListener("click", runOrchestrationTest);
+  document.getElementById("btnParseParams").disabled = true;
+  document.getElementById("btnParseParams").addEventListener("click", parseResultToEnd);
+  ["fmtForm", "fmtJson"].forEach(function (id) {
+    document.getElementById(id).addEventListener("click", function () {
+      var form = id === "fmtForm";
+      document.getElementById("fmtForm").setAttribute("aria-pressed", form ? "true" : "false");
+      document.getElementById("fmtJson").setAttribute("aria-pressed", form ? "false" : "true");
+      document.getElementById("testForm").style.display = form ? "" : "none";
+      document.getElementById("testJsonInput").style.display = form ? "none" : "";
+      setTestError("");
+    });
+  });
+
+  document.getElementById("btnNodeTest").addEventListener("click", function () {
+    if (isReadOnly) return;
+    var error = document.getElementById("nodeTestError");
+    var input;
+    try {
+      input = JSON.parse(document.getElementById("nodeTestInput").value);
+    } catch (parseError) {
+      error.textContent = "JSON 格式错误：" + parseError.message;
+      error.hidden = false;
+      document.getElementById("nodeTestInput").setAttribute("aria-invalid", "true");
+      return;
+    }
+    error.hidden = true;
+    document.getElementById("nodeTestInput").removeAttribute("aria-invalid");
+    var result = simulateNodeTest(nodes[selectedId], input);
+    document.getElementById("nodeTestResult").value = JSON.stringify({ code: 0, message: "success", data: result }, null, 2);
+    showToast("“" + nodes[selectedId].name + "”节点测试完成");
+  });
+
+  document.querySelectorAll("#panel-config input, #panel-config select, #panel-config textarea").forEach(function (control) {
+    control.addEventListener("change", markDirty);
+  });
+
+  document.querySelectorAll("[data-version-action]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var action = button.getAttribute("data-version-action");
+      var version = button.getAttribute("data-version");
+      if (action === "edit") {
+        if (isReadOnly) {
+          showToast("当前为只读详情，请从列表进入编辑模式");
+          return;
+        }
+        activateMainTab("tab-canvas");
+        showToast("已返回 " + version + " 草稿编辑");
+        return;
+      }
+      if (action === "compare") {
+        openInfoModal("版本对比", '<div class="modal-summary"><p><strong>' + esc(version) + '</strong> 与上一版本相比：</p><ul><li>新增额度分支判断</li><li>增加高额度推送与低额度记录节点</li><li>补充统一返回参数</li></ul></div>');
+        return;
+      }
+      if (action === "deployments") {
+        openInfoModal("环境部署", '<div class="modal-summary"><p><strong>' + esc(version) + '</strong> 已发布。</p><p>测试环境：<span class="tag tag-success"><span class="tag-dot"></span>运行中</span></p><p>生产环境：未部署</p></div>');
+        return;
+      }
+      openInfoModal("版本详情", '<div class="modal-summary"><p><strong>' + esc(version) + '</strong> 已废弃，仅保留查看和审计。</p><p>历史版本不可直接修改；如需恢复，请基于该版本创建新草稿。</p></div>');
+    });
+  });
+
+  document.querySelectorAll("[data-detail-action]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var action = button.getAttribute("data-detail-action");
+      if (action === "applications") {
+        openInfoModal("服务订阅申请记录", '<div class="modal-summary"><p>当前共有 2 条申请记录：</p><ul><li>风控决策系统：已批准并下发生效</li><li>客户主数据平台：待审批</li></ul><p>申请由消费应用负责人发起，审批完成后形成服务授权。</p></div>');
+        return;
+      }
+      if (action === "authorization") {
+        var object = button.getAttribute("data-object");
+        openInfoModal("服务授权详情", '<div class="modal-summary"><p><strong>消费应用：</strong>' + esc(object) + '</p><p><strong>认证方式：</strong>OAuth 2.0</p><p><strong>操作权限：</strong>调用 API</p><p><strong>数据权限：</strong>客户号、风险等级、可用额度</p></div>');
+        return;
+      }
+      openInfoModal("编辑报警配置",
+        '<div class="field"><label for="alarmErrorRate">错误率阈值(%)</label><input id="alarmErrorRate" type="number" min="0.1" step="0.1" value="1"></div>' +
+        '<div class="field"><label for="alarmTimeoutRate">超时率阈值(%)</label><input id="alarmTimeoutRate" type="number" min="0.1" step="0.1" value="5"></div>' +
+        '<button type="button" class="btn btn-primary" id="saveAlarmConfig" style="align-self:flex-start">保存报警配置</button>');
+      document.getElementById("saveAlarmConfig").addEventListener("click", function () {
+        closeInfoModal();
+        showToast("报警配置已保存");
+      });
+    });
+  });
+
+  document.querySelectorAll("[data-nav-placeholder]").forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      showToast(link.getAttribute("data-nav-placeholder") + "页面不在本次原型范围内");
+    });
+  });
+
+  function lifecycleClass(status) {
+    if (status === "已上线") return "tag-success";
+    if (status === "上线失败" || status === "下线失败") return "tag-danger";
+    if (status === "已下线") return "tag-neutral";
+    return "tag-warning";
+  }
+
+  function nextDraftVersion(current) {
+    var match = String(current || "").match(/^v?(\d+)\.(\d+)$/i);
+    if (!match) return "v0.1";
+    return "v" + match[1] + "." + (Number(match[2]) + 1);
+  }
+
+  function applyIncomingMetadata(params, name, status, version) {
+    var path = params.get("path") || "/api/v1/orchestration/draft";
+    document.title = "API 编排详情 — " + name + " — 数据服务平台";
+    document.getElementById("currentOrchName").textContent = name;
+    document.getElementById("breadcrumbOrchName").textContent = name;
+    document.getElementById("orchIdText").textContent = params.get("id") || "保存后生成";
+    document.getElementById("orchPathText").textContent = path;
+    document.getElementById("detailPathText").textContent = path;
+    document.getElementById("versionText").textContent = version;
+    document.getElementById("basicName").value = name;
+    document.getElementById("lifecycleStatusText").textContent = status;
+    document.getElementById("lifecycleStatus").className = "tag " + lifecycleClass(status);
+  }
+
+  function setReadOnlyMode() {
+    isReadOnly = true;
+    isDirty = false;
+    pendingConnectionFrom = null;
+    dragState = null;
+    document.body.classList.add("view-mode");
+    document.querySelectorAll("#panel-config input, #panel-config select, #panel-config textarea").forEach(function (control) {
+      control.disabled = true;
+      control.setAttribute("aria-readonly", "true");
+    });
+  }
+
+  function applyEntryMode() {
+    var params = new URLSearchParams(window.location.search);
+    var mode = params.get("mode");
+    var requestedTab = params.get("tab");
+    var incomingName = (params.get("name") || "").trim().slice(0, 50);
+    var name = incomingName || "未命名编排";
+    var incomingStatus = params.get("status") || "草稿";
+    var incomingVersion = params.get("version") || "v0.1";
+
+    if (mode === "view" || mode === "edit") {
+      applyIncomingMetadata(params, name, incomingStatus, incomingVersion);
+      if (mode === "view") setReadOnlyMode();
+    } else if (mode === "new-version") {
+      var draftVersion = nextDraftVersion(incomingVersion);
+      applyIncomingMetadata(params, name, "草稿", draftVersion);
+      isDirty = true;
+      hasSuccessfulTest = false;
+      document.getElementById("lastSavedAt").textContent = "尚未保存";
+      var existingRows = document.getElementById("versionTableBody").innerHTML.replace('id="currentVersionNodeCount"', "");
+      document.getElementById("versionTableBody").innerHTML =
+        '<tr><td><strong>' + esc(draftVersion) + '</strong></td><td><span class="tag tag-warning"><span class="tag-dot"></span>草稿</span></td>' +
+        '<td id="currentVersionNodeCount">' + Object.keys(nodes).length + '</td><td>王超</td><td>刚刚</td><td>基于 ' + esc(incomingVersion) + ' 创建</td>' +
+        '<td style="text-align:right;color:var(--ds-text-2)">当前版本</td></tr>' + existingRows;
+    } else if (mode === "new") {
+      nodes = {
+        start: {
+          id: "start", type: "start", name: "开始", x: 220, y: 260,
+          desc: "编排入口，定义请求参数", readonly: true, params: []
+        },
+        end: {
+          id: "end", type: "end", name: "结束", x: 760, y: 260,
+          desc: "编排出口，定义返回参数", readonly: true, params: []
+        }
+      };
+      edges = [{ from: "start", to: "end", label: "" }];
+      selectedId = "start";
+      isDirty = true;
+      hasSuccessfulTest = false;
+      applyIncomingMetadata(params, name, "草稿", incomingVersion);
+      document.getElementById("lastSavedAt").textContent = "尚未保存";
+      document.getElementById("basicDescription").value = "";
+      document.getElementById("versionTableBody").innerHTML =
+        '<tr><td><strong>' + esc(incomingVersion) + '</strong></td><td><span class="tag tag-warning"><span class="tag-dot"></span>草稿</span></td>' +
+        '<td id="currentVersionNodeCount">2</td><td>王超</td><td>—</td><td>新建 API 编排</td>' +
+        '<td style="text-align:right;color:var(--ds-text-2)">当前版本</td></tr>';
+    }
+
+    if (requestedTab === "version") activateMainTab("tab-version");
+  }
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape") return;
+    if (document.getElementById("addNodeModal").getAttribute("aria-hidden") === "false") closeAddNodeModal();
+    if (document.getElementById("infoModal").getAttribute("aria-hidden") === "false") closeInfoModal();
+    if (pendingConnectionFrom) {
+      pendingConnectionFrom = null;
+      renderNodes();
+      showToast("已取消添加依赖");
+    }
+  });
+
+  applyEntryMode();
+  renderNodes();
+  renderEdges();
+  renderConfig(selectedId);
+  updateCanvasStats();
+  updatePublishState();
+</script>
+<script src="menu.js"></script>
+</body>
+</html>

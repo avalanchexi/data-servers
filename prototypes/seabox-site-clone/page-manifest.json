@@ -1,0 +1,1429 @@
+{
+  "generatedAt": "2026-09-01T03:35:07.897Z",
+  "source": "sanitized Playwright crawl summary",
+  "sourcePageCount": 142,
+  "htmlPageCount": 142,
+  "defaultPage": "042-asset-overview.html",
+  "pages": [
+    {
+      "id": "001",
+      "filename": "001-index-qa-agent-uuid-task-uuid.html",
+      "template": "/#/home/index-qa/agent/:uuid/task/:uuid",
+      "source": "dom-link",
+      "group": "能力中心",
+      "item": "Data Agentic OS",
+      "tab": "",
+      "type": "chat"
+    },
+    {
+      "id": "002",
+      "filename": "002-index-qa-task-uuid.html",
+      "template": "/#/home/index-qa/task/:uuid",
+      "source": "sidebar:智能体/通用智能体",
+      "group": "智能体",
+      "item": "通用智能体",
+      "tab": "",
+      "type": "chat"
+    },
+    {
+      "id": "003",
+      "filename": "003-agent-list.html",
+      "template": "/#/home/agent-list",
+      "source": "sidebar:能力中心/智能体管理",
+      "group": "能力中心",
+      "item": "智能体管理",
+      "tab": "",
+      "type": "catalog"
+    },
+    {
+      "id": "004",
+      "filename": "004-skills-list.html",
+      "template": "/#/home/skills-list",
+      "source": "sidebar:能力中心/技能管理",
+      "group": "能力中心",
+      "item": "技能管理",
+      "tab": "",
+      "type": "catalog"
+    },
+    {
+      "id": "005",
+      "filename": "005-system-memory.html",
+      "template": "/#/home/system-memory",
+      "source": "sidebar:能力中心/记忆管理",
+      "group": "能力中心",
+      "item": "记忆管理",
+      "tab": "",
+      "type": "list"
+    },
+    {
+      "id": "006",
+      "filename": "006-mcp-list.html",
+      "template": "/#/home/mcp-list",
+      "source": "sidebar:能力中心/MCP 服务",
+      "group": "能力中心",
+      "item": "MCP 服务",
+      "tab": "",
+      "type": "catalog"
+    },
+    {
+      "id": "007",
+      "filename": "007-oa-work-hours.html",
+      "template": "/#/home/oa-work-hours",
+      "source": "sidebar:OA/工时管理",
+      "group": "OA",
+      "item": "工时管理",
+      "tab": "",
+      "type": "list"
+    },
+    {
+      "id": "008",
+      "filename": "008-oa-work-hours-tab-b5f7796.html",
+      "template": "/#/home/oa-work-hours::tab=工时填报",
+      "source": "tab:工时填报",
+      "group": "OA",
+      "item": "工时管理",
+      "tab": "工时填报",
+      "type": "list"
+    },
+    {
+      "id": "009",
+      "filename": "009-oa-project-management.html",
+      "template": "/#/home/oa-project-management",
+      "source": "sidebar:OA/研发项目",
+      "group": "OA",
+      "item": "研发项目",
+      "tab": "",
+      "type": "list"
+    },
+    {
+      "id": "010",
+      "filename": "010-oa-products.html",
+      "template": "/#/home/oa-products",
+      "source": "sidebar:OA/产品目录",
+      "group": "OA",
+      "item": "产品目录",
+      "tab": "",
+      "type": "catalog"
+    },
+    {
+      "id": "011",
+      "filename": "011-oa-approval-management.html",
+      "template": "/#/home/oa-approval-management",
+      "source": "sidebar:OA/审批管理",
+      "group": "OA",
+      "item": "审批管理",
+      "tab": "",
+      "type": "operations"
+    },
+    {
+      "id": "012",
+      "filename": "012-oa-approval-management-tab-af2e4d8.html",
+      "template": "/#/home/oa-approval-management::tab=待审批-0",
+      "source": "tab:待审批 0",
+      "group": "OA",
+      "item": "审批管理",
+      "tab": "待审批 0",
+      "type": "operations"
+    },
+    {
+      "id": "013",
+      "filename": "013-oa-approval-management-tab-4b3c965.html",
+      "template": "/#/home/oa-approval-management::tab=已通过",
+      "source": "tab:已通过",
+      "group": "OA",
+      "item": "审批管理",
+      "tab": "已通过",
+      "type": "operations"
+    },
+    {
+      "id": "014",
+      "filename": "014-oa-approval-management-tab-e944e4d.html",
+      "template": "/#/home/oa-approval-management::tab=已驳回",
+      "source": "tab:已驳回",
+      "group": "OA",
+      "item": "审批管理",
+      "tab": "已驳回",
+      "type": "operations"
+    },
+    {
+      "id": "015",
+      "filename": "015-oa-approval-management-tab-9373653.html",
+      "template": "/#/home/oa-approval-management::tab=已作废",
+      "source": "tab:已作废",
+      "group": "OA",
+      "item": "审批管理",
+      "tab": "已作废",
+      "type": "operations"
+    },
+    {
+      "id": "016",
+      "filename": "016-oa-okr.html",
+      "template": "/#/home/oa-okr",
+      "source": "sidebar:OA/OKR",
+      "group": "OA",
+      "item": "OKR",
+      "tab": "",
+      "type": "list"
+    },
+    {
+      "id": "017",
+      "filename": "017-oa-weekly-report.html",
+      "template": "/#/home/oa-weekly-report",
+      "source": "sidebar:OA/周报",
+      "group": "OA",
+      "item": "周报",
+      "tab": "",
+      "type": "list"
+    },
+    {
+      "id": "018",
+      "filename": "018-oa-token-management.html",
+      "template": "/#/home/oa-token-management",
+      "source": "sidebar:OA/Token服务",
+      "group": "OA",
+      "item": "Token服务",
+      "tab": "",
+      "type": "list"
+    },
+    {
+      "id": "019",
+      "filename": "019-oa-token-management-tab-c843b0d.html",
+      "template": "/#/home/oa-token-management::tab=Token服务",
+      "source": "tab:Token服务",
+      "group": "OA",
+      "item": "Token服务",
+      "tab": "Token服务",
+      "type": "list"
+    },
+    {
+      "id": "020",
+      "filename": "020-oa-token-management-tab-0bff116.html",
+      "template": "/#/home/oa-token-management::tab=API调用",
+      "source": "tab:API调用",
+      "group": "OA",
+      "item": "Token服务",
+      "tab": "API调用",
+      "type": "list"
+    },
+    {
+      "id": "021",
+      "filename": "021-oa-token-management-tab-791705d.html",
+      "template": "/#/home/oa-token-management::tab=用量分析",
+      "source": "tab:用量分析",
+      "group": "OA",
+      "item": "Token服务",
+      "tab": "用量分析",
+      "type": "dashboard"
+    },
+    {
+      "id": "022",
+      "filename": "022-knowledge-datasource.html",
+      "template": "/#/home/knowledge-datasource",
+      "source": "sidebar:数据中心/数据源",
+      "group": "数据中心",
+      "item": "数据源",
+      "tab": "",
+      "type": "catalog"
+    },
+    {
+      "id": "023",
+      "filename": "023-knowledge-dataset.html",
+      "template": "/#/home/knowledge-dataset",
+      "source": "sidebar:数据中心/数据集",
+      "group": "数据中心",
+      "item": "数据集",
+      "tab": "",
+      "type": "catalog"
+    },
+    {
+      "id": "024",
+      "filename": "024-data-center-semantic.html",
+      "template": "/#/home/data-center-semantic",
+      "source": "sidebar:数据中心/语义模型",
+      "group": "数据中心",
+      "item": "语义模型",
+      "tab": "",
+      "type": "graph"
+    },
+    {
+      "id": "025",
+      "filename": "025-data-center-semantic-tab-d30d76c.html",
+      "template": "/#/home/data-center-semantic::tab=语义图谱",
+      "source": "tab:语义图谱",
+      "group": "数据中心",
+      "item": "语义模型",
+      "tab": "语义图谱",
+      "type": "graph"
+    },
+    {
+      "id": "026",
+      "filename": "026-data-center-semantic-tab-376d994.html",
+      "template": "/#/home/data-center-semantic::tab=校验中心",
+      "source": "tab:校验中心",
+      "group": "数据中心",
+      "item": "语义模型",
+      "tab": "校验中心",
+      "type": "graph"
+    },
+    {
+      "id": "027",
+      "filename": "027-data-center-ontology.html",
+      "template": "/#/home/data-center-ontology",
+      "source": "sidebar:数据中心/本体模型",
+      "group": "数据中心",
+      "item": "本体模型",
+      "tab": "",
+      "type": "graph"
+    },
+    {
+      "id": "028",
+      "filename": "028-data-center-ontology-tab-c9c57f7.html",
+      "template": "/#/home/data-center-ontology::tab=领域管理",
+      "source": "tab:领域管理",
+      "group": "数据中心",
+      "item": "本体模型",
+      "tab": "领域管理",
+      "type": "graph"
+    },
+    {
+      "id": "029",
+      "filename": "029-data-center-ontology-tab-34994fb.html",
+      "template": "/#/home/data-center-ontology::tab=Schema-管理",
+      "source": "tab:Schema 管理",
+      "group": "数据中心",
+      "item": "本体模型",
+      "tab": "Schema 管理",
+      "type": "graph"
+    },
+    {
+      "id": "030",
+      "filename": "030-data-center-ontology-tab-1fc4950.html",
+      "template": "/#/home/data-center-ontology::tab=实体管理",
+      "source": "tab:实体管理",
+      "group": "数据中心",
+      "item": "本体模型",
+      "tab": "实体管理",
+      "type": "graph"
+    },
+    {
+      "id": "031",
+      "filename": "031-data-center-ontology-tab-896ee6b.html",
+      "template": "/#/home/data-center-ontology::tab=关系管理",
+      "source": "tab:关系管理",
+      "group": "数据中心",
+      "item": "本体模型",
+      "tab": "关系管理",
+      "type": "graph"
+    },
+    {
+      "id": "032",
+      "filename": "032-data-center-ontology-tab-05d741a.html",
+      "template": "/#/home/data-center-ontology::tab=指标管理",
+      "source": "tab:指标管理",
+      "group": "数据中心",
+      "item": "本体模型",
+      "tab": "指标管理",
+      "type": "graph"
+    },
+    {
+      "id": "033",
+      "filename": "033-data-center-ontology-tab-3f59783.html",
+      "template": "/#/home/data-center-ontology::tab=可视化",
+      "source": "tab:可视化",
+      "group": "数据中心",
+      "item": "本体模型",
+      "tab": "可视化",
+      "type": "graph"
+    },
+    {
+      "id": "034",
+      "filename": "034-data-center-ontology-tab-de97f1c.html",
+      "template": "/#/home/data-center-ontology::tab=完整性诊断",
+      "source": "tab:完整性诊断",
+      "group": "数据中心",
+      "item": "本体模型",
+      "tab": "完整性诊断",
+      "type": "graph"
+    },
+    {
+      "id": "035",
+      "filename": "035-data-center-datacontext.html",
+      "template": "/#/home/data-center-datacontext",
+      "source": "sidebar:数据中心/上下文图谱",
+      "group": "数据中心",
+      "item": "上下文图谱",
+      "tab": "",
+      "type": "graph"
+    },
+    {
+      "id": "036",
+      "filename": "036-data-center-datacontext-tab-218c753.html",
+      "template": "/#/home/data-center-datacontext::tab=图谱同步",
+      "source": "tab:图谱同步",
+      "group": "数据中心",
+      "item": "上下文图谱",
+      "tab": "图谱同步",
+      "type": "graph"
+    },
+    {
+      "id": "037",
+      "filename": "037-data-center-datacontext-tab-262d05a.html",
+      "template": "/#/home/data-center-datacontext::tab=图谱浏览",
+      "source": "tab:图谱浏览",
+      "group": "数据中心",
+      "item": "上下文图谱",
+      "tab": "图谱浏览",
+      "type": "graph"
+    },
+    {
+      "id": "038",
+      "filename": "038-data-center-datacontext-tab-a04a94f.html",
+      "template": "/#/home/data-center-datacontext::tab=血缘影响",
+      "source": "tab:血缘影响",
+      "group": "数据中心",
+      "item": "上下文图谱",
+      "tab": "血缘影响",
+      "type": "graph"
+    },
+    {
+      "id": "039",
+      "filename": "039-data-center-datacontext-tab-7a61067.html",
+      "template": "/#/home/data-center-datacontext::tab=指标概览",
+      "source": "tab:指标概览",
+      "group": "数据中心",
+      "item": "上下文图谱",
+      "tab": "指标概览",
+      "type": "graph"
+    },
+    {
+      "id": "040",
+      "filename": "040-data-center-datacontext-tab-f57ade8.html",
+      "template": "/#/home/data-center-datacontext::tab=Schema-目录",
+      "source": "tab:Schema 目录",
+      "group": "数据中心",
+      "item": "上下文图谱",
+      "tab": "Schema 目录",
+      "type": "graph"
+    },
+    {
+      "id": "041",
+      "filename": "041-data-center-sync.html",
+      "template": "/#/home/data-center-sync",
+      "source": "sidebar:数据中心/数据同步",
+      "group": "数据中心",
+      "item": "数据同步",
+      "tab": "",
+      "type": "list"
+    },
+    {
+      "id": "042",
+      "filename": "042-asset-overview.html",
+      "template": "/#/home/asset-overview",
+      "source": "sidebar:资产中心/资产总览",
+      "group": "资产中心",
+      "item": "资产总览",
+      "tab": "",
+      "type": "dashboard"
+    },
+    {
+      "id": "043",
+      "filename": "043-asset-overview-tab-58e2d41.html",
+      "template": "/#/home/asset-overview::tab=全景大屏",
+      "source": "tab:全景大屏",
+      "group": "资产中心",
+      "item": "资产总览",
+      "tab": "全景大屏",
+      "type": "dashboard"
+    },
+    {
+      "id": "044",
+      "filename": "044-asset-overview-tab-b9f4685.html",
+      "template": "/#/home/asset-overview::tab=治理驾驶舱",
+      "source": "tab:治理驾驶舱",
+      "group": "资产中心",
+      "item": "资产总览",
+      "tab": "治理驾驶舱",
+      "type": "dashboard"
+    },
+    {
+      "id": "045",
+      "filename": "045-asset-overview-tab-20ecbdc.html",
+      "template": "/#/home/asset-overview::tab=治理排行榜",
+      "source": "tab:治理排行榜",
+      "group": "资产中心",
+      "item": "资产总览",
+      "tab": "治理排行榜",
+      "type": "dashboard"
+    },
+    {
+      "id": "046",
+      "filename": "046-asset-overview-tab-e6c5f32.html",
+      "template": "/#/home/asset-overview::tab=问题大盘",
+      "source": "tab:问题大盘",
+      "group": "资产中心",
+      "item": "资产总览",
+      "tab": "问题大盘",
+      "type": "dashboard"
+    },
+    {
+      "id": "047",
+      "filename": "047-asset-map.html",
+      "template": "/#/home/asset-map",
+      "source": "sidebar:资产中心/数据地图",
+      "group": "资产中心",
+      "item": "数据地图",
+      "tab": "",
+      "type": "graph"
+    },
+    {
+      "id": "048",
+      "filename": "048-asset-map-tab-75e90b3.html",
+      "template": "/#/home/asset-map::tab=数据检索",
+      "source": "tab:数据检索",
+      "group": "资产中心",
+      "item": "数据地图",
+      "tab": "数据检索",
+      "type": "graph"
+    },
+    {
+      "id": "049",
+      "filename": "049-asset-map-tab-d3aae65.html",
+      "template": "/#/home/asset-map::tab=采集任务",
+      "source": "tab:采集任务",
+      "group": "资产中心",
+      "item": "数据地图",
+      "tab": "采集任务",
+      "type": "graph"
+    },
+    {
+      "id": "050",
+      "filename": "050-asset-map-tab-3e78f64.html",
+      "template": "/#/home/asset-map::tab=血缘分析",
+      "source": "tab:血缘分析",
+      "group": "资产中心",
+      "item": "数据地图",
+      "tab": "血缘分析",
+      "type": "graph"
+    },
+    {
+      "id": "051",
+      "filename": "051-asset-map-tab-3867206.html",
+      "template": "/#/home/asset-map::tab=类目管理",
+      "source": "tab:类目管理",
+      "group": "资产中心",
+      "item": "数据地图",
+      "tab": "类目管理",
+      "type": "graph"
+    },
+    {
+      "id": "052",
+      "filename": "052-asset-map-tab-7461196.html",
+      "template": "/#/home/asset-map::tab=我的数据",
+      "source": "tab:我的数据",
+      "group": "资产中心",
+      "item": "数据地图",
+      "tab": "我的数据",
+      "type": "graph"
+    },
+    {
+      "id": "053",
+      "filename": "053-asset-catalog.html",
+      "template": "/#/home/asset-catalog",
+      "source": "sidebar:资产中心/资产目录",
+      "group": "资产中心",
+      "item": "资产目录",
+      "tab": "",
+      "type": "operations"
+    },
+    {
+      "id": "054",
+      "filename": "054-asset-catalog-tab-60a6fad.html",
+      "template": "/#/home/asset-catalog::tab=资产盘点",
+      "source": "tab:资产盘点",
+      "group": "资产中心",
+      "item": "资产目录",
+      "tab": "资产盘点",
+      "type": "operations"
+    },
+    {
+      "id": "055",
+      "filename": "055-asset-catalog-tab-1a785ce.html",
+      "template": "/#/home/asset-catalog::tab=目录浏览",
+      "source": "tab:目录浏览",
+      "group": "资产中心",
+      "item": "资产目录",
+      "tab": "目录浏览",
+      "type": "operations"
+    },
+    {
+      "id": "056",
+      "filename": "056-asset-catalog-tab-ff389e7.html",
+      "template": "/#/home/asset-catalog::tab=权属管理",
+      "source": "tab:权属管理",
+      "group": "资产中心",
+      "item": "资产目录",
+      "tab": "权属管理",
+      "type": "operations"
+    },
+    {
+      "id": "057",
+      "filename": "057-asset-catalog-tab-8a76548.html",
+      "template": "/#/home/asset-catalog::tab=价值评估",
+      "source": "tab:价值评估",
+      "group": "资产中心",
+      "item": "资产目录",
+      "tab": "价值评估",
+      "type": "operations"
+    },
+    {
+      "id": "058",
+      "filename": "058-asset-catalog-tab-6bca663.html",
+      "template": "/#/home/asset-catalog::tab=资产运营",
+      "source": "tab:资产运营",
+      "group": "资产中心",
+      "item": "资产目录",
+      "tab": "资产运营",
+      "type": "operations"
+    },
+    {
+      "id": "059",
+      "filename": "059-asset-catalog-tab-65a834a.html",
+      "template": "/#/home/asset-catalog::tab=使用统计",
+      "source": "tab:使用统计",
+      "group": "资产中心",
+      "item": "资产目录",
+      "tab": "使用统计",
+      "type": "operations"
+    },
+    {
+      "id": "060",
+      "filename": "060-asset-standard.html",
+      "template": "/#/home/asset-standard",
+      "source": "sidebar:资产中心/数据标准",
+      "group": "资产中心",
+      "item": "数据标准",
+      "tab": "",
+      "type": "settings"
+    },
+    {
+      "id": "061",
+      "filename": "061-asset-standard-tab-ad87d16.html",
+      "template": "/#/home/asset-standard::tab=标准集",
+      "source": "tab:标准集",
+      "group": "资产中心",
+      "item": "数据标准",
+      "tab": "标准集",
+      "type": "settings"
+    },
+    {
+      "id": "062",
+      "filename": "062-asset-standard-tab-eb10297.html",
+      "template": "/#/home/asset-standard::tab=标准代码",
+      "source": "tab:标准代码",
+      "group": "资产中心",
+      "item": "数据标准",
+      "tab": "标准代码",
+      "type": "settings"
+    },
+    {
+      "id": "063",
+      "filename": "063-asset-standard-tab-a35c4df.html",
+      "template": "/#/home/asset-standard::tab=命名词典",
+      "source": "tab:命名词典",
+      "group": "资产中心",
+      "item": "数据标准",
+      "tab": "命名词典",
+      "type": "settings"
+    },
+    {
+      "id": "064",
+      "filename": "064-asset-standard-tab-a8e710d.html",
+      "template": "/#/home/asset-standard::tab=落标映射",
+      "source": "tab:落标映射",
+      "group": "资产中心",
+      "item": "数据标准",
+      "tab": "落标映射",
+      "type": "settings"
+    },
+    {
+      "id": "065",
+      "filename": "065-asset-standard-tab-c7a6ce1.html",
+      "template": "/#/home/asset-standard::tab=贯标统计",
+      "source": "tab:贯标统计",
+      "group": "资产中心",
+      "item": "数据标准",
+      "tab": "贯标统计",
+      "type": "settings"
+    },
+    {
+      "id": "066",
+      "filename": "066-asset-quality.html",
+      "template": "/#/home/asset-quality",
+      "source": "sidebar:资产中心/数据质量",
+      "group": "资产中心",
+      "item": "数据质量",
+      "tab": "",
+      "type": "list"
+    },
+    {
+      "id": "067",
+      "filename": "067-asset-quality-tab-8d0168c.html",
+      "template": "/#/home/asset-quality::tab=规则模板库",
+      "source": "tab:规则模板库",
+      "group": "资产中心",
+      "item": "数据质量",
+      "tab": "规则模板库",
+      "type": "list"
+    },
+    {
+      "id": "068",
+      "filename": "068-asset-quality-tab-b06d0ae.html",
+      "template": "/#/home/asset-quality::tab=监控任务",
+      "source": "tab:监控任务",
+      "group": "资产中心",
+      "item": "数据质量",
+      "tab": "监控任务",
+      "type": "dashboard"
+    },
+    {
+      "id": "069",
+      "filename": "069-asset-quality-tab-3f21f5f.html",
+      "template": "/#/home/asset-quality::tab=校验记录",
+      "source": "tab:校验记录",
+      "group": "资产中心",
+      "item": "数据质量",
+      "tab": "校验记录",
+      "type": "list"
+    },
+    {
+      "id": "070",
+      "filename": "070-asset-quality-tab-7b260b7.html",
+      "template": "/#/home/asset-quality::tab=质量评分",
+      "source": "tab:质量评分",
+      "group": "资产中心",
+      "item": "数据质量",
+      "tab": "质量评分",
+      "type": "list"
+    },
+    {
+      "id": "071",
+      "filename": "071-asset-quality-tab-4bc5f1e.html",
+      "template": "/#/home/asset-quality::tab=问题工单",
+      "source": "tab:问题工单",
+      "group": "资产中心",
+      "item": "数据质量",
+      "tab": "问题工单",
+      "type": "list"
+    },
+    {
+      "id": "072",
+      "filename": "072-asset-quality-tab-9ac2340.html",
+      "template": "/#/home/asset-quality::tab=质量报告",
+      "source": "tab:质量报告",
+      "group": "资产中心",
+      "item": "数据质量",
+      "tab": "质量报告",
+      "type": "list"
+    },
+    {
+      "id": "073",
+      "filename": "073-asset-security.html",
+      "template": "/#/home/asset-security",
+      "source": "sidebar:资产中心/数据安全",
+      "group": "资产中心",
+      "item": "数据安全",
+      "tab": "",
+      "type": "settings"
+    },
+    {
+      "id": "074",
+      "filename": "074-asset-security-tab-0482338.html",
+      "template": "/#/home/asset-security::tab=分类分级",
+      "source": "tab:分类分级",
+      "group": "资产中心",
+      "item": "数据安全",
+      "tab": "分类分级",
+      "type": "settings"
+    },
+    {
+      "id": "075",
+      "filename": "075-asset-security-tab-0549993.html",
+      "template": "/#/home/asset-security::tab=脱敏策略",
+      "source": "tab:脱敏策略",
+      "group": "资产中心",
+      "item": "数据安全",
+      "tab": "脱敏策略",
+      "type": "settings"
+    },
+    {
+      "id": "076",
+      "filename": "076-asset-security-tab-e35ff07.html",
+      "template": "/#/home/asset-security::tab=行列权限",
+      "source": "tab:行列权限",
+      "group": "资产中心",
+      "item": "数据安全",
+      "tab": "行列权限",
+      "type": "settings"
+    },
+    {
+      "id": "077",
+      "filename": "077-asset-security-tab-7666cd4.html",
+      "template": "/#/home/asset-security::tab=审计日志",
+      "source": "tab:审计日志",
+      "group": "资产中心",
+      "item": "数据安全",
+      "tab": "审计日志",
+      "type": "settings"
+    },
+    {
+      "id": "078",
+      "filename": "078-asset-security-tab-9c0eb7c.html",
+      "template": "/#/home/asset-security::tab=风险识别",
+      "source": "tab:风险识别",
+      "group": "资产中心",
+      "item": "数据安全",
+      "tab": "风险识别",
+      "type": "settings"
+    },
+    {
+      "id": "079",
+      "filename": "079-asset-lifecycle.html",
+      "template": "/#/home/asset-lifecycle",
+      "source": "sidebar:资产中心/数据生命周期",
+      "group": "资产中心",
+      "item": "数据生命周期",
+      "tab": "",
+      "type": "dashboard"
+    },
+    {
+      "id": "080",
+      "filename": "080-asset-lifecycle-tab-17f4506.html",
+      "template": "/#/home/asset-lifecycle::tab=分层策略",
+      "source": "tab:分层策略",
+      "group": "资产中心",
+      "item": "数据生命周期",
+      "tab": "分层策略",
+      "type": "dashboard"
+    },
+    {
+      "id": "081",
+      "filename": "081-asset-lifecycle-tab-27db1dc.html",
+      "template": "/#/home/asset-lifecycle::tab=归档管理",
+      "source": "tab:归档管理",
+      "group": "资产中心",
+      "item": "数据生命周期",
+      "tab": "归档管理",
+      "type": "dashboard"
+    },
+    {
+      "id": "082",
+      "filename": "082-asset-lifecycle-tab-23114d5.html",
+      "template": "/#/home/asset-lifecycle::tab=退役管理",
+      "source": "tab:退役管理",
+      "group": "资产中心",
+      "item": "数据生命周期",
+      "tab": "退役管理",
+      "type": "dashboard"
+    },
+    {
+      "id": "083",
+      "filename": "083-asset-service.html",
+      "template": "/#/home/asset-service",
+      "source": "sidebar:资产中心/数据服务",
+      "group": "资产中心",
+      "item": "数据服务",
+      "tab": "",
+      "type": "list"
+    },
+    {
+      "id": "084",
+      "filename": "084-asset-service-tab-c872fe4.html",
+      "template": "/#/home/asset-service::tab=服务注册",
+      "source": "tab:服务注册",
+      "group": "资产中心",
+      "item": "数据服务",
+      "tab": "服务注册",
+      "type": "list"
+    },
+    {
+      "id": "085",
+      "filename": "085-asset-service-tab-3b621c3.html",
+      "template": "/#/home/asset-service::tab=API-商城",
+      "source": "tab:API 商城",
+      "group": "资产中心",
+      "item": "数据服务",
+      "tab": "API 商城",
+      "type": "list"
+    },
+    {
+      "id": "086",
+      "filename": "086-asset-service-tab-39f08a1.html",
+      "template": "/#/home/asset-service::tab=授权管理",
+      "source": "tab:授权管理",
+      "group": "资产中心",
+      "item": "数据服务",
+      "tab": "授权管理",
+      "type": "list"
+    },
+    {
+      "id": "087",
+      "filename": "087-asset-service-tab-9515e12.html",
+      "template": "/#/home/asset-service::tab=调用统计",
+      "source": "tab:调用统计",
+      "group": "资产中心",
+      "item": "数据服务",
+      "tab": "调用统计",
+      "type": "list"
+    },
+    {
+      "id": "088",
+      "filename": "088-asset-service-tab-441b102.html",
+      "template": "/#/home/asset-service::tab=外部数据台账",
+      "source": "tab:外部数据台账",
+      "group": "资产中心",
+      "item": "数据服务",
+      "tab": "外部数据台账",
+      "type": "list"
+    },
+    {
+      "id": "089",
+      "filename": "089-asset-dcmm.html",
+      "template": "/#/home/asset-dcmm",
+      "source": "sidebar:资产中心/治理评估",
+      "group": "资产中心",
+      "item": "治理评估",
+      "tab": "",
+      "type": "list"
+    },
+    {
+      "id": "090",
+      "filename": "090-asset-dcmm-tab-fe91ab5.html",
+      "template": "/#/home/asset-dcmm::tab=指标台账",
+      "source": "tab:指标台账",
+      "group": "资产中心",
+      "item": "治理评估",
+      "tab": "指标台账",
+      "type": "list"
+    },
+    {
+      "id": "091",
+      "filename": "091-asset-dcmm-tab-86a2a9f.html",
+      "template": "/#/home/asset-dcmm::tab=自评估",
+      "source": "tab:自评估",
+      "group": "资产中心",
+      "item": "治理评估",
+      "tab": "自评估",
+      "type": "list"
+    },
+    {
+      "id": "092",
+      "filename": "092-asset-dcmm-tab-0b225bc.html",
+      "template": "/#/home/asset-dcmm::tab=证据库",
+      "source": "tab:证据库",
+      "group": "资产中心",
+      "item": "治理评估",
+      "tab": "证据库",
+      "type": "list"
+    },
+    {
+      "id": "093",
+      "filename": "093-asset-dcmm-tab-1747f37.html",
+      "template": "/#/home/asset-dcmm::tab=制度库",
+      "source": "tab:制度库",
+      "group": "资产中心",
+      "item": "治理评估",
+      "tab": "制度库",
+      "type": "list"
+    },
+    {
+      "id": "094",
+      "filename": "094-asset-dcmm-tab-577e3d5.html",
+      "template": "/#/home/asset-dcmm::tab=九域看板",
+      "source": "tab:九域看板",
+      "group": "资产中心",
+      "item": "治理评估",
+      "tab": "九域看板",
+      "type": "dashboard"
+    },
+    {
+      "id": "095",
+      "filename": "095-knowledge-kb.html",
+      "template": "/#/home/knowledge-kb",
+      "source": "sidebar:知识中心/知识库",
+      "group": "知识中心",
+      "item": "知识库",
+      "tab": "",
+      "type": "catalog"
+    },
+    {
+      "id": "096",
+      "filename": "096-knowledge-vector.html",
+      "template": "/#/home/knowledge-vector",
+      "source": "sidebar:知识中心/知识向量",
+      "group": "知识中心",
+      "item": "知识向量",
+      "tab": "",
+      "type": "catalog"
+    },
+    {
+      "id": "097",
+      "filename": "097-knowledge-vector-tab-463c2a8.html",
+      "template": "/#/home/knowledge-vector::tab=Chunk",
+      "source": "tab:Chunk",
+      "group": "知识中心",
+      "item": "知识向量",
+      "tab": "Chunk",
+      "type": "catalog"
+    },
+    {
+      "id": "098",
+      "filename": "098-knowledge-vector-tab-b296a77.html",
+      "template": "/#/home/knowledge-vector::tab=实体",
+      "source": "tab:实体",
+      "group": "知识中心",
+      "item": "知识向量",
+      "tab": "实体",
+      "type": "catalog"
+    },
+    {
+      "id": "099",
+      "filename": "099-knowledge-vector-tab-daf4f2d.html",
+      "template": "/#/home/knowledge-vector::tab=关系",
+      "source": "tab:关系",
+      "group": "知识中心",
+      "item": "知识向量",
+      "tab": "关系",
+      "type": "catalog"
+    },
+    {
+      "id": "100",
+      "filename": "100-knowledge-graph.html",
+      "template": "/#/home/knowledge-graph",
+      "source": "sidebar:知识中心/知识图谱",
+      "group": "知识中心",
+      "item": "知识图谱",
+      "tab": "",
+      "type": "graph"
+    },
+    {
+      "id": "101",
+      "filename": "101-knowledge-graph-tab-6a0a249.html",
+      "template": "/#/home/knowledge-graph::tab=图谱可视化",
+      "source": "tab:图谱可视化",
+      "group": "知识中心",
+      "item": "知识图谱",
+      "tab": "图谱可视化",
+      "type": "graph"
+    },
+    {
+      "id": "102",
+      "filename": "102-config-system-monitor.html",
+      "template": "/#/home/config-system-monitor",
+      "source": "sidebar:系统管理/系统监控",
+      "group": "系统管理",
+      "item": "系统监控",
+      "tab": "",
+      "type": "dashboard"
+    },
+    {
+      "id": "103",
+      "filename": "103-config-system-monitor-tab-d87f47b.html",
+      "template": "/#/home/config-system-monitor::tab=Dashboard",
+      "source": "tab:Dashboard",
+      "group": "系统管理",
+      "item": "系统监控",
+      "tab": "Dashboard",
+      "type": "dashboard"
+    },
+    {
+      "id": "104",
+      "filename": "104-config-system-monitor-tab-c97ffbd.html",
+      "template": "/#/home/config-system-monitor::tab=定时任务",
+      "source": "tab:定时任务",
+      "group": "系统管理",
+      "item": "系统监控",
+      "tab": "定时任务",
+      "type": "dashboard"
+    },
+    {
+      "id": "105",
+      "filename": "105-config-system-monitor-tab-7de34a7.html",
+      "template": "/#/home/config-system-monitor::tab=日志监控",
+      "source": "tab:日志监控",
+      "group": "系统管理",
+      "item": "系统监控",
+      "tab": "日志监控",
+      "type": "dashboard"
+    },
+    {
+      "id": "106",
+      "filename": "106-config-system-monitor-tab-8277393.html",
+      "template": "/#/home/config-system-monitor::tab=应用缓存",
+      "source": "tab:应用缓存",
+      "group": "系统管理",
+      "item": "系统监控",
+      "tab": "应用缓存",
+      "type": "dashboard"
+    },
+    {
+      "id": "107",
+      "filename": "107-config-system-monitor-tab-d83c1eb.html",
+      "template": "/#/home/config-system-monitor::tab=LLM缓存",
+      "source": "tab:LLM缓存",
+      "group": "系统管理",
+      "item": "系统监控",
+      "tab": "LLM缓存",
+      "type": "dashboard"
+    },
+    {
+      "id": "108",
+      "filename": "108-config-system-monitor-tab-dee24fa.html",
+      "template": "/#/home/config-system-monitor::tab=向量表",
+      "source": "tab:向量表",
+      "group": "系统管理",
+      "item": "系统监控",
+      "tab": "向量表",
+      "type": "dashboard"
+    },
+    {
+      "id": "109",
+      "filename": "109-config-system-monitor-tab-41bcd24.html",
+      "template": "/#/home/config-system-monitor::tab=SQLite-数据库",
+      "source": "tab:SQLite 数据库",
+      "group": "系统管理",
+      "item": "系统监控",
+      "tab": "SQLite 数据库",
+      "type": "dashboard"
+    },
+    {
+      "id": "110",
+      "filename": "110-config-system-config.html",
+      "template": "/#/home/config-system-config",
+      "source": "sidebar:系统管理/系统配置",
+      "group": "系统管理",
+      "item": "系统配置",
+      "tab": "",
+      "type": "settings"
+    },
+    {
+      "id": "111",
+      "filename": "111-config-system-config-tab-aacf2bf.html",
+      "template": "/#/home/config-system-config::tab=环境配置",
+      "source": "tab:环境配置",
+      "group": "系统管理",
+      "item": "系统配置",
+      "tab": "环境配置",
+      "type": "settings"
+    },
+    {
+      "id": "112",
+      "filename": "112-config-system-config-tab-a0daf6d.html",
+      "template": "/#/home/config-system-config::tab=应用配置",
+      "source": "tab:应用配置",
+      "group": "系统管理",
+      "item": "系统配置",
+      "tab": "应用配置",
+      "type": "settings"
+    },
+    {
+      "id": "113",
+      "filename": "113-config-system-config-tab-37f2615.html",
+      "template": "/#/home/config-system-config::tab=分析报告模板",
+      "source": "tab:分析报告模板",
+      "group": "系统管理",
+      "item": "系统配置",
+      "tab": "分析报告模板",
+      "type": "dashboard"
+    },
+    {
+      "id": "114",
+      "filename": "114-config-system-config-tab-10fc0fa.html",
+      "template": "/#/home/config-system-config::tab=字典配置",
+      "source": "tab:字典配置",
+      "group": "系统管理",
+      "item": "系统配置",
+      "tab": "字典配置",
+      "type": "settings"
+    },
+    {
+      "id": "115",
+      "filename": "115-config-permission.html",
+      "template": "/#/home/config-permission",
+      "source": "sidebar:系统管理/权限管理",
+      "group": "系统管理",
+      "item": "权限管理",
+      "tab": "",
+      "type": "settings"
+    },
+    {
+      "id": "116",
+      "filename": "116-config-permission-tab-baf8475.html",
+      "template": "/#/home/config-permission::tab=用户管理",
+      "source": "tab:用户管理",
+      "group": "系统管理",
+      "item": "权限管理",
+      "tab": "用户管理",
+      "type": "settings"
+    },
+    {
+      "id": "117",
+      "filename": "117-config-permission-tab-8228c05.html",
+      "template": "/#/home/config-permission::tab=组织管理",
+      "source": "tab:组织管理",
+      "group": "系统管理",
+      "item": "权限管理",
+      "tab": "组织管理",
+      "type": "settings"
+    },
+    {
+      "id": "118",
+      "filename": "118-config-permission-tab-3d0d88d.html",
+      "template": "/#/home/config-permission::tab=角色管理",
+      "source": "tab:角色管理",
+      "group": "系统管理",
+      "item": "权限管理",
+      "tab": "角色管理",
+      "type": "settings"
+    },
+    {
+      "id": "119",
+      "filename": "119-config-permission-tab-1a71c70.html",
+      "template": "/#/home/config-permission::tab=功能菜单",
+      "source": "tab:功能菜单",
+      "group": "系统管理",
+      "item": "权限管理",
+      "tab": "功能菜单",
+      "type": "settings"
+    },
+    {
+      "id": "120",
+      "filename": "120-config-permission-tab-813278e.html",
+      "template": "/#/home/config-permission::tab=功能权限",
+      "source": "tab:功能权限",
+      "group": "系统管理",
+      "item": "权限管理",
+      "tab": "功能权限",
+      "type": "settings"
+    },
+    {
+      "id": "121",
+      "filename": "121-config-permission-tab-2b5d5ae.html",
+      "template": "/#/home/config-permission::tab=IM用户映射",
+      "source": "tab:IM用户映射",
+      "group": "系统管理",
+      "item": "权限管理",
+      "tab": "IM用户映射",
+      "type": "settings"
+    },
+    {
+      "id": "122",
+      "filename": "122-config-messages.html",
+      "template": "/#/home/config-messages",
+      "source": "sidebar:系统管理/消息管理",
+      "group": "系统管理",
+      "item": "消息管理",
+      "tab": "",
+      "type": "settings"
+    },
+    {
+      "id": "123",
+      "filename": "123-config-messages-tab-4507399.html",
+      "template": "/#/home/config-messages::tab=消息列表",
+      "source": "tab:消息列表",
+      "group": "系统管理",
+      "item": "消息管理",
+      "tab": "消息列表",
+      "type": "settings"
+    },
+    {
+      "id": "124",
+      "filename": "124-config-messages-tab-1c3b857.html",
+      "template": "/#/home/config-messages::tab=消息模板",
+      "source": "tab:消息模板",
+      "group": "系统管理",
+      "item": "消息管理",
+      "tab": "消息模板",
+      "type": "settings"
+    },
+    {
+      "id": "125",
+      "filename": "125-config-content-compliance.html",
+      "template": "/#/home/config-content-compliance",
+      "source": "sidebar:系统管理/安全合规",
+      "group": "系统管理",
+      "item": "安全合规",
+      "tab": "",
+      "type": "settings"
+    },
+    {
+      "id": "126",
+      "filename": "126-config-content-compliance-tab-5060421.html",
+      "template": "/#/home/config-content-compliance::tab=概览",
+      "source": "tab:概览",
+      "group": "系统管理",
+      "item": "安全合规",
+      "tab": "概览",
+      "type": "settings"
+    },
+    {
+      "id": "127",
+      "filename": "127-config-content-compliance-tab-3360d71.html",
+      "template": "/#/home/config-content-compliance::tab=合规事件",
+      "source": "tab:合规事件",
+      "group": "系统管理",
+      "item": "安全合规",
+      "tab": "合规事件",
+      "type": "settings"
+    },
+    {
+      "id": "128",
+      "filename": "128-config-content-compliance-tab-8167fb8.html",
+      "template": "/#/home/config-content-compliance::tab=策略配置",
+      "source": "tab:策略配置",
+      "group": "系统管理",
+      "item": "安全合规",
+      "tab": "策略配置",
+      "type": "settings"
+    },
+    {
+      "id": "129",
+      "filename": "129-config-content-compliance-tab-4a9b885.html",
+      "template": "/#/home/config-content-compliance::tab=安全回答",
+      "source": "tab:安全回答",
+      "group": "系统管理",
+      "item": "安全合规",
+      "tab": "安全回答",
+      "type": "settings"
+    },
+    {
+      "id": "130",
+      "filename": "130-config-content-compliance-tab-a4358d3.html",
+      "template": "/#/home/config-content-compliance::tab=LLM安全",
+      "source": "tab:LLM安全",
+      "group": "系统管理",
+      "item": "安全合规",
+      "tab": "LLM安全",
+      "type": "settings"
+    },
+    {
+      "id": "131",
+      "filename": "131-config-risk-governance.html",
+      "template": "/#/home/config-risk-governance",
+      "source": "sidebar:系统管理/风险监管",
+      "group": "系统管理",
+      "item": "风险监管",
+      "tab": "",
+      "type": "settings"
+    },
+    {
+      "id": "132",
+      "filename": "132-config-risk-governance-tab-04f5fd7.html",
+      "template": "/#/home/config-risk-governance::tab=风险模型构建",
+      "source": "tab:风险模型构建",
+      "group": "系统管理",
+      "item": "风险监管",
+      "tab": "风险模型构建",
+      "type": "settings"
+    },
+    {
+      "id": "133",
+      "filename": "133-config-risk-governance-tab-6fe9bc8.html",
+      "template": "/#/home/config-risk-governance::tab=风险预警",
+      "source": "tab:风险预警",
+      "group": "系统管理",
+      "item": "风险监管",
+      "tab": "风险预警",
+      "type": "settings"
+    },
+    {
+      "id": "134",
+      "filename": "134-config-risk-governance-tab-d074bed.html",
+      "template": "/#/home/config-risk-governance::tab=风险闭环处置",
+      "source": "tab:风险闭环处置",
+      "group": "系统管理",
+      "item": "风险监管",
+      "tab": "风险闭环处置",
+      "type": "settings"
+    },
+    {
+      "id": "135",
+      "filename": "135-config-system-audit.html",
+      "template": "/#/home/config-system-audit",
+      "source": "sidebar:系统管理/系统审计",
+      "group": "系统管理",
+      "item": "系统审计",
+      "tab": "",
+      "type": "settings"
+    },
+    {
+      "id": "136",
+      "filename": "136-config-system-audit-tab-7666cd4.html",
+      "template": "/#/home/config-system-audit::tab=审计日志",
+      "source": "tab:审计日志",
+      "group": "系统管理",
+      "item": "系统审计",
+      "tab": "审计日志",
+      "type": "settings"
+    },
+    {
+      "id": "137",
+      "filename": "137-config-system-audit-tab-70229b4.html",
+      "template": "/#/home/config-system-audit::tab=用量统计",
+      "source": "tab:用量统计",
+      "group": "系统管理",
+      "item": "系统审计",
+      "tab": "用量统计",
+      "type": "settings"
+    },
+    {
+      "id": "138",
+      "filename": "138-config-system-audit-tab-981b552.html",
+      "template": "/#/home/config-system-audit::tab=日志管理",
+      "source": "tab:日志管理",
+      "group": "系统管理",
+      "item": "系统审计",
+      "tab": "日志管理",
+      "type": "settings"
+    },
+    {
+      "id": "139",
+      "filename": "139-config-feedback-backtest.html",
+      "template": "/#/home/config-feedback-backtest",
+      "source": "sidebar:系统管理/反馈回测",
+      "group": "系统管理",
+      "item": "反馈回测",
+      "tab": "",
+      "type": "settings"
+    },
+    {
+      "id": "140",
+      "filename": "140-config-feedback-backtest-tab-c9789b9.html",
+      "template": "/#/home/config-feedback-backtest::tab=反馈中心",
+      "source": "tab:反馈中心",
+      "group": "系统管理",
+      "item": "反馈回测",
+      "tab": "反馈中心",
+      "type": "settings"
+    },
+    {
+      "id": "141",
+      "filename": "141-config-feedback-backtest-tab-9c9c9fb.html",
+      "template": "/#/home/config-feedback-backtest::tab=评测集管理",
+      "source": "tab:评测集管理",
+      "group": "系统管理",
+      "item": "反馈回测",
+      "tab": "评测集管理",
+      "type": "settings"
+    },
+    {
+      "id": "142",
+      "filename": "142-config-feedback-backtest-tab-647450b.html",
+      "template": "/#/home/config-feedback-backtest::tab=回归测试",
+      "source": "tab:回归测试",
+      "group": "系统管理",
+      "item": "反馈回测",
+      "tab": "回归测试",
+      "type": "settings"
+    }
+  ]
+}

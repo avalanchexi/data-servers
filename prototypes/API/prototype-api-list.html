@@ -1,0 +1,2600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API 开发 — 数据服务平台</title>
+<style>
+  :root {
+    --ds-color-white: #ffffff;
+    --ds-color-black: #000000;
+    --ds-color-primary-1: #e8f3ff;
+    --ds-color-primary-2: #bedaff;
+    --ds-color-primary-3: #94bfff;
+    --ds-color-primary-4: #6aa1ff;
+    --ds-color-primary-5: #4080ff;
+    --ds-color-primary-6: #165dff;
+    --ds-color-primary-7: #0e42d2;
+    --ds-color-gray-1: #f7f8fa;
+    --ds-color-gray-2: #f2f3f5;
+    --ds-color-gray-3: #e5e6eb;
+    --ds-color-gray-4: #c9cdd4;
+    --ds-color-gray-5: #a9aeb8;
+    --ds-color-gray-6: #86909c;
+    --ds-color-gray-7: #6b7785;
+    --ds-color-gray-8: #4e5969;
+    --ds-color-gray-9: #272e3b;
+    --ds-color-gray-10: #1d2129;
+    --ds-color-success: #00b42a;
+    --ds-color-success-light: #e8ffea;
+    --ds-color-success-text: #087a24;
+    --ds-color-warning: #ff7d00;
+    --ds-color-warning-light: #fff7e8;
+    --ds-color-warning-text: #a84b00;
+    --ds-color-danger: #f53f3f;
+    --ds-color-danger-light: #ffece8;
+    --ds-color-danger-text: #cb2634;
+    --ds-bg-canvas: var(--ds-color-gray-2);
+    --ds-bg-surface: var(--ds-color-white);
+    --ds-bg-elevated: var(--ds-color-white);
+    --ds-bg-fill: var(--ds-color-gray-2);
+    --ds-bg-fill-hover: var(--ds-color-gray-3);
+    --ds-text-1: var(--ds-color-gray-10);
+    --ds-text-2: var(--ds-color-gray-8);
+    --ds-text-3: var(--ds-color-gray-6);
+    --ds-text-4: var(--ds-color-gray-4);
+    --ds-border-1: var(--ds-color-gray-2);
+    --ds-border-2: var(--ds-color-gray-3);
+    --ds-border-3: var(--ds-color-gray-4);
+    --ds-focus-ring: 0 0 0 2px rgb(22 93 255 / 18%);
+    --ds-mask: rgb(29 33 41 / 60%);
+    --ds-font-sans: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    --ds-font-mono: Consolas, Menlo, Monaco, monospace;
+    --ds-font-size-12: 12px;
+    --ds-font-size-14: 14px;
+    --ds-font-size-16: 16px;
+    --ds-font-size-20: 20px;
+    --ds-font-size-24: 24px;
+    --ds-font-weight-regular: 400;
+    --ds-font-weight-medium: 500;
+    --ds-font-weight-semibold: 600;
+    --ds-line-height-base: 1.5715;
+    --ds-line-height-tight: 1.35;
+    --ds-space-1: 2px;
+    --ds-space-2: 4px;
+    --ds-space-3: 6px;
+    --ds-space-4: 8px;
+    --ds-space-5: 10px;
+    --ds-space-6: 12px;
+    --ds-space-7: 16px;
+    --ds-space-8: 20px;
+    --ds-space-9: 24px;
+    --ds-space-10: 32px;
+    --ds-radius-small: 2px;
+    --ds-radius-medium: 4px;
+    --ds-radius-large: 8px;
+    --ds-shadow-1: 0 2px 5px rgb(0 0 0 / 10%);
+    --ds-shadow-2: 0 4px 10px rgb(0 0 0 / 10%);
+    --ds-shadow-3: 0 8px 20px rgb(0 0 0 / 10%);
+    --ds-duration-fast: 100ms;
+    --ds-duration-base: 200ms;
+    --ds-duration-slow: 300ms;
+    --ds-ease-standard: cubic-bezier(0.34, 0.69, 0.1, 1);
+    --ds-control-mini: 24px;
+    --ds-control-small: 28px;
+    --ds-control-default: 32px;
+    --ds-control-large: 36px;
+    --ds-nav-height: 60px;
+    --ds-sidebar-width: 220px;
+    --ds-content-max: 1440px;
+    --ds-grid-gutter: 16px;
+    --ds-page-padding: 24px;
+    --ds-z-popup: 1000;
+    --ds-z-modal: 1001;
+    --ds-z-message: 1003;
+    --ds-button-height: var(--ds-control-default);
+    --ds-button-radius: var(--ds-radius-small);
+    --ds-button-padding-inline: 15px;
+    --ds-input-height: var(--ds-control-default);
+    --ds-input-radius: var(--ds-radius-small);
+    --ds-form-item-gap: 20px;
+    --ds-table-cell-padding-inline: 12px;
+    --ds-table-cell-padding-block: 9px;
+    --ds-pagination-item-size: 32px;
+    --ds-modal-width: 520px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :root { --ds-duration-fast: 0ms; --ds-duration-base: 0ms; --ds-duration-slow: 0ms; }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--ds-font-sans);
+    font-size: var(--ds-font-size-14);
+    line-height: var(--ds-line-height-base);
+    color: var(--ds-text-1);
+    background: var(--ds-bg-canvas);
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; }
+  a { color: var(--ds-color-primary-6); text-decoration: none; }
+  a:hover { color: var(--ds-color-primary-7); }
+  :focus-visible { outline: none; box-shadow: var(--ds-focus-ring); }
+
+  /* 顶部导航 */
+  .topnav {
+    height: var(--ds-nav-height);
+    background: var(--ds-color-white);
+    border-bottom: 1px solid var(--ds-border-2);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--ds-space-9);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    font-size: var(--ds-font-size-16);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-text-1);
+    margin-right: var(--ds-space-10);
+  }
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--ds-radius-medium);
+    background: linear-gradient(135deg, var(--ds-color-primary-5), var(--ds-color-primary-7));
+    display: grid;
+    place-items: center;
+    color: var(--ds-color-white);
+  }
+  .topnav-spacer { flex: 1; }
+  .topnav-actions { display: flex; align-items: center; gap: var(--ds-space-7); }
+  .user-chip {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-2);
+  }
+  .avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--ds-color-primary-2);
+    color: var(--ds-color-primary-7);
+    display: grid;
+    place-items: center;
+    font-size: var(--ds-font-size-12);
+    font-weight: var(--ds-font-weight-medium);
+  }
+
+  /* 主体布局 */
+  .shell {
+    display: flex;
+    min-height: calc(100vh - var(--ds-nav-height));
+  }
+
+  /* 一级侧栏 */
+  .sidebar {
+    width: var(--ds-sidebar-width);
+    background: var(--ds-color-white);
+    border-right: 1px solid var(--ds-border-2);
+    padding: var(--ds-space-7) 0;
+    flex-shrink: 0;
+  }
+  .nav-group { padding: 0 var(--ds-space-4); }
+  .nav-group + .nav-group { margin-top: var(--ds-space-7); }
+  .nav-title {
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-3);
+    padding: 0 var(--ds-space-7) var(--ds-space-4);
+    letter-spacing: 0.4px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-6);
+    padding: 0 var(--ds-space-7);
+    height: 40px;
+    color: var(--ds-text-2);
+    border-radius: var(--ds-radius-small);
+    cursor: pointer;
+    font-size: var(--ds-font-size-14);
+    user-select: none;
+    text-decoration: none;
+    position: relative;
+  }
+  .nav-item:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .nav-item[aria-current="page"] {
+    background: var(--ds-color-primary-1);
+    color: var(--ds-color-primary-6);
+    font-weight: var(--ds-font-weight-medium);
+  }
+  .nav-item[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    background: var(--ds-color-primary-6);
+    border-radius: 0 2px 2px 0;
+  }
+  .nav-item svg { flex-shrink: 0; }
+  .nav-section { margin-top: var(--ds-space-2); }
+  .nav-parent {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-6);
+    padding: 0 var(--ds-space-7);
+    height: 40px;
+    color: var(--ds-text-2);
+    border-radius: var(--ds-radius-small);
+    cursor: pointer;
+    font-size: var(--ds-font-size-14);
+    user-select: none;
+    text-decoration: none;
+    position: relative;
+  }
+  .nav-parent:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .nav-parent .chev { margin-left: auto; transition: transform var(--ds-duration-fast) var(--ds-ease-standard); }
+  .nav-parent.is-open .chev { transform: rotate(90deg); }
+  .nav-children { display: none; padding: var(--ds-space-2) 0 var(--ds-space-3); }
+  .nav-children.is-open { display: block; }
+  .nav-child {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-6);
+    padding: 0 var(--ds-space-7) 0 42px;
+    height: 36px;
+    color: var(--ds-text-2);
+    border-radius: var(--ds-radius-small);
+    cursor: pointer;
+    font-size: var(--ds-font-size-14);
+    text-decoration: none;
+    position: relative;
+  }
+  .nav-child:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .nav-child[aria-current="page"] {
+    background: var(--ds-color-primary-1);
+    color: var(--ds-color-primary-6);
+    font-weight: var(--ds-font-weight-medium);
+  }
+  .nav-child[aria-current="page"]::before {
+    content: "";
+    position: absolute;
+    left: 32px;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    background: var(--ds-color-primary-6);
+    border-radius: 0 2px 2px 0;
+  }
+
+  /* API 二级面板 */
+  .api-layout {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+  }
+  .api-tree {
+    width: 260px;
+    background: var(--ds-color-white);
+    border-right: 1px solid var(--ds-border-2);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+  .api-tree-head {
+    padding: var(--ds-space-7) var(--ds-space-7) var(--ds-space-4);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ds-border-1);
+  }
+  .api-tree-head h2 {
+    margin: 0;
+    font-size: var(--ds-font-size-14);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-text-1);
+  }
+  .tree-actions { display: flex; gap: var(--ds-space-2); }
+  .icon-btn {
+    width: 28px;
+    height: 28px;
+    display: inline-grid;
+    place-items: center;
+    border: 1px solid var(--ds-border-2);
+    background: var(--ds-color-white);
+    border-radius: var(--ds-radius-small);
+    cursor: pointer;
+    color: var(--ds-text-2);
+  }
+  .icon-btn:hover { background: var(--ds-bg-fill); color: var(--ds-text-1); }
+  .tree {
+    padding: var(--ds-space-4) var(--ds-space-4);
+    overflow-y: auto;
+    flex: 1;
+  }
+  .tree-node {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    padding: 6px 8px;
+    border-radius: var(--ds-radius-small);
+    cursor: pointer;
+    color: var(--ds-text-2);
+    font-size: var(--ds-font-size-14);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .tree-node .tree-label {
+    flex: 1 1 0;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .tree-node:hover { background: var(--ds-bg-fill); }
+  .tree-node.is-selected {
+    background: var(--ds-color-primary-1);
+    color: var(--ds-color-primary-6);
+  }
+  .tree-node .chev { transition: transform var(--ds-duration-fast) var(--ds-ease-standard); }
+  .tree-node.is-open .chev { transform: rotate(90deg); }
+  .tree-children { padding-left: var(--ds-space-7); }
+  .tree-children[hidden] { display: none; }
+  .tree-leaf {
+    padding-left: 28px;
+    color: var(--ds-text-3);
+  }
+  .tree-leaf.is-selected { color: var(--ds-color-primary-6); }
+  .tree-badge {
+    margin-left: auto;
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-4);
+  }
+  .tree-node .tree-actions {
+    display: none;
+    gap: 2px;
+    margin-left: auto;
+  }
+  .tree-node:hover .tree-actions { display: inline-flex; }
+  .tree-node:hover .tree-badge { display: none; }
+  .tree-actions .icon-btn {
+    width: 22px;
+    height: 22px;
+    display: inline-grid;
+    place-items: center;
+    border: none;
+    background: transparent;
+    border-radius: var(--ds-radius-small);
+    cursor: pointer;
+    color: var(--ds-text-3);
+  }
+  .tree-actions .icon-btn:hover {
+    background: var(--ds-color-primary-1);
+    color: var(--ds-color-primary-6);
+  }
+  .tree-actions .icon-btn.is-danger:hover {
+    background: var(--ds-color-danger-light);
+    color: var(--ds-color-danger);
+  }
+  .tree-node[data-readonly="true"] .tree-actions .act-rename,
+  .tree-node[data-readonly="true"] .tree-actions .act-delete { display: none; }
+
+  /* 主内容区 */
+  .main {
+    flex: 1;
+    min-width: 0;
+    padding: var(--ds-space-9);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ds-space-7);
+  }
+  .page-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--ds-space-7);
+  }
+  .page-head h1 {
+    margin: 0;
+    font-size: var(--ds-font-size-24);
+    font-weight: var(--ds-font-weight-medium);
+    color: var(--ds-text-1);
+  }
+  .page-head p {
+    margin: var(--ds-space-2) 0 0;
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-3);
+  }
+  .crumb {
+    display: flex;
+    gap: var(--ds-space-3);
+    align-items: center;
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-3);
+    margin-bottom: var(--ds-space-3);
+  }
+  .crumb a { color: var(--ds-text-3); }
+  .crumb a:hover { color: var(--ds-color-primary-6); }
+  .head-actions { display: flex; gap: var(--ds-space-4); align-items: center; }
+
+  /* 按钮 */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--ds-space-3);
+    height: var(--ds-button-height);
+    padding: 0 var(--ds-button-padding-inline);
+    border-radius: var(--ds-button-radius);
+    font-size: var(--ds-font-size-14);
+    border: 1px solid var(--ds-border-2);
+    background: var(--ds-color-white);
+    color: var(--ds-text-1);
+    cursor: pointer;
+    line-height: 1;
+    transition: background var(--ds-duration-fast) var(--ds-ease-standard), border-color var(--ds-duration-fast) var(--ds-ease-standard);
+  }
+  .btn:hover { background: var(--ds-bg-fill); border-color: var(--ds-border-3); }
+  .btn:disabled,
+  .btn:disabled:hover {
+    color: var(--ds-text-4);
+    background: var(--ds-bg-fill);
+    border-color: var(--ds-border-2);
+    cursor: not-allowed;
+  }
+  .btn-primary {
+    background: var(--ds-color-primary-6);
+    border-color: var(--ds-color-primary-6);
+    color: var(--ds-color-white);
+  }
+  .btn-primary:hover {
+    background: var(--ds-color-primary-7);
+    border-color: var(--ds-color-primary-7);
+  }
+  .btn-text {
+    border-color: transparent;
+    background: transparent;
+    color: var(--ds-color-primary-6);
+    padding: 0 4px;
+    height: auto;
+  }
+  .btn-text:hover { background: var(--ds-color-primary-1); }
+  .btn-danger-ghost {
+    border-color: var(--ds-color-danger);
+    color: var(--ds-color-danger);
+    background: var(--ds-color-white);
+  }
+  .btn-danger-ghost:hover { background: var(--ds-color-danger-light); }
+  .btn-danger {
+    background: var(--ds-color-danger);
+    border-color: var(--ds-color-danger);
+    color: var(--ds-color-white);
+  }
+  .btn-danger:hover {
+    background: var(--ds-color-danger-text);
+    border-color: var(--ds-color-danger-text);
+  }
+
+  /* 工具栏 */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-4);
+    flex-wrap: wrap;
+  }
+  .search {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+  .search svg {
+    position: absolute;
+    left: var(--ds-space-7);
+    color: var(--ds-text-4);
+    pointer-events: none;
+  }
+  .search input {
+    height: var(--ds-input-height);
+    width: 260px;
+    padding: 0 var(--ds-space-7) 0 36px;
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-input-radius);
+    background: var(--ds-color-white);
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-1);
+    transition: border-color var(--ds-duration-fast) var(--ds-ease-standard);
+  }
+  .search input::placeholder { color: var(--ds-text-4); }
+  .search input:hover { border-color: var(--ds-border-3); }
+  .search input:focus { border-color: var(--ds-color-primary-6); outline: none; box-shadow: var(--ds-focus-ring); }
+  .select {
+    height: var(--ds-control-default);
+    padding: 0 28px 0 10px;
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-input-radius);
+    background: var(--ds-color-white) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5L6 7.5L9 4.5' stroke='%2386909c' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") no-repeat right 8px center;
+    appearance: none;
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-1);
+    cursor: pointer;
+  }
+  .select:hover { border-color: var(--ds-border-3); }
+  .select:focus { border-color: var(--ds-color-primary-6); outline: none; box-shadow: var(--ds-focus-ring); }
+  .toolbar-spacer { flex: 1; }
+
+  /* 表格 */
+  .card {
+    background: var(--ds-bg-surface);
+    border-radius: var(--ds-radius-medium);
+    border: 1px solid var(--ds-border-2);
+    overflow: hidden;
+  }
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-7);
+    padding: var(--ds-space-6) var(--ds-space-7);
+    border-bottom: 1px solid var(--ds-border-1);
+  }
+  .card-head .card-title {
+    font-size: var(--ds-font-size-14);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-text-1);
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+  }
+  .card-head .card-meta {
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-3);
+  }
+  .card-head .bulk-actions { display: none; gap: var(--ds-space-4); align-items: center; margin-left: auto; }
+  .card-head.is-bulk .card-title,
+  .card-head.is-bulk .card-meta { display: none; }
+  .card-head.is-bulk .bulk-actions { display: flex; }
+  .bulk-count { font-size: var(--ds-font-size-12); color: var(--ds-text-2); }
+  .table-scroll { overflow-x: auto; }
+  table.data {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: var(--ds-font-size-14);
+  }
+  table.data col.col-check { width: 36px; }
+  table.data col.col-name { width: 180px; }
+  table.data col.col-type { width: 64px; }
+  table.data col.col-level { width: 72px; }
+  table.data col.col-status { width: 76px; }
+  table.data col.col-qps { width: 44px; }
+  table.data col.col-version { width: 44px; }
+  table.data col.col-time { width: 100px; }
+  table.data col.col-actions { width: 184px; }
+  table.data thead th {
+    background: var(--ds-bg-fill);
+    color: var(--ds-text-2);
+    font-weight: var(--ds-font-weight-medium);
+    text-align: left;
+    padding: 10px var(--ds-table-cell-padding-inline);
+    border-bottom: 1px solid var(--ds-border-2);
+    white-space: nowrap;
+    font-size: var(--ds-font-size-12);
+  }
+  table.data thead th.col-check { text-align: center; }
+  table.data thead th.col-actions { text-align: right; }
+  table.data tbody td {
+    padding: 12px var(--ds-table-cell-padding-inline);
+    border-bottom: 1px solid var(--ds-border-1);
+    color: var(--ds-text-1);
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  table.data tbody td.col-check { text-align: center; overflow: visible; }
+  table.data tbody td.col-actions { text-align: right; overflow: visible; }
+  table.data tbody td.col-name { overflow: visible; }
+  table.data tbody td.col-qps,
+  table.data tbody td.col-version { font-family: var(--ds-font-mono); color: var(--ds-text-2); font-size: var(--ds-font-size-12); }
+  table.data tbody td.col-time { color: var(--ds-text-3); font-size: var(--ds-font-size-12); }
+  table.data tbody tr:hover { background: var(--ds-bg-fill); }
+  table.data tbody tr:last-child td { border-bottom: none; }
+  .api-name {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .api-name strong { font-weight: var(--ds-font-weight-semibold); color: var(--ds-text-1); }
+  .api-name .api-path {
+    font-family: var(--ds-font-mono);
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .row-actions { display: inline-flex; gap: var(--ds-space-3); justify-content: flex-end; }
+  .row-actions .btn-text { padding: 2px 6px; }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: var(--ds-radius-small);
+    font-size: var(--ds-font-size-12);
+    line-height: 1;
+    border: 1px solid transparent;
+  }
+  .tag-success { background: var(--ds-color-success-light); color: var(--ds-color-success-text); }
+  .tag-warning { background: var(--ds-color-warning-light); color: var(--ds-color-warning-text); }
+  .tag-danger { background: var(--ds-color-danger-light); color: var(--ds-color-danger-text); }
+  .tag-neutral { background: var(--ds-bg-fill); color: var(--ds-text-2); }
+  .tag-info { background: var(--ds-color-primary-1); color: var(--ds-color-primary-7); }
+  .tag-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .type-pill {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 8px;
+    border-radius: var(--ds-radius-small);
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-2);
+    background: var(--ds-bg-fill);
+    border: 1px solid var(--ds-border-2);
+  }
+
+  /* 分页 */
+  .pagination {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    padding: var(--ds-space-7) var(--ds-space-7);
+    justify-content: space-between;
+    border-top: 1px solid var(--ds-border-1);
+  }
+  .pagination-info { font-size: var(--ds-font-size-12); color: var(--ds-text-3); }
+  .pagination-controls { display: flex; gap: var(--ds-space-2); align-items: center; }
+  .page-btn {
+    min-width: var(--ds-pagination-item-size);
+    height: var(--ds-pagination-item-size);
+    display: inline-grid;
+    place-items: center;
+    border: 1px solid var(--ds-border-2);
+    background: var(--ds-color-white);
+    color: var(--ds-text-2);
+    border-radius: var(--ds-radius-small);
+    font-size: var(--ds-font-size-12);
+    cursor: pointer;
+    padding: 0 6px;
+  }
+  .page-btn:hover { border-color: var(--ds-color-primary-5); color: var(--ds-color-primary-6); }
+  .page-btn[aria-current="page"] {
+    background: var(--ds-color-primary-6);
+    border-color: var(--ds-color-primary-6);
+    color: var(--ds-color-white);
+  }
+  .page-btn[disabled] { color: var(--ds-text-4); cursor: not-allowed; }
+
+  /* 下拉菜单 */
+  .dropdown { position: relative; display: inline-flex; }
+  .dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 4px);
+    background: var(--ds-bg-elevated);
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-radius-medium);
+    box-shadow: var(--ds-shadow-2);
+    padding: var(--ds-space-2) 0;
+    min-width: 144px;
+    z-index: var(--ds-z-popup);
+    display: none;
+  }
+  .dropdown.is-open .dropdown-menu { display: block; }
+  .dropdown.is-drop-up .dropdown-menu {
+    top: auto;
+    bottom: calc(100% + 4px);
+  }
+  .dropdown-menu button {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 7px var(--ds-space-7);
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-1);
+    cursor: pointer;
+    text-align: left;
+  }
+  .dropdown-menu button:hover { background: var(--ds-bg-fill); }
+  .dropdown-menu button.is-danger { color: var(--ds-color-danger); }
+  .dropdown-menu button.is-danger:hover { background: var(--ds-color-danger-light); }
+  .dropdown-menu .menu-divider { height: 1px; background: var(--ds-border-1); margin: var(--ds-space-2) 0; }
+
+  /* 弹窗 */
+  .modal-mask {
+    position: fixed;
+    inset: 0;
+    background: var(--ds-mask);
+    z-index: var(--ds-z-modal);
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-mask[aria-hidden="false"] { display: flex; }
+  .modal {
+    width: var(--ds-modal-width);
+    background: var(--ds-bg-elevated);
+    border-radius: var(--ds-radius-large);
+    box-shadow: var(--ds-shadow-3);
+    overflow: hidden;
+  }
+  .modal-head {
+    padding: var(--ds-space-7) var(--ds-space-9) var(--ds-space-7);
+    border-bottom: 1px solid var(--ds-border-1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-head h3 { margin: 0; font-size: var(--ds-font-size-16); font-weight: var(--ds-font-weight-medium); }
+  .modal-body { padding: var(--ds-space-9); display: flex; flex-direction: column; gap: var(--ds-space-7); max-height: calc(100vh - 140px); overflow-y: auto; }
+  .field { display: flex; flex-direction: column; gap: var(--ds-space-3); }
+  .field > label { font-size: var(--ds-font-size-14); color: var(--ds-text-1); }
+  .field .req { color: var(--ds-color-danger); margin-left: 2px; }
+  .field input, .field select, .field textarea {
+    height: var(--ds-input-height);
+    padding: 0 var(--ds-space-7);
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-input-radius);
+    background: var(--ds-color-white);
+    font-size: var(--ds-font-size-14);
+    color: var(--ds-text-1);
+    font-family: inherit;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--ds-color-primary-6);
+    outline: none;
+    box-shadow: var(--ds-focus-ring);
+  }
+  .field .help { font-size: var(--ds-font-size-12); color: var(--ds-text-3); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-7); }
+  .form-section {
+    font-size: var(--ds-font-size-14);
+    font-weight: var(--ds-font-weight-semibold);
+    color: var(--ds-text-1);
+    padding-top: var(--ds-space-5);
+    border-top: 1px solid var(--ds-border-1);
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+  }
+  .form-section .section-badge {
+    font-size: var(--ds-font-size-12);
+    font-weight: var(--ds-font-weight-regular);
+    color: var(--ds-text-3);
+  }
+  .field-switch {
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-4);
+    height: var(--ds-input-height);
+  }
+  .field-switch .switch-label { font-size: var(--ds-font-size-14); color: var(--ds-text-1); }
+  .field-switch .switch-hint { font-size: var(--ds-font-size-12); color: var(--ds-text-3); }
+  .switch {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+  .switch input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .switch-track {
+    position: absolute;
+    inset: 0;
+    background: var(--ds-color-gray-5);
+    border-radius: 10px;
+    transition: background var(--ds-duration-fast) var(--ds-ease-standard);
+    pointer-events: none;
+  }
+  .switch-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: var(--ds-color-white);
+    border-radius: 50%;
+    transition: transform var(--ds-duration-fast) var(--ds-ease-standard);
+    box-shadow: var(--ds-shadow-1);
+    pointer-events: none;
+  }
+  .switch input:checked ~ .switch-track { background: var(--ds-color-primary-6); }
+  .switch input:checked ~ .switch-thumb { transform: translateX(16px); }
+  .switch input:focus-visible ~ .switch-track { box-shadow: var(--ds-focus-ring); }
+  .type-card:disabled { cursor: default; }
+  .type-card:disabled:hover { border-color: var(--ds-border-2); }
+  .type-card:disabled[aria-pressed="true"] { border-color: var(--ds-color-primary-5); background: var(--ds-color-primary-1); }
+  .field input[readonly] { background: var(--ds-bg-fill); color: var(--ds-text-3); cursor: default; }
+  .type-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--ds-space-4);
+  }
+  .type-card {
+    border: 1px solid var(--ds-border-2);
+    border-radius: var(--ds-radius-medium);
+    padding: var(--ds-space-7);
+    cursor: pointer;
+    background: var(--ds-color-white);
+    transition: border-color var(--ds-duration-fast) var(--ds-ease-standard), box-shadow var(--ds-duration-fast) var(--ds-ease-standard);
+  }
+  .type-card:hover { border-color: var(--ds-color-primary-5); }
+  .type-card[aria-pressed="true"] {
+    border-color: var(--ds-color-primary-6);
+    box-shadow: 0 0 0 2px rgb(22 93 255 / 18%);
+  }
+  .type-card h4 {
+    margin: 0 0 var(--ds-space-3);
+    font-size: var(--ds-font-size-14);
+    font-weight: var(--ds-font-weight-medium);
+    display: flex;
+    align-items: center;
+    gap: var(--ds-space-3);
+  }
+  .type-card p {
+    margin: 0;
+    font-size: var(--ds-font-size-12);
+    color: var(--ds-text-3);
+    line-height: 1.5;
+  }
+  .modal-foot {
+    padding: var(--ds-space-7) var(--ds-space-9);
+    border-top: 1px solid var(--ds-border-1);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--ds-space-4);
+    background: var(--ds-bg-fill);
+  }
+
+  /* 提示 */
+  .alert {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ds-space-4);
+    padding: var(--ds-space-5) var(--ds-space-7);
+    border-radius: var(--ds-radius-medium);
+    background: var(--ds-color-primary-1);
+    border: 1px solid var(--ds-color-primary-2);
+    color: var(--ds-text-1);
+    font-size: var(--ds-font-size-12);
+  }
+  .alert svg { color: var(--ds-color-primary-6); flex-shrink: 0; margin-top: 1px; }
+  .alert strong { color: var(--ds-color-primary-7); }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: calc(var(--ds-nav-height) + var(--ds-space-7));
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ds-color-gray-10);
+    color: var(--ds-color-white);
+    padding: var(--ds-space-5) var(--ds-space-7);
+    border-radius: var(--ds-radius-medium);
+    box-shadow: var(--ds-shadow-2);
+    z-index: var(--ds-z-message);
+    font-size: var(--ds-font-size-14);
+    display: none;
+    align-items: center;
+    gap: var(--ds-space-4);
+  }
+  .toast[aria-hidden="false"] { display: inline-flex; }
+
+  @media (max-width: 1280px) {
+    .api-tree { width: 220px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 2L14 5V11L8 14L2 11V5L8 2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+        <path d="M8 5V11M5 6.5L11 9.5M11 6.5L5 9.5" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+    </span>
+    数据服务平台
+  </div>
+
+  <div class="topnav-spacer"></div>
+
+  <div class="topnav-actions">
+    <div class="user-chip">
+      <span class="avatar" aria-hidden="true">王</span>
+      <span>王超 · 数据开发</span>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar-mount" data-current="api-dev" data-hide="ds,market" aria-label="主导航"></aside>
+
+  <main class="api-layout">
+    <!-- API 目录树 -->
+    <section class="api-tree" aria-label="API 目录">
+      <div class="api-tree-head">
+        <h2>API 目录</h2>
+        <div class="tree-actions">
+          <button type="button" class="icon-btn" aria-label="新建文件夹" id="btnNewFolder" title="新建文件夹">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1.5 3.5h4l1.5 1.5h5.5v7H1.5v-8.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+              <path d="M7 7v3M5.5 8.5h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button type="button" class="icon-btn" aria-label="刷新目录" title="刷新" id="btnRefreshTree">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M12 7a5 5 0 11-1.5-3.6M12 2v3h-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="tree" id="apiTree">
+        <!-- 根 -->
+        <div class="tree-node is-open is-selected" data-folder="root" data-name="全部 API" data-readonly="true" tabindex="0" role="treeitem" aria-expanded="true">
+          <svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 3l4 3-4 3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1.5 3.5h4l1.5 1.5h5.5v7H1.5v-8.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          <span class="tree-label">全部 API</span>
+          <span class="tree-badge">12</span>
+          <span class="tree-actions">
+            <button type="button" class="icon-btn act-add" title="新建子目录" aria-label="新建子目录"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+          </span>
+        </div>
+        <div class="tree-children">
+          <div class="tree-node is-open" data-folder="risk" data-name="风控服务" tabindex="0" role="treeitem" aria-expanded="true">
+            <svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 3l4 3-4 3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1.5 3.5h4l1.5 1.5h5.5v7H1.5v-8.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            <span class="tree-label">风控服务</span>
+            <span class="tree-badge">5</span>
+            <span class="tree-actions">
+              <button type="button" class="icon-btn act-add" title="新建子目录" aria-label="新建子目录"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+              <button type="button" class="icon-btn act-rename" title="重命名" aria-label="重命名"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 9.5l1.5-4 5-5L11 3l-5 5-4 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></button>
+              <button type="button" class="icon-btn is-danger act-delete" title="删除" aria-label="删除"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.5 4h5M5 4V3a1 1 0 011-1 1 1 0 011 1v1M4.5 4v6a1 1 0 001 1h1a1 1 0 001-1V4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </span>
+          </div>
+          <div class="tree-children">
+            <div class="tree-node tree-leaf" data-folder="risk-credit" data-name="授信查询" tabindex="0" role="treeitem">
+              <span style="width:14px"></span>
+              <span class="tree-label">授信查询</span>
+              <span class="tree-badge">3</span>
+              <span class="tree-actions">
+                <button type="button" class="icon-btn act-add" title="新建子目录" aria-label="新建子目录"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+                <button type="button" class="icon-btn act-rename" title="重命名" aria-label="重命名"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 9.5l1.5-4 5-5L11 3l-5 5-4 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="icon-btn is-danger act-delete" title="删除" aria-label="删除"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.5 4h5M5 4V3a1 1 0 011-1 1 1 0 011 1v1M4.5 4v6a1 1 0 001 1h1a1 1 0 001-1V4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              </span>
+            </div>
+            <div class="tree-node tree-leaf" data-folder="risk-fraud" data-name="反欺诈" tabindex="0" role="treeitem">
+              <span style="width:14px"></span>
+              <span class="tree-label">反欺诈</span>
+              <span class="tree-badge">2</span>
+              <span class="tree-actions">
+                <button type="button" class="icon-btn act-add" title="新建子目录" aria-label="新建子目录"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+                <button type="button" class="icon-btn act-rename" title="重命名" aria-label="重命名"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 9.5l1.5-4 5-5L11 3l-5 5-4 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></button>
+                <button type="button" class="icon-btn is-danger act-delete" title="删除" aria-label="删除"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.5 4h5M5 4V3a1 1 0 011-1 1 1 0 011 1v1M4.5 4v6a1 1 0 001 1h1a1 1 0 001-1V4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+              </span>
+            </div>
+          </div>
+
+          <div class="tree-node" data-folder="cust" data-name="客户洞察" tabindex="0" role="treeitem" aria-expanded="false">
+            <svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 3l4 3-4 3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1.5 3.5h4l1.5 1.5h5.5v7H1.5v-8.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            <span class="tree-label">客户洞察</span>
+            <span class="tree-badge">4</span>
+            <span class="tree-actions">
+              <button type="button" class="icon-btn act-add" title="新建子目录" aria-label="新建子目录"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+              <button type="button" class="icon-btn act-rename" title="重命名" aria-label="重命名"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 9.5l1.5-4 5-5L11 3l-5 5-4 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></button>
+              <button type="button" class="icon-btn is-danger act-delete" title="删除" aria-label="删除"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.5 4h5M5 4V3a1 1 0 011-1 1 1 0 011 1v1M4.5 4v6a1 1 0 001 1h1a1 1 0 001-1V4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </span>
+          </div>
+          <div class="tree-children" hidden></div>
+
+          <div class="tree-node" data-folder="ops" data-name="运营分析" tabindex="0" role="treeitem" aria-expanded="false">
+            <svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 3l4 3-4 3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1.5 3.5h4l1.5 1.5h5.5v7H1.5v-8.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            <span class="tree-label">运营分析</span>
+            <span class="tree-badge">3</span>
+            <span class="tree-actions">
+              <button type="button" class="icon-btn act-add" title="新建子目录" aria-label="新建子目录"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+              <button type="button" class="icon-btn act-rename" title="重命名" aria-label="重命名"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 9.5l1.5-4 5-5L11 3l-5 5-4 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg></button>
+              <button type="button" class="icon-btn is-danger act-delete" title="删除" aria-label="删除"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.5 4h5M5 4V3a1 1 0 011-1 1 1 0 011 1v1M4.5 4v6a1 1 0 001 1h1a1 1 0 001-1V4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            </span>
+          </div>
+          <div class="tree-children" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- API 列表主区域 -->
+    <section class="main" aria-label="API 列表">
+      <div class="page-head">
+        <div>
+          <nav class="crumb" aria-label="面包屑">
+            <a href="#" data-page="api">API</a>
+            <span>›</span>
+            <span>全部 API</span>
+          </nav>
+          <h1>API 开发</h1>
+          <p>基于 ADS 逻辑表生成 API 服务,供应用系统调用;支持脚本式、向导式、原生式三种开发方式。</p>
+        </div>
+        <div class="head-actions">
+          <button type="button" class="btn" id="btnImport">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2v7M4 6l3 3 3-3M2 11h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            导入 API
+          </button>
+          <button type="button" class="btn btn-primary" id="btnNewApi">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2v10M2 7h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            新建 API
+          </button>
+        </div>
+      </div>
+
+      <div class="alert">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3.5M8 11h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <div>
+          <strong>提示</strong>&nbsp;API 服务只能引用 ADS 层数据资产;发布到生产前需经管理者上线审核。
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="search">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="6" cy="6" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M9 9l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <input type="search" placeholder="搜索 API 名称、路径" id="searchInput" aria-label="搜索 API">
+        </div>
+        <select class="select" aria-label="按类型筛选" id="typeFilter">
+          <option value="">全部类型</option>
+          <option>脚本式</option>
+          <option>向导式</option>
+          <option>原生式</option>
+        </select>
+        <select class="select" aria-label="按状态筛选" id="statusFilter">
+          <option value="">全部状态</option>
+          <option>草稿</option>
+          <option>待上线审核</option>
+          <option>上线中</option>
+          <option>已上线</option>
+          <option>待下线审核</option>
+          <option>下线中</option>
+          <option>已下线</option>
+          <option>执行失败</option>
+        </select>
+        <div class="toolbar-spacer"></div>
+        <button type="button" class="btn" id="btnSort" aria-label="切换最近修改时间排序方向">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 3h10M4 7h6M6 11h2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          排序
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="card-head" id="cardHead">
+          <div class="card-title">
+            <span id="currentFolderName">全部 API</span>
+            <span class="tree-badge" style="position:static">12 个 API</span>
+          </div>
+          <div class="card-meta" id="cardMeta">已按最近修改时间倒序排列</div>
+          <div class="bulk-actions" id="bulkActions">
+            <span class="bulk-count">已选 <strong id="bulkCount">0</strong> 项</span>
+            <button type="button" class="btn btn-text" data-bulk="move">移动到…</button>
+            <button type="button" class="btn btn-text" data-bulk="export">导出</button>
+            <button type="button" class="btn btn-danger-ghost" data-bulk="delete">批量删除</button>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="data" aria-label="API 列表">
+            <colgroup>
+              <col class="col-check">
+              <col class="col-name">
+              <col class="col-type">
+              <col class="col-level">
+              <col class="col-status">
+              <col class="col-qps">
+              <col class="col-version">
+              <col class="col-time">
+              <col class="col-actions">
+            </colgroup>
+            <thead>
+              <tr>
+                <th class="col-check"><input type="checkbox" aria-label="全选" id="chkAll"></th>
+                <th class="col-name th-sort" data-sort="name" tabindex="0" role="button">API 名称 / 路径</th>
+                <th class="col-type th-sort" data-sort="type" tabindex="0" role="button">类型</th>
+                <th class="col-level">安全等级</th>
+                <th class="col-status">状态</th>
+                <th class="col-qps th-sort" data-sort="qps" tabindex="0" role="button">QPS</th>
+                <th class="col-version th-sort" data-sort="version" tabindex="0" role="button">版本</th>
+                <th class="col-time th-sort" data-sort="time" tabindex="0" role="button">最近修改 ↓</th>
+                <th class="col-actions">操作</th>
+              </tr>
+            </thead>
+            <tbody id="apiTbody">
+              <tr>
+                <td class="col-check"><input type="checkbox" aria-label="选择 客户授信额度查询"></td>
+                <td class="col-name">
+                  <div class="api-name">
+                    <strong>客户授信额度查询</strong>
+                    <span class="api-path">/api/v1/risk/credit/query</span>
+                  </div>
+                </td>
+                <td class="col-type"><span class="type-pill">脚本式</span></td>
+                <td class="col-level"><span class="tag tag-warning"><span class="tag-dot"></span>L3 秘密</span></td>
+                <td class="col-status"><span class="tag tag-success"><span class="tag-dot"></span>已上线</span></td>
+                <td class="col-qps">200</td>
+                <td class="col-version">v2.1</td>
+                <td class="col-time">2026-08-21 14:32</td>
+                <td class="col-actions">
+                  <div class="row-actions">
+                    <button type="button" class="btn-text">查看</button>
+                    <button type="button" class="btn-text">测试</button>
+                    <div class="dropdown">
+                      <button type="button" class="btn-text act-more" aria-haspopup="menu" aria-expanded="false">更多
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </button>
+                      <div class="dropdown-menu" role="menu">
+                        <button type="button" role="menuitem" data-action="edit-basic">编辑基本信息</button>
+                        <button type="button" role="menuitem">复制</button>
+                        <button type="button" role="menuitem">移动到…</button>
+                        <button type="button" role="menuitem">版本管理</button>
+                        <button type="button" role="menuitem">下线</button>
+                        <div class="menu-divider"></div>
+                        <button type="button" class="is-danger" role="menuitem">删除</button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-check"><input type="checkbox" aria-label="选择 反欺诈风险评分"></td>
+                <td class="col-name">
+                  <div class="api-name">
+                    <strong>反欺诈风险评分</strong>
+                    <span class="api-path">/api/v1/risk/fraud/score</span>
+                  </div>
+                </td>
+                <td class="col-type"><span class="type-pill">向导式</span></td>
+                <td class="col-level"><span class="tag tag-warning"><span class="tag-dot"></span>L3 秘密</span></td>
+                <td class="col-status"><span class="tag tag-success"><span class="tag-dot"></span>已上线</span></td>
+                <td class="col-qps">500</td>
+                <td class="col-version">v1.3</td>
+                <td class="col-time">2026-08-19 09:15</td>
+                <td class="col-actions">
+                  <div class="row-actions">
+                    <button type="button" class="btn-text">查看</button>
+                    <button type="button" class="btn-text">测试</button>
+                    <div class="dropdown">
+                      <button type="button" class="btn-text act-more" aria-haspopup="menu" aria-expanded="false">更多
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </button>
+                      <div class="dropdown-menu" role="menu">
+                        <button type="button" role="menuitem" data-action="edit-basic">编辑基本信息</button>
+                        <button type="button" role="menuitem">复制</button>
+                        <button type="button" role="menuitem">移动到…</button>
+                        <button type="button" role="menuitem">版本管理</button>
+                        <button type="button" role="menuitem">下线</button>
+                        <div class="menu-divider"></div>
+                        <button type="button" class="is-danger" role="menuitem">删除</button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-check"><input type="checkbox" aria-label="选择 客户标签灵活查询"></td>
+                <td class="col-name">
+                  <div class="api-name">
+                    <strong>客户标签灵活查询</strong>
+                    <span class="api-path">/api/v1/cust/tag/query</span>
+                  </div>
+                </td>
+                <td class="col-type"><span class="type-pill">原生式</span></td>
+                <td class="col-level"><span class="tag tag-neutral"><span class="tag-dot"></span>L2 内部</span></td>
+                <td class="col-status"><span class="tag tag-info"><span class="tag-dot"></span>待上线审核</span></td>
+                <td class="col-qps">—</td>
+                <td class="col-version">v0.3</td>
+                <td class="col-time">2026-08-25 17:08</td>
+                <td class="col-actions">
+                  <div class="row-actions">
+                    <button type="button" class="btn-text">查看</button>
+                    <button type="button" class="btn-text">测试</button>
+                    <div class="dropdown">
+                      <button type="button" class="btn-text act-more" aria-haspopup="menu" aria-expanded="false">更多
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </button>
+                      <div class="dropdown-menu" role="menu">
+                        <button type="button" role="menuitem" data-action="edit-basic">编辑基本信息</button>
+                        <button type="button" role="menuitem">复制</button>
+                        <button type="button" role="menuitem">移动到…</button>
+                        <button type="button" role="menuitem">版本管理</button>
+                        <button type="button" role="menuitem">提交上线审核</button>
+                        <div class="menu-divider"></div>
+                        <button type="button" class="is-danger" role="menuitem">删除</button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-check"><input type="checkbox" aria-label="选择 订单回款明细"></td>
+                <td class="col-name">
+                  <div class="api-name">
+                    <strong>订单回款明细</strong>
+                    <span class="api-path">/api/v1/ops/order/payment</span>
+                  </div>
+                </td>
+                <td class="col-type"><span class="type-pill">脚本式</span></td>
+                <td class="col-level"><span class="tag tag-neutral"><span class="tag-dot"></span>L2 内部</span></td>
+                <td class="col-status"><span class="tag tag-warning"><span class="tag-dot"></span>草稿</span></td>
+                <td class="col-qps">—</td>
+                <td class="col-version">v0.1</td>
+                <td class="col-time">2026-08-26 11:42</td>
+                <td class="col-actions">
+                  <div class="row-actions">
+                    <button type="button" class="btn-text">编辑</button>
+                    <button type="button" class="btn-text">测试</button>
+                    <div class="dropdown">
+                      <button type="button" class="btn-text act-more" aria-haspopup="menu" aria-expanded="false">更多
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </button>
+                      <div class="dropdown-menu" role="menu">
+                        <button type="button" role="menuitem" data-action="edit-basic">编辑基本信息</button>
+                        <button type="button" role="menuitem">复制</button>
+                        <button type="button" role="menuitem">移动到…</button>
+                        <button type="button" role="menuitem">提交上线审核</button>
+                        <div class="menu-divider"></div>
+                        <button type="button" class="is-danger" role="menuitem">删除</button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-check"><input type="checkbox" aria-label="选择 客户授信历史"></td>
+                <td class="col-name">
+                  <div class="api-name">
+                    <strong>客户授信历史</strong>
+                    <span class="api-path">/api/v1/risk/credit/history</span>
+                  </div>
+                </td>
+                <td class="col-type"><span class="type-pill">脚本式</span></td>
+                <td class="col-level"><span class="tag tag-warning"><span class="tag-dot"></span>L3 秘密</span></td>
+                <td class="col-status"><span class="tag tag-success"><span class="tag-dot"></span>已上线</span></td>
+                <td class="col-qps">100</td>
+                <td class="col-version">v1.0</td>
+                <td class="col-time">2026-08-12 16:20</td>
+                <td class="col-actions">
+                  <div class="row-actions">
+                    <button type="button" class="btn-text">查看</button>
+                    <button type="button" class="btn-text">测试</button>
+                    <div class="dropdown">
+                      <button type="button" class="btn-text act-more" aria-haspopup="menu" aria-expanded="false">更多
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </button>
+                      <div class="dropdown-menu" role="menu">
+                        <button type="button" role="menuitem" data-action="edit-basic">编辑基本信息</button>
+                        <button type="button" role="menuitem">复制</button>
+                        <button type="button" role="menuitem">移动到…</button>
+                        <button type="button" role="menuitem">版本管理</button>
+                        <button type="button" role="menuitem">下线</button>
+                        <div class="menu-divider"></div>
+                        <button type="button" class="is-danger" role="menuitem">删除</button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-check"><input type="checkbox" aria-label="选择 实时经营看板"></td>
+                <td class="col-name">
+                  <div class="api-name">
+                    <strong>实时经营看板</strong>
+                    <span class="api-path">/api/v1/ops/dashboard/realtime</span>
+                  </div>
+                </td>
+                <td class="col-type"><span class="type-pill">原生式</span></td>
+                <td class="col-level"><span class="tag tag-neutral"><span class="tag-dot"></span>L2 内部</span></td>
+                <td class="col-status"><span class="tag tag-info"><span class="tag-dot"></span>待上线审核</span></td>
+                <td class="col-qps">—</td>
+                <td class="col-version">v0.4</td>
+                <td class="col-time">2026-08-24 10:55</td>
+                <td class="col-actions">
+                  <div class="row-actions">
+                    <button type="button" class="btn-text">查看</button>
+                    <button type="button" class="btn-text">测试</button>
+                    <div class="dropdown">
+                      <button type="button" class="btn-text act-more" aria-haspopup="menu" aria-expanded="false">更多
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </button>
+                      <div class="dropdown-menu" role="menu">
+                        <button type="button" role="menuitem" data-action="edit-basic">编辑基本信息</button>
+                        <button type="button" role="menuitem">复制</button>
+                        <button type="button" role="menuitem">移动到…</button>
+                        <button type="button" role="menuitem">版本管理</button>
+                        <button type="button" role="menuitem">提交上线审核</button>
+                        <div class="menu-divider"></div>
+                        <button type="button" class="is-danger" role="menuitem">删除</button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="col-check"><input type="checkbox" aria-label="选择 客户生命周期标签"></td>
+                <td class="col-name">
+                  <div class="api-name">
+                    <strong>客户生命周期标签</strong>
+                    <span class="api-path">/api/v1/cust/lifecycle/tag</span>
+                  </div>
+                </td>
+                <td class="col-type"><span class="type-pill">向导式</span></td>
+                <td class="col-level"><span class="tag tag-neutral"><span class="tag-dot"></span>L2 内部</span></td>
+                <td class="col-status"><span class="tag tag-neutral"><span class="tag-dot"></span>已下线</span></td>
+                <td class="col-qps">—</td>
+                <td class="col-version">v1.2</td>
+                <td class="col-time">2026-07-30 09:08</td>
+                <td class="col-actions">
+                  <div class="row-actions">
+                    <button type="button" class="btn-text">查看</button>
+                    <button type="button" class="btn-text">重新上线</button>
+                    <div class="dropdown">
+                      <button type="button" class="btn-text act-more" aria-haspopup="menu" aria-expanded="false">更多
+                        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </button>
+                      <div class="dropdown-menu" role="menu">
+                        <button type="button" role="menuitem" data-action="edit-basic">编辑基本信息</button>
+                        <button type="button" role="menuitem">复制</button>
+                        <button type="button" role="menuitem">移动到…</button>
+                        <button type="button" role="menuitem">版本管理</button>
+                        <div class="menu-divider"></div>
+                        <button type="button" class="is-danger" role="menuitem">删除</button>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination">
+          <div class="pagination-info">共 12 条 · 第 1 / 2 页</div>
+          <div class="pagination-controls">
+            <button type="button" class="page-btn" disabled aria-label="上一页">‹</button>
+            <button type="button" class="page-btn" aria-current="page">1</button>
+            <button type="button" class="page-btn">2</button>
+            <button type="button" class="page-btn" aria-label="下一页">›</button>
+            <span style="color: var(--ds-text-4); padding: 0 4px;">/</span>
+            <select class="select" style="height: 28px;" aria-label="每页条数" id="pageSizeSelect">
+              <option selected>10 条/页</option>
+              <option>20 条/页</option>
+              <option>50 条/页</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- 新建 API 弹窗 -->
+<div class="modal-mask" id="newApiModal" role="dialog" aria-modal="true" aria-labelledby="newApiTitle" aria-hidden="true">
+  <div class="modal" role="document" style="width: 580px;">
+    <div class="modal-head">
+      <h3 id="newApiTitle">新建 API</h3>
+      <button type="button" class="icon-btn" aria-label="关闭" data-close-modal>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-section">基本信息 <span class="section-badge">带 * 为必填</span></div>
+
+      <div class="field">
+        <label for="apiName">API 名称 <span class="req">*</span></label>
+        <input type="text" id="apiName" placeholder="以字母、数字或下划线组成,30 字以内" maxlength="30">
+        <span class="help">将在调用路径中作为唯一标识</span>
+      </div>
+
+      <div class="field">
+        <label>开发方式 <span class="req">*</span></label>
+        <div class="type-grid" role="radiogroup" aria-label="开发方式" id="typeGrid">
+          <button type="button" class="type-card" role="radio" aria-pressed="true" aria-checked="true" data-type="script">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 4L1.5 8 5 12M11 4l3.5 4L11 12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              脚本式
+            </h4>
+            <p>自定义 SQL,支持同源多张逻辑表,适合复杂查询</p>
+          </button>
+          <button type="button" class="type-card" role="radio" aria-pressed="false" aria-checked="false" data-type="guide">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              向导式
+            </h4>
+            <p>无代码配置,单张逻辑表,自动生成查询语句</p>
+          </button>
+          <button type="button" class="type-card" role="radio" aria-pressed="false" aria-checked="false" data-type="native">
+            <h4>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              原生式
+            </h4>
+            <p>对圈选范围内逻辑表灵活重组,适合数据探查</p>
+          </button>
+        </div>
+        <span class="help" id="typeHelp">创建后不可更改开发方式</span>
+      </div>
+
+      <div class="field">
+        <label for="apiFolder">存储目录 <span class="req">*</span></label>
+        <select id="apiFolder">
+          <option>风控服务 / 授信查询</option>
+          <option>风控服务 / 反欺诈</option>
+          <option>客户洞察</option>
+          <option>运营分析</option>
+        </select>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="apiQps">最大 QPS <span class="req">*</span></label>
+          <input type="number" id="apiQps" placeholder="100" min="1" value="100">
+        </div>
+        <div class="field">
+          <label for="apiLevel">安全等级</label>
+          <select id="apiLevel">
+            <option>L1 公开</option>
+            <option selected>L2 内部</option>
+            <option>L3 秘密</option>
+            <option>L4 机密</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="apiDesc">描述</label>
+        <textarea id="apiDesc" rows="3" placeholder="说明 API 用途、调用方、注意事项" style="height: auto; padding: 8px 12px; resize: vertical;"></textarea>
+      </div>
+
+      <div class="form-section">更多配置</div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="apiMaxLimit">最大 limit</label>
+          <input type="number" id="apiMaxLimit" placeholder="不限" min="1">
+          <span class="help">API 查询返回的最大行数</span>
+        </div>
+        <div class="field">
+          <label for="apiVersion">初始版本</label>
+          <input type="text" id="apiVersion" value="V0" readonly>
+          <span class="help">初始创建时默认 V0</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>报警模版 <span class="req">*</span></label>
+        <div class="field-switch">
+          <label class="switch">
+            <input type="checkbox" id="apiAlarm" checked>
+            <span class="switch-track"></span>
+            <span class="switch-thumb"></span>
+          </label>
+          <span class="switch-label" id="alarmLabel">开启</span>
+          <span class="switch-hint">开启后自动配置默认报警规则,接收人为 API 负责人</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="apiVersionDesc">版本描述</label>
+        <textarea id="apiVersionDesc" rows="2" placeholder="填写本次版本的变更说明" style="height: auto; padding: 8px 12px; resize: vertical;"></textarea>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn" data-close-modal>取消</button>
+      <button type="button" class="btn btn-primary" id="btnSaveApi">保存并开发</button>
+    </div>
+  </div>
+</div>
+
+<!-- 导入 API 弹窗 -->
+<div class="modal-mask" id="importModal" role="dialog" aria-modal="true" aria-labelledby="importTitle" aria-hidden="true">
+  <div class="modal" role="document" style="width: 480px;">
+    <div class="modal-head">
+      <h3 id="importTitle">导入 API</h3>
+      <button type="button" class="icon-btn" aria-label="关闭" data-close-modal><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label for="importFile">选择文件 <span class="req">*</span></label>
+        <input type="file" id="importFile" accept=".json,.yaml,.yml">
+        <span class="help">支持 .json / .yaml 格式的 API 定义文件,单次最多导入 20 条</span>
+      </div>
+      <div class="field">
+        <label for="importFolder">导入到目录</label>
+        <select id="importFolder"></select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn" data-close-modal>取消</button>
+      <button type="button" class="btn btn-primary" id="btnConfirmImport">确认导入</button>
+    </div>
+  </div>
+</div>
+
+<!-- 新建目录弹窗 -->
+<div class="modal-mask" id="folderModal" role="dialog" aria-modal="true" aria-labelledby="folderModalTitle" aria-hidden="true">
+  <div class="modal" role="document">
+    <div class="modal-head">
+      <h3 id="folderModalTitle">新建目录</h3>
+      <button type="button" class="icon-btn" aria-label="关闭" data-close-modal>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label for="folderParent">上级目录 <span class="req">*</span></label>
+        <select id="folderParent">
+          <option value="root">全部 API</option>
+          <option value="risk">风控服务</option>
+          <option value="cust">客户洞察</option>
+          <option value="ops">运营分析</option>
+        </select>
+        <span class="help">新建的目录将归入所选上级目录</span>
+      </div>
+      <div class="field">
+        <label for="folderName">目录名称 <span class="req">*</span></label>
+        <input type="text" id="folderName" placeholder="2-20 字,不能以数字开头" maxlength="20">
+        <span class="help">同级目录名称不可重复</span>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn" data-close-modal>取消</button>
+      <button type="button" class="btn btn-primary" id="btnSaveFolder">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- 重命名弹窗 -->
+<div class="modal-mask" id="renameModal" role="dialog" aria-modal="true" aria-labelledby="renameModalTitle" aria-hidden="true">
+  <div class="modal" role="document">
+    <div class="modal-head">
+      <h3 id="renameModalTitle">重命名目录</h3>
+      <button type="button" class="icon-btn" aria-label="关闭" data-close-modal>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>当前名称</label>
+        <input type="text" id="renameCurrent" readonly style="background: var(--ds-bg-fill); color: var(--ds-text-3); cursor: default;">
+      </div>
+      <div class="field">
+        <label for="renameInput">新名称 <span class="req">*</span></label>
+        <input type="text" id="renameInput" placeholder="2-20 字,不能以数字开头" maxlength="20">
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn" data-close-modal>取消</button>
+      <button type="button" class="btn btn-primary" id="btnRenameFolder">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 删除确认弹窗 -->
+<div class="modal-mask" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle" aria-hidden="true">
+  <div class="modal" role="document" style="width: 440px;">
+    <div class="modal-head">
+      <h3 id="deleteModalTitle">删除目录</h3>
+      <button type="button" class="icon-btn" aria-label="关闭" data-close-modal>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="alert" style="background: var(--ds-color-danger-light); border-color: var(--ds-color-danger); width: 100%;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="color: var(--ds-color-danger);"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3.5M8 11h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <div>
+          <strong style="color: var(--ds-color-danger-text);">危险操作</strong>&nbsp;删除目录后,目录下的子目录与 API 将一并移除,且不可恢复。
+        </div>
+      </div>
+      <p style="margin: 0; font-size: var(--ds-font-size-14); color: var(--ds-text-2);">
+        确认删除目录 <strong id="deleteFolderName" style="color: var(--ds-text-1);"></strong> 及其全部内容吗?
+      </p>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn" data-close-modal>取消</button>
+      <button type="button" class="btn btn-danger" id="btnConfirmDelete">确认删除</button>
+    </div>
+  </div>
+</div>
+
+<!-- API 操作确认弹窗 -->
+<div class="modal-mask" id="apiActionModal" role="dialog" aria-modal="true" aria-labelledby="apiActionTitle" aria-describedby="apiActionMessage" aria-hidden="true">
+  <div class="modal" role="document" style="width: 440px;">
+    <div class="modal-head">
+      <h3 id="apiActionTitle">确认操作</h3>
+      <button type="button" class="icon-btn" aria-label="关闭" data-close-modal>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="alert" id="apiActionAlert" style="width: 100%;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M8 5v3.5M8 11h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <div id="apiActionMessage"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn" data-close-modal>取消</button>
+      <button type="button" class="btn btn-primary" id="btnConfirmApiAction">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite" aria-hidden="true">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 8l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span id="toastMsg">已保存</span>
+</div>
+
+<script>
+  document.querySelectorAll('.crumb a[data-page]').forEach(a => {
+    a.addEventListener('click', e => { e.preventDefault(); showToast('已回到 API 模块根目录'); });
+  });
+
+  // ===== 通用弹窗管理 =====
+  const modalIds = ['newApiModal', 'folderModal', 'renameModal', 'deleteModal', 'importModal', 'apiActionModal'];
+  let activeModal = null;
+  function openModalById(id) {
+    closeAllModals();
+    activeModal = document.getElementById(id);
+    activeModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeAllModals() {
+    modalIds.forEach(id => { const m = document.getElementById(id); if (m) m.setAttribute('aria-hidden', 'true'); });
+    document.body.style.overflow = '';
+    activeModal = null;
+  }
+  document.querySelectorAll('[data-close-modal]').forEach(b => b.addEventListener('click', closeAllModals));
+  modalIds.forEach(id => {
+    const m = document.getElementById(id);
+    m.addEventListener('click', e => { if (e.target === m) closeAllModals(); });
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && activeModal) closeAllModals(); });
+
+  // ===== API 目录树(事件委托) =====
+  const tree = document.getElementById('apiTree');
+  const ACTION_SVG = {
+    add: '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>',
+    rename: '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 9.5l1.5-4 5-5L11 3l-5 5-4 1.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>',
+    del: '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.5 4h5M5 4V3a1 1 0 011-1 1 1 0 011 1v1M4.5 4v6a1 1 0 001 1h1a1 1 0 001-1V4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  };
+  function buildTreeActions(readonly) {
+    const r = readonly ? '' : `<button type="button" class="icon-btn act-rename" title="重命名" aria-label="重命名">${ACTION_SVG.rename}</button>`;
+    const d = readonly ? '' : `<button type="button" class="icon-btn is-danger act-delete" title="删除" aria-label="删除">${ACTION_SVG.del}</button>`;
+    return `<span class="tree-actions"><button type="button" class="icon-btn act-add" title="新建子目录" aria-label="新建子目录">${ACTION_SVG.add}</button>${r}${d}</span>`;
+  }
+  function buildLeafNode(id, name) {
+    const div = document.createElement('div');
+    div.className = 'tree-node tree-leaf';
+    div.setAttribute('data-folder', id);
+    div.setAttribute('data-name', name);
+    div.setAttribute('tabindex', '0');
+    div.setAttribute('role', 'treeitem');
+    div.innerHTML = `<span style="width:14px"></span><span class="tree-label">${name}</span><span class="tree-badge">0</span>${buildTreeActions(false)}`;
+    return div;
+  }
+  function buildParentNode(id, name, badge, readonly) {
+    const div = document.createElement('div');
+    div.className = 'tree-node is-open';
+    if (readonly) div.setAttribute('data-readonly', 'true');
+    div.setAttribute('data-folder', id);
+    div.setAttribute('data-name', name);
+    div.setAttribute('tabindex', '0');
+    div.setAttribute('role', 'treeitem');
+    div.setAttribute('aria-expanded', 'true');
+    div.innerHTML = `<svg class="chev" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M4 3l4 3-4 3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1.5 3.5h4l1.5 1.5h5.5v7H1.5v-8.5z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="tree-label">${name}</span><span class="tree-badge">${badge}</span>${buildTreeActions(readonly)}`;
+    return div;
+  }
+
+  tree.addEventListener('click', e => {
+    const actBtn = e.target.closest('.tree-actions .icon-btn');
+    if (actBtn) {
+      e.stopPropagation();
+      const node = actBtn.closest('.tree-node');
+      if (actBtn.classList.contains('act-add')) {
+        const fid = node.dataset.folder;
+        if (folders[fid] && folders[fid].level >= 3) { showToast('最多支持三级目录,该节点下不可再建子目录', 'warn'); return; }
+        openFolderModal(fid);
+      }
+      else if (actBtn.classList.contains('act-rename')) openRenameModal(node);
+      else if (actBtn.classList.contains('act-delete')) openDeleteModal(node);
+      return;
+    }
+    const node = e.target.closest('.tree-node');
+    if (!node) return;
+    const chev = node.querySelector('.chev');
+    if (chev) {
+      const open = node.classList.toggle('is-open');
+      node.setAttribute('aria-expanded', open ? 'true' : 'false');
+      const next = node.nextElementSibling;
+      if (next && next.classList.contains('tree-children')) next.hidden = !open;
+    }
+    selectTreeNode(node);
+  });
+  tree.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      const node = e.target.closest('.tree-node');
+      if (node) { e.preventDefault(); node.click(); }
+    }
+  });
+
+  function selectTreeNode(node) {
+    document.querySelectorAll('.tree-node').forEach(n => n.classList.remove('is-selected'));
+    node.classList.add('is-selected');
+    listState.folder = node.dataset.folder || 'root';
+    listState.page = 1;
+    renderAPIList();
+  }
+
+  // ===== 目录:增 =====
+  function openFolderModal(parentId) {
+    renderFolderParentOptions();
+    const sel = document.getElementById('folderParent');
+    if([...sel.options].some(o=>o.value===parentId)) sel.value = parentId;
+    else sel.value = 'root';
+    openModalById('folderModal');
+    setTimeout(() => document.getElementById('folderName').focus(), 50);
+  }
+  document.getElementById('btnNewFolder').addEventListener('click', () => {
+    const sel = tree.querySelector('.tree-node.is-selected');
+    openFolderModal(sel ? sel.dataset.folder : 'root');
+  });
+  document.getElementById('folderName').addEventListener('input', function() { this.style.borderColor = ''; });
+  document.getElementById('btnSaveFolder').addEventListener('click', () => {
+    const input = document.getElementById('folderName');
+    const name = input.value.trim();
+    if(!name){ input.style.borderColor='var(--ds-color-danger)'; input.focus(); showToast('请输入目录名称','warn'); return; }
+    const parentId = document.getElementById('folderParent').value;
+    const parent = folders[parentId];
+    if(!parent){ showToast('上级目录无效','warn'); return; }
+    // 三级限制:父节点 level 必须 <3
+    if(parent.level >= 3){ showToast('最多支持三级目录,该节点下不可再建子目录','warn'); return; }
+    // 重名校验:同级(同 parent)不可重名
+    const siblings = (parent.children||[]).map(cid=>folders[cid]?.name);
+    if(siblings.includes(name)){ input.style.borderColor='var(--ds-color-danger)'; input.focus(); showToast('同级已存在同名目录','warn'); return; }
+    // 同步 folders 数据
+    const id = 'f-' + (++folderSeq);
+    folders[id] = { id, name, parent:parentId, level:parent.level+1, children:[] };
+    parent.children.push(id);
+    // DOM 插入(复用现有逻辑:叶子升级为父节点 + 插入新叶子)
+    let parentNode = tree.querySelector(`.tree-node[data-folder="${parentId}"]`);
+    if(!parentNode) parentNode = tree.querySelector('.tree-node[data-folder="root"]');
+    if(parentNode.classList.contains('tree-leaf')){
+      const wasSelected = parentNode.classList.contains('is-selected');
+      const oid = parentNode.dataset.folder;
+      const oname = parentNode.dataset.name;
+      const obadge = parentNode.querySelector('.tree-badge').textContent;
+      const oreadonly = parentNode.hasAttribute('data-readonly');
+      const newParent = buildParentNode(oid, oname, obadge, oreadonly);
+      if(wasSelected) newParent.classList.add('is-selected');
+      parentNode.replaceWith(newParent);
+      parentNode = newParent;
+    }
+    parentNode.classList.add('is-open');
+    parentNode.setAttribute('aria-expanded','true');
+    let children = parentNode.nextElementSibling;
+    if(!children || !children.classList.contains('tree-children')){
+      children = document.createElement('div');
+      children.className = 'tree-children';
+      parentNode.after(children);
+    }
+    children.hidden = false;
+    children.appendChild(buildLeafNode(id, name));
+    closeAllModals();
+    input.value = '';
+    renderBadges();
+    renderFolderParentOptions();
+    showToast(`目录「${name}」已创建`);
+  });
+
+  // ===== 目录:改 =====
+  let renameTarget = null;
+  function openRenameModal(node) {
+    renameTarget = node;
+    document.getElementById('renameCurrent').value = node.dataset.name;
+    const input = document.getElementById('renameInput');
+    input.value = node.dataset.name;
+    openModalById('renameModal');
+    setTimeout(() => { input.focus(); input.select(); }, 50);
+  }
+  document.getElementById('renameInput').addEventListener('input', function() { this.style.borderColor = ''; });
+  document.getElementById('btnRenameFolder').addEventListener('click', () => {
+    const input = document.getElementById('renameInput');
+    const name = input.value.trim();
+    if (!name) { input.style.borderColor = 'var(--ds-color-danger)'; input.focus(); showToast('请输入新名称', 'warn'); return; }
+    if (renameTarget) {
+      const old = renameTarget.dataset.name;
+      const fid = renameTarget.dataset.folder;
+      renameTarget.dataset.name = name;
+      renameTarget.querySelector('.tree-label').textContent = name;
+      if (folders[fid]) folders[fid].name = name;
+      if (renameTarget.classList.contains('is-selected')) document.getElementById('currentFolderName').textContent = name;
+      renderBadges();
+      renderFolderParentOptions();
+      showToast(`「${old}」已重命名为「${name}」`);
+    }
+    closeAllModals();
+  });
+
+  // ===== 目录:删 =====
+  let deleteTarget = null;
+  function openDeleteModal(node) {
+    deleteTarget = node;
+    document.getElementById('deleteFolderName').textContent = node.dataset.name;
+    openModalById('deleteModal');
+  }
+  document.getElementById('btnConfirmDelete').addEventListener('click', () => {
+    if (deleteTarget) {
+      const name = deleteTarget.dataset.name;
+      const fid = deleteTarget.dataset.folder;
+      // 同步 folders 数据:删除该节点及其子孙,并从父节点 children 中移除
+      let toDelete = [];
+      let parentId = null;
+      if (folders[fid]) {
+        toDelete = folderDescendants(fid);
+        parentId = folders[fid].parent;
+        toDelete.forEach(id => { delete folders[id]; });
+        if (parentId && folders[parentId]) {
+          folders[parentId].children = (folders[parentId].children || []).filter(c => c !== fid);
+        }
+      }
+      const children = deleteTarget.nextElementSibling;
+      if (children && children.classList.contains('tree-children')) children.remove();
+      deleteTarget.remove();
+      // 若当前选中是被删目录或其子孙,回到 root
+      if (toDelete.length && toDelete.includes(listState.folder)) {
+        listState.folder = 'root';
+        listState.page = 1;
+        const root = tree.querySelector('.tree-node[data-folder="root"]');
+        if (root) {
+          document.querySelectorAll('.tree-node').forEach(n => n.classList.remove('is-selected'));
+          root.classList.add('is-selected');
+        }
+      }
+      renderBadges();
+      renderAPIList();
+      renderFolderParentOptions();
+      showToast(`目录「${name}」及其内容已删除`, 'warn');
+    }
+    closeAllModals();
+  });
+
+  // ===== 新建 / 编辑 API 弹窗 =====
+  let isEditMode = false;
+  let editingApiName = null;
+  const apiConfigs = {
+    '客户授信额度查询': { type: 'script', folder: '风控服务 / 授信查询', qps: 200, level: 'L3 秘密', desc: '查询客户授信额度,供风控审批流程调用', version: 'v2.1', limit: 1000, alarm: true, versionDesc: '增加额度上限字段返回' },
+    '反欺诈风险评分': { type: 'guide', folder: '风控服务 / 反欺诈', qps: 500, level: 'L3 秘密', desc: '基于多维度特征计算反欺诈评分', version: 'v1.3', limit: 1000, alarm: true, versionDesc: '优化评分模型权重' },
+    '客户标签灵活查询': { type: 'native', folder: '客户洞察', qps: '', level: 'L2 内部', desc: '灵活查询客户标签,支持多维度筛选', version: 'v0.3', limit: '', alarm: false, versionDesc: '初版草稿' },
+    '订单回款明细': { type: 'script', folder: '运营分析', qps: '', level: 'L2 内部', desc: '查询订单回款明细,供运营对账使用', version: 'v0.1', limit: '', alarm: false, versionDesc: '初版草稿' },
+    '客户授信历史': { type: 'script', folder: '风控服务 / 授信查询', qps: 100, level: 'L3 秘密', desc: '查询客户授信变更历史记录', version: 'v1.0', limit: 500, alarm: true, versionDesc: '首次发布' },
+    '实时经营看板': { type: 'native', folder: '运营分析', qps: '', level: 'L2 内部', desc: '实时经营指标看板数据查询', version: 'v0.4', limit: '', alarm: false, versionDesc: '补充同比环比字段' },
+    '客户生命周期标签': { type: 'guide', folder: '客户洞察', qps: '', level: 'L2 内部', desc: '查询客户生命周期阶段标签', version: 'v1.2', limit: 500, alarm: true, versionDesc: '调整生命周期判定规则' }
+  };
+
+  // ===== 列表数据驱动 =====
+  const apis = [
+    { name:'客户授信额度查询', path:'/api/v1/risk/credit/query', type:'脚本式', level:'L3 秘密', status:'已上线', qps:200, version:'v2.1', time:'2026-08-21 14:32', folder:'risk-credit' },
+    { name:'反欺诈风险评分', path:'/api/v1/risk/fraud/score', type:'向导式', level:'L3 秘密', status:'已上线', qps:500, version:'v1.3', time:'2026-08-19 09:15', folder:'risk-fraud' },
+    { name:'客户标签灵活查询', path:'/api/v1/cust/tag/query', type:'原生式', level:'L2 内部', status:'待上线审核', qps:'', version:'v0.3', time:'2026-08-25 17:08', folder:'cust' },
+    { name:'订单回款明细', path:'/api/v1/ops/order/payment', type:'脚本式', level:'L2 内部', status:'草稿', qps:'', version:'v0.1', time:'2026-08-26 11:42', folder:'ops' },
+    { name:'客户授信历史', path:'/api/v1/risk/credit/history', type:'脚本式', level:'L3 秘密', status:'已上线', qps:100, version:'v1.0', time:'2026-08-12 16:20', folder:'risk-credit' },
+    { name:'实时经营看板', path:'/api/v1/ops/dashboard/realtime', type:'原生式', level:'L2 内部', status:'待上线审核', qps:'', version:'v0.4', time:'2026-08-24 10:55', folder:'ops' },
+    { name:'客户生命周期标签', path:'/api/v1/cust/lifecycle/tag', type:'向导式', level:'L2 内部', status:'已下线', qps:'', version:'v1.2', time:'2026-07-30 09:08', folder:'cust' }
+  ];
+  const folders = {
+    'root':{id:'root',name:'全部 API',parent:null,level:0,children:['risk','cust','ops'],readonly:true},
+    'risk':{id:'risk',name:'风控服务',parent:'root',level:1,children:['risk-credit','risk-fraud']},
+    'risk-credit':{id:'risk-credit',name:'授信查询',parent:'risk',level:2,children:[]},
+    'risk-fraud':{id:'risk-fraud',name:'反欺诈',parent:'risk',level:2,children:[]},
+    'cust':{id:'cust',name:'客户洞察',parent:'root',level:1,children:[]},
+    'ops':{id:'ops',name:'运营分析',parent:'root',level:1,children:[]}
+  };
+  let folderSeq = 100;
+  const listState = { folder:'root', type:'', status:'', keyword:'', sortKey:'time', sortDir:'desc', page:1, pageSize:10 };
+
+  function folderDescendants(id){
+    const res=[id]; const stack=[id];
+    while(stack.length){ const cur=stack.pop(); (folders[cur]?.children||[]).forEach(c=>{res.push(c);stack.push(c);}); }
+    return res;
+  }
+  function folderPathStr(id){
+    if(id==='root'||!id) return '全部 API';
+    const parts=[]; let cur=id;
+    while(cur && cur!=='root'){ parts.unshift(folders[cur].name); cur=folders[cur].parent; }
+    return parts.join(' / ');
+  }
+  function folderIdByPath(path){
+    return Object.keys(folders).find(id => folderPathStr(id) === path) || 'root';
+  }
+  function filteredApis(){
+    const descs=folderDescendants(listState.folder);
+    let list=apis.filter(a=>descs.includes(a.folder));
+    if(listState.type) list=list.filter(a=>a.type===listState.type);
+    if(listState.status) list=list.filter(a=>a.status===listState.status);
+    if(listState.keyword){ const kw=listState.keyword.toLowerCase(); list=list.filter(a=>a.name.toLowerCase().includes(kw)||a.path.toLowerCase().includes(kw)); }
+    const k=listState.sortKey, dir=listState.sortDir==='asc'?1:-1;
+    list=[...list].sort((a,b)=>{ let va=a[k], vb=b[k]; if(k==='qps'){ va=va===''?-1:va; vb=vb===''?-1:vb; } if(va<vb) return -1*dir; if(va>vb) return 1*dir; return 0; });
+    return list;
+  }
+  function levelTagClass(level){ return (level.indexOf('L3')===0||level.indexOf('L4')===0)?'tag tag-warning':'tag tag-neutral'; }
+  function statusTagClass(s){
+    if(s==='已上线') return 'tag tag-success';
+    if(s==='待上线审核'||s==='待下线审核'||s==='上线中'||s==='下线中') return 'tag tag-info';
+    if(s==='草稿') return 'tag tag-warning';
+    if(s.includes('失败')) return 'tag tag-danger';
+    return 'tag tag-neutral';
+  }
+  const ROW_ACTIONS = {
+    '草稿': {
+      inline: [['continue-dev','继续开发'], ['test','测试']],
+      menu: [['edit-basic','编辑基本信息'], ['copy-draft','复制为新草稿'], ['move','移动到…'], ['submit-online','提交上线审核'], ['delete-draft','删除草稿','danger']]
+    },
+    '待上线审核': {
+      inline: [['view-request','查看申请'], ['cancel-online-review','取消申请']],
+      menu: [['version','查看版本'], ['approval-history','审批记录']]
+    },
+    '上线中': {
+      inline: [['view-progress','查看进度']],
+      menu: [['execution-detail','执行详情']]
+    },
+    '已上线': {
+      inline: [['view-detail','查看详情'], ['create-version','创建新版本']],
+      menu: [['online-test','在线测试'], ['monitor','运行监控'], ['version','版本管理'], ['submit-offline','提交下线申请']]
+    },
+    '待下线审核': {
+      inline: [['view-request','查看申请'], ['cancel-offline-review','取消下线申请']],
+      menu: [['view-detail','查看详情'], ['monitor','运行监控']]
+    },
+    '下线中': {
+      inline: [['view-progress','查看进度']],
+      menu: [['execution-detail','执行详情']]
+    },
+    '已下线': {
+      inline: [['view-detail','查看详情'], ['reapply-online','申请重新上线']],
+      menu: [['create-version','创建新版本'], ['version','版本管理']]
+    },
+    '执行失败': {
+      inline: [['view-failure','查看失败原因'], ['retry','重试']],
+      menu: [['execution-record','执行记录']]
+    }
+  };
+  function actionButtonHTML(item, inMenu){
+    const [action,label,tone] = item;
+    if(inMenu) return `<button type="button" role="menuitem"${tone==='danger'?' class="is-danger"':''} data-action="${action}">${label}</button>`;
+    return `<button type="button" class="btn-text" data-act="${action}">${label}</button>`;
+  }
+  function rowActionsHTML(a){
+    const config = ROW_ACTIONS[a.status] || {
+      inline: [['view-detail','查看详情']],
+      menu: [['version','版本管理'], ['execution-record','操作记录']]
+    };
+    const inline = config.inline || [];
+    const inlineActions = new Set(inline.map(item => item[0]));
+    let menu = (config.menu || []).filter(item => !inlineActions.has(item[0]));
+    if(a.status==='草稿' && a.governed) menu = menu.filter(item => item[0] !== 'delete-draft');
+    const inlineHTML = inline.map(item => actionButtonHTML(item, false)).join('');
+    const menuHTML = menu.map(item => actionButtonHTML(item, true)).join('');
+    const moreHTML = menuHTML ? `<div class="dropdown"><button type="button" class="btn-text act-more" aria-haspopup="menu" aria-expanded="false">更多<svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="dropdown-menu" role="menu">${menuHTML}</div></div>` : '';
+    return `<div class="row-actions">${inlineHTML}${moreHTML}</div>`;
+  }
+  function renderAPIList(){
+    const list=filteredApis();
+    const total=list.length;
+    const ps=listState.pageSize;
+    const pages=Math.max(1,Math.ceil(total/ps));
+    if(listState.page>pages) listState.page=pages;
+    const start=(listState.page-1)*ps;
+    const pageList=list.slice(start,start+ps);
+    const tbody=document.getElementById('apiTbody');
+    if(pageList.length===0){
+      tbody.innerHTML=`<tr><td colspan="9" style="text-align:center;padding:48px 0;color:var(--ds-text-3);">当前条件下暂无 API</td></tr>`;
+    } else {
+      tbody.innerHTML=pageList.map(a=>`<tr data-name="${a.name}"><td class="col-check"><input type="checkbox" aria-label="选择 ${a.name}"></td><td class="col-name"><div class="api-name"><strong>${a.name}</strong><span class="api-path">${a.path}</span></div></td><td class="col-type"><span class="type-pill">${a.type}</span></td><td class="col-level"><span class="tag ${levelTagClass(a.level)}"><span class="tag-dot"></span>${a.level}</span></td><td class="col-status"><span class="tag ${statusTagClass(a.status)}"><span class="tag-dot"></span>${a.status}</span></td><td class="col-qps">${a.qps||'—'}</td><td class="col-version">${a.version}</td><td class="col-time">${a.time}</td><td class="col-actions">${rowActionsHTML(a)}</td></tr>`).join('');
+    }
+    const folderName = listState.folder==='root' ? '全部 API' : (folders[listState.folder]?.name || '全部 API');
+    document.getElementById('currentFolderName').textContent=folderName;
+    const cardBadge=document.querySelector('#cardHead > .card-title .tree-badge');
+    if(cardBadge) cardBadge.textContent=total+' 个 API';
+    const info=document.querySelector('.pagination-info');
+    if(info) info.textContent=`共 ${total} 条 · 第 ${listState.page} / ${pages} 页`;
+    const ctrl=document.querySelector('.pagination-controls');
+    if(ctrl){
+      const opts=[10,20,50];
+      const optStr=opts.map(n=>`<option ${n===listState.pageSize?'selected':''}>${n} 条/页</option>`).join('');
+      const psHTML=`<select class="select" style="height:28px" aria-label="每页条数" id="pageSizeSelect">${optStr}</select>`;
+      let html=`<button type="button" class="page-btn" ${listState.page<=1?'disabled':''} aria-label="上一页" data-page="prev">‹</button>`;
+      for(let i=1;i<=pages;i++){ html+=`<button type="button" class="page-btn" ${i===listState.page?'aria-current="page"':''} data-page="${i}">${i}</button>`; }
+      html+=`<button type="button" class="page-btn" ${listState.page>=pages?'disabled':''} aria-label="下一页" data-page="next">›</button><span style="color:var(--ds-text-4);padding:0 4px;">/</span>${psHTML}`;
+      ctrl.innerHTML=html;
+    }
+    const meta=document.getElementById('cardMeta');
+    if(meta){ const sl={time:'最近修改时间',name:'名称',qps:'QPS',version:'版本'}[listState.sortKey]||'最近修改时间'; meta.textContent=`已按${sl}${listState.sortDir==='desc'?'倒序':'升序'}排列`; }
+    if(typeof updateBulk==='function') updateBulk();
+  }
+  function renderBadges(){
+    Object.keys(folders).forEach(id=>{
+      const node=tree.querySelector(`.tree-node[data-folder="${id}"]`);
+      if(!node) return;
+      const descs=folderDescendants(id);
+      const count=apis.filter(a=>descs.includes(a.folder)).length;
+      const badge=node.querySelector('.tree-badge');
+      if(badge) badge.textContent=count;
+    });
+  }
+  function renderFolderParentOptions(){
+    const sel=document.getElementById('folderParent');
+    let html='';
+    (function walk(id){
+      const f=folders[id]; if(!f) return;
+      if(f.level<3){ const indent='　'.repeat(f.level); html+=`<option value="${id}">${indent}${f.name}</option>`; }
+      (f.children||[]).forEach(c=>walk(c));
+    })('root');
+    sel.innerHTML=html;
+  }
+
+  let selectedApiType = 'script';
+  function selectType(type) {
+    selectedApiType = type;
+    document.querySelectorAll('#typeGrid .type-card').forEach(c => {
+      const active = c.dataset.type === type;
+      c.setAttribute('aria-pressed', active ? 'true' : 'false');
+      c.setAttribute('aria-checked', active ? 'true' : 'false');
+    });
+  }
+  function setTypeDisabled(disabled) {
+    document.querySelectorAll('#typeGrid .type-card').forEach(c => { c.disabled = disabled; });
+  }
+  function updateAlarmLabel() {
+    document.getElementById('alarmLabel').textContent = document.getElementById('apiAlarm').checked ? '开启' : '关闭';
+  }
+
+  function openNewApiModal() {
+    isEditMode = false;
+    editingApiName = null;
+    document.getElementById('newApiTitle').textContent = '新建 API';
+    document.getElementById('apiName').value = '';
+    document.getElementById('apiName').readOnly = false;
+    selectType('script');
+    setTypeDisabled(false);
+    document.getElementById('apiFolder').selectedIndex = 0;
+    document.getElementById('apiQps').value = '100';
+    document.getElementById('apiLevel').value = 'L2 内部';
+    document.getElementById('apiDesc').value = '';
+    document.getElementById('apiMaxLimit').value = '';
+    document.getElementById('apiVersion').value = 'V0';
+    document.getElementById('apiAlarm').checked = true;
+    updateAlarmLabel();
+    document.getElementById('apiVersionDesc').value = '';
+    document.getElementById('btnSaveApi').textContent = '保存并开发';
+    openModalById('newApiModal');
+    setTimeout(() => document.getElementById('apiName').focus(), 50);
+  }
+
+  function openEditApiModal(apiName) {
+    // 优先从 apiConfigs 取,其次从 apis 数组取并补全默认值
+    let cfg = apiConfigs[apiName];
+    if (!cfg) {
+      const api = apis.find(a => a.name === apiName);
+      if (api) {
+        cfg = {
+          type: api.type === '脚本式' ? 'script' : api.type === '向导式' ? 'guide' : 'native',
+          folder: folderPathStr(api.folder),
+          qps: api.qps,
+          level: api.level,
+          desc: '',
+          version: api.version,
+          limit: '',
+          alarm: false,
+          versionDesc: ''
+        };
+      }
+    }
+    if (!cfg) { showToast('未找到该 API 的配置数据', 'warn'); return; }
+    isEditMode = true;
+    editingApiName = apiName;
+    document.getElementById('newApiTitle').textContent = '编辑 API · ' + apiName;
+    document.getElementById('apiName').value = apiName;
+    document.getElementById('apiName').readOnly = true;
+    selectType(cfg.type);
+    setTypeDisabled(true);
+    const folderSel = document.getElementById('apiFolder');
+    for (let i = 0; i < folderSel.options.length; i++) {
+      if (folderSel.options[i].textContent === cfg.folder) { folderSel.selectedIndex = i; break; }
+    }
+    document.getElementById('apiQps').value = cfg.qps || '';
+    document.getElementById('apiLevel').value = cfg.level || 'L2 内部';
+    document.getElementById('apiDesc').value = cfg.desc || '';
+    document.getElementById('apiMaxLimit').value = cfg.limit || '';
+    document.getElementById('apiVersion').value = cfg.version || 'V0';
+    document.getElementById('apiAlarm').checked = cfg.alarm !== false;
+    updateAlarmLabel();
+    document.getElementById('apiVersionDesc').value = cfg.versionDesc || '';
+    document.getElementById('btnSaveApi').textContent = '保存';
+    openModalById('newApiModal');
+    setTimeout(() => document.getElementById('apiDesc').focus(), 50);
+  }
+
+  document.getElementById('btnNewApi').addEventListener('click', openNewApiModal);
+  document.querySelectorAll('#typeGrid .type-card').forEach(card => {
+    card.addEventListener('click', () => { if (!card.disabled) selectType(card.dataset.type); });
+  });
+  document.getElementById('apiAlarm').addEventListener('change', updateAlarmLabel);
+  document.getElementById('apiName').addEventListener('input', function() { this.style.borderColor = ''; });
+  document.getElementById('btnSaveApi').addEventListener('click', () => {
+    const input = document.getElementById('apiName');
+    const name = input.value.trim();
+    if (!name) { input.style.borderColor = 'var(--ds-color-danger)'; input.focus(); showToast('请输入 API 名称', 'warn'); return; }
+    const qps = document.getElementById('apiQps').value.trim();
+    if (!qps) { showToast('请填写最大 QPS', 'warn'); document.getElementById('apiQps').focus(); return; }
+    if (isEditMode) {
+      const api = findApiByName(editingApiName);
+      if (!api || api.status !== '草稿') { showToast('只有草稿可以编辑基本信息', 'warn'); return; }
+      const folderPath = document.getElementById('apiFolder').selectedOptions[0]?.textContent || '全部 API';
+      api.qps = Number(qps);
+      api.level = document.getElementById('apiLevel').value;
+      api.folder = folderIdByPath(folderPath);
+      api.time = new Date().toISOString().slice(0,16).replace('T',' ');
+      apiConfigs[name] = {
+        ...(apiConfigs[name] || {}),
+        type: selectedApiType,
+        folder: folderPath,
+        qps: api.qps,
+        level: api.level,
+        desc: document.getElementById('apiDesc').value.trim(),
+        version: api.version,
+        limit: document.getElementById('apiMaxLimit').value.trim(),
+        alarm: document.getElementById('apiAlarm').checked,
+        versionDesc: document.getElementById('apiVersionDesc').value.trim()
+      };
+      closeAllModals();
+      renderBadges();
+      renderAPIList();
+      showToast(`API「${name}」基本信息已保存`);
+    } else {
+      const type = selectedApiType;
+      closeAllModals();
+      showToast(`API「${name}」已创建,进入${type === 'script' ? '脚本式' : type === 'guide' ? '向导式' : '原生式'}开发页面`);
+      setTimeout(() => {
+        window.location.href = `prototype-api-dev.html?type=${encodeURIComponent(type)}&name=${encodeURIComponent(name)}`;
+      }, 400);
+    }
+  });
+
+  // ===== 下拉菜单(更多)与行操作 =====
+  function apiTypeToParam(type){ return type === '脚本式' ? 'script' : type === '向导式' ? 'guide' : type === '原生式' ? 'native' : (apiConfigs[type] && apiConfigs[type].type) || 'script'; }
+  function apiTypeLabel(t){ return t === 'script' ? '脚本式' : t === 'guide' ? '向导式' : t === 'native' ? '原生式' : '脚本式'; }
+  function findApiByName(name){ return apis.find(a => a.name === name); }
+  function devRedirect(apiName){
+    const api = findApiByName(apiName);
+    if (!api || api.status !== '草稿') { showToast('当前状态不可继续开发，请按该状态提供的操作处理', 'warn'); return; }
+    const typeParam = api ? apiTypeToParam(api.type) : (apiConfigs[apiName] && apiConfigs[apiName].type) || 'script';
+    const typeLabel = api ? api.type : apiTypeLabel(typeParam);
+    showToast(`进入「${apiName}」${typeLabel}开发页面`);
+    setTimeout(() => { window.location.href = `prototype-api-dev.html?type=${encodeURIComponent(typeParam)}&name=${encodeURIComponent(apiName)}`; }, 300);
+  }
+  let pendingApiAction = null;
+  function openApiActionConfirm({title, message, confirmLabel='确认', danger=false, onConfirm}){
+    document.getElementById('apiActionTitle').textContent = title;
+    document.getElementById('apiActionMessage').textContent = message;
+    const alert = document.getElementById('apiActionAlert');
+    alert.style.background = danger ? 'var(--ds-color-danger-light)' : 'var(--ds-color-primary-1)';
+    alert.style.borderColor = danger ? 'var(--ds-color-danger)' : 'var(--ds-color-primary-3)';
+    const confirmBtn = document.getElementById('btnConfirmApiAction');
+    confirmBtn.textContent = confirmLabel;
+    confirmBtn.className = danger ? 'btn btn-danger' : 'btn btn-primary';
+    pendingApiAction = onConfirm;
+    openModalById('apiActionModal');
+  }
+  document.getElementById('btnConfirmApiAction').addEventListener('click', () => {
+    const action = pendingApiAction;
+    pendingApiAction = null;
+    closeAllModals();
+    if (typeof action === 'function') action();
+  });
+  function uniqueCopyName(baseName){
+    let candidate = `${baseName}-副本`;
+    let seq = 2;
+    while(findApiByName(candidate)) candidate = `${baseName}-副本${seq++}`;
+    return candidate;
+  }
+  function removeApi(api){
+    const idx = apis.indexOf(api);
+    if(idx < 0) return;
+    apis.splice(idx, 1);
+    if(apiConfigs[api.name]) delete apiConfigs[api.name];
+    renderBadges();
+    renderAPIList();
+  }
+  function handleApiAction(action, apiName){
+    const api = findApiByName(apiName);
+    if(!api) return;
+    switch(action){
+      case 'continue-dev':
+      case 'dev':
+        devRedirect(apiName);
+        return;
+      case 'test':
+        showToast(`已打开「${apiName}」草稿测试`);
+        return;
+      case 'online-test':
+        showToast(`已打开「${apiName}」在线测试`);
+        return;
+      case 'edit-basic':
+        if(api.status !== '草稿') { showToast('只有草稿可以编辑基本信息', 'warn'); return; }
+        openEditApiModal(apiName);
+        return;
+      case 'copy-draft': {
+        if(api.status !== '草稿') { showToast('只有草稿可以直接复制', 'warn'); return; }
+        const copyName = uniqueCopyName(api.name);
+        const copy = { ...api, name:copyName, version:'v0.1', status:'草稿', governed:false, time:new Date().toISOString().slice(0,16).replace('T',' ') };
+        apis.push(copy);
+        if(apiConfigs[api.name]) apiConfigs[copyName] = { ...apiConfigs[api.name], version:'v0.1' };
+        renderBadges();
+        renderAPIList();
+        showToast(`已复制为新草稿「${copyName}」`);
+        return;
+      }
+      case 'submit-online':
+        if(api.status !== '草稿') { showToast('当前状态不能重复提交上线审核', 'warn'); return; }
+        openApiActionConfirm({
+          title:'提交上线审核',
+          message:`提交后「${apiName}」将进入待上线审核，审核期间不可继续修改。`,
+          confirmLabel:'提交审核',
+          onConfirm:() => { api.status='待上线审核'; api.governed=true; api.reviewOrigin='草稿'; renderAPIList(); showToast(`「${apiName}」已进入待上线审核`); }
+        });
+        return;
+      case 'cancel-online-review':
+        if(api.status !== '待上线审核') { showToast('当前没有可取消的上线申请', 'warn'); return; }
+        openApiActionConfirm({
+          title:'取消上线申请',
+          message:`取消后「${apiName}」将退出审核，已提交的申请记录仍会保留。`,
+          confirmLabel:'确认取消',
+          onConfirm:() => { api.status=api.reviewOrigin==='已下线'?'已下线':'草稿'; api.governed=true; renderAPIList(); showToast(`「${apiName}」的上线申请已取消`); }
+        });
+        return;
+      case 'submit-offline':
+        if(api.status !== '已上线') { showToast('只有已上线 API 可以提交下线申请', 'warn'); return; }
+        openApiActionConfirm({
+          title:'提交下线申请',
+          message:`下线会影响「${apiName}」的现有调用；审批通过并执行完成后才停止生产流量。`,
+          confirmLabel:'提交申请',
+          danger:true,
+          onConfirm:() => { api.status='待下线审核'; api.governed=true; renderAPIList(); showToast(`「${apiName}」已进入待下线审核`); }
+        });
+        return;
+      case 'cancel-offline-review':
+        if(api.status !== '待下线审核') { showToast('当前没有可取消的下线申请', 'warn'); return; }
+        openApiActionConfirm({
+          title:'取消下线申请',
+          message:`取消后「${apiName}」继续保持已上线，申请记录仍会保留。`,
+          confirmLabel:'确认取消',
+          onConfirm:() => { api.status='已上线'; renderAPIList(); showToast(`「${apiName}」的下线申请已取消`); }
+        });
+        return;
+      case 'reapply-online':
+        if(api.status !== '已下线') { showToast('只有已下线 API 可以申请重新上线', 'warn'); return; }
+        openApiActionConfirm({
+          title:'申请重新上线',
+          message:`「${apiName}」将重新进入上线审核，不会直接恢复生产流量。`,
+          confirmLabel:'提交申请',
+          onConfirm:() => { api.status='待上线审核'; api.governed=true; api.reviewOrigin='已下线'; renderAPIList(); showToast(`「${apiName}」已进入待上线审核`); }
+        });
+        return;
+      case 'delete-draft':
+        if(api.status !== '草稿' || api.governed) { showToast('仅从未进入治理流程的草稿可以删除', 'warn'); return; }
+        openApiActionConfirm({
+          title:'删除草稿',
+          message:`将永久删除草稿「${apiName}」，此操作不可恢复。`,
+          confirmLabel:'确认删除',
+          danger:true,
+          onConfirm:() => { removeApi(api); showToast(`已删除草稿「${apiName}」`, 'warn'); }
+        });
+        return;
+      case 'create-version': {
+        const typeParam = apiTypeToParam(api.type);
+        showToast(`正在为「${apiName}」创建新版本草稿`);
+        setTimeout(() => { window.location.href = `prototype-api-dev.html?type=${encodeURIComponent(typeParam)}&name=${encodeURIComponent(apiName)}&mode=new-version`; }, 300);
+        return;
+      }
+      case 'retry':
+        if(!api.status.includes('失败')) { showToast('当前状态无需重试', 'warn'); return; }
+        api.status = api.failedStage === '下线' ? '下线中' : '上线中';
+        renderAPIList();
+        showToast(`已重新执行「${apiName}」的失败步骤`);
+        return;
+      case 'move':
+        showToast(`请选择「${apiName}」要移动到的目录`);
+        return;
+      default: {
+        const labels = {
+          'view-request':'申请详情', 'view-progress':'执行进度', 'view-detail':'API 详情',
+          'view-failure':'失败原因', 'version':'版本管理', 'approval-history':'审批记录',
+          'execution-detail':'执行详情', 'monitor':'运行监控', 'execution-record':'执行记录'
+        };
+        showToast(`已打开「${apiName}」${labels[action] || '相关信息'}`);
+        return;
+      }
+    }
+  }
+  function closeAllRowDropdowns(){
+    document.querySelectorAll('.dropdown.is-open').forEach(d => {
+      d.classList.remove('is-open','is-drop-up');
+      d.querySelector('.act-more')?.setAttribute('aria-expanded', 'false');
+    });
+  }
+  document.addEventListener('click', e => {
+    const moreBtn = e.target.closest('.act-more');
+    if (moreBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dropdown = moreBtn.closest('.dropdown');
+      const wasOpen = dropdown.classList.contains('is-open');
+      closeAllRowDropdowns();
+      if (!wasOpen) {
+        dropdown.classList.add('is-open');
+        moreBtn.setAttribute('aria-expanded', 'true');
+        const menu = dropdown.querySelector('.dropdown-menu');
+        const boundary = dropdown.closest('.table-scroll')?.getBoundingClientRect();
+        const menuRect = menu?.getBoundingClientRect();
+        if(menuRect && ((boundary && menuRect.bottom > boundary.bottom) || menuRect.bottom > window.innerHeight - 12)) dropdown.classList.add('is-drop-up');
+      }
+      return;
+    }
+    const menuItem = e.target.closest('.dropdown-menu button');
+    if (menuItem) {
+      e.stopPropagation();
+      const action = menuItem.dataset.action || menuItem.textContent.trim();
+      const dropdown = menuItem.closest('.dropdown');
+      dropdown.classList.remove('is-open');
+      dropdown.querySelector('.act-more')?.setAttribute('aria-expanded', 'false');
+      const tr = menuItem.closest('tr');
+      const apiName = tr ? (tr.dataset.name || (tr.querySelector('.api-name strong') ? tr.querySelector('.api-name strong').textContent.trim() : '')) : '';
+      if (!apiName) return;
+      handleApiAction(action, apiName);
+      return;
+    }
+    const rowBtn = e.target.closest('#apiTbody .row-actions > .btn-text[data-act]');
+    if (rowBtn) {
+      const act = rowBtn.dataset.act;
+      const tr = rowBtn.closest('tr');
+      const apiName = tr ? (tr.dataset.name || (tr.querySelector('.api-name strong') ? tr.querySelector('.api-name strong').textContent.trim() : '')) : '';
+      if (!apiName) return;
+      handleApiAction(act, apiName);
+      return;
+    }
+    if (!e.target.closest('.dropdown')) {
+      closeAllRowDropdowns();
+    }
+  });
+
+  // ===== 全选与批量操作 =====
+  const chkAll = document.getElementById('chkAll');
+  const cardHead = document.getElementById('cardHead');
+  function selectedApis(){
+    return [...document.querySelectorAll('#apiTbody input[type=checkbox]:checked')]
+      .map(cb => findApiByName(cb.closest('tr')?.dataset.name || ''))
+      .filter(Boolean);
+  }
+  function isDeletableDraft(api){ return api.status === '草稿' && !api.governed; }
+  function updateBulk() {
+    const cbs = document.querySelectorAll('#apiTbody input[type=checkbox]');
+    const checked = document.querySelectorAll('#apiTbody input[type=checkbox]:checked');
+    const selected = selectedApis();
+    cardHead.classList.toggle('is-bulk', checked.length > 0);
+    document.getElementById('bulkCount').textContent = checked.length;
+    chkAll.checked = checked.length > 0 && checked.length === cbs.length;
+    chkAll.indeterminate = checked.length > 0 && checked.length < cbs.length;
+    const moveBtn = document.querySelector('[data-bulk="move"]');
+    const deleteBtn = document.querySelector('[data-bulk="delete"]');
+    const allDrafts = selected.length > 0 && selected.every(api => api.status === '草稿');
+    const allDeletable = selected.length > 0 && selected.every(isDeletableDraft);
+    moveBtn.disabled = !allDrafts;
+    moveBtn.title = allDrafts ? '' : '仅草稿可以批量移动';
+    deleteBtn.disabled = !allDeletable;
+    deleteBtn.title = allDeletable ? '' : '仅从未进入治理流程的草稿可以删除';
+  }
+  chkAll.addEventListener('change', () => {
+    document.querySelectorAll('#apiTbody input[type=checkbox]').forEach(cb => { cb.checked = chkAll.checked; });
+    updateBulk();
+  });
+  document.getElementById('apiTbody').addEventListener('change', e => { if (e.target.type === 'checkbox') updateBulk(); });
+  document.querySelectorAll('[data-bulk]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(btn.disabled) return;
+      const selected = selectedApis();
+      if(selected.length === 0) return;
+      if(btn.dataset.bulk === 'delete') {
+        openApiActionConfirm({
+          title:'批量删除草稿',
+          message:`将永久删除选中的 ${selected.length} 个草稿，此操作不可恢复。`,
+          confirmLabel:'确认删除',
+          danger:true,
+          onConfirm:() => {
+            selected.forEach(api => {
+              const idx = apis.indexOf(api);
+              if(idx >= 0) apis.splice(idx,1);
+              if(apiConfigs[api.name]) delete apiConfigs[api.name];
+            });
+            chkAll.checked = false;
+            renderBadges();
+            renderAPIList();
+            showToast(`已删除 ${selected.length} 个草稿`, 'warn');
+          }
+        });
+        return;
+      }
+      showToast(btn.dataset.bulk === 'export' ? `已导出 ${selected.length} 个 API` : `请选择 ${selected.length} 个草稿要移动到的目录`);
+    });
+  });
+
+  // ===== 搜索 =====
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    listState.keyword = e.target.value.trim();
+    listState.page = 1;
+    renderAPIList();
+  });
+
+  // ===== 分页(事件委托) =====
+  document.querySelector('.pagination-controls').addEventListener('click', e => {
+    const btn = e.target.closest('.page-btn[data-page]');
+    if(!btn || btn.disabled) return;
+    const p = btn.dataset.page;
+    const list = filteredApis();
+    const pages = Math.max(1, Math.ceil(list.length / listState.pageSize));
+    if(p==='prev') listState.page = Math.max(1, listState.page-1);
+    else if(p==='next') listState.page = Math.min(pages, listState.page+1);
+    else listState.page = parseInt(p,10) || 1;
+    renderAPIList();
+  });
+
+  // ===== 类型 / 状态 / 每页条数 筛选 =====
+  document.getElementById('typeFilter').addEventListener('change', e => { listState.type = e.target.value; listState.page=1; renderAPIList(); });
+  document.getElementById('statusFilter').addEventListener('change', e => { listState.status = e.target.value; listState.page=1; renderAPIList(); });
+  document.querySelector('.pagination-controls').addEventListener('change', e => {
+    if(e.target.id==='pageSizeSelect' || e.target.getAttribute('aria-label')==='每页条数'){
+      const raw = e.target.value.replace(/\D/g,'');
+      listState.pageSize = parseInt(raw,10) || 10;
+      listState.page = 1;
+      renderAPIList();
+    }
+  });
+
+  document.getElementById('btnSort').addEventListener('click', () => {
+    listState.sortKey = 'time';
+    listState.sortDir = listState.sortDir === 'desc' ? 'asc' : 'desc';
+    document.querySelectorAll('th[data-sort]').forEach(t => {
+      const labels = {time:'最近修改', name:'API 名称 / 路径', type:'类型', qps:'QPS', version:'版本'};
+      t.textContent = labels[t.dataset.sort] || t.textContent.replace(/\s*[↑↓]\s*$/, '').trim();
+    });
+    const timeTh = document.querySelector('th[data-sort="time"]');
+    if(timeTh) timeTh.textContent = `最近修改 ${listState.sortDir==='desc'?'↓':'↑'}`;
+    const btn = document.getElementById('btnSort');
+    btn.setAttribute('aria-label', listState.sortDir==='desc'?'当前最近优先，切换为最早优先':'当前最早优先，切换为最近优先');
+    renderAPIList();
+  });
+
+  // ===== 表头排序 =====
+  document.querySelectorAll('th[data-sort]').forEach(th => {
+    const handler = () => {
+      const key = th.dataset.sort;
+      if(listState.sortKey === key){ listState.sortDir = listState.sortDir==='desc'?'asc':'desc'; }
+      else { listState.sortKey = key; listState.sortDir = 'desc'; }
+      // 更新表头方向箭头
+      document.querySelectorAll('th[data-sort]').forEach(t => {
+        const orig = t.textContent.replace(/\s*[↑↓]\s*$/, '').trim();
+        t.textContent = orig;
+      });
+      const labels = {time:'最近修改', name:'API 名称 / 路径', type:'类型', qps:'QPS', version:'版本'};
+      th.textContent = (labels[th.dataset.sort] || th.textContent.trim()) + (listState.sortDir==='desc'?' ↓':' ↑');
+      renderAPIList();
+    };
+    th.addEventListener('click', handler);
+    th.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); handler(); } });
+  });
+
+  // ===== Toast =====
+  let toastTimer = null;
+  function showToast(msg, type) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    toast.style.background = type === 'warn' ? 'var(--ds-color-warning-text)' : 'var(--ds-color-gray-10)';
+    toast.setAttribute('aria-hidden', 'false');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.setAttribute('aria-hidden', 'true'), 2400);
+  }
+
+  // ===== 导入 API / 刷新目录 =====
+  function openImportModal(){
+    const folderSel = document.getElementById('importFolder');
+    folderSel.innerHTML = Object.keys(folders).filter(id => id !== 'root').map(id => `<option value="${id}">${folderPathStr(id)}</option>`).join('');
+    if (listState.folder !== 'root') {
+      if (folderSel.querySelector(`option[value="${listState.folder}"]`)) folderSel.value = listState.folder;
+      else folderSel.value = folderSel.options[0]?.value || '';
+    } else {
+      folderSel.value = folderSel.options[0]?.value || '';
+    }
+    openModalById('importModal');
+  }
+  document.getElementById('btnImport').addEventListener('click', openImportModal);
+  document.getElementById('btnRefreshTree').addEventListener('click', () => {
+    renderBadges();
+    renderAPIList();
+    renderFolderParentOptions();
+    showToast('目录已刷新');
+  });
+  document.getElementById('btnConfirmImport').addEventListener('click', () => {
+    const fileInput = document.getElementById('importFile');
+    const file = fileInput.files && fileInput.files[0];
+    if(!file){
+      fileInput.focus();
+      showToast('请先选择 JSON 或 YAML 格式的 API 定义文件', 'warn');
+      return;
+    }
+    const folder = document.getElementById('importFolder').value || listState.folder;
+    const rawName = file.name.replace(/\.(json|ya?ml)$/i,'').trim() || '导入API';
+    let newName = rawName.slice(0,30);
+    let seq = 2;
+    while(findApiByName(newName)) newName = `${rawName.slice(0,26)}-${seq++}`;
+    apis.push({
+      name: newName,
+      path: '/api/v1/imported/' + newName.toLowerCase(),
+      type: '脚本式',
+      level: 'L2 内部',
+      status: '草稿',
+      governed: false,
+      qps: '',
+      version: 'v0.1',
+      time: new Date().toISOString().slice(0,16).replace('T',' '),
+      folder: folder || 'root'
+    });
+    closeAllModals();
+    fileInput.value = '';
+    renderBadges();
+    renderAPIList();
+    showToast(`已导入 1 条 API「${newName}」`);
+  });
+
+  // ===== 初始化 =====
+  renderBadges();
+  renderAPIList();
+
+</script>
+<script src="menu.js"></script>
+</body>
+</html>
