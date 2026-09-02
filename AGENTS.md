@@ -14,4 +14,4 @@
 
 ### 前端规范
 
-涉及前端规范、设计、原型、实现或评审时，先读取 `frontend/alignment.md`。原 `$enterprise-prototype-design` Skill 与旧设计系统已经弃用，不再作为规范来源；平台产品术语仍以 `CONTEXT.md` 为准。
+`$agenticos-design-system` 仅在用户显式输入该 Skill 名称时使用，不自动触发。Skill 位于 `.agents/skills/agenticos-design-system/`，唯一规范源位于 `frontend/design-system/`，迁移流程位于 `frontend/design-system/migration.md`，决策依据见 `frontend/alignment.md`。平台产品术语仍以 `CONTEXT.md` 为准。

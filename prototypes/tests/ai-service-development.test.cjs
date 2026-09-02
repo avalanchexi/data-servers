@@ -6,7 +6,7 @@ const vm = require('node:vm');
 
 // Run the real inline renderer and handlers with DOM output sinks.
 // CSS contract checks below do not replace browser layout verification.
-const html = fs.readFileSync(path.join(__dirname, '..', 'ai-service-development.html'), 'utf8');
+const html = fs.readFileSync(path.join(__dirname, '..', 'archive', '2026-09-02', 'ai-service-development.html'), 'utf8');
 
 function load(options = {}) {
   const elements = new Map();

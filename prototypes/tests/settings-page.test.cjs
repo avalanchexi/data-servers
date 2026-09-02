@@ -7,7 +7,7 @@ const vm = require('node:vm');
 // Unit harness: runs the actual inline script, not a browser or a layout engine.
 // Only DOM sinks and focus timers are substituted; render/save logic stays real.
 function loadPrototype() {
-  const html = fs.readFileSync(path.join(__dirname, '..', 'settings-page-prototype.html'), 'utf8');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'archive', '2026-09-02', 'settings-page-prototype.html'), 'utf8');
   const elements = new Map();
   const listeners = {};
   const timers = new Map();
@@ -461,7 +461,7 @@ test('dirty auth lifetime edits are protected on navigation and cancel changes r
 
 test('static layout guard: the open drawer does not transform the containing block of viewport-fixed help', () => {
   // Checks this CSS positioning contract only; does not claim browser geometry.
-  const html = fs.readFileSync(path.join(__dirname, '..', 'settings-page-prototype.html'), 'utf8');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'archive', '2026-09-02', 'settings-page-prototype.html'), 'utf8');
   const css = html.match(/<style>([\s\S]*?)<\/style>/)[1];
   let openDrawerTransform = 'none';
   for (const rule of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {

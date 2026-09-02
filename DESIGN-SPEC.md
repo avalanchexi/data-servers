@@ -1,12 +1,14 @@
 # 数据服务平台原型设计规范
 
+> **历史归档：本文已退役。** 当前规范入口为 [`frontend/design-system/README.md`](frontend/design-system/README.md)，项目级 AI 入口为 [`.agents/skills/agenticos-design-system/SKILL.md`](.agents/skills/agenticos-design-system/SKILL.md)。旧页面迁移执行 [`frontend/design-system/migration.md`](frontend/design-system/migration.md)；下文只用于识别遗留 tokens、类名和页面意图，不提供当前视觉数值。
+
 > 版本：1.1（协作评审基线）
 >
 > 更新日期：2026-08-28
 >
 > 适用范围：数据服务平台桌面 Web 原型
 >
-> 视觉基准：[合并原型](prototypes/data-service-platform-prototype.html)
+> 视觉基准：[合并原型](prototypes/archive/2026-09-02/data-service-platform-prototype.html)
 
 ## 1. 文档目的
 
@@ -22,10 +24,10 @@
 
 规范优先级从高到低如下：
 
-1. [企业原型设计规范 Skill](.agents/skills/enterprise-prototype-design/SKILL.md) 与 [设计 tokens](.agents/skills/enterprise-prototype-design/assets/design-tokens.css)：视觉与交互的唯一来源。
+1. [AgenticOS 设计系统](frontend/design-system/README.md) 与 [项目级设计 Skill](.agents/skills/agenticos-design-system/SKILL.md)：新页面视觉与交互的唯一来源。
 2. [领域文档](CONTEXT.md)：产品术语、对象边界、状态名称和动作语义的唯一来源。
-3. 本文档：面向协作的执行摘要与组件选型规则。
-4. [合并原型](prototypes/data-service-platform-prototype.html)：页面结构、实际效果和交互参考。
+3. 本文档：已退役的历史执行摘要，仅用于旧原型迁移比对。
+4. [合并原型](prototypes/archive/2026-09-02/data-service-platform-prototype.html)：历史页面结构和交互参考。
 
 若现有原型中的局部样式与本文不一致，应视为待收敛的遗留实现，不应复制到新页面。禁止新增另一套颜色、字号、间距、圆角或组件命名体系。
 
@@ -485,9 +487,9 @@ Tag 用于类型、版本、身份、范围和上下文，不表达业务状态�
 
 ## 17. 自动化与参考文件
 
-- 合并原型：[prototypes/data-service-platform-prototype.html](prototypes/data-service-platform-prototype.html)
-- 设计 tokens：[design-tokens.css](.agents/skills/enterprise-prototype-design/assets/design-tokens.css)
-- 原型设计规范：[enterprise-prototype-design](.agents/skills/enterprise-prototype-design/SKILL.md)
+- 合并原型：[prototypes/archive/2026-09-02/data-service-platform-prototype.html](prototypes/archive/2026-09-02/data-service-platform-prototype.html)
+- 当前设计 tokens：[tokens.css](frontend/design-system/tokens.css)
+- 当前项目级 Skill：[agenticos-design-system](.agents/skills/agenticos-design-system/SKILL.md)
 - 领域术语：[CONTEXT.md](CONTEXT.md)
 - 设计系统契约测试：[prototype-design-system.test.cjs](prototypes/tests/prototype-design-system.test.cjs)
 

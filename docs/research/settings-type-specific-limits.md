@@ -1,6 +1,6 @@
 # 设置页：类型限制、认证凭据策略调研与原型映射
 
-日期：2026-08-27。对象：`prototypes/settings-page-prototype.html`。
+日期：2026-08-27。对象：`prototypes/archive/2026-09-02/settings-page-prototype.html`。
 
 ## 结论与边界
 

@@ -1,0 +1,2482 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>申请审核 — 数据服务域</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../../../frontend/design-system/tokens.css">
+  <style>
+    body {
+      min-width: var(--shell-min-width);
+      height: 100vh;
+      overflow: hidden;
+      font-size: var(--font-size-sm);
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      border: 0;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+    }
+
+    .icon {
+      width: var(--icon-size-md);
+      height: var(--icon-size-md);
+      flex: 0 0 auto;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+
+    .icon.sm {
+      width: var(--icon-size-sm);
+      height: var(--icon-size-sm);
+    }
+
+    .icon.lg {
+      width: var(--icon-size-lg);
+      height: var(--icon-size-lg);
+    }
+
+    .topbar {
+      position: fixed;
+      z-index: 30;
+      inset: 0 0 auto;
+      display: flex;
+      align-items: center;
+      height: var(--shell-topbar-height);
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-sidebar-bg);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      width: var(--shell-sidebar-width);
+      height: 100%;
+      padding-inline: var(--space-5);
+      gap: var(--space-3);
+      border-right: 1px solid var(--color-border);
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .brand-mark {
+      width: var(--space-8);
+      height: var(--space-8);
+      border: 5px solid var(--color-primary);
+      border-right-color: transparent;
+      border-radius: var(--radius-pill);
+      transform: rotate(-25deg);
+    }
+
+    .top-domain {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      padding-inline: var(--space-6);
+      border-bottom: 2px solid var(--color-primary);
+      color: var(--color-primary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      padding-right: var(--space-5);
+      gap: var(--space-3);
+    }
+
+    .global-search {
+      display: flex;
+      align-items: center;
+      width: 272px;
+      height: var(--control-height-sm);
+      padding-inline: var(--space-3);
+      gap: var(--space-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-card);
+      color: var(--color-text-tertiary);
+    }
+
+    .global-search input {
+      min-width: 0;
+      flex: 1;
+      outline: 0;
+      background: transparent;
+      color: var(--color-text);
+      font-size: var(--font-size-xs);
+    }
+
+    .top-icon {
+      display: grid;
+      width: var(--control-height-sm);
+      height: var(--control-height-sm);
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--color-text-secondary);
+      place-items: center;
+    }
+
+    .top-icon:hover {
+      background: var(--color-bg-hover);
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .avatar {
+      display: grid;
+      width: var(--control-height-sm);
+      height: var(--control-height-sm);
+      border-radius: var(--radius-pill);
+      background: var(--gradient-primary);
+      color: var(--color-text-inverse);
+      place-items: center;
+    }
+
+    .sidebar {
+      position: fixed;
+      z-index: 20;
+      top: var(--shell-topbar-height);
+      bottom: 0;
+      left: 0;
+      width: var(--shell-sidebar-width);
+      overflow-y: auto;
+      border-right: 1px solid var(--color-border);
+      background: var(--color-sidebar-bg);
+      padding: var(--space-4) var(--space-3);
+    }
+
+    .nav-item {
+      display: flex;
+      width: 100%;
+      min-height: var(--control-height-md);
+      align-items: center;
+      padding-inline: var(--space-3);
+      gap: var(--space-3);
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--color-text-secondary);
+      text-align: left;
+    }
+
+    .nav-item + .nav-item {
+      margin-top: var(--space-1);
+    }
+
+    .nav-item:hover {
+      background: var(--color-sidebar-hover);
+      color: var(--color-text);
+    }
+
+    .nav-item.active {
+      background: var(--gradient-sidebar-active);
+      color: var(--color-primary);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .nav-divider {
+      height: 1px;
+      margin: var(--space-3) 0;
+      background: var(--color-border);
+    }
+
+    .workspace {
+      position: fixed;
+      top: var(--shell-topbar-height);
+      right: 0;
+      bottom: 0;
+      left: var(--shell-sidebar-width);
+      padding: var(--shell-page-inset);
+      background: var(--color-bg);
+    }
+
+    .page-card {
+      display: flex;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+      flex-direction: column;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      background: var(--color-card);
+      box-shadow: var(--shadow-card);
+    }
+
+    .page-header {
+      display: flex;
+      min-height: 78px;
+      align-items: center;
+      padding: var(--space-4) var(--space-6);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .page-icon {
+      display: grid;
+      width: var(--control-height-md);
+      height: var(--control-height-md);
+      margin-right: var(--space-4);
+      border-radius: var(--radius-lg);
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      place-items: center;
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--line-height-title);
+    }
+
+    .page-description {
+      margin: var(--space-1) 0 0;
+      color: var(--color-text-tertiary);
+      line-height: var(--line-height-body);
+    }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      gap: var(--space-3);
+    }
+
+    .demo-badge {
+      display: inline-flex;
+      align-items: center;
+      height: var(--control-height-sm);
+      padding-inline: var(--space-3);
+      gap: var(--space-2);
+      border-radius: var(--radius-pill);
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .tabs {
+      display: flex;
+      height: var(--control-height-lg);
+      padding-inline: var(--space-6);
+      gap: var(--space-8);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .tab {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: transparent;
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+    }
+
+    .tab[aria-selected="true"] {
+      color: var(--color-primary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .tab[aria-selected="true"]::after {
+      position: absolute;
+      right: 0;
+      bottom: -1px;
+      left: 0;
+      height: 3px;
+      background: var(--color-primary);
+      content: "";
+    }
+
+    .tab-count {
+      display: inline-flex;
+      min-width: var(--space-5);
+      height: var(--space-5);
+      align-items: center;
+      justify-content: center;
+      padding-inline: var(--space-2);
+      border-radius: var(--radius-pill);
+      background: var(--color-disabled-bg);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+    }
+
+    .tab[aria-selected="true"] .tab-count {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+
+    .page-content {
+      display: flex;
+      min-height: 0;
+      overflow: hidden;
+      flex: 1;
+      flex-direction: column;
+      padding: var(--space-5) var(--space-6) var(--space-4);
+    }
+
+    .scope-note {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      gap: var(--space-3);
+      border: 1px solid var(--color-info-bg);
+      border-radius: var(--radius-lg);
+      background: var(--color-primary-light);
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-xs);
+      line-height: var(--line-height-body);
+    }
+
+    .scope-note .icon {
+      color: var(--color-info);
+    }
+
+    .scope-note strong {
+      color: var(--color-text);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--space-4);
+      gap: var(--space-2);
+    }
+
+    .search-field,
+    .select {
+      height: var(--control-height-sm);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      outline: 0;
+      background: var(--color-card);
+      color: var(--color-text);
+      font-size: var(--font-size-xs);
+    }
+
+    .search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-wrap .icon {
+      position: absolute;
+      left: var(--space-3);
+      color: var(--color-text-tertiary);
+      pointer-events: none;
+    }
+
+    .search-field {
+      width: 268px;
+      padding: 0 var(--space-3) 0 var(--space-10);
+    }
+
+    .select {
+      min-width: 132px;
+      padding-inline: var(--space-3);
+    }
+
+    .search-field:focus,
+    .select:focus,
+    textarea:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px var(--color-focus-ring);
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      gap: var(--space-2);
+    }
+
+    .button {
+      display: inline-flex;
+      height: var(--control-height-sm);
+      align-items: center;
+      justify-content: center;
+      padding-inline: var(--space-3);
+      gap: var(--space-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-card);
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      transition: background var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
+    }
+
+    .button:hover:not(:disabled) {
+      background: var(--color-bg-hover);
+    }
+
+    .button.primary {
+      border-color: var(--color-primary);
+      background: var(--gradient-primary);
+      color: var(--color-text-inverse);
+    }
+
+    .button.primary:hover:not(:disabled) {
+      box-shadow: var(--glow-primary-sm);
+    }
+
+    .button.danger {
+      border-color: var(--color-error);
+      background: var(--color-card);
+      color: var(--color-error);
+    }
+
+    .button.ghost {
+      border-color: transparent;
+      background: transparent;
+    }
+
+    .button:disabled {
+      border-color: var(--color-border);
+      background: var(--color-disabled-bg);
+      color: var(--color-disabled-text);
+    }
+
+    .prototype-select {
+      min-width: 116px;
+      color: var(--color-text-tertiary);
+    }
+
+    .table-region {
+      display: flex;
+      min-height: 0;
+      overflow: hidden;
+      flex: 1;
+      flex-direction: column;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+
+    .table-scroll {
+      min-height: 0;
+      overflow: auto;
+      flex: 1;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1080px;
+      border-collapse: separate;
+      border-spacing: 0;
+      table-layout: fixed;
+      text-align: left;
+    }
+
+    th,
+    td {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      vertical-align: middle;
+    }
+
+    th {
+      position: sticky;
+      z-index: 2;
+      top: 0;
+      height: var(--control-height-lg);
+      background: var(--color-card-elevated);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      white-space: nowrap;
+    }
+
+    td {
+      min-height: 72px;
+      background: var(--color-card);
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-xs);
+    }
+
+    tbody tr:hover td {
+      background: var(--color-primary-light);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    th:last-child,
+    td:last-child {
+      position: sticky;
+      right: 0;
+      box-shadow: -8px 0 12px var(--color-shadow-fixed);
+    }
+
+    th:last-child {
+      z-index: 3;
+    }
+
+    .request-title {
+      color: var(--color-text);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      line-height: var(--line-height-body);
+    }
+
+    .meta-line {
+      display: flex;
+      align-items: center;
+      margin-top: var(--space-1);
+      gap: var(--space-2);
+      color: var(--color-text-tertiary);
+      line-height: var(--line-height-body);
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+    }
+
+    .app-name {
+      color: var(--color-text);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .change-summary {
+      max-width: 220px;
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-body);
+      white-space: normal;
+    }
+
+    .chip-row {
+      display: flex;
+      margin-top: var(--space-2);
+      gap: var(--space-1);
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--status-badge-padding-block) var(--space-2);
+      border-radius: var(--radius-sm);
+      background: var(--color-disabled-bg);
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-xs);
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--status-badge-padding-block) var(--status-badge-padding-inline);
+      gap: var(--space-1);
+      border-radius: var(--radius-pill);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      white-space: nowrap;
+    }
+
+    .badge.neutral {
+      background: var(--color-disabled-bg);
+      color: var(--color-text-secondary);
+    }
+
+    .badge.info {
+      background: var(--color-info-bg);
+      color: var(--color-info);
+    }
+
+    .badge.success {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .badge.warning {
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+    }
+
+    .badge.error {
+      background: var(--color-error-bg);
+      color: var(--color-error);
+    }
+
+    .badge-dot {
+      width: var(--space-1);
+      height: var(--space-1);
+      border-radius: var(--radius-pill);
+      background: currentColor;
+    }
+
+    .flow-cell {
+      min-width: 0;
+    }
+
+    .flow-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+    }
+
+    .flow-node {
+      color: var(--color-text);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .flow-count {
+      color: var(--color-text-tertiary);
+      font-family: var(--font-mono);
+    }
+
+    .progress {
+      height: var(--space-1);
+      margin-top: var(--space-2);
+      overflow: hidden;
+      border-radius: var(--radius-pill);
+      background: var(--color-disabled-bg);
+    }
+
+    .progress > span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--gradient-primary);
+    }
+
+    .sla {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-weight: var(--font-weight-medium);
+      white-space: nowrap;
+    }
+
+    .sla.neutral {
+      color: var(--color-text-secondary);
+    }
+
+    .sla.warning {
+      color: var(--color-warning);
+    }
+
+    .sla.error {
+      color: var(--color-error);
+    }
+
+    .status-stack {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-2);
+      flex-direction: column;
+    }
+
+    .effect-label {
+      color: var(--color-text-tertiary);
+      white-space: nowrap;
+    }
+
+    .text-button {
+      display: inline-flex;
+      min-height: var(--control-height-sm);
+      align-items: center;
+      padding-inline: var(--space-2);
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--color-primary);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      white-space: nowrap;
+    }
+
+    .text-button:hover {
+      background: var(--color-primary-light);
+    }
+
+    .pagination {
+      display: flex;
+      min-height: var(--control-height-lg);
+      align-items: center;
+      justify-content: flex-end;
+      padding: var(--space-2) var(--space-3);
+      gap: var(--space-2);
+      border-top: 1px solid var(--color-border);
+      background: var(--color-card);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+    }
+
+    .page-number {
+      display: grid;
+      width: var(--control-height-sm);
+      height: var(--control-height-sm);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-card);
+      color: var(--color-text-secondary);
+      place-items: center;
+    }
+
+    .page-number.current {
+      border-color: var(--color-primary);
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+
+    .page-number:disabled {
+      background: var(--color-disabled-bg);
+      color: var(--color-disabled-text);
+    }
+
+    .state-row td {
+      height: 320px;
+      text-align: center;
+    }
+
+    .state-box {
+      display: inline-flex;
+      max-width: 420px;
+      align-items: center;
+      flex-direction: column;
+      color: var(--color-text-tertiary);
+      line-height: var(--line-height-body);
+    }
+
+    .state-icon {
+      display: grid;
+      width: var(--space-12);
+      height: var(--space-12);
+      margin-bottom: var(--space-3);
+      border-radius: var(--radius-lg);
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      place-items: center;
+    }
+
+    .state-box strong {
+      margin-bottom: var(--space-1);
+      color: var(--color-text);
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .state-box .button {
+      margin-top: var(--space-4);
+    }
+
+    .skeleton {
+      height: var(--space-3);
+      border-radius: var(--radius-sm);
+      background: linear-gradient(90deg, var(--color-disabled-bg), var(--color-bg-hover), var(--color-disabled-bg));
+      background-size: 200% 100%;
+      animation: shimmer 1.2s linear infinite;
+    }
+
+    .skeleton.wide {
+      width: 88%;
+    }
+
+    .skeleton.medium {
+      width: 64%;
+      margin-top: var(--space-2);
+    }
+
+    @keyframes shimmer {
+      from { background-position: 200% 0; }
+      to { background-position: -200% 0; }
+    }
+
+    .backdrop {
+      position: fixed;
+      z-index: 50;
+      inset: 0;
+      visibility: hidden;
+      background: var(--color-overlay);
+      opacity: 0;
+      transition: opacity var(--duration-normal) var(--ease-standard), visibility var(--duration-normal) var(--ease-standard);
+    }
+
+    .backdrop.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .drawer {
+      position: fixed;
+      z-index: 60;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      visibility: hidden;
+      width: 720px;
+      max-width: calc(100vw - var(--shell-sidebar-width));
+      flex-direction: column;
+      background: var(--color-card);
+      box-shadow: var(--shadow-modal);
+      transform: translateX(100%);
+      transition: transform var(--duration-normal) var(--ease-standard), visibility var(--duration-normal) var(--ease-standard);
+    }
+
+    .drawer.open {
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      min-height: 76px;
+      align-items: flex-start;
+      padding: var(--space-5) var(--space-6);
+      gap: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .drawer-title-wrap {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .drawer-eyebrow {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--space-1);
+      gap: var(--space-2);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+    }
+
+    .drawer-title {
+      margin: 0;
+      color: var(--color-text);
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--line-height-title);
+    }
+
+    .drawer-close {
+      display: grid;
+      width: var(--control-height-sm);
+      height: var(--control-height-sm);
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--color-text-secondary);
+      place-items: center;
+    }
+
+    .drawer-close:hover {
+      background: var(--color-bg-hover);
+    }
+
+    .drawer-body {
+      min-height: 0;
+      overflow-y: auto;
+      flex: 1;
+      padding: var(--space-5) var(--space-6);
+    }
+
+    .drawer-footer {
+      display: flex;
+      min-height: var(--space-16);
+      align-items: center;
+      justify-content: flex-end;
+      padding-inline: var(--space-6);
+      gap: var(--space-2);
+      border-top: 1px solid var(--color-border);
+      background: var(--color-card);
+    }
+
+    .drawer-footer .button {
+      height: var(--control-height-md);
+      padding-inline: var(--space-4);
+      font-size: var(--font-size-sm);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-3);
+      margin-bottom: var(--space-5);
+    }
+
+    .summary-item {
+      min-width: 0;
+      padding: var(--space-3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-card);
+    }
+
+    .summary-label {
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+    }
+
+    .summary-value {
+      margin-top: var(--space-1);
+      overflow: hidden;
+      color: var(--color-text);
+      font-weight: var(--font-weight-medium);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .detail-section + .detail-section {
+      margin-top: var(--space-6);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-3);
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--color-text);
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .section-note {
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+    }
+
+    .flow-steps {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      padding: var(--space-4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-card);
+    }
+
+    .flow-step {
+      position: relative;
+      min-width: 0;
+      text-align: center;
+    }
+
+    .flow-step:not(:last-child)::after {
+      position: absolute;
+      z-index: 0;
+      top: 14px;
+      right: -50%;
+      left: 50%;
+      height: 2px;
+      background: var(--color-border);
+      content: "";
+    }
+
+    .flow-step.done:not(:last-child)::after {
+      background: var(--color-success);
+    }
+
+    .step-dot {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      width: 28px;
+      height: 28px;
+      margin: 0 auto var(--space-2);
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-pill);
+      background: var(--color-card);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      place-items: center;
+    }
+
+    .flow-step.done .step-dot {
+      border-color: var(--color-success);
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .flow-step.current .step-dot {
+      border-color: var(--color-primary);
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      box-shadow: 0 0 0 4px var(--color-focus-ring);
+    }
+
+    .step-name {
+      overflow: hidden;
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .flow-step.current .step-name {
+      color: var(--color-primary);
+    }
+
+    .step-meta {
+      margin-top: var(--space-1);
+      overflow: hidden;
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .change-card {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-card);
+    }
+
+    .change-row {
+      display: grid;
+      grid-template-columns: 116px minmax(0, 1fr);
+      padding: var(--space-3) var(--space-4);
+      gap: var(--space-3);
+      border-bottom: 1px solid var(--color-border);
+      line-height: var(--line-height-body);
+    }
+
+    .change-row:last-child {
+      border-bottom: 0;
+    }
+
+    .change-label {
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+    }
+
+    .change-value {
+      color: var(--color-text-secondary);
+    }
+
+    .permission-list {
+      display: grid;
+      gap: var(--space-3);
+    }
+
+    .permission-card {
+      padding: var(--space-4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-card);
+    }
+
+    .permission-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-3);
+    }
+
+    .permission-name {
+      color: var(--color-text);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .permission-desc {
+      margin-top: var(--space-1);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+      line-height: var(--line-height-body);
+    }
+
+    .risk-alert {
+      display: flex;
+      margin-top: var(--space-4);
+      padding: var(--space-3) var(--space-4);
+      gap: var(--space-3);
+      border: 1px solid var(--color-warning-bg);
+      border-radius: var(--radius-lg);
+      background: var(--color-warning-bg);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-body);
+    }
+
+    .risk-alert .icon {
+      color: var(--color-warning);
+    }
+
+    .audit-note {
+      margin-top: var(--space-3);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+      line-height: var(--line-height-body);
+    }
+
+    .modal-layer {
+      position: fixed;
+      z-index: 80;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-6);
+      background: var(--color-modal-overlay);
+    }
+
+    .modal-layer.open {
+      display: flex;
+    }
+
+    .modal {
+      width: 500px;
+      max-width: 100%;
+      border-radius: var(--radius-xl);
+      background: var(--color-card);
+      box-shadow: var(--shadow-modal);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      padding: var(--space-5);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .modal-title {
+      margin: 0;
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .modal-body {
+      padding: var(--space-5);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-body);
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      padding: var(--space-4) var(--space-5);
+      gap: var(--space-2);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .form-field {
+      display: grid;
+      margin-top: var(--space-4);
+      gap: var(--space-2);
+    }
+
+    .form-field label {
+      color: var(--color-text);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .form-field textarea,
+    .form-field select {
+      width: 100%;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      outline: 0;
+      background: var(--color-card);
+      color: var(--color-text);
+    }
+
+    .form-field textarea {
+      min-height: 96px;
+      resize: vertical;
+      padding: var(--space-3);
+    }
+
+    .form-field select {
+      height: var(--control-height-md);
+      padding-inline: var(--space-3);
+    }
+
+    .field-error {
+      display: none;
+      color: var(--color-error);
+      font-size: var(--font-size-xs);
+    }
+
+    .field-error.show {
+      display: block;
+    }
+
+    .confirm-check {
+      display: flex;
+      align-items: flex-start;
+      margin-top: var(--space-4);
+      gap: var(--space-2);
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-xs);
+    }
+
+    .confirm-check input {
+      width: var(--icon-size-md);
+      height: var(--icon-size-md);
+      margin-top: var(--space-1);
+      accent-color: var(--color-primary);
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 100;
+      top: calc(var(--shell-topbar-height) + var(--space-5));
+      left: 50%;
+      display: flex;
+      visibility: hidden;
+      min-width: 300px;
+      align-items: center;
+      padding: var(--space-3) var(--space-4);
+      gap: var(--space-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-card);
+      box-shadow: var(--shadow-card-lg);
+      color: var(--color-text-secondary);
+      opacity: 0;
+      transform: translate(-50%, -8px);
+      transition: opacity var(--duration-normal) var(--ease-standard), transform var(--duration-normal) var(--ease-standard), visibility var(--duration-normal) var(--ease-standard);
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .toast .icon {
+      color: var(--color-success);
+    }
+
+    @media (max-height: 760px) {
+      .scope-note {
+        display: none;
+      }
+
+      .page-content {
+        padding-top: var(--space-4);
+      }
+    }
+
+    @media (max-width: 1250px) {
+      .toolbar {
+        gap: var(--space-1);
+      }
+
+      .search-field {
+        width: 220px;
+      }
+
+      .select {
+        min-width: 108px;
+        padding-inline: var(--space-2);
+      }
+
+      .prototype-select {
+        min-width: 100px;
+      }
+
+      .button {
+        padding-inline: var(--space-2);
+      }
+
+      .button.ghost {
+        white-space: nowrap;
+      }
+    }
+
+    @media (min-width: 1400px) {
+      .table-scroll {
+        overflow-x: hidden;
+      }
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"></path><path d="M5 10v10h14V10"></path></symbol>
+    <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 9-4 3 4 3"></path><path d="m16 9 4 3-4 3"></path><path d="m14 5-4 14"></path></symbol>
+    <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9h16l-2-5H6z"></path><path d="M5 9v11h14V9"></path><path d="M9 20v-6h6v6"></path></symbol>
+    <symbol id="i-app" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"></rect><rect x="14" y="3" width="7" height="7" rx="2"></rect><rect x="3" y="14" width="7" height="7" rx="2"></rect><rect x="14" y="14" width="7" height="7" rx="2"></rect></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"></circle><path d="m11 12 8-8"></path><path d="m16 7 2 2"></path><path d="m14 9 2 2"></path></symbol>
+    <symbol id="i-approval" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path d="M9 4V2h6v2"></path><path d="m9 13 2 2 4-5"></path></symbol>
+    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2-6h6"></path></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19 12a7 7 0 0 0-.1-1l2-1-2-4-2 1a7 7 0 0 0-2-1l-.3-2h-5L9 6a7 7 0 0 0-2 1L5 6 3 10l2 1a7 7 0 0 0 0 2l-2 1 2 4 2-1a7 7 0 0 0 2 1l.5 2h5l.5-2a7 7 0 0 0 2-1l2 1 2-4-2-1a7 7 0 0 0 .1-1Z"></path></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5"></path><path d="M12 8h.01"></path></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5"></path><path d="M19 12a7 7 0 1 0-2 5"></path></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12"></path><path d="m18 6-12 12"></path></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"></path></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 3 2.8 20h18.4z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"></path></symbol>
+  </svg>
+
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>AgenticOS</span></div>
+    <div class="top-domain">数据中台</div>
+    <div class="top-actions">
+      <label class="global-search">
+        <svg class="icon sm" aria-hidden="true"><use href="#i-search"></use></svg>
+        <input type="search" placeholder="搜索菜单、数据应用或服务">
+      </label>
+      <button class="top-icon" type="button" aria-label="通知"><svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg></button>
+      <div class="profile"><span class="avatar">审</span><span>审核管理员</span></div>
+    </div>
+  </header>
+
+  <aside class="sidebar" aria-label="数据服务域导航">
+    <nav>
+      <button class="nav-item" type="button"><svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg><span>工作台</span></button>
+      <button class="nav-item" type="button"><svg class="icon" aria-hidden="true"><use href="#i-code"></use></svg><span>服务开发</span></button>
+      <button class="nav-item" type="button"><svg class="icon" aria-hidden="true"><use href="#i-store"></use></svg><span>服务集市</span></button>
+      <button class="nav-item" type="button"><svg class="icon" aria-hidden="true"><use href="#i-app"></use></svg><span>数据应用</span></button>
+      <button class="nav-item" type="button"><svg class="icon" aria-hidden="true"><use href="#i-key"></use></svg><span>应用与授权</span></button>
+      <button class="nav-item active" type="button" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-approval"></use></svg><span>审批中心</span></button>
+      <div class="nav-divider"></div>
+      <button class="nav-item" type="button"><svg class="icon" aria-hidden="true"><use href="#i-activity"></use></svg><span>运行管理</span></button>
+      <button class="nav-item" type="button"><svg class="icon" aria-hidden="true"><use href="#i-settings"></use></svg><span>设置</span></button>
+    </nav>
+  </aside>
+
+  <main class="workspace">
+    <section class="page-card" aria-labelledby="page-title">
+      <header class="page-header">
+        <span class="page-icon" aria-hidden="true"><svg class="icon lg"><use href="#i-approval"></use></svg></span>
+        <div>
+          <h1 class="page-title" id="page-title">申请审核</h1>
+          <p class="page-description">处理数据应用上线、变更、权限调整与下线事项，审批状态与权限生效结果分别留痕。</p>
+        </div>
+        <div class="header-meta">
+          <span class="demo-badge"><svg class="icon sm" aria-hidden="true"><use href="#i-info"></use></svg>演示数据</span>
+        </div>
+      </header>
+
+      <div class="tabs" role="tablist" aria-label="申请审核视图">
+        <button class="tab" id="tab-todo" type="button" role="tab" aria-selected="true" aria-controls="approval-panel" data-tab="todo">
+          我的待办 <span class="tab-count" id="count-todo">0</span>
+        </button>
+        <button class="tab" id="tab-initiated" type="button" role="tab" aria-selected="false" aria-controls="approval-panel" data-tab="initiated" tabindex="-1">
+          我发起的 <span class="tab-count" id="count-initiated">0</span>
+        </button>
+        <button class="tab" id="tab-processed" type="button" role="tab" aria-selected="false" aria-controls="approval-panel" data-tab="processed" tabindex="-1">
+          已处理 <span class="tab-count" id="count-processed">0</span>
+        </button>
+      </div>
+
+      <div class="page-content" id="approval-panel" role="tabpanel" aria-labelledby="tab-todo">
+        <div class="scope-note">
+          <svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg>
+          <span><strong>一个列表项代表一个完整审批工作流实例。</strong> API、Agent 等能力及其依赖数据表的使用权限随同一个数据应用版本申请审核；服务产品自身的开发上线不在本页处理。</span>
+        </div>
+
+        <div class="toolbar" aria-label="审批筛选">
+          <label class="search-wrap">
+            <svg class="icon sm" aria-hidden="true"><use href="#i-search"></use></svg>
+            <input class="search-field" id="search-input" type="search" placeholder="搜索事项、实例编号或数据应用" aria-label="搜索申请事项">
+          </label>
+          <select class="select" id="type-filter" aria-label="事项类型">
+            <option value="">全部事项</option>
+            <option>应用上线</option>
+            <option>应用变更</option>
+            <option>权限新增</option>
+            <option>权限变更</option>
+            <option>权限续期</option>
+            <option>权限撤销</option>
+            <option>应用下线</option>
+          </select>
+          <select class="select" id="risk-filter" aria-label="风险等级">
+            <option value="">全部风险</option>
+            <option value="high">高风险</option>
+            <option value="medium">中风险</option>
+            <option value="low">低风险</option>
+          </select>
+          <select class="select" id="status-filter" aria-label="审批状态">
+            <option value="">全部状态</option>
+            <option>待处理</option>
+            <option>审批中</option>
+            <option>已通过</option>
+            <option>已驳回</option>
+            <option>已撤回</option>
+            <option>已终止</option>
+          </select>
+          <button class="button ghost" id="reset-button" type="button">重置</button>
+          <div class="toolbar-right">
+            <select class="select prototype-select" id="prototype-state" aria-label="原型状态">
+              <option value="normal">正常状态</option>
+              <option value="loading">加载状态</option>
+              <option value="empty">首次空态</option>
+              <option value="error">加载失败</option>
+              <option value="permission">无权限</option>
+            </select>
+            <button class="button" id="refresh-button" type="button"><svg class="icon sm" aria-hidden="true"><use href="#i-refresh"></use></svg>刷新</button>
+          </div>
+        </div>
+
+        <div class="table-region">
+          <div class="table-scroll">
+            <table aria-label="数据应用审批工作流实例">
+              <thead>
+                <tr>
+                  <th style="width:190px">申请事项</th>
+                  <th style="width:145px">数据应用</th>
+                  <th style="width:230px">变更摘要</th>
+                  <th style="width:190px">流程进度与时限</th>
+                  <th style="width:110px">发起信息</th>
+                  <th style="width:120px">状态</th>
+                  <th style="width:95px">操作</th>
+                </tr>
+              </thead>
+              <tbody id="approval-body"></tbody>
+            </table>
+          </div>
+          <div class="pagination">
+            <span id="result-total">共 0 条</span>
+            <button class="page-number" type="button" aria-label="上一页" disabled>‹</button>
+            <button class="page-number current" type="button" aria-current="page">1</button>
+            <button class="page-number" type="button">2</button>
+            <button class="page-number" type="button">3</button>
+            <button class="page-number" type="button" aria-label="下一页">›</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="backdrop" id="drawer-backdrop"></div>
+  <aside class="drawer" id="approval-drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true">
+    <header class="drawer-header">
+      <div class="drawer-title-wrap">
+        <div class="drawer-eyebrow"><span id="drawer-type">权限变更</span><span>·</span><span class="mono" id="drawer-id">WF-0000</span></div>
+        <h2 class="drawer-title" id="drawer-title">申请事项</h2>
+      </div>
+      <button class="drawer-close" id="drawer-close" type="button" aria-label="关闭审核详情"><svg class="icon"><use href="#i-close"></use></svg></button>
+    </header>
+    <div class="drawer-body">
+      <div class="summary-grid" id="drawer-summary"></div>
+
+      <section class="detail-section">
+        <div class="section-head"><h3 class="section-title">审批流程</h3><span class="section-note" id="drawer-flow-note"></span></div>
+        <div class="flow-steps" id="drawer-flow"></div>
+      </section>
+
+      <section class="detail-section">
+        <div class="section-head"><h3 class="section-title">事项说明</h3><span class="badge neutral" id="drawer-risk"></span></div>
+        <div class="change-card" id="drawer-changes"></div>
+      </section>
+
+      <section class="detail-section">
+        <div class="section-head"><h3 class="section-title">服务与操作权限</h3><span class="section-note">固定版本，不自动跟随升级</span></div>
+        <div class="permission-list" id="drawer-services"></div>
+      </section>
+
+      <section class="detail-section">
+        <div class="section-head"><h3 class="section-title">依赖数据表使用权限</h3><span class="section-note">字段、行范围、用途和期限</span></div>
+        <div class="permission-list" id="drawer-tables"></div>
+        <div class="risk-alert" id="drawer-alert">
+          <svg class="icon" aria-hidden="true"><use href="#i-warning"></use></svg>
+          <div><strong>审核提示</strong><div id="drawer-alert-text">请确认申请的数据范围与消费目的匹配。</div></div>
+        </div>
+        <p class="audit-note">审批意见、转交记录、权限范围和最终决策将写入公共审计事件；页面不展示密钥或生产数据正文。</p>
+      </section>
+    </div>
+    <footer class="drawer-footer" id="drawer-footer"></footer>
+  </aside>
+
+  <div class="modal-layer" id="action-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <section class="modal">
+      <header class="modal-header"><h2 class="modal-title" id="modal-title">确认操作</h2></header>
+      <div class="modal-body" id="modal-body"></div>
+      <footer class="modal-footer">
+        <button class="button" id="modal-cancel" type="button">取消</button>
+        <button class="button primary" id="modal-confirm" type="button">确认</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
+    <span id="toast-text">操作成功</span>
+  </div>
+
+  <script>
+    var datasets = {
+      todo: [
+        {
+          id: "WF-20260901-0186",
+          title: "商户风险评估应用首次上线",
+          app: "商户风险评估助手",
+          appCode: "merchant_risk_agent",
+          version: "v1.0.0",
+          type: "应用上线",
+          risk: "high",
+          riskLabel: "高风险",
+          summary: "首次申请 3 项服务、6 张依赖数据表及 1 项操作权限。",
+          chips: ["API × 2", "Agent × 1", "数据表 × 6"],
+          node: "数据负责人审核",
+          progress: 3,
+          total: 5,
+          applicant: "陈思远",
+          submitted: "09-01 09:18",
+          sla: "剩余 1小时45分",
+          slaTone: "warning",
+          status: "待处理",
+          statusTone: "warning",
+          effect: "—",
+          action: "查看并审核",
+          actionable: true,
+          purpose: "为商户准入与存量风险复核提供统一风险评分。",
+          validity: "2026-09-01 至 2027-08-31",
+          changeText: "新建数据应用运行版本并申请首次服务、数据表与操作权限。",
+          services: [
+            { name: "商户风险画像查询 API", meta: "API · v3.2.1 · 只读调用", badge: "服务授权" },
+            { name: "风险归因分析 Agent", meta: "Agent · v1.6.0 · 同步会话", badge: "服务授权" },
+            { name: "风险复核任务提交", meta: "操作：create_review_task · 需要人工确认", badge: "操作权限" }
+          ],
+          tables: [
+            { name: "ads_merchant_risk_profile", meta: "28 个字段 · 行范围：所属业务域 · 用途：风险评分", level: "敏感 L3" },
+            { name: "ads_merchant_behavior_90d", meta: "16 个字段 · 近 90 天 · 用途：异常行为识别", level: "内部 L2" },
+            { name: "其余 4 张依赖数据表", meta: "共 47 个字段 · 仅限已批准服务依赖闭包", level: "混合等级" }
+          ],
+          steps: [
+            { name: "提交申请", meta: "陈思远", state: "done" },
+            { name: "应用负责人", meta: "周岚", state: "done" },
+            { name: "数据负责人", meta: "待你处理", state: "current" },
+            { name: "安全复核", meta: "数据安全组", state: "pending" },
+            { name: "完成", meta: "整体生效", state: "pending" }
+          ]
+        },
+        {
+          id: "WF-20260901-0179",
+          title: "客户画像查询范围调整",
+          app: "客户经营分析台",
+          appCode: "customer_ops_console",
+          version: "v2.4.0",
+          type: "权限变更",
+          risk: "high",
+          riskLabel: "高风险",
+          summary: "新增高敏字段 4 项，并将数据范围从华东区域扩展至全国。",
+          chips: ["数据表 × 2", "字段 +4", "范围扩大"],
+          node: "数据安全复核",
+          progress: 4,
+          total: 5,
+          applicant: "宋嘉言",
+          submitted: "08-31 16:42",
+          sla: "已超时 28分",
+          slaTone: "error",
+          status: "待处理",
+          statusTone: "error",
+          effect: "—",
+          action: "查看并审核",
+          actionable: true,
+          purpose: "支持全国客户经营专题分析，输出仅限聚合统计。",
+          validity: "沿用当前版本，有效至 2027-02-28",
+          changeText: "扩大客户范围并新增证件归属地、风险标签等高敏字段。",
+          services: [
+            { name: "客户 360 画像查询", meta: "API · v4.0.2 · 固定版本", badge: "服务授权" }
+          ],
+          tables: [
+            { name: "ads_customer_360_profile", meta: "新增 4 个字段 · 行范围：全国 · 用途：经营分析", level: "敏感 L3" },
+            { name: "ads_customer_segment_result", meta: "12 个字段 · 行范围：全国 · 仅输出聚合结果", level: "内部 L2" }
+          ],
+          steps: [
+            { name: "提交申请", meta: "宋嘉言", state: "done" },
+            { name: "应用负责人", meta: "已通过", state: "done" },
+            { name: "数据负责人", meta: "已通过", state: "done" },
+            { name: "安全复核", meta: "待你处理", state: "current" },
+            { name: "完成", meta: "整体生效", state: "pending" }
+          ]
+        },
+        {
+          id: "WF-20260901-0174",
+          title: "经营指标问答能力新增",
+          app: "管理驾驶舱 Agent",
+          appCode: "executive_copilot",
+          version: "v1.8.0",
+          type: "权限新增",
+          risk: "medium",
+          riskLabel: "中风险",
+          summary: "新增 1 项 Agent 服务及其依赖的 3 张经营指标数据表。",
+          chips: ["Agent × 1", "数据表 × 3", "字段 × 31"],
+          node: "数据负责人审核",
+          progress: 3,
+          total: 5,
+          applicant: "林若川",
+          submitted: "08-31 14:10",
+          sla: "剩余 5小时20分",
+          slaTone: "neutral",
+          status: "待处理",
+          statusTone: "warning",
+          effect: "—",
+          action: "查看并审核",
+          actionable: true,
+          purpose: "通过自然语言查询已发布经营指标，不返回明细记录。",
+          validity: "2026-09-01 至 2027-02-28",
+          changeText: "在现有数据应用版本中增加指标问答 Agent 及依赖数据范围。",
+          services: [
+            { name: "经营指标问答 Agent", meta: "Agent · v2.1.0 · 同步会话", badge: "服务授权" }
+          ],
+          tables: [
+            { name: "ads_operation_metric_daily", meta: "18 个字段 · 日汇总 · 用途：指标问答", level: "内部 L2" },
+            { name: "其余 2 张指标维表", meta: "13 个字段 · 只读 · 不含个人明细", level: "公开 L1" }
+          ],
+          steps: [
+            { name: "提交申请", meta: "林若川", state: "done" },
+            { name: "应用负责人", meta: "已通过", state: "done" },
+            { name: "数据负责人", meta: "待你处理", state: "current" },
+            { name: "安全复核", meta: "待处理", state: "pending" },
+            { name: "完成", meta: "整体生效", state: "pending" }
+          ]
+        },
+        {
+          id: "WF-20260901-0168",
+          title: "供应商对账应用权限续期",
+          app: "供应商对账客户端",
+          appCode: "supplier_reconcile",
+          version: "v3.0.1",
+          type: "权限续期",
+          risk: "low",
+          riskLabel: "低风险",
+          summary: "原范围不变，12 项服务与数据表权限续期 180 天。",
+          chips: ["范围不变", "续期 180 天"],
+          node: "应用负责人确认",
+          progress: 2,
+          total: 4,
+          applicant: "许静安",
+          submitted: "08-31 11:35",
+          sla: "剩余 9小时",
+          slaTone: "neutral",
+          status: "待处理",
+          statusTone: "warning",
+          effect: "—",
+          action: "查看并审核",
+          actionable: true,
+          purpose: "延续供应商月度对账数据交换。",
+          validity: "续期至 2027-03-01",
+          changeText: "授权对象、字段及行范围均不变化，仅延长有效期。",
+          services: [
+            { name: "供应商对账单查询", meta: "API · v2.8.4 · 固定版本", badge: "服务授权" }
+          ],
+          tables: [
+            { name: "ads_supplier_reconciliation", meta: "22 个字段 · 仅本应用所属供应商 · 范围不变", level: "内部 L2" }
+          ],
+          steps: [
+            { name: "提交申请", meta: "许静安", state: "done" },
+            { name: "应用负责人", meta: "待你处理", state: "current" },
+            { name: "权限复核", meta: "待处理", state: "pending" },
+            { name: "完成", meta: "续期生效", state: "pending" },
+            { name: "—", meta: "—", state: "pending" }
+          ]
+        },
+        {
+          id: "WF-20260901-0161",
+          title: "批量重算操作权限申请",
+          app: "经营日报修复 Worker",
+          appCode: "daily_report_repair",
+          version: "v1.3.0",
+          type: "权限新增",
+          risk: "high",
+          riskLabel: "高风险",
+          summary: "新增批量重算操作，单次最多影响 31 个业务日期。",
+          chips: ["操作权限 × 1", "人工确认", "影响预览"],
+          node: "操作负责人审核",
+          progress: 3,
+          total: 5,
+          applicant: "韩知行",
+          submitted: "08-30 18:06",
+          sla: "剩余 42分",
+          slaTone: "warning",
+          status: "待处理",
+          statusTone: "warning",
+          effect: "—",
+          action: "查看并审核",
+          actionable: true,
+          purpose: "修复因上游延迟产生的日报缺口，执行前必须预览影响。",
+          validity: "2026-09-01 至 2026-12-31",
+          changeText: "增加 execute_daily_rebuild 操作，不扩大现有数据读取范围。",
+          services: [
+            { name: "日报重算 Worker", meta: "Worker · v1.3.0 · 异步任务", badge: "服务授权" },
+            { name: "execute_daily_rebuild", meta: "最大 31 个业务日期 · 每次人工确认", badge: "操作权限" }
+          ],
+          tables: [
+            { name: "ads_operation_daily_report", meta: "沿用既有 18 个字段 · 数据范围不变", level: "内部 L2" }
+          ],
+          steps: [
+            { name: "提交申请", meta: "韩知行", state: "done" },
+            { name: "应用负责人", meta: "已通过", state: "done" },
+            { name: "操作负责人", meta: "待你处理", state: "current" },
+            { name: "安全复核", meta: "待处理", state: "pending" },
+            { name: "完成", meta: "整体生效", state: "pending" }
+          ]
+        },
+        {
+          id: "WF-20260901-0153",
+          title: "旧版营销触达应用下线",
+          app: "营销触达客户端（旧版）",
+          appCode: "campaign_client_legacy",
+          version: "v4.6.2",
+          type: "应用下线",
+          risk: "medium",
+          riskLabel: "中风险",
+          summary: "撤销 2 份凭据、9 项授权及全部网关策略，历史记录保留。",
+          chips: ["凭据 × 2", "授权 × 9", "不可自动恢复"],
+          node: "等待会签完成",
+          progress: 3,
+          total: 5,
+          applicant: "顾南星",
+          submitted: "08-30 15:24",
+          sla: "剩余 14小时",
+          slaTone: "neutral",
+          status: "审批中",
+          statusTone: "info",
+          effect: "—",
+          action: "查看详情",
+          actionable: false,
+          purpose: "旧版客户端已完成替换，终止当前数据应用及全部调用资格。",
+          validity: "审批通过后永久终止",
+          changeText: "下线为独立终止事项，不与任何新增、变更或续期混合。",
+          services: [
+            { name: "全部服务授权", meta: "7 项固定版本服务授权将撤销", badge: "撤销" },
+            { name: "全部操作权限", meta: "2 项操作权限将撤销", badge: "撤销" }
+          ],
+          tables: [
+            { name: "全部依赖数据表", meta: "9 张表的字段、行范围与用途授权全部撤销", level: "终止访问" }
+          ],
+          steps: [
+            { name: "提交申请", meta: "顾南星", state: "done" },
+            { name: "应用负责人", meta: "已通过", state: "done" },
+            { name: "权限会签", meta: "2/3 已完成", state: "current" },
+            { name: "下线确认", meta: "待处理", state: "pending" },
+            { name: "完成", meta: "终止应用", state: "pending" }
+          ]
+        }
+      ],
+      initiated: [
+        {
+          id: "WF-20260831-0148",
+          title: "客户经营分析台运行配置变更",
+          app: "客户经营分析台",
+          appCode: "customer_ops_console",
+          version: "v2.3.2",
+          type: "应用变更",
+          risk: "medium",
+          riskLabel: "中风险",
+          summary: "调整运行方式并更新 OAuth 回调引用，权限范围保持不变。",
+          chips: ["运行配置", "权限不变"],
+          node: "安全复核",
+          progress: 4,
+          total: 5,
+          applicant: "审核管理员",
+          submitted: "08-31 10:16",
+          sla: "已流转 22小时",
+          slaTone: "neutral",
+          status: "审批中",
+          statusTone: "info",
+          effect: "—",
+          action: "查看进度",
+          actionable: false,
+          purpose: "切换受控运行位置并更新认证引用。",
+          validity: "随应用版本生效",
+          changeText: "从外部运行调整为平台托管；数据与服务权限范围不变。",
+          services: [{ name: "既有服务授权", meta: "固定版本与范围不变", badge: "无变更" }],
+          tables: [{ name: "既有数据表权限", meta: "字段和行范围不变", level: "无变更" }],
+          steps: [
+            { name: "提交申请", meta: "审核管理员", state: "done" },
+            { name: "应用负责人", meta: "已通过", state: "done" },
+            { name: "运行审核", meta: "已通过", state: "done" },
+            { name: "安全复核", meta: "处理中", state: "current" },
+            { name: "完成", meta: "整体生效", state: "pending" }
+          ]
+        },
+        {
+          id: "WF-20260830-0131",
+          title: "供应链预警 Agent 数据权限新增",
+          app: "供应链预警 Agent",
+          appCode: "supply_alert_agent",
+          version: "v1.5.0",
+          type: "权限新增",
+          risk: "high",
+          riskLabel: "高风险",
+          summary: "新增 2 张履约明细数据表及 19 个字段。",
+          chips: ["数据表 × 2", "字段 × 19"],
+          node: "安全复核",
+          progress: 4,
+          total: 5,
+          applicant: "审核管理员",
+          submitted: "08-30 09:05",
+          sla: "已流转 2天",
+          slaTone: "warning",
+          status: "审批中",
+          statusTone: "info",
+          effect: "—",
+          action: "查看进度",
+          actionable: false,
+          purpose: "补充供应链履约异常判断所需数据。",
+          validity: "2026-09-01 至 2027-08-31",
+          changeText: "新增已治理的数据表与字段，不新增中台实质操作。",
+          services: [{ name: "供应链异常预警 Agent", meta: "Agent · v1.5.0 · 固定版本", badge: "既有授权" }],
+          tables: [{ name: "dws_supplier_fulfillment_detail", meta: "19 个字段 · 所属业务域 · 异常识别", level: "敏感 L3" }],
+          steps: [
+            { name: "提交申请", meta: "审核管理员", state: "done" },
+            { name: "应用负责人", meta: "已通过", state: "done" },
+            { name: "数据负责人", meta: "已通过", state: "done" },
+            { name: "安全复核", meta: "处理中", state: "current" },
+            { name: "完成", meta: "整体生效", state: "pending" }
+          ]
+        },
+        {
+          id: "WF-20260828-0107",
+          title: "指标订阅权限续期",
+          app: "经营指标订阅器",
+          appCode: "metric_subscriber",
+          version: "v2.1.1",
+          type: "权限续期",
+          risk: "low",
+          riskLabel: "低风险",
+          summary: "原权限范围不变，续期 365 天。",
+          chips: ["范围不变", "续期 365 天"],
+          node: "流程完成",
+          progress: 5,
+          total: 5,
+          applicant: "审核管理员",
+          submitted: "08-28 13:44",
+          sla: "耗时 6小时",
+          slaTone: "neutral",
+          status: "已通过",
+          statusTone: "success",
+          effect: "已生效",
+          effectTone: "success",
+          action: "查看结果",
+          actionable: false,
+          purpose: "延续经营指标订阅。",
+          validity: "续期至 2027-08-31",
+          changeText: "仅延长有效期，服务固定版本和数据范围不变。",
+          services: [{ name: "经营指标数据流", meta: "数据流 · v2.1.1 · 既有授权", badge: "已续期" }],
+          tables: [{ name: "指标订阅数据范围", meta: "范围不变", level: "内部 L2" }],
+          steps: [
+            { name: "提交申请", meta: "审核管理员", state: "done" },
+            { name: "应用负责人", meta: "已通过", state: "done" },
+            { name: "权限复核", meta: "已通过", state: "done" },
+            { name: "策略下发", meta: "成功", state: "done" },
+            { name: "完成", meta: "已生效", state: "done" }
+          ]
+        },
+        {
+          id: "WF-20260827-0094",
+          title: "客户标签字段权限变更",
+          app: "营销策略工作台",
+          appCode: "campaign_strategy",
+          version: "v3.7.0",
+          type: "权限变更",
+          risk: "high",
+          riskLabel: "高风险",
+          summary: "申请新增字段因用途说明不足被驳回。",
+          chips: ["字段 +3", "用途待补充"],
+          node: "流程完成",
+          progress: 5,
+          total: 5,
+          applicant: "审核管理员",
+          submitted: "08-27 16:20",
+          sla: "耗时 1天",
+          slaTone: "neutral",
+          status: "已驳回",
+          statusTone: "error",
+          effect: "未下发",
+          effectTone: "neutral",
+          action: "查看结果",
+          actionable: false,
+          purpose: "用于客户标签筛选与营销触达。",
+          validity: "未生效",
+          changeText: "数据安全复核认为新增字段与用途说明不匹配。",
+          services: [{ name: "客户标签查询 API", meta: "服务授权未变化", badge: "无变更" }],
+          tables: [{ name: "ads_customer_marketing_tag", meta: "拟新增 3 个字段 · 未批准", level: "敏感 L3" }],
+          steps: [
+            { name: "提交申请", meta: "审核管理员", state: "done" },
+            { name: "应用负责人", meta: "已通过", state: "done" },
+            { name: "数据负责人", meta: "已通过", state: "done" },
+            { name: "安全复核", meta: "已驳回", state: "done" },
+            { name: "完成", meta: "未生效", state: "done" }
+          ]
+        }
+      ],
+      processed: [
+        {
+          id: "WF-20260831-0142",
+          title: "供应商风险查询权限新增",
+          app: "供应商准入工作台",
+          appCode: "supplier_onboarding",
+          version: "v2.6.0",
+          type: "权限新增",
+          risk: "medium",
+          riskLabel: "中风险",
+          summary: "新增 1 项 API 与 2 张依赖数据表，审批通过且已生效。",
+          chips: ["API × 1", "数据表 × 2"],
+          node: "流程完成",
+          progress: 5,
+          total: 5,
+          applicant: "叶知秋",
+          submitted: "08-31 08:40",
+          sla: "处理 38分",
+          slaTone: "neutral",
+          status: "已通过",
+          statusTone: "success",
+          effect: "已生效",
+          effectTone: "success",
+          action: "查看记录",
+          actionable: false,
+          purpose: "供应商准入风险核验。",
+          validity: "2026-08-31 至 2027-08-30",
+          changeText: "新增服务与依赖数据表权限。",
+          services: [{ name: "供应商风险查询 API", meta: "API · v2.2.0 · 已生效", badge: "服务授权" }],
+          tables: [{ name: "ads_supplier_risk_profile 等 2 张表", meta: "27 个字段 · 所属供应商范围", level: "敏感 L3" }],
+          steps: [
+            { name: "提交申请", meta: "叶知秋", state: "done" },
+            { name: "应用负责人", meta: "已通过", state: "done" },
+            { name: "数据负责人", meta: "你已通过", state: "done" },
+            { name: "策略下发", meta: "成功", state: "done" },
+            { name: "完成", meta: "已生效", state: "done" }
+          ]
+        },
+        {
+          id: "WF-20260830-0126",
+          title: "订单补偿操作权限申请",
+          app: "订单异常处置 Agent",
+          appCode: "order_recovery_agent",
+          version: "v1.9.0",
+          type: "权限新增",
+          risk: "high",
+          riskLabel: "高风险",
+          summary: "高风险写操作缺少影响预览能力，审核驳回。",
+          chips: ["操作权限 × 1", "缺少影响预览"],
+          node: "流程完成",
+          progress: 5,
+          total: 5,
+          applicant: "彭思齐",
+          submitted: "08-30 14:20",
+          sla: "处理 52分",
+          slaTone: "neutral",
+          status: "已驳回",
+          statusTone: "error",
+          effect: "未下发",
+          effectTone: "neutral",
+          action: "查看记录",
+          actionable: false,
+          purpose: "对异常订单执行补偿。",
+          validity: "未生效",
+          changeText: "申请 execute_order_compensation 操作，因缺少影响预览被驳回。",
+          services: [{ name: "execute_order_compensation", meta: "高风险操作 · 未批准", badge: "操作权限" }],
+          tables: [{ name: "既有数据读取范围", meta: "未发生变更", level: "无变更" }],
+          steps: [
+            { name: "提交申请", meta: "彭思齐", state: "done" },
+            { name: "应用负责人", meta: "已通过", state: "done" },
+            { name: "操作负责人", meta: "你已驳回", state: "done" },
+            { name: "执行处理", meta: "未进入", state: "done" },
+            { name: "完成", meta: "未生效", state: "done" }
+          ]
+        },
+        {
+          id: "WF-20260829-0113",
+          title: "数据应用下线",
+          app: "旧版渠道报表客户端",
+          appCode: "channel_report_legacy",
+          version: "v5.1.4",
+          type: "应用下线",
+          risk: "medium",
+          riskLabel: "中风险",
+          summary: "已撤销全部凭据、权限和网关策略，历史记录保留。",
+          chips: ["凭据已撤销", "授权已撤销"],
+          node: "流程完成",
+          progress: 5,
+          total: 5,
+          applicant: "邱向晨",
+          submitted: "08-29 09:12",
+          sla: "处理 1小时",
+          slaTone: "neutral",
+          status: "已通过",
+          statusTone: "success",
+          effect: "已终止",
+          effectTone: "success",
+          action: "查看记录",
+          actionable: false,
+          purpose: "终止旧版客户端调用资格。",
+          validity: "永久终止，不自动恢复",
+          changeText: "应用下线独立执行，逻辑删除对象并保留全部历史。",
+          services: [{ name: "全部服务与操作权限", meta: "共 11 项 · 已撤销", badge: "已撤销" }],
+          tables: [{ name: "全部依赖数据表权限", meta: "共 8 张表 · 已撤销", level: "已终止" }],
+          steps: [
+            { name: "提交申请", meta: "邱向晨", state: "done" },
+            { name: "应用负责人", meta: "已通过", state: "done" },
+            { name: "权限会签", meta: "你已通过", state: "done" },
+            { name: "下线执行", meta: "成功", state: "done" },
+            { name: "完成", meta: "已终止", state: "done" }
+          ]
+        },
+        {
+          id: "WF-20260828-0102",
+          title: "财务汇总数据权限变更",
+          app: "月度财务分析台",
+          appCode: "finance_monthly_console",
+          version: "v4.2.0",
+          type: "权限变更",
+          risk: "medium",
+          riskLabel: "中风险",
+          summary: "审批通过，但 1 项网关策略下发失败，旧版本继续运行。",
+          chips: ["数据表 × 3", "策略冲突"],
+          node: "流程完成",
+          progress: 5,
+          total: 5,
+          applicant: "孟清和",
+          submitted: "08-28 10:05",
+          sla: "处理 2小时",
+          slaTone: "neutral",
+          status: "已通过",
+          statusTone: "success",
+          effect: "下发失败",
+          effectTone: "error",
+          action: "查看记录",
+          actionable: false,
+          purpose: "增加财务汇总分析维度。",
+          validity: "新版本未生效，旧版本继续运行",
+          changeText: "审批通过与技术下发结果分离；策略冲突导致整体未生效。",
+          services: [{ name: "财务汇总查询 API", meta: "API · v4.2.0 · 等待重新下发", badge: "服务授权" }],
+          tables: [{ name: "ads_finance_monthly_summary 等 3 张表", meta: "41 个字段 · 已批准但未生效", level: "敏感 L3" }],
+          steps: [
+            { name: "提交申请", meta: "孟清和", state: "done" },
+            { name: "应用负责人", meta: "已通过", state: "done" },
+            { name: "数据负责人", meta: "你已通过", state: "done" },
+            { name: "策略下发", meta: "失败", state: "done" },
+            { name: "完成", meta: "整体未生效", state: "done" }
+          ]
+        }
+      ]
+    };
+
+    var activeTab = "todo";
+    var activeRecord = null;
+    var pendingAction = null;
+    var currentState = new URLSearchParams(window.location.search).get("state") || "normal";
+    var tabs = Array.prototype.slice.call(document.querySelectorAll("[role=tab]"));
+    var body = document.getElementById("approval-body");
+    var panel = document.getElementById("approval-panel");
+    var searchInput = document.getElementById("search-input");
+    var typeFilter = document.getElementById("type-filter");
+    var riskFilter = document.getElementById("risk-filter");
+    var statusFilter = document.getElementById("status-filter");
+    var prototypeState = document.getElementById("prototype-state");
+    var drawer = document.getElementById("approval-drawer");
+    var drawerBackdrop = document.getElementById("drawer-backdrop");
+    var modalLayer = document.getElementById("action-modal");
+    var toastTimer = null;
+
+    prototypeState.value = ["normal", "loading", "empty", "error", "permission"].indexOf(currentState) >= 0 ? currentState : "normal";
+
+    function escapeHtml(value) {
+      return String(value == null ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function badge(text, tone) {
+      return '<span class="badge ' + escapeHtml(tone || "neutral") + '"><span class="badge-dot"></span>' + escapeHtml(text) + "</span>";
+    }
+
+    function icon(id, className) {
+      return '<svg class="icon ' + (className || "") + '" aria-hidden="true"><use href="#' + id + '"></use></svg>';
+    }
+
+    function tabLabel(tab) {
+      if (tab === "todo") return "我的待办";
+      if (tab === "initiated") return "我发起的";
+      return "已处理";
+    }
+
+    function updateCounts() {
+      document.getElementById("count-todo").textContent = datasets.todo.length;
+      document.getElementById("count-initiated").textContent = datasets.initiated.length;
+      document.getElementById("count-processed").textContent = datasets.processed.length;
+    }
+
+    function filteredRows() {
+      var query = searchInput.value.trim().toLowerCase();
+      return datasets[activeTab].filter(function (row) {
+        var haystack = [row.id, row.title, row.app, row.appCode, row.summary, row.type, row.applicant].join(" ").toLowerCase();
+        return (!query || haystack.indexOf(query) >= 0)
+          && (!typeFilter.value || row.type === typeFilter.value)
+          && (!riskFilter.value || row.risk === riskFilter.value)
+          && (!statusFilter.value || row.status === statusFilter.value);
+      });
+    }
+
+    function skeletonRows() {
+      var rows = "";
+      for (var index = 0; index < 5; index += 1) {
+        rows += '<tr aria-hidden="true">';
+        for (var cell = 0; cell < 7; cell += 1) {
+          rows += '<td><div class="skeleton wide"></div><div class="skeleton medium"></div></td>';
+        }
+        rows += "</tr>";
+      }
+      return rows;
+    }
+
+    function stateRow(title, description, actionLabel, stateAction, iconId) {
+      return '<tr class="state-row"><td colspan="7"><div class="state-box">'
+        + '<span class="state-icon">' + icon(iconId || "i-info", "lg") + "</span>"
+        + "<strong>" + escapeHtml(title) + "</strong>"
+        + "<span>" + escapeHtml(description) + "</span>"
+        + (actionLabel ? '<button class="button" type="button" data-state-action="' + escapeHtml(stateAction) + '">' + escapeHtml(actionLabel) + "</button>" : "")
+        + "</div></td></tr>";
+    }
+
+    function renderRows() {
+      panel.setAttribute("aria-labelledby", "tab-" + activeTab);
+      if (currentState === "loading") {
+        body.innerHTML = skeletonRows();
+        document.getElementById("result-total").textContent = "正在加载审批实例";
+        return;
+      }
+      if (currentState === "empty") {
+        body.innerHTML = stateRow("暂无申请事项", "当前租户还没有数据应用权限审批工作流实例。", "", "", "i-approval");
+        document.getElementById("result-total").textContent = "共 0 条";
+        return;
+      }
+      if (currentState === "error") {
+        body.innerHTML = stateRow("审批列表加载失败", "工作流服务暂时不可用，请稍后重试。", "重新加载", "retry", "i-warning");
+        document.getElementById("result-total").textContent = "加载失败";
+        return;
+      }
+      if (currentState === "permission") {
+        body.innerHTML = stateRow("无权查看审批事项", "当前账号没有审批中心的查看权限，请联系租户管理员申请相应角色。", "", "", "i-key");
+        document.getElementById("result-total").textContent = "无权限";
+        return;
+      }
+
+      var rows = filteredRows();
+      if (!rows.length) {
+        body.innerHTML = stateRow("未找到匹配的申请", "请调整搜索词或筛选条件后重试。", "重置筛选", "reset", "i-search");
+        document.getElementById("result-total").textContent = "共 0 条";
+        return;
+      }
+
+      body.innerHTML = rows.map(function (row) {
+        var progressWidth = Math.round((row.progress / row.total) * 100);
+        var effect = row.effect && row.effect !== "—"
+          ? '<span class="effect-label">生效：' + badge(row.effect, row.effectTone || "neutral") + "</span>"
+          : "";
+        return "<tr>"
+          + '<td><div class="request-title">' + escapeHtml(row.title) + '</div><div class="meta-line"><span class="mono">' + escapeHtml(row.id) + "</span>" + badge(row.type, "neutral") + "</div></td>"
+          + '<td><div class="app-name">' + escapeHtml(row.app) + '</div><div class="meta-line mono">' + escapeHtml(row.appCode) + " · " + escapeHtml(row.version) + "</div></td>"
+          + '<td><div class="change-summary">' + escapeHtml(row.summary) + '</div><div class="chip-row">' + badge(row.riskLabel, row.risk === "high" ? "error" : row.risk === "medium" ? "warning" : "neutral") + row.chips.map(function (chip) { return '<span class="chip">' + escapeHtml(chip) + "</span>"; }).join("") + "</div></td>"
+          + '<td class="flow-cell"><div class="flow-head"><span class="flow-node">' + escapeHtml(row.node) + '</span><span class="flow-count">' + row.progress + "/" + row.total + '</span></div><div class="progress" aria-label="流程进度 ' + progressWidth + '%"><span style="width:' + progressWidth + '%"></span></div><div class="meta-line"><span class="sla ' + escapeHtml(row.slaTone) + '">' + icon("i-clock", "sm") + escapeHtml(row.sla) + "</span></div></td>"
+          + '<td><div class="app-name">' + escapeHtml(row.applicant) + '</div><div class="meta-line">' + escapeHtml(row.submitted) + "</div></td>"
+          + '<td><div class="status-stack">' + badge(row.status, row.statusTone) + effect + "</div></td>"
+          + '<td><button class="text-button" type="button" data-view-id="' + escapeHtml(row.id) + '">' + escapeHtml(row.action) + icon("i-chevron", "sm") + "</button></td>"
+          + "</tr>";
+      }).join("");
+      document.getElementById("result-total").textContent = "共 " + rows.length + " 条";
+    }
+
+    function selectTab(selected, moveFocus) {
+      tabs.forEach(function (tab) {
+        var isSelected = tab === selected;
+        tab.setAttribute("aria-selected", String(isSelected));
+        tab.tabIndex = isSelected ? 0 : -1;
+      });
+      activeTab = selected.getAttribute("data-tab");
+      searchInput.value = "";
+      typeFilter.value = "";
+      riskFilter.value = "";
+      statusFilter.value = "";
+      renderRows();
+      if (moveFocus) selected.focus();
+    }
+
+    function findRecord(id) {
+      var groups = Object.keys(datasets);
+      for (var groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
+        var group = datasets[groups[groupIndex]];
+        for (var recordIndex = 0; recordIndex < group.length; recordIndex += 1) {
+          if (group[recordIndex].id === id) return group[recordIndex];
+        }
+      }
+      return null;
+    }
+
+    function renderSummaryItem(label, value) {
+      return '<div class="summary-item"><div class="summary-label">' + escapeHtml(label) + '</div><div class="summary-value" title="' + escapeHtml(value) + '">' + escapeHtml(value) + "</div></div>";
+    }
+
+    function openDrawer(record) {
+      activeRecord = record;
+      document.getElementById("drawer-type").textContent = record.type;
+      document.getElementById("drawer-id").textContent = record.id;
+      document.getElementById("drawer-title").textContent = record.title;
+      document.getElementById("drawer-summary").innerHTML =
+        renderSummaryItem("数据应用", record.app)
+        + renderSummaryItem("应用版本", record.version)
+        + renderSummaryItem("发起人", record.applicant)
+        + renderSummaryItem("当前节点", record.node)
+        + renderSummaryItem("审批状态", record.status)
+        + renderSummaryItem("处理时限", record.sla);
+      document.getElementById("drawer-flow-note").textContent = record.progress + " / " + record.total + " 个节点";
+      document.getElementById("drawer-flow").innerHTML = record.steps.map(function (step, index) {
+        var dotContent = step.state === "done" ? icon("i-check", "sm") : String(index + 1);
+        return '<div class="flow-step ' + escapeHtml(step.state) + '"><div class="step-dot">' + dotContent + '</div><div class="step-name" title="' + escapeHtml(step.name) + '">' + escapeHtml(step.name) + '</div><div class="step-meta" title="' + escapeHtml(step.meta) + '">' + escapeHtml(step.meta) + "</div></div>";
+      }).join("");
+      var riskTone = record.risk === "high" ? "error" : record.risk === "medium" ? "warning" : "neutral";
+      document.getElementById("drawer-risk").className = "badge " + riskTone;
+      document.getElementById("drawer-risk").innerHTML = '<span class="badge-dot"></span>' + escapeHtml(record.riskLabel);
+      document.getElementById("drawer-changes").innerHTML =
+        '<div class="change-row"><div class="change-label">申请目的</div><div class="change-value">' + escapeHtml(record.purpose) + "</div></div>"
+        + '<div class="change-row"><div class="change-label">本次变更</div><div class="change-value">' + escapeHtml(record.changeText) + "</div></div>"
+        + '<div class="change-row"><div class="change-label">授权期限</div><div class="change-value">' + escapeHtml(record.validity) + "</div></div>"
+        + '<div class="change-row"><div class="change-label">生效原则</div><div class="change-value">审批通过后进入策略下发；任一必需项失败时新版本整体不生效。</div></div>';
+      document.getElementById("drawer-services").innerHTML = record.services.map(function (item) {
+        return '<article class="permission-card"><div class="permission-head"><div><div class="permission-name">' + escapeHtml(item.name) + '</div><div class="permission-desc">' + escapeHtml(item.meta) + '</div></div>' + badge(item.badge, "info") + "</div></article>";
+      }).join("");
+      document.getElementById("drawer-tables").innerHTML = record.tables.map(function (item) {
+        var tone = item.level.indexOf("L3") >= 0 ? "warning" : "neutral";
+        return '<article class="permission-card"><div class="permission-head"><div><div class="permission-name mono">' + escapeHtml(item.name) + '</div><div class="permission-desc">' + escapeHtml(item.meta) + '</div></div>' + badge(item.level, tone) + "</div></article>";
+      }).join("");
+      document.getElementById("drawer-alert-text").textContent = record.risk === "high"
+        ? "该实例包含高敏数据或高风险操作，请核对用途、范围、依赖闭包与人工确认条件。"
+        : "请确认申请目的、固定服务版本、数据范围和有效期限相互匹配。";
+      renderDrawerFooter(record);
+      drawer.classList.add("open");
+      drawerBackdrop.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      document.getElementById("drawer-close").focus();
+    }
+
+    function renderDrawerFooter(record) {
+      var footer = document.getElementById("drawer-footer");
+      if (activeTab === "todo" && record.actionable) {
+        footer.innerHTML =
+          '<button class="button" type="button" data-drawer-action="transfer">转交</button>'
+          + '<button class="button danger" type="button" data-drawer-action="reject">驳回</button>'
+          + '<button class="button primary" type="button" data-drawer-action="approve">批准</button>';
+      } else {
+        footer.innerHTML = '<button class="button" type="button" data-drawer-action="close">关闭</button>';
+      }
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove("open");
+      drawerBackdrop.classList.remove("open");
+      drawer.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      activeRecord = null;
+    }
+
+    function openModal(action) {
+      pendingAction = action;
+      var title = document.getElementById("modal-title");
+      var modalBody = document.getElementById("modal-body");
+      var confirm = document.getElementById("modal-confirm");
+      confirm.className = "button primary";
+      if (action === "approve") {
+        title.textContent = "确认批准申请";
+        confirm.textContent = "确认批准";
+        modalBody.innerHTML = "批准后工作流将继续进入后续节点；全部审批完成后才会触发策略下发。"
+          + '<label class="confirm-check"><input type="checkbox" id="approve-check"><span>我已核对服务固定版本、依赖数据表范围、使用目的和有效期限。</span></label>'
+          + '<span class="field-error" id="modal-error">请先确认已完成范围核对。</span>';
+      } else if (action === "reject") {
+        title.textContent = "驳回申请";
+        confirm.textContent = "确认驳回";
+        confirm.className = "button danger";
+        modalBody.innerHTML = "驳回后当前数据应用版本不会生效，申请人可以修改后重新提交。"
+          + '<div class="form-field"><label for="action-note">驳回原因</label><textarea id="action-note" placeholder="请说明不通过的具体范围和修改建议"></textarea><span class="field-error" id="modal-error">请填写至少 6 个字的驳回原因。</span></div>';
+      } else {
+        title.textContent = "转交审批任务";
+        confirm.textContent = "确认转交";
+        modalBody.innerHTML = "转交只改变当前审批任务处理人，不改变工作流实例、申请快照或审批策略。"
+          + '<div class="form-field"><label for="transfer-user">转交给</label><select id="transfer-user"><option value="">请选择具备审批资格的人员</option><option>赵清禾（数据负责人）</option><option>陆远川（数据负责人）</option></select><span class="field-error" id="modal-error">请选择转交人员。</span></div>';
+      }
+      modalLayer.classList.add("open");
+      modalLayer.setAttribute("aria-hidden", "false");
+      document.getElementById("modal-cancel").focus();
+    }
+
+    function closeModal() {
+      modalLayer.classList.remove("open");
+      modalLayer.setAttribute("aria-hidden", "true");
+      pendingAction = null;
+    }
+
+    function validateModal() {
+      var error = document.getElementById("modal-error");
+      if (pendingAction === "approve") {
+        var checked = document.getElementById("approve-check").checked;
+        error.classList.toggle("show", !checked);
+        return checked;
+      }
+      if (pendingAction === "reject") {
+        var note = document.getElementById("action-note").value.trim();
+        var validNote = note.length >= 6;
+        error.classList.toggle("show", !validNote);
+        return validNote;
+      }
+      var selected = document.getElementById("transfer-user").value;
+      error.classList.toggle("show", !selected);
+      return !!selected;
+    }
+
+    function finishAction() {
+      if (!validateModal() || !activeRecord) return;
+      var message = "";
+      if (pendingAction === "approve") {
+        activeRecord.status = "审批中";
+        activeRecord.statusTone = "info";
+        activeRecord.node = "等待后续节点";
+        activeRecord.actionable = false;
+        activeRecord.action = "查看详情";
+        message = "已批准当前节点，工作流继续流转";
+      } else if (pendingAction === "reject") {
+        activeRecord.status = "已驳回";
+        activeRecord.statusTone = "error";
+        activeRecord.node = "流程完成";
+        activeRecord.actionable = false;
+        activeRecord.action = "查看记录";
+        message = "已驳回申请，审批意见已留痕";
+      } else {
+        activeRecord.node = document.getElementById("transfer-user").value;
+        activeRecord.actionable = false;
+        activeRecord.action = "查看详情";
+        message = "审批任务已转交";
+      }
+      closeModal();
+      closeDrawer();
+      renderRows();
+      showToast(message);
+    }
+
+    function showToast(message) {
+      var toast = document.getElementById("toast");
+      document.getElementById("toast-text").textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(function () { toast.classList.remove("show"); }, 2600);
+    }
+
+    tabs.forEach(function (tab, index) {
+      tab.addEventListener("click", function () { selectTab(tab, false); });
+      tab.addEventListener("keydown", function (event) {
+        var nextIndex = null;
+        if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+        if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === "Home") nextIndex = 0;
+        if (event.key === "End") nextIndex = tabs.length - 1;
+        if (nextIndex === null) return;
+        event.preventDefault();
+        selectTab(tabs[nextIndex], true);
+      });
+    });
+
+    [searchInput, typeFilter, riskFilter, statusFilter].forEach(function (control) {
+      control.addEventListener(control === searchInput ? "input" : "change", function () {
+        currentState = "normal";
+        prototypeState.value = "normal";
+        renderRows();
+      });
+    });
+
+    document.getElementById("reset-button").addEventListener("click", function () {
+      searchInput.value = "";
+      typeFilter.value = "";
+      riskFilter.value = "";
+      statusFilter.value = "";
+      currentState = "normal";
+      prototypeState.value = "normal";
+      renderRows();
+    });
+
+    prototypeState.addEventListener("change", function () {
+      currentState = prototypeState.value;
+      renderRows();
+    });
+
+    document.getElementById("refresh-button").addEventListener("click", function () {
+      currentState = "loading";
+      prototypeState.value = "loading";
+      renderRows();
+      window.setTimeout(function () {
+        currentState = "normal";
+        prototypeState.value = "normal";
+        renderRows();
+        showToast("审批列表已刷新");
+      }, 700);
+    });
+
+    body.addEventListener("click", function (event) {
+      var viewButton = event.target.closest("[data-view-id]");
+      if (viewButton) {
+        var record = findRecord(viewButton.getAttribute("data-view-id"));
+        if (record) openDrawer(record);
+        return;
+      }
+      var stateButton = event.target.closest("[data-state-action]");
+      if (!stateButton) return;
+      if (stateButton.getAttribute("data-state-action") === "reset") {
+        document.getElementById("reset-button").click();
+      } else {
+        currentState = "loading";
+        prototypeState.value = "loading";
+        renderRows();
+        window.setTimeout(function () {
+          currentState = "normal";
+          prototypeState.value = "normal";
+          renderRows();
+          showToast("审批列表已重新加载");
+        }, 700);
+      }
+    });
+
+    document.getElementById("drawer-close").addEventListener("click", closeDrawer);
+    drawerBackdrop.addEventListener("click", closeDrawer);
+    document.getElementById("drawer-footer").addEventListener("click", function (event) {
+      var button = event.target.closest("[data-drawer-action]");
+      if (!button) return;
+      var action = button.getAttribute("data-drawer-action");
+      if (action === "close") closeDrawer();
+      else openModal(action);
+    });
+
+    document.getElementById("modal-cancel").addEventListener("click", closeModal);
+    document.getElementById("modal-confirm").addEventListener("click", finishAction);
+    modalLayer.addEventListener("click", function (event) {
+      if (event.target === modalLayer) closeModal();
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key !== "Escape") return;
+      if (modalLayer.classList.contains("open")) closeModal();
+      else if (drawer.classList.contains("open")) closeDrawer();
+    });
+
+    updateCounts();
+    renderRows();
+  </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # 服务运监：分类指标与交互说明
 
-日期：2026-08-28。原型：`prototypes/runtime-management.html`。
+日期：2026-08-28。原型：`prototypes/archive/2026-09-02/runtime-management.html`。
 
 ## 页面与对象
 

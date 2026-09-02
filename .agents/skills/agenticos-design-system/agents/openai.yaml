@@ -1,0 +1,7 @@
+interface:
+  display_name: "AgenticOS Design System"
+  short_description: "按目标证据设计、迁移和审查 AgenticOS 桌面页面"
+  brand_color: "#5B6CF0"
+  default_prompt: "使用 $agenticos-design-system 设计、迁移或审查这个 AgenticOS 桌面页面。"
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,184 @@
+/**
+ * AgenticOS Design System v1
+ * Evidence baseline: 1440x900 desktop, light theme.
+ * This file is the canonical numeric source. Do not duplicate these values in page CSS.
+ */
+:root {
+  color-scheme: light;
+
+  /* Typography */
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-metric: 28px;
+  --line-height-tight: 1.25;
+  --line-height-title: 1.4;
+  --line-height-body: 1.5;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Surfaces and text */
+  --color-bg: #f0f2f8;
+  --color-bg-hover: #e8ebf5;
+  --color-card: #ffffff;
+  --color-card-elevated: #f5f3ff;
+  --color-sidebar-bg: #fafafe;
+  --color-sidebar-hover: #f0edff;
+  --color-border: #e2e4ee;
+  --color-border-strong: #cfd3e2;
+  --color-text: #1a1d2e;
+  --color-text-secondary: #555b6e;
+  --color-text-tertiary: #8b8fa3;
+  --color-text-inverse: #ffffff;
+
+  /* Brand and interaction */
+  --color-primary: #5b6cf0;
+  --color-primary-hover: #4a5ad4;
+  --color-primary-active: #3f4fbd;
+  --color-primary-light: #f0edff;
+  --color-primary-bg: var(--color-primary-light);
+  --color-focus-ring: rgba(91, 108, 240, 0.24);
+  --color-primary-glow: rgba(91, 108, 240, 0.3);
+  --color-primary-glow-sm: rgba(91, 108, 240, 0.15);
+  --color-primary-glow-xs: rgba(91, 108, 240, 0.08);
+  --color-shadow-effect: rgba(91, 108, 240, 0.25);
+  --color-shadow-effect-sm: rgba(91, 108, 240, 0.14);
+  --color-shadow-effect-xs: rgba(91, 108, 240, 0.1);
+  --gradient-primary: linear-gradient(135deg, #5b7cfa 0%, #8b5cf6 100%);
+  --gradient-primary-subtle: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+  --gradient-sidebar-active: linear-gradient(90deg, rgba(91, 108, 240, 0.12) 0%, rgba(139, 92, 246, 0.06) 100%);
+
+  /* Semantic states */
+  --color-info: #5b6cf0;
+  --color-info-bg: #e8e5ff;
+  --color-info-light: var(--color-info-bg);
+  --color-success: #10b981;
+  --color-success-bg: #d1fae5;
+  --color-success-light: var(--color-success-bg);
+  --color-warning: #f59e0b;
+  --color-warning-bg: #fef3c7;
+  --color-warning-light: var(--color-warning-bg);
+  --color-error: #ef4444;
+  --color-error-bg: #fee2e2;
+  --color-error-light: var(--color-error-bg);
+  --color-state-success: var(--color-success);
+  --color-disabled-bg: #f3f4f6;
+  --color-disabled-text: #9ca3af;
+  --color-overlay: rgba(15, 23, 42, 0.55);
+  --color-modal-overlay: var(--color-overlay);
+
+  /* Shared implementation semantics */
+  --color-scroll-thumb: #c4c0d6;
+  --color-scroll-thumb-hover: #9e99b8;
+  --color-shadow-fixed: rgba(0, 0, 0, 0.08);
+  --color-bubble-user-bg: linear-gradient(135deg, #f0edff 0%, #e8e5ff 100%);
+  --color-bubble-user-text: #2d2a5e;
+  --color-bubble-user-border: #d4cff5;
+  --color-suggestion-text: #4a4a6a;
+  --color-suggestion-btn-border: #d0d0e0;
+
+  /* Data visualization */
+  --chart-1: #5b6cf0;
+  --chart-2: #5ad8a6;
+  --chart-3: #f6bd16;
+  --chart-4: #e8684a;
+  --chart-5: #6dc8ec;
+  --chart-6: #9270ca;
+  --chart-7: #ff9d4d;
+  --chart-8: #269a99;
+
+  /* 4px spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Shape and elevation */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 999px;
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-card: 0 8px 24px rgba(91, 108, 240, 0.055);
+  --shadow-card-lg: 0 14px 36px rgba(91, 108, 240, 0.09);
+  --shadow-card-xl: 0 24px 60px rgba(91, 108, 240, 0.12);
+  --shadow-modal: 0 24px 60px rgba(15, 23, 42, 0.18);
+  --glow-primary: 0 0 20px rgba(91, 108, 240, 0.3), 0 0 40px rgba(139, 92, 246, 0.15);
+  --glow-primary-sm: 0 0 12px rgba(91, 108, 240, 0.25);
+  --glow-border: 0 0 0 1px rgba(91, 108, 240, 0.3);
+
+  /* Desktop shell, inferred consistently from 41 Playwright states */
+  --shell-topbar-height: 56px;
+  --shell-sidebar-width: 240px;
+  --shell-page-inset: 20px;
+  --shell-min-width: 1180px;
+  --shell-reference-width: 1440px;
+  --shell-reference-height: 900px;
+
+  /* Controls */
+  --control-height-sm: 32px;
+  --control-height-md: 40px;
+  --control-height-lg: 48px;
+  --status-badge-padding-block: 2px;
+  --status-badge-padding-inline: 10px;
+  --icon-size-sm: 14px;
+  --icon-size-md: 16px;
+  --icon-size-lg: 20px;
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-normal: 180ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -7,7 +7,7 @@ const vm = require('node:vm');
 // Runs the real inline program. DOM output sinks are substituted, not a browser:
 // these tests cover selection/rendering/handlers, not visual layout or CSS geometry.
 function load() {
-  const html = fs.readFileSync(path.join(__dirname, '..', 'runtime-management.html'), 'utf8');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'archive', '2026-09-02', 'runtime-management.html'), 'utf8');
   const elements = new Map();
   const listeners = {};
   function element(id) {

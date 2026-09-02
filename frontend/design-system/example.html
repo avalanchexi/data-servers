@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgenticOS 设计系统综合示例</title>
+  <link rel="stylesheet" href="./tokens.css">
+  <style>
+    body {
+      min-width: var(--shell-min-width);
+      height: 100vh;
+      overflow: hidden;
+      font-size: var(--font-size-sm);
+    }
+
+    button,
+    input,
+    select {
+      border: 0;
+    }
+
+    .icon {
+      width: var(--icon-size-md);
+      height: var(--icon-size-md);
+      flex: 0 0 auto;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+
+    .topbar {
+      position: fixed;
+      z-index: 20;
+      inset: 0 0 auto;
+      display: flex;
+      align-items: center;
+      height: var(--shell-topbar-height);
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-sidebar-bg);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      width: var(--shell-sidebar-width);
+      padding-inline: var(--space-5);
+      gap: var(--space-3);
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-bold);
+    }
+
+    .brand-mark {
+      display: grid;
+      width: var(--space-8);
+      height: var(--space-8);
+      border: 5px solid var(--color-primary);
+      border-right-color: transparent;
+      border-radius: var(--radius-pill);
+      place-items: center;
+      transform: rotate(-25deg);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      padding-right: var(--space-5);
+      gap: var(--space-4);
+    }
+
+    .global-search {
+      display: flex;
+      align-items: center;
+      width: 272px;
+      height: var(--control-height-sm);
+      padding-inline: var(--space-3);
+      gap: var(--space-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-card);
+      color: var(--color-text-tertiary);
+    }
+
+    .global-search input {
+      min-width: 0;
+      flex: 1;
+      outline: 0;
+      background: transparent;
+      color: var(--color-text);
+      font-size: var(--font-size-xs);
+    }
+
+    .top-icon {
+      display: grid;
+      width: var(--control-height-sm);
+      height: var(--control-height-sm);
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--color-text-secondary);
+      place-items: center;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      color: var(--color-text);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .avatar {
+      display: grid;
+      width: var(--control-height-sm);
+      height: var(--control-height-sm);
+      border-radius: var(--radius-pill);
+      background: var(--gradient-primary);
+      color: var(--color-text-inverse);
+      place-items: center;
+    }
+
+    .sidebar {
+      position: fixed;
+      z-index: 10;
+      top: var(--shell-topbar-height);
+      bottom: 0;
+      left: 0;
+      width: var(--shell-sidebar-width);
+      overflow: auto;
+      border-right: 1px solid var(--color-border);
+      background: var(--color-sidebar-bg);
+      padding: var(--space-4) var(--space-3);
+    }
+
+    .nav-section {
+      margin: var(--space-1) 0;
+    }
+
+    .nav-item {
+      display: flex;
+      width: 100%;
+      height: var(--control-height-md);
+      align-items: center;
+      padding-inline: var(--space-3);
+      gap: var(--space-3);
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--color-text-secondary);
+      text-align: left;
+    }
+
+    .nav-item.active {
+      background: var(--gradient-sidebar-active);
+      color: var(--color-primary);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .nav-item.sub {
+      width: calc(100% - var(--space-8));
+      margin-left: var(--space-8);
+      padding-left: var(--space-3);
+      font-size: var(--font-size-xs);
+    }
+
+    .nav-divider {
+      height: 1px;
+      margin: var(--space-3) 0;
+      background: var(--color-border);
+    }
+
+    .workspace {
+      position: fixed;
+      top: var(--shell-topbar-height);
+      right: 0;
+      bottom: 0;
+      left: var(--shell-sidebar-width);
+      padding: var(--shell-page-inset);
+      background: var(--color-bg);
+    }
+
+    .page-card {
+      display: flex;
+      height: 100%;
+      overflow: hidden;
+      flex-direction: column;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      background: var(--color-card);
+      box-shadow: var(--shadow-card);
+    }
+
+    .page-header {
+      display: flex;
+      min-height: 78px;
+      align-items: center;
+      padding: var(--space-4) var(--space-6);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .page-icon {
+      display: grid;
+      width: var(--control-height-md);
+      height: var(--control-height-md);
+      margin-right: var(--space-4);
+      border-radius: var(--radius-lg);
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      place-items: center;
+    }
+
+    .page-icon .icon {
+      width: var(--icon-size-lg);
+      height: var(--icon-size-lg);
+    }
+
+    .page-title {
+      margin: 0;
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--line-height-title);
+    }
+
+    .page-description {
+      margin: var(--space-1) 0 0;
+      color: var(--color-text-tertiary);
+      line-height: var(--line-height-body);
+    }
+
+    .header-actions {
+      display: flex;
+      margin-left: auto;
+      gap: var(--space-2);
+    }
+
+    .button {
+      display: inline-flex;
+      height: var(--control-height-sm);
+      align-items: center;
+      justify-content: center;
+      padding-inline: var(--space-3);
+      gap: var(--space-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-card);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      transition: background var(--duration-fast) var(--ease-standard);
+    }
+
+    .button:hover {
+      background: var(--color-bg-hover);
+    }
+
+    .button.primary {
+      border-color: var(--color-primary);
+      background: var(--gradient-primary);
+      color: var(--color-text-inverse);
+    }
+
+    .button.primary:hover {
+      box-shadow: var(--glow-primary-sm);
+    }
+
+    .tabs {
+      display: flex;
+      height: var(--control-height-lg);
+      padding-inline: var(--space-6);
+      gap: var(--space-8);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .tab {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: transparent;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      font-size: var(--font-size-sm);
+    }
+
+    .tab[aria-selected="true"] {
+      color: var(--color-primary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .tab[aria-selected="true"]::after {
+      position: absolute;
+      right: 0;
+      bottom: -1px;
+      left: 0;
+      height: 3px;
+      background: var(--color-primary);
+      content: "";
+    }
+
+    .page-content {
+      min-height: 0;
+      overflow: auto;
+      flex: 1;
+      padding: var(--space-5) var(--space-6) var(--space-6);
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-5);
+    }
+
+    .metric-card {
+      padding: var(--space-4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      background: var(--color-card);
+    }
+
+    .metric-label {
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+    }
+
+    .metric-value {
+      margin-top: var(--space-2);
+      font-size: var(--font-size-metric);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--line-height-tight);
+    }
+
+    .metric-note {
+      margin-top: var(--space-2);
+      color: var(--color-success);
+      font-size: var(--font-size-xs);
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--space-4);
+      gap: var(--space-2);
+    }
+
+    .field,
+    .select {
+      height: var(--control-height-sm);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      outline: 0;
+      background: var(--color-card);
+      color: var(--color-text);
+      font-size: var(--font-size-xs);
+    }
+
+    .field {
+      width: 240px;
+      padding-inline: var(--space-3);
+    }
+
+    .select {
+      min-width: 132px;
+      padding-inline: var(--space-3);
+    }
+
+    .field:focus,
+    .select:focus {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px var(--color-focus-ring);
+    }
+
+    .toolbar-right {
+      display: flex;
+      margin-left: auto;
+      gap: var(--space-2);
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+    }
+
+    table {
+      width: 100%;
+      min-width: 900px;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th,
+    td {
+      height: var(--control-height-lg);
+      padding-inline: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      white-space: nowrap;
+    }
+
+    th {
+      background: var(--color-card-elevated);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+    }
+
+    td {
+      color: var(--color-text-secondary);
+      font-size: var(--font-size-sm);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tbody tr:hover {
+      background: var(--color-bg-hover);
+    }
+
+    .service-name {
+      color: var(--color-text);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .service-id {
+      margin-top: var(--space-1);
+      color: var(--color-text-tertiary);
+      font-family: var(--font-mono);
+      font-size: var(--font-size-xs);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--status-badge-padding-block) var(--status-badge-padding-inline);
+      border-radius: var(--radius-pill);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .badge.success {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .badge.warning {
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+    }
+
+    .badge.info {
+      background: var(--color-info-bg);
+      color: var(--color-info);
+    }
+
+    .text-button {
+      padding: var(--space-1) var(--space-2);
+      background: transparent;
+      color: var(--color-primary);
+      cursor: pointer;
+      font-size: var(--font-size-xs);
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: var(--space-4);
+      gap: var(--space-2);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-size-xs);
+    }
+
+    .page-number {
+      display: grid;
+      width: var(--control-height-sm);
+      height: var(--control-height-sm);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-card);
+      color: var(--color-text-secondary);
+      place-items: center;
+    }
+
+    .page-number.current {
+      border-color: var(--color-primary);
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+    }
+
+    .panel-message {
+      display: none;
+      min-height: 360px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      color: var(--color-text-tertiary);
+      text-align: center;
+    }
+
+    .panel-message.active {
+      display: flex;
+    }
+
+    .registry-panel[hidden] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"></span><span>AgenticOS</span></div>
+    <div class="top-actions">
+      <label class="global-search">
+        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+        <input type="search" placeholder="搜索菜单、资产或能力">
+      </label>
+      <button class="top-icon" aria-label="通知">
+        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
+      </button>
+      <div class="profile"><span class="avatar">何</span><span>何峰</span></div>
+    </div>
+  </header>
+
+  <aside class="sidebar" aria-label="主导航">
+    <nav>
+      <div class="nav-section"><button class="nav-item"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"></rect><path d="M8 9h8M8 13h5"></path></svg>智能体</button></div>
+      <div class="nav-section"><button class="nav-item"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 4 7v10l8 4 8-4V7z"></path><path d="m4 7 8 4 8-4"></path></svg>能力中心</button></div>
+      <div class="nav-divider"></div>
+      <div class="nav-section"><button class="nav-item active"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="7" cy="7" r="2"></circle><circle cx="17" cy="7" r="2"></circle><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>资产中心</button></div>
+      <div class="nav-section"><button class="nav-item sub">资产总览</button></div>
+      <div class="nav-section"><button class="nav-item sub">数据地图</button></div>
+      <div class="nav-section"><button class="nav-item sub">资产目录</button></div>
+      <div class="nav-section"><button class="nav-item sub">数据标准</button></div>
+      <div class="nav-section"><button class="nav-item sub">数据质量</button></div>
+      <div class="nav-section"><button class="nav-item sub active">数据服务</button></div>
+      <div class="nav-divider"></div>
+      <div class="nav-section"><button class="nav-item"><svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19 12a7 7 0 0 0-.1-1l2-1-2-4-2 1a7 7 0 0 0-2-1l-.3-2h-5L9 6a7 7 0 0 0-2 1L5 6 3 10l2 1a7 7 0 0 0 0 2l-2 1 2 4 2-1a7 7 0 0 0 2 1l.5 2h5l.5-2a7 7 0 0 0 2-1l2 1 2-4-2-1a7 7 0 0 0 .1-1Z"></path></svg>系统管理</button></div>
+    </nav>
+  </aside>
+
+  <main class="workspace">
+    <section class="page-card" aria-labelledby="page-title">
+      <header class="page-header">
+        <span class="page-icon" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="7" ry="3"></ellipse><path d="M5 5v7c0 1.7 3.1 3 7 3s7-1.3 7-3V5"></path><path d="M5 12v7c0 1.7 3.1 3 7 3s7-1.3 7-3v-7"></path></svg></span>
+        <div>
+          <h1 class="page-title" id="page-title">数据服务</h1>
+          <p class="page-description">管理服务注册、网关授权、运行监控和域级设置。</p>
+        </div>
+        <div class="header-actions">
+          <button class="button">导出清单</button>
+          <button class="button primary"><span aria-hidden="true">＋</span>注册服务</button>
+        </div>
+      </header>
+
+      <div class="tabs" role="tablist" aria-label="数据服务任务">
+        <button class="tab" id="tab-market" role="tab" aria-selected="false" aria-controls="panel-market" data-panel="market" tabindex="-1">服务集市</button>
+        <button class="tab" id="tab-registry" role="tab" aria-selected="true" aria-controls="panel-registry" data-panel="registry">服务注册</button>
+        <button class="tab" id="tab-auth" role="tab" aria-selected="false" aria-controls="panel-auth" data-panel="auth" tabindex="-1">授权管理</button>
+        <button class="tab" id="tab-stats" role="tab" aria-selected="false" aria-controls="panel-stats" data-panel="stats" tabindex="-1">调用统计</button>
+        <button class="tab" id="tab-settings" role="tab" aria-selected="false" aria-controls="panel-settings" data-panel="settings" tabindex="-1">设置</button>
+      </div>
+
+      <div class="page-content">
+        <div class="registry-panel" id="panel-registry" role="tabpanel" aria-labelledby="tab-registry" data-panel-content="registry">
+          <section class="metrics" aria-label="服务指标">
+            <article class="metric-card"><div class="metric-label">已上线服务</div><div class="metric-value">128</div><div class="metric-note">较上月新增 12</div></article>
+            <article class="metric-card"><div class="metric-label">待审批</div><div class="metric-value">7</div><div class="metric-note">其中 2 项即将超时</div></article>
+            <article class="metric-card"><div class="metric-label">今日调用</div><div class="metric-value">24.8万</div><div class="metric-note">成功率 99.92%</div></article>
+            <article class="metric-card"><div class="metric-label">授权应用</div><div class="metric-value">36</div><div class="metric-note">覆盖 8 个业务域</div></article>
+          </section>
+
+          <div class="toolbar">
+            <input class="field" type="search" placeholder="搜索服务名称或编码" aria-label="搜索服务">
+            <select class="select" aria-label="服务状态"><option>全部状态</option><option>已上线</option><option>待审批</option><option>已下线</option></select>
+            <select class="select" aria-label="服务类型"><option>全部类型</option><option>API</option><option>AI 能力</option><option>MCP</option></select>
+            <div class="toolbar-right"><button class="button">刷新</button><button class="button" disabled>批量下线</button></div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>服务</th><th>类型</th><th>所属域</th><th>网关状态</th><th>授权应用</th><th>最近发布</th><th>操作</th></tr></thead>
+              <tbody>
+                <tr><td><div class="service-name">客户风险画像查询</div><div class="service-id">risk_profile_query_v3</div></td><td>API</td><td>客户经营</td><td><span class="badge success">已上线</span></td><td>12</td><td>2026-08-31 16:20</td><td><button class="text-button">查看</button><button class="text-button">授权</button></td></tr>
+                <tr><td><div class="service-name">自然语言指标问答</div><div class="service-id">metric_qa_agent</div></td><td>AI 能力</td><td>经营分析</td><td><span class="badge info">审批中</span></td><td>—</td><td>2026-08-31 10:42</td><td><button class="text-button">查看</button></td></tr>
+                <tr><td><div class="service-name">企业主数据检索</div><div class="service-id">enterprise_master_search</div></td><td>MCP</td><td>主数据</td><td><span class="badge warning">待更新</span></td><td>5</td><td>2026-08-29 09:15</td><td><button class="text-button">查看</button><button class="text-button">更新</button></td></tr>
+                <tr><td><div class="service-name">供应链异常预警</div><div class="service-id">supply_chain_alert</div></td><td>API</td><td>供应链</td><td><span class="badge success">已上线</span></td><td>8</td><td>2026-08-28 18:06</td><td><button class="text-button">查看</button><button class="text-button">授权</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pagination"><span>共 128 条</span><button class="page-number" aria-label="上一页">‹</button><button class="page-number current" aria-current="page">1</button><button class="page-number">2</button><button class="page-number">3</button><button class="page-number" aria-label="下一页">›</button></div>
+        </div>
+
+        <div class="panel-message" id="panel-market" role="tabpanel" aria-labelledby="tab-market" data-panel-content="market" hidden><strong>服务集市</strong><p>同一壳层中切换到集市列表模式。</p></div>
+        <div class="panel-message" id="panel-auth" role="tabpanel" aria-labelledby="tab-auth" data-panel-content="auth" hidden><strong>授权管理</strong><p>使用筛选、授权状态表和详情抽屉模式。</p></div>
+        <div class="panel-message" id="panel-stats" role="tabpanel" aria-labelledby="tab-stats" data-panel-content="stats" hidden><strong>调用统计</strong><p>使用时间筛选、指标卡、趋势图和异常明细模式。</p></div>
+        <div class="panel-message" id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" data-panel-content="settings" hidden><strong>设置</strong><p>使用目录与详情模式维护数据服务域共用配置。</p></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll('[role="tab"]'))
+    const panels = Array.from(document.querySelectorAll('[data-panel-content]'))
+
+    function selectTab(selected, moveFocus = false) {
+      tabs.forEach((tab) => {
+        const active = tab === selected
+        tab.setAttribute('aria-selected', String(active))
+        tab.tabIndex = active ? 0 : -1
+      })
+      panels.forEach((panel) => {
+        const active = panel.dataset.panelContent === selected.dataset.panel
+        panel.classList.toggle('active', active)
+        panel.hidden = !active
+      })
+      if (moveFocus) selected.focus()
+    }
+
+    tabs.forEach((tab) => tab.addEventListener('click', () => selectTab(tab)))
+    tabs.forEach((tab, index) => tab.addEventListener('keydown', (event) => {
+      let nextIndex = null
+      if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length
+      if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length
+      if (event.key === 'Home') nextIndex = 0
+      if (event.key === 'End') nextIndex = tabs.length - 1
+      if (nextIndex === null) return
+      event.preventDefault()
+      selectTab(tabs[nextIndex], true)
+    }))
+  </script>
+</body>
+</html>

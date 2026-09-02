@@ -93,7 +93,7 @@
 | 能力 | 分级 | 当前证据与判断 | 关键缺口／影响 |
 | --- | --- | --- | --- |
 | 服务注册、发布与调用统计 | 仅前端可见且后端未证实 | `asset/service` 有服务 CRUD、状态、MCP 发布、调用统计和外部数据登记契约。 | 缺 API 契约真源、不可变版本、测试证据、部署和真实调用链。 |
-| API／AI 服务开发 | 仅前端可见且后端未证实 | [数据服务决策地图](../../.scratch/data-service-platform/map.md) 和 [AI 服务开发原型](../../prototypes/ai-service-development.html) 已明确目标生命周期；它们是决策／原型，不是实现。 | 需要正式服务制品库、测试、审批、发布执行和数据权限闭包。 |
+| API／AI 服务开发 | 仅前端可见且后端未证实 | [数据服务决策地图](../../.scratch/data-service-platform/map.md) 和 [AI 服务开发原型](../../prototypes/archive/2026-09-02/ai-service-development.html) 已明确目标生命周期；它们是决策／原型，不是实现。 | 需要正式服务制品库、测试、审批、发布执行和数据权限闭包。 |
 | Agent／MCP／Skill 接入 | 可扩展 | Playwright 捕获 `/api/v1/agents` 成功响应；[agent.ts](../../frontend/agenticos-asset-center-frontend/agenticos-asset-center-frontend/src/api/agent.ts)、[mcp.ts](../../frontend/agenticos-asset-center-frontend/agenticos-asset-center-frontend/src/api/mcp.ts)、`skills.ts` 提供管理契约。 | Agent 得到运行证据，MCP／Skill 主要仍是前端契约；还缺数据应用身份、固定版本、授权和网关执行投影。 |
 | 统一网关与数据应用授权 | 缺失 | [ADR 0001](../adr/0001-data-application-as-exclusive-consumption-boundary.md)、[ADR 0002](../adr/0002-govern-all-external-data-and-operation-channels-through-gateways.md) 和网关工单定义了目标边界；当前没有相应后端或真实网关控制面证据。 | 没有统一外部访问、认证、配额、路由、停流、发布和审计边界，不能生产开放数据。 |
 | 服务运行监控 | 可扩展 | 系统监控和审计已运行，数据服务运行管理原型已单独定义网关健康、配置发布和事件范围。 | 应建立数据服务域监控；与平台系统监控共享遥测基础设施，但不合并职责或页面。 |
@@ -109,7 +109,7 @@
 | 租户、工作空间与环境隔离 | 缺失 | `src/` 中仅零散出现 `tenant_id`，没有贯穿请求、资源和路由的 Tenant／Workspace 上下文；组织不等于租户或数据项目。 | 不补齐则无法保证数据、任务、资源、配置和凭据隔离。 |
 | 系统配置 | 已具备 | Playwright 捕获 `/admin/system-config` 和 `/admin/app-config` 成功响应，页面展示 24／32 个分类；源码支持敏感值遮罩和批量更新。 | 可作为基础配置服务种子，但现状偏全局文件配置。目标需支持 `global → tenant → workspace → environment → domain/object` 作用域、Schema、版本、Secret 引用和发布。 |
 | 工作流／审批 | 仅前端可见且后端未证实 | [workflows.ts](../../frontend/agenticos-asset-center-frontend/agenticos-asset-center-frontend/src/api/workflows.ts) 是 Agent 工作流契约；系统配置有审批策略，审计中有审批相关事件，但本轮无通用审批服务响应。 | 应复用统一审批编排，但数据任务 DAG、数据质量执行和网关发布不能由审批工作流替代。 |
-| 统一网关 | 缺失 | 只有目标 ADR、研究和 [运行管理原型](../../prototypes/runtime-management.html)。 | 属生产数据服务的阻断项，应形成厂商中立控制面和适配器。 |
+| 统一网关 | 缺失 | 只有目标 ADR、研究和 [运行管理原型](../../prototypes/archive/2026-09-02/runtime-management.html)。 | 属生产数据服务的阻断项，应形成厂商中立控制面和适配器。 |
 | Agent／MCP／Skill 平台 | 可扩展 | Agent 接口有真实响应，三类 API 客户端和 Agent runtime context 已存在。 | 适合做治理 Agent、开发助手和扩展入口；不能代替确定性的数据执行器。 |
 | 运行时与资源隔离 | 可扩展 | 有 Agent、QA Task、Cron、缓存、向量库和 SQLite 的运行表面；没有数据作业执行器、资源队列、沙箱／网络／临时数据隔离证据。 | 可复用任务框架和观测接入，必须新增数据工作负载运行层。 |
 | 系统监控 | 已具备 | [采集报告](../../output/playwright/seabox-system-management-detail-audit/20260901T011050Z/system-management-data-report.md) 和 `/admin/system-monitor/dashboard` 成功响应证明系统／Agent 运行监控存在。 | 保持“平台系统运维”定位；数据工程任务运维和数据服务运行监控分别建设，不合并。 |
@@ -201,4 +201,4 @@ AgenticOS 公共底座（复用并补强）
 - 真实系统采集：[数据明细报告](../../output/playwright/seabox-system-management-detail-audit/20260901T011050Z/system-management-data-report.md)、[网络证据](../../output/playwright/seabox-system-management-detail-audit/20260901T011050Z/network/network-details.jsonl)
 - 数据服务已决策：[决策地图](../../.scratch/data-service-platform/map.md)、[设置边界](../../.scratch/data-service-platform/issues/16-decide-settings-policy-scope.md)、[网关配置边界](../../.scratch/data-service-platform/issues/21-decide-gateway-runtime-configuration-boundary.md)
 - 难逆转边界：[ADR 0001](../adr/0001-data-application-as-exclusive-consumption-boundary.md)、[ADR 0002](../adr/0002-govern-all-external-data-and-operation-channels-through-gateways.md)、[ADR 0003](../adr/0003-map-external-data-consumers-through-data-applications.md)
-- 原型（仅目标交互证据）：[统一数据服务平台](../../prototypes/data-service-platform-prototype.html)、[运行管理](../../prototypes/runtime-management.html)、[设置](../../prototypes/settings-page-prototype.html)、[AI 服务开发](../../prototypes/ai-service-development.html)
+- 原型（仅目标交互证据）：[统一数据服务平台](../../prototypes/archive/2026-09-02/data-service-platform-prototype.html)、[运行管理](../../prototypes/archive/2026-09-02/runtime-management.html)、[设置](../../prototypes/archive/2026-09-02/settings-page-prototype.html)、[AI 服务开发](../../prototypes/archive/2026-09-02/ai-service-development.html)

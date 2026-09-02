@@ -16,7 +16,7 @@
 
 ### 改造前的具体缺口（本轮已修复）
 
-改造前核对 `prototypes/ai-service-development.html`：
+改造前核对 `prototypes/archive/2026-09-02/ai-service-development.html`：
 
 - `createServiceModal()` 能选择四种类型，但提交只切换到同一个 `workbench`；输入的名称、说明未成为工作台所用服务对象。
 - `workbenchView()` 的标题、开发导航、编辑区仍固定为“客户洞察 Agent”。
@@ -166,7 +166,7 @@ Temporal 区分单次尝试时长与包含重试的总执行期限，长任务�
 
 ## 8. 本轮落地范围与验证边界
 
-用户确认直接修改 `prototypes/ai-service-development.html`。实现范围：
+用户确认直接修改 `prototypes/archive/2026-09-02/ai-service-development.html`。实现范围：
 
 - 平台托管服务在创建时选择 AI 对话创建或手工创建；看板卡片显示当前开发方式。AI 工作区采用“会话 → 服务配置 → 按需展开的只读配置抽屉”的从左到右顺序；开发方式切换置于服务配置标题下。手工工作区保留类型专属编辑器，不显示 AI 生成入口。
 - 可编辑草稿支持原位切换开发方式并记录修订；待采纳 AI 变更会阻止切换。修订与审核记录只能由系统生成，AI 配置抽屉不提供调整入口。

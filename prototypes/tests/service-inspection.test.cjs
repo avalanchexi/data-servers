@@ -7,7 +7,7 @@ const vm = require('node:vm');
 // Runs the real inline program. DOM output sinks are substituted, not a browser:
 // these tests cover selection/rendering/handlers, not visual layout or CSS geometry.
 function load() {
-  const html = fs.readFileSync(path.join(__dirname, '..', 'runtime-management.html'), 'utf8');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'archive', '2026-09-02', 'runtime-management.html'), 'utf8');
   const elements = new Map();
   const listeners = {};
   function element(id) {
@@ -56,7 +56,7 @@ test('service inspection route is renamed and starts with all application catego
 });
 
 test('service monitoring has consistent names and a collapsed text search at the right edge of the directory heading', () => {
-  const html = fs.readFileSync(path.join(__dirname, '..', 'runtime-management.html'), 'utf8');
+  const html = fs.readFileSync(path.join(__dirname, '..', 'archive', '2026-09-02', 'runtime-management.html'), 'utf8');
   assert.doesNotMatch(html, /服务运检/);
   assert.match(html, /data-page="monitoring">服务运监<\/button>/);
   assert.match(html, /data-page-link="monitoring">查看服务运监<\/button>/);

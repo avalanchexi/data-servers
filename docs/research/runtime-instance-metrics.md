@@ -1,6 +1,6 @@
 # 运行情况：注册中心、AI 治理中心与沙箱指标
 
-调研日期：2026-08-28。适用原型：`prototypes/runtime-management.html`。
+调研日期：2026-08-28。适用原型：`prototypes/archive/2026-09-02/runtime-management.html`。
 
 ## 结论与边界
 
